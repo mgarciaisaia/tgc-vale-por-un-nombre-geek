@@ -1,0 +1,8 @@
+D:\Archivos de Pablo\Proyectos\Visual Studio 2010\Csharp\TgcViewer\AlumnoEjemplos\obj\Debug\AlumnoEjemplos.dll
+D:\Archivos de Pablo\Proyectos\Visual Studio 2010\Csharp\TgcViewer\AlumnoEjemplos\obj\Debug\AlumnoEjemplos.pdb
+D:\Archivos de Pablo\Proyectos\Visual Studio 2010\Csharp\TgcViewer\AlumnoEjemplos\AlumnoEjemplos.dll
+D:\Archivos de Pablo\Proyectos\Visual Studio 2010\Csharp\TgcViewer\AlumnoEjemplos\AlumnoEjemplos.pdb
+D:\Archivos de Pablo\Proyectos\Visual Studio 2010\Csharp\TgcViewer\AlumnoEjemplos\TgcViewer.exe
+D:\Archivos de Pablo\Proyectos\Visual Studio 2010\Csharp\TgcViewer\AlumnoEjemplos\Ionic.Zip.dll
+D:\Archivos de Pablo\Proyectos\Visual Studio 2010\Csharp\TgcViewer\AlumnoEjemplos\TgcViewer.pdb
+D:\Archivos de Pablo\Proyectos\Visual Studio 2010\Csharp\TgcViewer\AlumnoEjemplos\obj\Debug\AlumnoEjemplos.csprojResolveAssemblyReference.cache
