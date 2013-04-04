@@ -157,6 +157,7 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
             float moveForward = 0f;
             float moveUp = 0f;
             float rotate = 0;
+            float targetRotation = 0;
             TgcD3dInput d3dInput = GuiController.Instance.D3dInput;
             bool moving = false;
             bool rotating = false;
@@ -181,11 +182,13 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
            if(d3dInput.keyDown(Key.Q)){
                moveUp =- velocidadNadar;
                moving = true;
+               targetRotation = Geometry.DegreeToRadian(-30);
            }
 
             if(d3dInput.keyDown(Key.E)){
                 moveUp = velocidadNadar;
                 moving =true;
+                targetRotation = Geometry.DegreeToRadian(30);
             }
             //Derecha
             if (d3dInput.keyDown(Key.D))
@@ -225,25 +228,20 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
 
                personaje.move(0, moveUp * elapsedTime, 0);
 
-               if (personaje.Rotation.X == 0) //Rotar al subir o bajar
+               float deltaRotation = targetRotation - personaje.Rotation.X;
+                if (deltaRotation != 0) // Hay que rotar el personaje
                {
-                   if (moveUp != 0)
-                   {
-                       if (moveUp > 0)
-
+                   
+                       if (deltaRotation > 0)
+                           // FIXME: los grados de rotacion deberian tener en cuenta el elapsedTime
                            personaje.rotateX(Geometry.DegreeToRadian(30));
 
 
 
-                       else if (moveUp < 0f)
+                       else if (deltaRotation < 0)
 
                            personaje.rotateX(Geometry.DegreeToRadian(-30));
-                   }
-               }
-               else if (moveUp == 0f) //Enderezar 
-               {
-                   if (personaje.Rotation.X == Geometry.DegreeToRadian(30)) personaje.rotateX(Geometry.DegreeToRadian(-30));
-                   else personaje.rotateX(Geometry.DegreeToRadian(30));
+                   
                }
 
 
