@@ -14,7 +14,7 @@ using TgcViewer.Utils.TgcKeyFrameLoader;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 
-namespace AlumnoEjemplos.PruebaMoverPersonaje
+namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
 {
     /// <summary>
     /// Prueba de control y animacion de personaje.
@@ -23,6 +23,9 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
     {
         TgcKeyFrameMesh personaje;
         TgcBox piso;
+        bool moviendo;
+
+        //Picking
         TgcPickingRay pickingRay;
         Vector3 newPosition;
         bool applyMovement;
@@ -71,21 +74,20 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
 
            //Cargar modelo con una animación Key Frame
             string pathMesh = GuiController.Instance.AlumnoEjemplosMediaDir + "pez-TgcKeyFrameMesh.xml";
-            string[] animationsPath = new string[] { GuiController.Instance.AlumnoEjemplosMediaDir + "Animaciones//nadar-TgcKeyFrameAnim.xml" };
+            string[] animationsPath = new string[] {
+                GuiController.Instance.AlumnoEjemplosMediaDir + "Animaciones//nadar-TgcKeyFrameAnim.xml",
+                 GuiController.Instance.AlumnoEjemplosMediaDir + "Animaciones//quieto-TgcKeyFrameAnim.xml"
+            };
             personaje = (TgcKeyFrameMesh)loader.loadMeshAndAnimationsFromFile(pathMesh, animationsPath);
 
-            personaje.playAnimation("nadar");
+            personaje.playAnimation("quieto");
 
             //Posicion inicial
             personaje.Position = new Vector3(0, -45, 0);
             personaje.rotateY(Geometry.DegreeToRadian(180f));
 
 
-            //Picking
-            pickingRay = new TgcPickingRay();
-            GuiController.Instance.Modifiers.addFloat("speed", 10, 100, 40);
-            collisionPointMesh = TgcBox.fromSize(new Vector3(3, 1, 3), Color.Red);
-
+             GuiController.Instance.Modifiers.addFloat("speed", 10, 100, 40);
             //Crear un modifier para un ComboBox con opciones
             string[] opciones = new string[] { "Teclas", "Picking"};
             GuiController.Instance.Modifiers.addInterval("Controles", opciones, 0);
@@ -93,19 +95,25 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
 
             //Configurar camara en Tercer Persona
             GuiController.Instance.ThirdPersonCamera.Enable = true;
-            GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position, 100, -30);
+            GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position, 30, -30);
 
             //Coordenadas mouse
             GuiController.Instance.UserVars.addVar("Posicion Mouse");
 
-           
+
+
+
+            //Picking
+            pickingRay = new TgcPickingRay();
+            collisionPointMesh = TgcBox.fromSize(new Vector3(3, 1, 3), Color.Red);
            
          }
 
 
         public override void render(float elapsedTime)
         {
-            this.moverPersonaje(elapsedTime);
+            Utils.desplazarVistaConMouse(40);
+            this.moverPersonaje(elapsedTime, (float)GuiController.Instance.Modifiers["speed"]);
             GuiController.Instance.UserVars.setValue("Posicion Mouse", "(" + GuiController.Instance.D3dInput.Xpos+ "," + GuiController.Instance.D3dInput.Ypos.ToString()+")");
             personaje.updateAnimation();
             piso.render();
@@ -113,15 +121,22 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
 
         }
 
-        private void moverPersonaje(float elapsedTime)
+
+
+
+
+        private void moverPersonaje(float elapsedTime, float speed)
         {
 
             if (GuiController.Instance.Modifiers.getValue("Controles").Equals("Teclas")){
 
                 if(!currentControl.Equals("Teclas")){
                     personaje.AutoTransformEnable=true;
+
+                    GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position, 30, -30);
+
                 }
-                this.moverPersonajeTeclas(elapsedTime);
+                this.moverPersonajeTeclas(elapsedTime, speed);
             }
 
                 
@@ -129,8 +144,12 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
             {
                 if (!currentControl.Equals("Picking"))
                 {
+
+                    GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position, 100, -30);
+
                     newPosition = personaje.Position;
                     applyMovement = false;
+
                     //Rotación original de la malla, hacia -Z
                     originalMeshRot = new Vector3(0, 0, -1);
 
@@ -138,18 +157,21 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
                     personaje.AutoTransformEnable = false;
                     meshRotationMatrix = Matrix.Identity;
                 }
-                this.moverPersonajePicking(elapsedTime);
+                this.moverPersonajePicking(elapsedTime, (float)GuiController.Instance.Modifiers["speed"]);
             }
             currentControl = (string) GuiController.Instance.Modifiers.getValue("Controles");
         }
 
-        private void moverPersonajeTeclas(float elapsedTime)
+     
+        
+        
+        private void moverPersonajeTeclas(float elapsedTime,float speed)
         {
 
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
 
-            float velocidadNadar = (float)GuiController.Instance.Modifiers.getValue("speed");
+            float velocidadNadar = speed;
             float velocidadRotacion = 120f;
 
 
@@ -218,7 +240,8 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
             //Si hubo desplazamiento
             if (moving)
             {
-               //Aplicar movimiento hacia adelante o atras segun la orientacion actual del Mesh
+                personaje.playAnimation("nadar", true);
+                //Aplicar movimiento hacia adelante o atras segun la orientacion actual del Mesh
                 Vector3 lastPos = personaje.Position;
 
                 //La velocidad de movimiento tiene que multiplicarse por el elapsedTime para hacerse independiente de la velocida de CPU
@@ -226,7 +249,7 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
                 personaje.moveOrientedY(moveForward * elapsedTime);
 
 
-               personaje.move(0, moveUp * elapsedTime, 0);
+                personaje.move(0, moveUp * elapsedTime, 0);
 
                float deltaRotation = targetRotation - personaje.Rotation.X;
                 if (deltaRotation != 0) // Hay que rotar el personaje
@@ -234,7 +257,7 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
                    
                        if (deltaRotation > 0)
                            // FIXME: los grados de rotacion deberian tener en cuenta el elapsedTime
-                           personaje.rotateX(Geometry.DegreeToRadian(30));
+                            personaje.rotateX(Geometry.DegreeToRadian(30));
 
 
 
@@ -245,18 +268,21 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
                }
 
 
-               //Hacer que la camara siga al personaje en su nueva posicion
-               GuiController.Instance.ThirdPersonCamera.Target = personaje.Position;
+                //Hacer que la camara siga al personaje en su nueva posicion
+                GuiController.Instance.ThirdPersonCamera.Target = personaje.Position;
             }
-
+            else personaje.playAnimation("quieto", true);
+            
          
         }
 
-        private void moverPersonajePicking(float elapsedTime)
+        
+        
+        
+        private void moverPersonajePicking(float elapsedTime, float speed)
         {
             
-            desplazarVista(40);
-            
+                  
             //Si hacen clic con el mouse, ver si hay colision con el suelo
             if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
@@ -280,12 +306,11 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
             }
 
 
-            float speed = (float)GuiController.Instance.Modifiers["speed"];
-
-
+          
             //Interporlar movimiento, si hay que mover
             if (applyMovement)
             {
+                personaje.playAnimation("nadar", true);
                 //Ver si queda algo de distancia para mover
                 Vector3 posDiff = newPosition - personaje.Position;
                 float posDiffLength = posDiff.LengthSq();
@@ -317,6 +342,7 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
                 else
                 {
                     applyMovement = false;
+                    personaje.playAnimation("quieto");
                 }
                 //Mostrar caja con lugar en el que se hizo click, solo si hay movimiento
                 if (applyMovement)
@@ -330,33 +356,7 @@ namespace AlumnoEjemplos.PruebaMoverPersonaje
 
         }
 
-        private static void desplazarVista(float cameraSpeed)
-        {
-            Vector3 desplazamiento;
-            float dx=0, dz=0;
-           
-            //Mover si el mouse está en un borde.
-            if (GuiController.Instance.D3dInput.Xpos <= 10 && GuiController.Instance.D3dInput.Xpos > 0)
-            
-                dx = -cameraSpeed * GuiController.Instance.ElapsedTime;
-
-            else if (GuiController.Instance.D3dInput.Xpos >= GuiController.Instance.Panel3d.Width-10 && GuiController.Instance.D3dInput.Xpos < GuiController.Instance.Panel3d.Width)
-
-                dx = cameraSpeed * GuiController.Instance.ElapsedTime;
-
-            if (GuiController.Instance.D3dInput.Ypos <= 10 && GuiController.Instance.D3dInput.Ypos > -10)
-
-                dz = cameraSpeed * GuiController.Instance.ElapsedTime;
-
-            else if (GuiController.Instance.D3dInput.Ypos >= GuiController.Instance.Panel3d.Height-10 && GuiController.Instance.D3dInput.Ypos < GuiController.Instance.Panel3d.Height)
-
-                dz = -cameraSpeed * GuiController.Instance.ElapsedTime;
-
-
-            desplazamiento = new Vector3(dx,0,dz);
-            GuiController.Instance.ThirdPersonCamera.Target = GuiController.Instance.ThirdPersonCamera.Target + desplazamiento;
-        }
-        
+       
         public override void close()
         {
             personaje.dispose();
