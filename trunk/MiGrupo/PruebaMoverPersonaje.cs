@@ -13,6 +13,7 @@ using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.TgcKeyFrameLoader;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
+using TgcViewer.Utils.Sound;
 
 namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
 {
@@ -24,6 +25,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
         TgcKeyFrameMesh personaje;
         TgcBox piso;
         bool moviendo;
+        bool reproduciendo;
 
         //Picking
         TgcPickingRay pickingRay;
@@ -33,6 +35,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
         String currentControl;
         Vector3 originalMeshRot;
         Matrix meshRotationMatrix;
+        private TgcStaticSound sonidoChapoteo;
 
 
         public override string getCategory()
@@ -82,6 +85,12 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
 
             personaje.playAnimation("quieto");
 
+            //Sonido
+
+            //Cargar sonido
+            sonidoChapoteo = new TgcStaticSound();
+            sonidoChapoteo.loadSound(GuiController.Instance.AlumnoEjemplosMediaDir + "Sound//WATER.WAV");
+
             //Posicion inicial
             personaje.Position = new Vector3(0, -45, 0);
             personaje.rotateY(Geometry.DegreeToRadian(180f));
@@ -102,6 +111,11 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
 
 
 
+            //Musica :D
+            GuiController.Instance.Mp3Player.FileName = GuiController.Instance.AlumnoEjemplosMediaDir + "Music//UWSDWF.mp3";
+            GuiController.Instance.Mp3Player.play(true);
+            reproduciendo = true;
+            GuiController.Instance.Modifiers.addBoolean("Musica", "Reproducir", true);
 
             //Picking
             pickingRay = new TgcPickingRay();
@@ -114,17 +128,16 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
         {
             Utils.desplazarVistaConMouse(40);
             this.moverPersonaje(elapsedTime, (float)GuiController.Instance.Modifiers["speed"]);
-            GuiController.Instance.UserVars.setValue("Posicion Mouse", "(" + GuiController.Instance.D3dInput.Xpos+ "," + GuiController.Instance.D3dInput.Ypos.ToString()+")");
+                  
+
             personaje.updateAnimation();
+
             piso.render();
             personaje.render();
-
+            actualizarEstadoReproductorMP3();
         }
 
-
-
-
-
+  
         private void moverPersonaje(float elapsedTime, float speed)
         {
 
@@ -241,6 +254,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
             if (moving)
             {
                 personaje.playAnimation("nadar", true);
+                sonidoChapoteo.play();
                 //Aplicar movimiento hacia adelante o atras segun la orientacion actual del Mesh
                 Vector3 lastPos = personaje.Position;
 
@@ -251,27 +265,31 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
 
                 personaje.move(0, moveUp * elapsedTime, 0);
 
-               float deltaRotation = targetRotation - personaje.Rotation.X;
+                float deltaRotation = targetRotation - personaje.Rotation.X;
                 if (deltaRotation != 0) // Hay que rotar el personaje
-               {
-                   
-                       if (deltaRotation > 0)
-                           // FIXME: los grados de rotacion deberian tener en cuenta el elapsedTime
-                            personaje.rotateX(Geometry.DegreeToRadian(30));
+                {
+
+                    if (deltaRotation > 0)
+                        // FIXME: los grados de rotacion deberian tener en cuenta el elapsedTime
+                        personaje.rotateX(Geometry.DegreeToRadian(30));
 
 
 
-                       else if (deltaRotation < 0)
+                    else if (deltaRotation < 0)
 
-                           personaje.rotateX(Geometry.DegreeToRadian(-30));
-                   
-               }
+                        personaje.rotateX(Geometry.DegreeToRadian(-30));
+
+                }
 
 
                 //Hacer que la camara siga al personaje en su nueva posicion
                 GuiController.Instance.ThirdPersonCamera.Target = personaje.Position;
             }
-            else personaje.playAnimation("quieto", true);
+            else
+            {
+                personaje.playAnimation("quieto", true);
+                sonidoChapoteo.stop();
+            }
             
          
         }
@@ -311,6 +329,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
             if (applyMovement)
             {
                 personaje.playAnimation("nadar", true);
+                sonidoChapoteo.play();
                 //Ver si queda algo de distancia para mover
                 Vector3 posDiff = newPosition - personaje.Position;
                 float posDiffLength = posDiff.LengthSq();
@@ -343,6 +362,8 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
                 {
                     applyMovement = false;
                     personaje.playAnimation("quieto");
+                    sonidoChapoteo.stop();
+
                 }
                 //Mostrar caja con lugar en el que se hizo click, solo si hay movimiento
                 if (applyMovement)
@@ -356,12 +377,28 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
 
         }
 
+        private void actualizarEstadoReproductorMP3()
+        {
+            if (!((bool)GuiController.Instance.Modifiers.getValue("Musica")) && reproduciendo)
+            {
+
+                GuiController.Instance.Mp3Player.pause();
+                reproduciendo = false;
+            }
+            else if (((bool)GuiController.Instance.Modifiers.getValue("Musica")) && !reproduciendo)
+            {
+                GuiController.Instance.Mp3Player.resume();
+                reproduciendo = true;
+            }
+        }
+
        
         public override void close()
         {
             personaje.dispose();
             collisionPointMesh.dispose();
             piso.dispose();
+            sonidoChapoteo.dispose();
         }
 
     }
