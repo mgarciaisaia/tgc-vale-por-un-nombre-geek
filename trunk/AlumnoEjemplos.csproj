@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="MiGrupo\EjemploAlumno.cs" />
     <Compile Include="MiGrupo\PruebaMoverPersonaje.cs" />
+    <Compile Include="MiGrupo\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
