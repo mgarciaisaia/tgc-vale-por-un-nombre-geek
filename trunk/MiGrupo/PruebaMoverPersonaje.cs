@@ -78,8 +78,8 @@ namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
            //Cargar modelo con una animación Key Frame
             string pathMesh = GuiController.Instance.AlumnoEjemplosMediaDir + "pez-TgcKeyFrameMesh.xml";
             string[] animationsPath = new string[] {
-                GuiController.Instance.AlumnoEjemplosMediaDir + "Animaciones//nadar-TgcKeyFrameAnim.xml",
-                 GuiController.Instance.AlumnoEjemplosMediaDir + "Animaciones//quieto-TgcKeyFrameAnim.xml"
+                GuiController.Instance.AlumnoEjemplosMediaDir + "Animaciones//pez//nadar-TgcKeyFrameAnim.xml",
+                 GuiController.Instance.AlumnoEjemplosMediaDir + "Animaciones//pez//quieto-TgcKeyFrameAnim.xml"
             };
             personaje = (TgcKeyFrameMesh)loader.loadMeshAndAnimationsFromFile(pathMesh, animationsPath);
 
