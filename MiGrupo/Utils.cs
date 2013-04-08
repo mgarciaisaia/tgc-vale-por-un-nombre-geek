@@ -16,19 +16,19 @@ namespace AlumnoEjemplos.MiGrupo
             float dx = 0, dz = 0;
 
             //Mover si el mouse está en un borde.
-            if (GuiController.Instance.D3dInput.Xpos <= 10 && GuiController.Instance.D3dInput.Xpos > 0)
+            if (GuiController.Instance.D3dInput.Xpos <= 100 && GuiController.Instance.D3dInput.Xpos > 0)
 
                 dx = -cameraSpeed * GuiController.Instance.ElapsedTime;
 
-            else if (GuiController.Instance.D3dInput.Xpos >= GuiController.Instance.Panel3d.Width - 10 && GuiController.Instance.D3dInput.Xpos < GuiController.Instance.Panel3d.Width)
+            else if (GuiController.Instance.D3dInput.Xpos >= GuiController.Instance.Panel3d.Width - 100 && GuiController.Instance.D3dInput.Xpos < GuiController.Instance.Panel3d.Width)
 
                 dx = cameraSpeed * GuiController.Instance.ElapsedTime;
 
-            if (GuiController.Instance.D3dInput.Ypos <= 10 && GuiController.Instance.D3dInput.Ypos > -10)
+            if (GuiController.Instance.D3dInput.Ypos <= 100 && GuiController.Instance.D3dInput.Ypos > -100)
 
                 dz = cameraSpeed * GuiController.Instance.ElapsedTime;
 
-            else if (GuiController.Instance.D3dInput.Ypos >= GuiController.Instance.Panel3d.Height - 10 && GuiController.Instance.D3dInput.Ypos < GuiController.Instance.Panel3d.Height)
+            else if (GuiController.Instance.D3dInput.Ypos >= GuiController.Instance.Panel3d.Height - 100 && GuiController.Instance.D3dInput.Ypos < GuiController.Instance.Panel3d.Height)
 
                 dz = -cameraSpeed * GuiController.Instance.ElapsedTime;
 
