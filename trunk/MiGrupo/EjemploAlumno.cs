@@ -9,6 +9,11 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
 using TgcViewer.Utils.TgcGeometry;
 using TgcViewer.Utils.TgcSceneLoader;
+using TgcViewer.Utils.TgcSkeletalAnimation;
+using TgcViewer.Utils.Collision.ElipsoidCollision;
+using TgcViewer.Utils.Terrain;
+using TgcViewer.Utils.Input;
+using Microsoft.DirectX.DirectInput;
 
 namespace AlumnoEjemplos.MiGrupo
 {
@@ -19,6 +24,15 @@ namespace AlumnoEjemplos.MiGrupo
     {
         TgcBox piso;
         List<TgcBox> obstaculos;
+
+
+
+        TgcScene escenario;
+        TgcSkeletalMesh personaje;
+        List<Collider> objetosColisionables = new List<Collider>();
+        TgcElipsoid characterElipsoid;
+        ElipsoidCollisionManager collisionManager;
+        TgcSkyBox skyBox;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -55,93 +69,75 @@ namespace AlumnoEjemplos.MiGrupo
             //GuiController.Instance: acceso principal a todas las herramientas del Framework
 
             //Device de DirectX para crear primitivas
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
             //Carpeta de archivos Media del alumno
             string alumnoMediaFolder = GuiController.Instance.AlumnoEjemplosMediaDir;
+
+            TgcSceneLoader loader = new TgcSceneLoader();
+            escenario = loader.loadSceneFromFile(GuiController.Instance.ExamplesMediaDir + "\\MeshCreator\\Scenes\\Mountains\\Mountains-TgcScene.xml");
 
             //Crear piso
             TgcTexture pisoTexture = TgcTexture.createTexture(d3dDevice, GuiController.Instance.ExamplesMediaDir + "Texturas\\tierra.jpg");
             piso = TgcBox.fromSize(new Vector3(0, -60, 0), new Vector3(1000, 5, 1000), pisoTexture);
 
-
-            //Cargar obstaculos y posicionarlos. Los obstáculos se crean con TgcBox en lugar de cargar un modelo.
-            obstaculos = new List<TgcBox>();
-            TgcBox obstaculo;
-
-
-            //Obstaculo 1
-            obstaculo = TgcBox.fromSize(
-                new Vector3(-100, 0, 0),
-                new Vector3(80, 150, 80),
-                TgcTexture.createTexture(d3dDevice, GuiController.Instance.ExamplesMediaDir + "Texturas\\baldosaFacultad.jpg"));
-            obstaculos.Add(obstaculo);
-
-            //Obstaculo 2
-            obstaculo = TgcBox.fromSize(
-                new Vector3(50, 0, 200),
-                new Vector3(80, 300, 80),
-                TgcTexture.createTexture(d3dDevice, GuiController.Instance.ExamplesMediaDir + "Texturas\\madera.jpg"));
-            obstaculos.Add(obstaculo);
-
-            //Obstaculo 3
-            obstaculo = TgcBox.fromSize(
-                new Vector3(300, 0, 100),
-                new Vector3(80, 100, 150),
-                TgcTexture.createTexture(d3dDevice, GuiController.Instance.ExamplesMediaDir + "Texturas\\granito.jpg"));
-            obstaculos.Add(obstaculo);
-
-            ///////////////MODIFIERS//////////////////
-
-            //Crear un modifier para un valor FLOAT
-            GuiController.Instance.Modifiers.addFloat("valorFloat", -50f, 200f, 0f);
-
-            //Crear un modifier para un ComboBox con opciones
-            string[] opciones = new string[]{"opcion1", "opcion2", "opcion3"};
-            GuiController.Instance.Modifiers.addInterval("valorIntervalo", opciones, 0);
-
-            //Crear un modifier para modificar un vértice
-            GuiController.Instance.Modifiers.addVertex3f("valorVertice", new Vector3(-100, -100, -100), new Vector3(50, 50, 50), new Vector3(0, 0, 0));
-
-
-            
-            ///////////////CONFIGURAR CAMARA ROTACIONAL//////////////////
-            //Es la camara que viene por default, asi que no hace falta hacerlo siempre
-            GuiController.Instance.RotCamera.Enable = true;
-            //Configurar centro al que se mira y distancia desde la que se mira
-            GuiController.Instance.RotCamera.setCamera(new Vector3(0, 10, 0), 100);
-             
-
-
-            /*
-            ///////////////CONFIGURAR CAMARA PRIMERA PERSONA//////////////////
-            //Camara en primera persona, tipo videojuego FPS
-            //Solo puede haber una camara habilitada a la vez. Al habilitar la camara FPS se deshabilita la camara rotacional
-            //Por default la camara FPS viene desactivada
-            GuiController.Instance.FpsCamera.Enable = true;
-            //Configurar posicion y hacia donde se mira
-            GuiController.Instance.FpsCamera.setCamera(new Vector3(0, 10, -0), new Vector3(10, 0, 0));
-            */
-
-
-
-            ///////////////LISTAS EN C#//////////////////
-            //crear
-            List<string> lista = new List<string>();
-
-            //agregar elementos
-            lista.Add("elemento1");
-            lista.Add("elemento2");
-
-            //obtener elementos
-            string elemento1 = lista[0];
-
-            //bucle foreach
-            foreach (string elemento in lista)
+            objetosColisionables.Clear();
+            foreach (TgcMesh mesh in escenario.Meshes)
             {
-                //Loggear por consola del Framework
-                GuiController.Instance.Logger.log(elemento);
+                //Los objetos del layer "TriangleCollision" son colisiones a nivel de triangulo
+                if (mesh.Layer == "TriangleCollision")
+                {
+                    objetosColisionables.Add(TriangleMeshCollider.fromMesh(mesh));
+                }
+                //El resto de los objetos son colisiones de BoundingBox. Las colisiones a nivel de triangulo son muy costosas asi que deben utilizarse solo
+                //donde es extremadamente necesario (por ejemplo en el piso). El resto se simplifica con un BoundingBox
+                else
+                {
+                    objetosColisionables.Add(BoundingBoxCollider.fromBoundingBox(mesh.BoundingBox));
+                }
             }
+
+            //Cargar personaje con animaciones
+            TgcSkeletalLoader skeletalLoader = new TgcSkeletalLoader();
+            personaje = skeletalLoader.loadMeshAndAnimationsFromFile(
+                GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\" + "BasicHuman-TgcSkeletalMesh.xml",
+                new string[] { 
+                    GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "Walk-TgcSkeletalAnim.xml",
+                    GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "StandBy-TgcSkeletalAnim.xml",
+                    GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "Jump-TgcSkeletalAnim.xml"
+                });
+            //Configurar animacion inicial
+            personaje.playAnimation("StandBy", true);
+            //Escalarlo porque es muy grande
+            personaje.Position = new Vector3(0, 1000, -150);
+            //Rotarlo 180° porque esta mirando para el otro lado
+            personaje.rotateY(Geometry.DegreeToRadian(180f));
+
+            //BoundingSphere que va a usar el personaje
+            personaje.AutoUpdateBoundingBox = false;
+            characterElipsoid = new TgcElipsoid(personaje.BoundingBox.calculateBoxCenter() + new Vector3(0, 0, 0), new Vector3(12, 28, 12));
+
+            //Crear manejador de colisiones
+            collisionManager = new ElipsoidCollisionManager();
+            collisionManager.GravityEnabled = true;
+
+            //Crear SkyBox
+            skyBox = new TgcSkyBox();
+            skyBox.Center = new Vector3(0, 0, 0);
+            skyBox.Size = new Vector3(10000, 10000, 10000);
+            string texturesPath = GuiController.Instance.ExamplesMediaDir + "Texturas\\Quake\\SkyBox3\\";
+            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Up, texturesPath + "Up.jpg");
+            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Down, texturesPath + "Down.jpg");
+            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Left, texturesPath + "Left.jpg");
+            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Right, texturesPath + "Right.jpg");
+            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Front, texturesPath + "Back.jpg");
+            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Back, texturesPath + "Front.jpg");
+            skyBox.updateValues();
+
+
+            //Configurar camara en Tercer Persona
+            GuiController.Instance.ThirdPersonCamera.Enable = true;
+            GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position, 300, -300);
         }
 
 
@@ -153,41 +149,115 @@ namespace AlumnoEjemplos.MiGrupo
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            //Device de DirectX para renderizar
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
-            //Obtener valores de Modifiers
-            float valorFloat = (float)GuiController.Instance.Modifiers["valorFloat"];
-            string opcionElegida = (string)GuiController.Instance.Modifiers["valorIntervalo"];
-            Vector3 valorVertice = (Vector3)GuiController.Instance.Modifiers["valorVertice"];
+            //Movemos la camara
+            Utils.desplazarVistaConMouse(400);
 
+            //Calcular proxima posicion de personaje segun Input
+            float moveForward = 0f;
+            float rotate = 0;
+            bool moving = false;
+            bool rotating = false;
+            TgcD3dInput d3dInput = GuiController.Instance.D3dInput;
 
-            ///////////////INPUT//////////////////
-            //conviene deshabilitar ambas camaras para que no haya interferencia
-
-            //Capturar Input teclado 
-            if (GuiController.Instance.D3dInput.keyPressed(Microsoft.DirectX.DirectInput.Key.F))
+            //Adelante
+            if (d3dInput.keyDown(Key.W))
             {
-                //Tecla F apretada
+                moveForward = -1;
+                moving = true;
             }
 
-            //Capturar Input Mouse
-            if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
+            //Atras
+            if (d3dInput.keyDown(Key.S))
             {
-                //Boton izq apretado
+                moveForward = 1;
+                moving = true;
+            }
+
+            //Derecha
+            if (d3dInput.keyDown(Key.D))
+            {
+                rotate = 150f;
+                rotating = true;
+            }
+
+            //Izquierda
+            if (d3dInput.keyDown(Key.A))
+            {
+                rotate = -150f;
+                rotating = true;
+            }
+
+            //Si hubo rotacion
+            if (rotating)
+            {
+                //Rotar personaje y la camara, hay que multiplicarlo por el tiempo transcurrido para no atarse a la velocidad el hardware
+                float rotAngle = Geometry.DegreeToRadian(rotate * elapsedTime);
+                personaje.rotateY(rotAngle);
+                //GuiController.Instance.ThirdPersonCamera.rotateY(rotAngle);
+            }
+
+            //Moviendose
+            if (moving)
+            {
+                //Activar animacion de caminando
+                personaje.playAnimation("Walk", true);
+            }
+            //Si no se esta moviendo ni saltando, activar animacion de Parado
+            else
+            {
+                personaje.playAnimation("StandBy", true);
             }
 
 
-            //Render piso
-            piso.render();
-
-
-            //Render obstaculos
-            foreach (TgcBox obstaculo in obstaculos)
+            //Vector de movimiento
+            Vector3 movementVector = Vector3.Empty;
+            if (moving)
             {
-                obstaculo.render();
-                obstaculo.BoundingBox.render();
+                //Aplicar movimiento, desplazarse en base a la rotacion actual del personaje
+                movementVector = new Vector3(
+                    FastMath.Sin(personaje.Rotation.Y) * moveForward,
+                    0,
+                    FastMath.Cos(personaje.Rotation.Y) * moveForward
+                    );
             }
+
+
+            //Actualizar valores de gravedad
+            collisionManager.GravityEnabled = true;
+            collisionManager.GravityForce = new Vector3(0, -4, 0);
+            collisionManager.SlideFactor = 1f;
+            collisionManager.OnGroundMinDotValue = 0.72f;
+
+            //Mover personaje con detección de colisiones, sliding y gravedad
+            //Aca se aplica toda la lógica de detección de colisiones del CollisionManager. Intenta mover el Elipsoide
+            //del personaje a la posición deseada. Retorna la verdadera posicion (realMovement) a la que se pudo mover
+            Vector3 realMovement = collisionManager.moveCharacter(characterElipsoid, movementVector, objetosColisionables);
+            personaje.move(realMovement);
+
+
+            //GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position, 300, -300);
+
+            //Cargar desplazamiento realizar en UserVar
+            //GuiController.Instance.UserVars.setValue("Movement", TgcParserUtils.printVector3(realMovement));
+
+
+
+            //Render de mallas
+            foreach (TgcMesh mesh in escenario.Meshes)
+            {
+                mesh.render();
+            }
+
+
+
+            //Render personaje
+            personaje.animateAndRender();
+            characterElipsoid.render();
+
+            //Render SkyBox
+            skyBox.render();
 
         }
 
@@ -197,11 +267,10 @@ namespace AlumnoEjemplos.MiGrupo
         /// </summary>
         public override void close()
         {
-            piso.dispose();
-            foreach (TgcBox obstaculo in obstaculos)
-            {
-                obstaculo.dispose();
-            }
+            escenario.disposeAll();
+            personaje.dispose();
+            skyBox.dispose();
+            characterElipsoid.dispose();
         }
 
     }
