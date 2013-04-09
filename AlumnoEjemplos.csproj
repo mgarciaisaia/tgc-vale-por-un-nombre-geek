@@ -88,9 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MiGrupo\Commandos\Ambiente.cs" />
+    <Compile Include="MiGrupo\Commandos\Camara.cs" />
     <Compile Include="MiGrupo\Commandos\EjemploAlumno.cs" />
     <Compile Include="MiGrupo\Pez\PruebaMoverPersonaje.cs" />
-    <Compile Include="MiGrupo\Utils.cs" />
+    <Compile Include="MiGrupo\Pez\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
