@@ -14,6 +14,7 @@ using TgcViewer.Utils.Collision.ElipsoidCollision;
 using TgcViewer.Utils.Terrain;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
+using AlumnoEjemplos.MiGrupo.Commandos;
 
 namespace AlumnoEjemplos.MiGrupo
 {
@@ -34,6 +35,7 @@ namespace AlumnoEjemplos.MiGrupo
         ElipsoidCollisionManager collisionManager;
 
         Ambiente ambiente;
+        Camara camara;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -122,13 +124,13 @@ namespace AlumnoEjemplos.MiGrupo
             collisionManager = new ElipsoidCollisionManager();
             collisionManager.GravityEnabled = true;
 
+
             //Crear SkyBox
             ambiente = new Ambiente();
+            //Inicializar camara
+            camara = new Camara(personaje.Position);
 
 
-            //Configurar camara en Tercer Persona
-            GuiController.Instance.ThirdPersonCamera.Enable = true;
-            GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position, 300, -300);
         }
 
 
@@ -142,8 +144,8 @@ namespace AlumnoEjemplos.MiGrupo
         {
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
-            //Movemos la camara
-            Utils.desplazarVistaConMouse(400);
+            camara.refresh(400);
+            ambiente.render();
 
             //Calcular proxima posicion de personaje segun Input
             float moveForward = 0f;
@@ -233,7 +235,6 @@ namespace AlumnoEjemplos.MiGrupo
             //Cargar desplazamiento realizar en UserVar
             //GuiController.Instance.UserVars.setValue("Movement", TgcParserUtils.printVector3(realMovement));
 
-            ambiente.render();
 
             //Render de mallas
             foreach (TgcMesh mesh in escenario.Meshes)
