@@ -185,11 +185,14 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
         private float obtenerAltura(float x, float z)
         {
             int altura;
+             float width = (float)terrain.HeightmapData.GetLength(0);
+            float length = (float)terrain.HeightmapData.GetLength(1);
 
+           
             int xInt = (int)x;
             int zInt = (int)z;
-            xInt = xInt + (int)(escalaXZ * 32); //64 / 2 
-            zInt = zInt + (int)(escalaXZ * 32);
+            xInt = xInt + (int)(escalaXZ * (width/2)); 
+            zInt = zInt + (int)(escalaXZ * (length/2));
 
             altura = terrain.HeightmapData[(int)(xInt / escalaXZ), (int)(zInt / escalaXZ)];
             altura = (int)(altura * escalaY);
