@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
     /// </summary>
     public class PruebaEscenario : TgcExample
     {
-        TgcSimpleTerrain terrain;
+        Terrain terrain;
         TgcSkeletalMesh personaje;
         string pathHeightmap;
         string pathTextura;
@@ -67,7 +67,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
            
             escalaY = 1f;
             
-            terrain = new TgcSimpleTerrain();
+            terrain = new Terrain();
             terrain.loadHeightmap(pathHeightmap, escalaXZ, escalaY, new Vector3(0, 0, 0));
             terrain.loadTexture(pathTextura);
         
@@ -83,7 +83,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
             //Configurar animacion inicial
             personaje.playAnimation("StandBy", true);
             
-            personaje.Position = new Vector3(0, obtenerAltura(0,0), 0);
+            personaje.Position = new Vector3(0, terrain.getHeight(0,0), 0);
             //Rotarlo 180° porque esta mirando para el otro lado
             personaje.rotateY(Geometry.DegreeToRadian(180f));
 
@@ -126,8 +126,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
                 moveForward = velocidad;
                 moving = true;
             }
-
-           
+                  
 
           
             //Derecha
@@ -167,7 +166,17 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
                 //Ver Unidad 2: Ciclo acoplado vs ciclo desacoplado
 
                 personaje.moveOrientedY(moveForward * elapsedTime);
-                personaje.Position = new Vector3(personaje.Position.X, obtenerAltura(personaje.Position.X, personaje.Position.Z), personaje.Position.Z);
+
+
+
+
+
+                //Movimiento en altura: No tiene en cuenta el tema de la inclinación
+                personaje.Position = new Vector3(personaje.Position.X, terrain.getHeight(personaje.Position.X, personaje.Position.Z), personaje.Position.Z);
+
+
+
+
 
                 //Hacer que la camara siga al personaje en su nueva posicion
                 GuiController.Instance.ThirdPersonCamera.Target = personaje.Position;
@@ -181,27 +190,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
 
         }
 
-        //Desarrollado por grupo Flanders
-        private float obtenerAltura(float x, float z)
-        {
-            int altura;
-             float width = (float)terrain.HeightmapData.GetLength(0);
-            float length = (float)terrain.HeightmapData.GetLength(1);
-
-           
-            int xInt = (int)x;
-            int zInt = (int)z;
-            xInt = xInt + (int)(escalaXZ * (width/2)); 
-            zInt = zInt + (int)(escalaXZ * (length/2));
-
-            altura = terrain.HeightmapData[(int)(xInt / escalaXZ), (int)(zInt / escalaXZ)];
-            altura = (int)(altura * escalaY);
-            return altura;
-        }
-
-    
-
-        public override void render(float elapsedTime)
+       public override void render(float elapsedTime)
 
         {
            moverPersonajeTeclas(elapsedTime, 100);
