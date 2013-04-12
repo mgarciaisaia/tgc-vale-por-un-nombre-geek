@@ -41,7 +41,7 @@ namespace AlumnoEjemplos.MiGrupo.Pruebas
 
             height = (int)(HeightmapData[i, j] * scaleY);
            
-            return height+ 2;
+            return height;
         }
 
 
