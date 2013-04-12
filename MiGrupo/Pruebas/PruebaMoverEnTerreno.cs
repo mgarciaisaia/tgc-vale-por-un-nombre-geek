@@ -171,9 +171,10 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
 
                 float modificador = (float)GuiController.Instance.Modifiers.getValue("disminucion dy");
 
+                float dy = terrain.getHeight(personaje.Position.X, personaje.Position.Z) - personaje.Position.Y;
 
                 //Movimiento en altura: No tiene en cuenta el tema de la inclinación
-                personaje.Position = new Vector3(personaje.Position.X, personaje.Position.Y + (terrain.getHeight(personaje.Position.X, personaje.Position.Z) - personaje.Position.Y) / modificador, personaje.Position.Z);
+                personaje.Position = new Vector3(personaje.Position.X, personaje.Position.Y + dy / modificador, personaje.Position.Z);
 
 
 
