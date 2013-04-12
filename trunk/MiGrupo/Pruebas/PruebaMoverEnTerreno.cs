@@ -57,15 +57,15 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
 
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
-          
-            pathHeightmap = GuiController.Instance.AlumnoEjemplosMediaDir + "Heightmaps\\" + "Heightmap3.jpg";
+            GuiController.Instance.Modifiers.addFloat("disminucion dy", 1, 300, 25);
+            pathHeightmap = GuiController.Instance.AlumnoEjemplosMediaDir + "Heightmaps\\" + "heightmap.jpg";
 
-            pathTextura = GuiController.Instance.AlumnoEjemplosMediaDir+ "Heightmaps\\" + "TerrainTexture3.jpg";
+            pathTextura = GuiController.Instance.AlumnoEjemplosMediaDir+ "Heightmaps\\" + "TerrainTexture5.jpg";
 
            
-            escalaXZ = 40f;
+            escalaXZ = 20f;
            
-            escalaY = 1f;
+            escalaY = 2f;
             
             terrain = new Terrain();
             terrain.loadHeightmap(pathHeightmap, escalaXZ, escalaY, new Vector3(0, 0, 0));
@@ -89,7 +89,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
 
             //Configurar camara en Tercer Persona
             GuiController.Instance.ThirdPersonCamera.Enable = true;
-            GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position, 20, -120);
+            GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position,80, -120);
             GuiController.Instance.ThirdPersonCamera.TargetDisplacement = new Vector3(0, 45, 0); 
         }
 
@@ -169,10 +169,11 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
 
 
 
+                float modificador = (float)GuiController.Instance.Modifiers.getValue("disminucion dy");
 
 
                 //Movimiento en altura: No tiene en cuenta el tema de la inclinación
-                personaje.Position = new Vector3(personaje.Position.X, terrain.getHeight(personaje.Position.X, personaje.Position.Z), personaje.Position.Z);
+                personaje.Position = new Vector3(personaje.Position.X, personaje.Position.Y + (terrain.getHeight(personaje.Position.X, personaje.Position.Z) - personaje.Position.Y) / modificador, personaje.Position.Z);
 
 
 
