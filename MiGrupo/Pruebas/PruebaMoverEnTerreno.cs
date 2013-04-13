@@ -69,10 +69,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
             //Cargar personaje con animaciones
             TgcSkeletalLoader skeletalLoader = new TgcSkeletalLoader();
             personaje = skeletalLoader.loadMeshAndAnimationsFromFile(
-                GuiController.Instance.AlumnoEjemplosMediaDir + "SkeletalAnimations\\BasicHuman\\" + "BasicHuman-TgcSkeletalMesh.xml",
+                mediaDir + "SkeletalAnimations\\BasicHuman\\" + "BasicHuman-TgcSkeletalMesh.xml",
                 new string[] { 
-                    GuiController.Instance.AlumnoEjemplosMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "Walk-TgcSkeletalAnim.xml",
-                    GuiController.Instance.AlumnoEjemplosMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "StandBy-TgcSkeletalAnim.xml",
+                    mediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "Walk-TgcSkeletalAnim.xml",
+                    mediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "StandBy-TgcSkeletalAnim.xml",
                       });
 
 
@@ -128,6 +128,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
             //Si hubo desplazamiento
             if (moving)
             {
+
                 personaje.playAnimation("Walk", true);
                
                 //Hacer que avance en XZ
@@ -135,8 +136,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 
 
                 //Movimiento en Y: No tiene en cuenta el tema de la inclinación
-
-
                 float modificador = (float)GuiController.Instance.Modifiers.getValue("disminucion dy");
                 float dy = terrain.getHeight(personaje.Position.X, personaje.Position.Z) - personaje.Position.Y;
                 personaje.Position = new Vector3(personaje.Position.X, personaje.Position.Y + dy / modificador, personaje.Position.Z);
