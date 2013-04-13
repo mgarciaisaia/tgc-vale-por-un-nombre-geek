@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TgcViewer.Example;
 using TgcViewer;
-using Microsoft.DirectX.Direct3D;
 using System.Drawing;
 using Microsoft.DirectX;
-using TgcViewer.Utils.Modifiers;
-using TgcViewer.Utils.TgcSkeletalAnimation;
 using TgcViewer.Utils.TgcGeometry;
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer.Utils.TgcKeyFrameLoader;
-using TgcViewer.Utils.Input;
-using Microsoft.DirectX.DirectInput;
-using TgcViewer.Utils.Sound;
-using TgcViewer.Utils.Terrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.Pruebas;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario

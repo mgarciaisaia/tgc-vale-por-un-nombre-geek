@@ -1,10 +1,7 @@
 ﻿using TgcViewer.Utils.Terrain;
 using Microsoft.DirectX;
-using TgcViewer.Utils.TgcGeometry;
-using System.Drawing;
 using Microsoft.DirectX.Direct3D;
 using TgcViewer;
-using System;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.Pruebas
 {
