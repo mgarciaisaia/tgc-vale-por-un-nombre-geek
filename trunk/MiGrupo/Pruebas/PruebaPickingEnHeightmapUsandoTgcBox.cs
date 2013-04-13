@@ -138,7 +138,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
         public override void close()
         {
             terrain.dispose();
-           
+            planeCollisionPointMesh.dispose();
+            collisionPointMesh.dispose();
+            planoAuxiliar.dispose();
         }
 
 
