@@ -92,6 +92,7 @@
     <Compile Include="MiGrupo\Commandos\EjemploAlumno.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaMoverEnTerreno.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaMoverPersonaje.cs" />
+    <Compile Include="MiGrupo\Pruebas\PruebaPickingEnHeightmapUsandoTgcBox.cs" />
     <Compile Include="MiGrupo\Pruebas\Terrain.cs" />
     <Compile Include="MiGrupo\Pruebas\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

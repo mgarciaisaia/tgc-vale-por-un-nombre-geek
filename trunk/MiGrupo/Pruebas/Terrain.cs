@@ -50,5 +50,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Pruebas
         }
 
 
+
+        public float getHeight(Vector3 p)
+        {
+            return getHeight(p.X, p.Z);
+        }
     }
 }
