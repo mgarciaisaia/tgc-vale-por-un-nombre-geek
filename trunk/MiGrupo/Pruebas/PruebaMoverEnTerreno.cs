@@ -40,7 +40,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
         /// </summary>
         public override string getName()
         {
-            return "PruebaHeightmap";
+            return "PruebaMovimientoEnHeightmap";
         }
 
         /// <summary>
@@ -95,6 +95,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 
             //Modificador para el calculo de movimiento en y
             GuiController.Instance.Modifiers.addFloat("disminucion dy", 1, 300, 25);
+
+
+            GuiController.Instance.Modifiers.addBoolean("Terrain", "wireframe", false);
+            
         }
 
 
@@ -143,6 +147,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 
                 //Hacer que la camara siga al personaje en su nueva posicion
                 GuiController.Instance.ThirdPersonCamera.Target = personaje.Position;
+
+
 
             }
             
@@ -206,7 +212,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
            
            personaje.updateAnimation();
            personaje.render();
-           terrain.render();
+
+           if ((bool)GuiController.Instance.Modifiers.getValue("Terrain"))
+           {
+                       terrain.renderWireframe();
+           }
+           else terrain.render();
         }
 
 

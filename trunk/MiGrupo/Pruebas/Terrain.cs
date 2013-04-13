@@ -55,5 +55,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Pruebas
         {
             return getHeight(p.X, p.Z);
         }
+
+        public void renderWireframe()
+        {
+            Device device = GuiController.Instance.D3dDevice;
+
+            //Cambiamos a modo WireFrame
+            device.RenderState.FillMode = FillMode.WireFrame;
+
+            //Llamamos al metodo original del padre
+            base.render();
+
+            //Restrablecemos modo solido
+            device.RenderState.FillMode = FillMode.Solid;
+        }
     }
 }
