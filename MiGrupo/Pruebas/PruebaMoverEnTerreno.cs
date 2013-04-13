@@ -20,7 +20,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.Pruebas;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 {
     /// <summary>
-    /// Prueba de control y animacion de personaje.
+    /// Prueba de movimiento en heightmap
     /// </summary>
     public class PruebaEscenario : TgcExample
     {

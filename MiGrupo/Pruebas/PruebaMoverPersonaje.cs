@@ -24,8 +24,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaMoverPersonaje
     {
         TgcKeyFrameMesh personaje;
         TgcBox piso;
-        bool moviendo;
-        bool reproduciendo;
+         bool reproduciendo;
 
         //Picking
         TgcPickingRay pickingRay;
