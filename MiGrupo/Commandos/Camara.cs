@@ -7,7 +7,7 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 
-namespace AlumnoEjemplos.MiGrupo.Commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 {
     class Camara
     {

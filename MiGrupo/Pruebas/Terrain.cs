@@ -6,16 +6,21 @@ using Microsoft.DirectX.Direct3D;
 using TgcViewer;
 using System;
 
-namespace AlumnoEjemplos.MiGrupo.Pruebas
+namespace AlumnoEjemplos.ValePorUnNombreGeek.Pruebas
 {
     class Terrain : TgcSimpleTerrain
     {
         float scaleXZ;
         float scaleY;
-        float halfWidth;
+        float halfWidth;//Se usa mas la mitad que el total
         float halfLength;
 
-
+        public float getHalfWidth() { return halfWidth; }
+        public float getHalfLength() { return halfLength; }
+        public float getWidth() { return halfWidth*2; }
+        public float getLength() { return halfLength*2; }
+        public float getScaleXZ() { return scaleXZ; }
+        public float getScaleY() { return scaleY; }
 
         public new void loadHeightmap(string heightmapPath, float scaleXZ, float scaleY, Vector3 center)
         {

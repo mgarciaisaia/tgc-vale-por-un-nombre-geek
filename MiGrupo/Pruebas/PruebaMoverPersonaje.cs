@@ -15,7 +15,7 @@ using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 using TgcViewer.Utils.Sound;
 
-namespace AlumnoEjemplos.MiGrupo.PruebaMoverPersonaje
+namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaMoverPersonaje
 {
     /// <summary>
     /// Prueba de control y animacion de personaje.

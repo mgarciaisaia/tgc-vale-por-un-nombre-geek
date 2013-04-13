@@ -15,9 +15,9 @@ using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 using TgcViewer.Utils.Sound;
 using TgcViewer.Utils.Terrain;
-using AlumnoEjemplos.MiGrupo.Pruebas;
+using AlumnoEjemplos.ValePorUnNombreGeek.Pruebas;
 
-namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
+namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 {
     /// <summary>
     /// Prueba de control y animacion de personaje.
@@ -28,8 +28,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
         TgcSkeletalMesh personaje;
         string pathHeightmap;
         string pathTextura;
-        float escalaXZ;
-        float escalaY;
+    
 
         public override string getCategory()
         {
@@ -41,7 +40,7 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
         /// </summary>
         public override string getName()
         {
-            return "PruebaEscenario";
+            return "PruebaHeightmap";
         }
 
         /// <summary>
@@ -49,26 +48,22 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
         /// </summary>
         public override string getDescription()
         {
-            return "Prueba de carga de escenarios";
+            return "Prueba de movimiento en Heightmap";
         }
 
         public override void init()
         {
+           
+            String mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir;
 
-            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
+            pathHeightmap =mediaDir + "Heightmaps\\" + "heightmap.jpg";
 
-            GuiController.Instance.Modifiers.addFloat("disminucion dy", 1, 300, 25);
-            pathHeightmap = GuiController.Instance.AlumnoEjemplosMediaDir + "Heightmaps\\" + "heightmap.jpg";
-
-            pathTextura = GuiController.Instance.AlumnoEjemplosMediaDir+ "Heightmaps\\" + "TerrainTexture5.jpg";
+            pathTextura = mediaDir + "Heightmaps\\" + "TerrainTexture5.jpg";
 
            
-            escalaXZ = 20f;
-           
-            escalaY = 2f;
-            
+           //Cargar heightmap          
             terrain = new Terrain();
-            terrain.loadHeightmap(pathHeightmap, escalaXZ, escalaY, new Vector3(0, 0, 0));
+            terrain.loadHeightmap(pathHeightmap, 20f, 2f, new Vector3(0, 0, 0));
             terrain.loadTexture(pathTextura);
         
             //Cargar personaje con animaciones
@@ -80,37 +75,97 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
                     GuiController.Instance.AlumnoEjemplosMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "StandBy-TgcSkeletalAnim.xml",
                       });
 
+
             //Configurar animacion inicial
             personaje.playAnimation("StandBy", true);
-            
+
+            //Posicion inicial
             personaje.Position = new Vector3(0, terrain.getHeight(0,0), 0);
+
             //Rotarlo 180° porque esta mirando para el otro lado
             personaje.rotateY(Geometry.DegreeToRadian(180f));
 
+            
+            
             //Configurar camara en Tercer Persona
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position,80, -120);
-            GuiController.Instance.ThirdPersonCamera.TargetDisplacement = new Vector3(0, 45, 0); 
+            GuiController.Instance.ThirdPersonCamera.TargetDisplacement = new Vector3(0, 45, 0);
+
+
+            //Modificador para el calculo de movimiento en y
+            GuiController.Instance.Modifiers.addFloat("disminucion dy", 1, 300, 25);
         }
 
 
      
-        private void moverPersonajeTeclas(float elapsedTime, float speed)
+        private void moverPersonajeTeclas(float elapsedTime, float velocidad)
         {
-
-            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-
-
-            float velocidad = speed;
+            
+           
             float velocidadRotacion = 120f;
 
 
-            //Calcular proxima posicion de personaje segun Input
-            float moveForward = 0f;
-            float rotate = 0;
+            float moveForward;
+            float rotate;
+
+            bool moving;
+            bool rotating;
+
+            teclasPulsadas(velocidad, velocidadRotacion, out moveForward, out rotate, out moving, out rotating);
+
+
+            //Si hubo rotacion
+            if (rotating)
+            {
+                //Rotar personaje
+                float rotAngle = Geometry.DegreeToRadian(rotate * elapsedTime);
+                personaje.rotateY(rotAngle);
+
+            }
+
+
+            //Si hubo desplazamiento
+            if (moving)
+            {
+                personaje.playAnimation("Walk", true);
+               
+                //Hacer que avance en XZ
+                personaje.moveOrientedY(moveForward * elapsedTime);
+
+
+                //Movimiento en Y: No tiene en cuenta el tema de la inclinación
+
+
+                float modificador = (float)GuiController.Instance.Modifiers.getValue("disminucion dy");
+                float dy = terrain.getHeight(personaje.Position.X, personaje.Position.Z) - personaje.Position.Y;
+                personaje.Position = new Vector3(personaje.Position.X, personaje.Position.Y + dy / modificador, personaje.Position.Z);
+
+
+                //Hacer que la camara siga al personaje en su nueva posicion
+                GuiController.Instance.ThirdPersonCamera.Target = personaje.Position;
+
+            }
+            
+            else
+                personaje.playAnimation("StandBy", true);
+                
+           
+
+
+        }
+
+        private static void teclasPulsadas(float velocidad, float velocidadRotacion, out float moveForward, out float rotate, out bool moving, out bool rotating)
+        {
+
             TgcD3dInput d3dInput = GuiController.Instance.D3dInput;
-            bool moving = false;
-            bool rotating = false;
+           
+            
+            moveForward = 0f;
+            rotate = 0;
+           
+            moving = false;
+            rotating = false;
 
 
             //Adelante
@@ -126,9 +181,9 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
                 moveForward = velocidad;
                 moving = true;
             }
-                  
 
-          
+
+
             //Derecha
             if (d3dInput.keyDown(Key.D))
             {
@@ -143,63 +198,16 @@ namespace AlumnoEjemplos.MiGrupo.PruebaEscenario
                 rotating = true;
             }
 
-
-
-            //Si hubo rotacion
-            if (rotating)
-            {
-                //Rotar personaje
-                float rotAngle = Geometry.DegreeToRadian(rotate * elapsedTime);
-                personaje.rotateY(rotAngle);
-
-            }
-
-            //Si hubo desplazamiento
-            if (moving)
-            {
-                personaje.playAnimation("Walk", true);
-               
-                //Aplicar movimiento hacia adelante o atras segun la orientacion actual del Mesh
-                Vector3 lastPos = personaje.Position;
-
-                //La velocidad de movimiento tiene que multiplicarse por el elapsedTime para hacerse independiente de la velocida de CPU
-                //Ver Unidad 2: Ciclo acoplado vs ciclo desacoplado
-
-                personaje.moveOrientedY(moveForward * elapsedTime);
-
-
-
-                float modificador = (float)GuiController.Instance.Modifiers.getValue("disminucion dy");
-
-                float dy = terrain.getHeight(personaje.Position.X, personaje.Position.Z) - personaje.Position.Y;
-
-                //Movimiento en altura: No tiene en cuenta el tema de la inclinación
-                personaje.Position = new Vector3(personaje.Position.X, personaje.Position.Y + dy / modificador, personaje.Position.Z);
-
-
-
-
-
-                //Hacer que la camara siga al personaje en su nueva posicion
-                GuiController.Instance.ThirdPersonCamera.Target = personaje.Position;
-            }
-            else
-            {
-                personaje.playAnimation("StandBy", true);
-                
-            }
-
-
         }
 
        public override void render(float elapsedTime)
 
         {
            moverPersonajeTeclas(elapsedTime, 100);
+           
            personaje.updateAnimation();
            personaje.render();
-            
-            terrain.render();
+           terrain.render();
         }
 
 

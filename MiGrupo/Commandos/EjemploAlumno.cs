@@ -14,9 +14,9 @@ using TgcViewer.Utils.Collision.ElipsoidCollision;
 using TgcViewer.Utils.Terrain;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
-using AlumnoEjemplos.MiGrupo.Commandos;
+using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
 
-namespace AlumnoEjemplos.MiGrupo
+namespace AlumnoEjemplos.ValePorUnNombreGeek
 {
     /// <summary>
     /// Ejemplo del alumno

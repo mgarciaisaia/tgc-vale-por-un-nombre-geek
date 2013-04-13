@@ -6,7 +6,7 @@ using TgcViewer.Utils.Terrain;
 using Microsoft.DirectX;
 using TgcViewer;
 
-namespace AlumnoEjemplos.MiGrupo
+namespace AlumnoEjemplos.ValePorUnNombreGeek
 {
     class Ambiente
     {
