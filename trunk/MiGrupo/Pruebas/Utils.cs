@@ -5,7 +5,7 @@ using System.Text;
 using TgcViewer;
 using Microsoft.DirectX;
 
-namespace AlumnoEjemplos.MiGrupo
+namespace AlumnoEjemplos.ValePorUnNombreGeek
 {
     class Utils
     {
