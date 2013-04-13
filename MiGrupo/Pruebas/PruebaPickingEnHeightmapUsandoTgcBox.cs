@@ -32,6 +32,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
         TgcPickingRay pickingRay;
         Vector3 newPosition;
         TgcBox collisionPointMesh;
+        TgcBox planeCollisionPointMesh;
         TgcBox planoAuxiliar;
     
 
@@ -75,15 +76,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 
 
             //Picking
-            planoAuxiliar = TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(terrain.getWidth()*terrain.getScaleXZ(), 0.1f, terrain.getLength()*terrain.getScaleXZ()));
+            planoAuxiliar = TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(terrain.getWidth()*terrain.getScaleXZ(), 0.1f, terrain.getLength()*terrain.getScaleXZ()), Color.Blue);
             pickingRay = new TgcPickingRay();
             collisionPointMesh = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
-           
+            planeCollisionPointMesh = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Green);
 
 
             //Configurar camara en Tercer Persona
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, terrain.getHeight(0,0),0), 500, -120);
+
+
+            GuiController.Instance.Modifiers.addBoolean("Terrain", "wireframe", false);
             
 
         }
@@ -97,10 +101,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 
             if(picking(out newPosition))
                 collisionPointMesh.Position = newPosition;
-            
+
+
+            if ((bool)GuiController.Instance.Modifiers.getValue("Terrain"))
+            {
+                planoAuxiliar.render();
+                planeCollisionPointMesh.render();
+                terrain.renderWireframe();
+            }
+            else terrain.render();
 
             collisionPointMesh.render();
-            terrain.render();
+          
         }
 
         private bool picking(out Vector3 p)
@@ -118,9 +130,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
                 //Detectar colisión Ray-AABB
                 if (TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, planoAuxiliar.BoundingBox, out colisionPlano)){
 
+
+                    planeCollisionPointMesh.Position = colisionPlano;
                     //Proyectar punto en el heightmap
                     p = new Vector3(colisionPlano.X, terrain.getHeight(colisionPlano), colisionPlano.Z);
-
+                   
                     return true;
 
                 }                    
