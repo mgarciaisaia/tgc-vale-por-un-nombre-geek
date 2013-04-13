@@ -87,7 +87,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, terrain.getHeight(0,0),0), 500, -120);
 
 
-            GuiController.Instance.Modifiers.addBoolean("Terrain", "wireframe", false);
+            GuiController.Instance.Modifiers.addBoolean("Terrain", "wireframe", true);
             
 
         }
