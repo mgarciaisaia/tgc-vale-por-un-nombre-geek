@@ -16,8 +16,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
     {
         TgcSkeletalMesh personaje;
 
-        Targeteable target;
-
+        private Targeteable target;
+        public bool drawBoundingBox = false;
 
         public Character(Vector3 _position)
         {
@@ -76,6 +76,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 
 
             personaje.render();
+            if (this.drawBoundingBox) personaje.BoundingBox.render();
         }
 
         public void dispose()
@@ -86,6 +87,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
         public Vector3 getPosition()
         {
             return personaje.Position;
+        }
+
+        public TgcBoundingBox BoundingBox()
+        {
+            return this.personaje.BoundingBox;
         }
 
 

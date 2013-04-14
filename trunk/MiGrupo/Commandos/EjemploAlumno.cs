@@ -2,6 +2,7 @@ using TgcViewer.Example;
 using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
 using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking;
+using System.Collections.Generic;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
 {
@@ -12,10 +13,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
     {
         Sky sky;
         Camera camera;
-        Character character;
+        List<Character> characters;
         Terrain terrain;
+
         MovementPicking picking;
-        MultipleSelection multipleSelection;
+        MultipleSelection selection;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -55,17 +57,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             //Cargar HeightMap
             terrain = new Terrain();
 
-            //Picking
-            picking = new MovementPicking(terrain);
-
-            //Crear personaje
-            character = new Character(terrain.getPosition(0, 0));
+            //Crear personajes
+            this.characters = new List<Character>();
+            this.characters.Add(new Character(terrain.getPosition(-200, 200)));
+            this.characters.Add(new Character(terrain.getPosition(200, 200)));
 
             //Inicializar camara
-            camera = new Camera(character.getPosition());
+            camera = new Camera(this.terrain.getPosition(0, 150));
 
-            //Inicializar seleccion multiple
-            multipleSelection = new MultipleSelection(terrain);
+            //Movimiento por picking
+            picking = new MovementPicking(this.terrain);
+
+            //Seleccion multiple
+            selection = new MultipleSelection(this.terrain, this.characters);
         }
 
 
@@ -80,14 +84,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             Vector3 pickingPosition;
             if (picking.thereIsPicking(out pickingPosition))
             {
-                character.setPositionTarget(pickingPosition);
+                foreach (Character ch in selection.getSelectedCharacters())
+                {
+                    ch.setPositionTarget(pickingPosition);
+                }
             }
 
             camera.update(500);
             sky.render();
             terrain.render();
-            character.render(elapsedTime);
-            multipleSelection.update();
+            foreach (Character ch in this.characters)
+            {
+                ch.render(elapsedTime);
+            }
+            selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
         }
 
         /// <summary>
@@ -98,8 +108,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         {
             sky.dispose();
             terrain.dispose();
-            character.dispose();
-            multipleSelection.dispose();
+            selection.dispose();
+            foreach (Character ch in this.characters)
+            {
+                ch.dispose();
+            }
         }
 
     }

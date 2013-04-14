@@ -30,31 +30,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
 
                 p = GeneralMethods.intersectionPoint(pickingRay.Ray.Origin, pickingRay.Ray.Direction, this.terrain);
                 return true;
-
-                /*Vector3 origin = pickingRay.Ray.Origin;
-                Vector3 direction = pickingRay.Ray.Direction;
-
-                float i = 0;
-
-                Vector3 aPoint;
-
-                while (true)
-                {
-                    aPoint = origin + i * direction;
-                    if (GeneralMethods.isCloseTo(aPoint.Y, this.terrain.getHeight(aPoint.X, aPoint.Z)))
-                    {
-                        //encontramos el punto de interseccion
-                        p = aPoint;
-                        return true;
-                    }
-                    if (aPoint.Y < -100){
-                        //ya cruzamos hace rato el piso y nos vamos al subsuelo...
-                        p = Vector3.Empty;
-                        return false;
-                    }
-
-                    i++;
-                }*/
             }
 
             p = Vector3.Empty;
