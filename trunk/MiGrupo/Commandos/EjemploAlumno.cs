@@ -1,21 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TgcViewer.Example;
-using TgcViewer;
-using Microsoft.DirectX.Direct3D;
-using System.Drawing;
 using Microsoft.DirectX;
-using TgcViewer.Utils.Modifiers;
-using TgcViewer.Utils.TgcGeometry;
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer.Utils.TgcSkeletalAnimation;
-using TgcViewer.Utils.Collision.ElipsoidCollision;
-using TgcViewer.Utils.Terrain;
-using TgcViewer.Utils.Input;
-using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
-using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.target;
+using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
 {
@@ -29,6 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         Character character;
         Terrain terrain;
         MovementPicking picking;
+        MultipleSelection seleccionMultiple;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -62,11 +49,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void init()
         {
-            //GuiController.Instance: acceso principal a todas las herramientas del Framework
-
-            //Device de DirectX para crear primitivas
-            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-
             //Crear SkyBox
             sky = new Sky();
 
@@ -78,12 +60,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Crear personaje
             character = new Character(terrain.getPosition(0, 0));
-            character.setPositionTarget(terrain.getPosition(500, 500));
 
             //Inicializar camara
             camera = new Camera(character.getPosition());
 
-
+            //Inicializar seleccion multiple
+            seleccionMultiple = new MultipleSelection();
         }
 
 
@@ -95,18 +77,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-
             Vector3 pickingPosition;
             if (picking.thereIsPicking(out pickingPosition))
             {
                 character.setPositionTarget(pickingPosition);
             }
 
-            camera.refresh(500);
+            camera.update(500);
             sky.render();
             terrain.render();
             character.render(elapsedTime);
+            seleccionMultiple.update();
         }
 
         /// <summary>
