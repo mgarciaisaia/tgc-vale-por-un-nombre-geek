@@ -15,6 +15,7 @@ using TgcViewer.Utils.Terrain;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
+using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.target;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
 {
@@ -23,10 +24,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
     /// </summary>
     public class EjemploAlumno : TgcExample
     {
-        Sky ambiente;
-        Camera camara;
-        Character personaje;
-        Terrain terreno;
+        Sky sky;
+        Camera camera;
+        Character character;
+        Terrain terrain;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -66,17 +67,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
             //Crear SkyBox
-            ambiente = new Sky();
+            sky = new Sky();
 
             //Cargar HeightMap
-            terreno = new Terrain();
+            terrain = new Terrain();
 
             //Crear personaje
-            personaje = new Character(terreno.getPosition(0, 0));
-            personaje.setTarget(terreno.getPosition(500, 500));
+            character = new Character(terrain.getPosition(0, 0));
+            character.setPositionTarget(terrain.getPosition(500, 500));
 
             //Inicializar camara
-            camara = new Camera(personaje.getPosition());
+            camera = new Camera(character.getPosition());
 
 
         }
@@ -92,10 +93,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         {
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
 
-            camara.refresh(500);
-            ambiente.render();
-            terreno.render();
-            personaje.render(elapsedTime);
+            camera.refresh(500);
+            sky.render();
+            terrain.render();
+            character.render(elapsedTime);
         }
 
         /// <summary>
@@ -104,9 +105,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void close()
         {
-            ambiente.dispose();
-            terreno.dispose();
-            personaje.dispose();
+            sky.dispose();
+            terrain.dispose();
+            character.dispose();
         }
 
     }
