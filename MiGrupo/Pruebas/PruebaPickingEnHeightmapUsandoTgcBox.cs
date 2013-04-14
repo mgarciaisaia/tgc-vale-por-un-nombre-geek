@@ -126,14 +126,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
                     //p = new Vector3(colisionPlano.X, terrain.getHeight(colisionPlano), colisionPlano.Z);
                     p = new Vector3(colisionPlano.X, colisionPlano.Y, colisionPlano.Z);
 
-                    TgcViewer.Utils.Input.TgcThirdPersonCamera camara = GuiController.Instance.ThirdPersonCamera;
-
                     float i;
 
                     //calculamos posicion real en z
-                    for (i = camara.Position.Z; i <= p.Z; i++)
+                    for (i = pickingRay.Ray.Origin.Z; i <= p.Z; i++)
                     {
-                        if ((camara.Position.Y / Math.Abs(p.Z - camara.Position.Z)) < (terrain.getHeight(p.X, i) / Math.Abs(p.Z - i)))
+                        if ((pickingRay.Ray.Origin.Y / Math.Abs(p.Z - pickingRay.Ray.Origin.Z)) < (terrain.getHeight(p.X, i) / Math.Abs(p.Z - i)))
                         {
                             p = new Vector3(p.X, terrain.getHeight(p.X, i), i);
                             break;
