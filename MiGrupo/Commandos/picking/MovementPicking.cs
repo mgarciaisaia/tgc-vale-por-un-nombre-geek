@@ -8,7 +8,7 @@ using System.Drawing;
 using TgcViewer;
 using TgcViewer.Utils._2D;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
 {
     class MovementPicking
     {
@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 
         public bool thereIsPicking(out Vector3 p)
         {
-            if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
+            if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_RIGHT))
             {
                 pickingRay.updateRay();
 

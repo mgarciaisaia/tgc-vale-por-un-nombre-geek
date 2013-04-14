@@ -20,7 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
             GuiController.Instance.Modifiers.addBoolean("Camara", "Usar mouse", true);
         }
 
-        public void refresh(float cameraSpeed)
+        public void update(float cameraSpeed)
         {
             bool mouseEnabled = (bool)GuiController.Instance.Modifiers.getValue("Camara");
             float dx = 0, dz = 0;
