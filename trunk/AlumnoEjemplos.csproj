@@ -90,6 +90,8 @@
     <Compile Include="MiGrupo\Commandos\Ambiente.cs" />
     <Compile Include="MiGrupo\Commandos\Camara.cs" />
     <Compile Include="MiGrupo\Commandos\EjemploAlumno.cs" />
+    <Compile Include="MiGrupo\Pruebas\Enemy.cs" />
+    <Compile Include="MiGrupo\Pruebas\PruebaVision.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaMoverEnTerreno.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaMoverPersonaje.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaPickingEnHeightmapUsandoTgcBox.cs" />
