@@ -6,14 +6,15 @@ using TgcViewer.Utils.TgcSkeletalAnimation;
 using TgcViewer;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.target;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 {
-    class Character
+    class Character : Targeteable
     {
         TgcSkeletalMesh personaje;
 
-        Vector3? objetivo;
+        Targeteable target;
 
 
         public Character(Vector3 _position)
@@ -49,18 +50,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
             }
             */
 
-            if (this.objetivo != null)
+            if (this.target != null)
             {
-                Vector3 direccion = (Vector3)this.objetivo - this.personaje.Position;
+                Vector3 direccion = this.target.getPosition() - this.personaje.Position;
                 direccion = direccion * (1 / direccion.Length());
 
                 personaje.playAnimation("Walk", true);
                 personaje.move(direccion);
 
-                if (GeneralMethods.isCloseTo(personaje.Position, (Vector3)this.objetivo))
+                if (GeneralMethods.isCloseTo(personaje.Position, this.target.getPosition()))
                 {
                     personaje.playAnimation("StandBy", true);
-                    objetivo = null;
+                    this.target = null;
                 }
             }
 
@@ -78,9 +79,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
             return personaje.Position;
         }
 
-        public void setTarget(Vector3 _target)
+
+
+
+
+        private void setTarget(Targeteable _target)
         {
-            this.objetivo = _target;
+            this.target = _target;
+        }
+
+        public void setPositionTarget(Vector3 pos)
+        {
+            this.setTarget(new TargeteablePosition(pos));
+        }
+
+        public void setCharacterTarget(Character ch)
+        {
+            this.setTarget(ch);
         }
     }
 }

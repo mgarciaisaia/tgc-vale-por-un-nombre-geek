@@ -92,6 +92,8 @@
     <Compile Include="MiGrupo\Commandos\EjemploAlumno.cs" />
     <Compile Include="MiGrupo\Commandos\GeneralMethods.cs" />
     <Compile Include="MiGrupo\Commandos\Character.cs" />
+    <Compile Include="MiGrupo\Commandos\target\Targeteable.cs" />
+    <Compile Include="MiGrupo\Commandos\target\TargeteablePosition.cs" />
     <Compile Include="MiGrupo\Commandos\Terrain.cs" />
     <Compile Include="MiGrupo\Pruebas\Enemy.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaVision.cs" />
