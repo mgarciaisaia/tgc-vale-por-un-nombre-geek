@@ -15,7 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         Character character;
         Terrain terrain;
         MovementPicking picking;
-        MultipleSelection seleccionMultiple;
+        MultipleSelection multipleSelection;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -65,7 +65,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             camera = new Camera(character.getPosition());
 
             //Inicializar seleccion multiple
-            seleccionMultiple = new MultipleSelection();
+            multipleSelection = new MultipleSelection(terrain);
         }
 
 
@@ -87,7 +87,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             sky.render();
             terrain.render();
             character.render(elapsedTime);
-            seleccionMultiple.update();
+            multipleSelection.update();
         }
 
         /// <summary>
@@ -99,6 +99,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             sky.dispose();
             terrain.dispose();
             character.dispose();
+            multipleSelection.dispose();
         }
 
     }
