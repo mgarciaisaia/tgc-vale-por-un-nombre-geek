@@ -73,6 +73,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Crear personaje
             personaje = new Personaje(terreno.getPosition(0, 0));
+            personaje.setTarget(terreno.getPosition(500, 500));
 
             //Inicializar camara
             camara = new Camara(personaje.getPosition());
