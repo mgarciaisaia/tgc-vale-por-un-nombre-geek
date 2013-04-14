@@ -8,25 +8,22 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
 {
-    class Ambiente
+    class Sky : TgcSkyBox
     {
-        private TgcSkyBox skyBox;
+        //private TgcSkyBox skyBox;
 
-        public Ambiente()
+        public Sky() : base()
         {
-            //Crear SkyBox
-            skyBox = new TgcSkyBox();
-
-            skyBox.Center = new Vector3(0, 0, 0);
-            skyBox.Size = new Vector3(10000, 10000, 10000);
+            this.Center = new Vector3(0, 0, 0);
+            this.Size = new Vector3(10000, 10000, 10000);
             
             string texturesPath = GuiController.Instance.ExamplesMediaDir + "Texturas\\Quake\\SkyBox1\\";
-            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Up, texturesPath + "phobos_up.jpg");
-            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Down, texturesPath + "phobos_dn.jpg");
-            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Left, texturesPath + "phobos_lf.jpg");
-            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Right, texturesPath + "phobos_rt.jpg");
-            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Front, texturesPath + "phobos_ft.jpg");
-            skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Back, texturesPath + "phobos_bk.jpg");
+            this.setFaceTexture(TgcSkyBox.SkyFaces.Up, texturesPath + "phobos_up.jpg");
+            this.setFaceTexture(TgcSkyBox.SkyFaces.Down, texturesPath + "phobos_dn.jpg");
+            this.setFaceTexture(TgcSkyBox.SkyFaces.Left, texturesPath + "phobos_lf.jpg");
+            this.setFaceTexture(TgcSkyBox.SkyFaces.Right, texturesPath + "phobos_rt.jpg");
+            this.setFaceTexture(TgcSkyBox.SkyFaces.Front, texturesPath + "phobos_ft.jpg");
+            this.setFaceTexture(TgcSkyBox.SkyFaces.Back, texturesPath + "phobos_bk.jpg");
 
             /*
             string texturesPath = GuiController.Instance.ExamplesMediaDir + "Texturas\\Quake\\SkyBox3\\";
@@ -38,15 +35,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             skyBox.setFaceTexture(TgcSkyBox.SkyFaces.Back, texturesPath + "Front.jpg");
              */
 
-            skyBox.updateValues();
-        }
-
-        public void render(){
-            skyBox.render();
-        }
-
-        public void dispose(){
-            skyBox.dispose();
+            this.updateValues();
         }
     }
 }

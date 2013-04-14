@@ -87,12 +87,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MiGrupo\Commandos\Ambiente.cs" />
-    <Compile Include="MiGrupo\Commandos\Camara.cs" />
+    <Compile Include="MiGrupo\Commandos\Sky.cs" />
+    <Compile Include="MiGrupo\Commandos\Camera.cs" />
     <Compile Include="MiGrupo\Commandos\EjemploAlumno.cs" />
-    <Compile Include="MiGrupo\Commandos\MetodosGenerales.cs" />
-    <Compile Include="MiGrupo\Commandos\Personaje.cs" />
-    <Compile Include="MiGrupo\Commandos\Terreno.cs" />
+    <Compile Include="MiGrupo\Commandos\GeneralMethods.cs" />
+    <Compile Include="MiGrupo\Commandos\Character.cs" />
+    <Compile Include="MiGrupo\Commandos\Terrain.cs" />
     <Compile Include="MiGrupo\Pruebas\Enemy.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaVision.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaMoverEnTerreno.cs" />

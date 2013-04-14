@@ -9,9 +9,9 @@ using Microsoft.DirectX.DirectInput;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 {
-    class Camara
+    class Camera
     {
-        public Camara(Vector3 _posInicial)
+        public Camera(Vector3 _posInicial)
         {
             GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(_posInicial, 300, -300);

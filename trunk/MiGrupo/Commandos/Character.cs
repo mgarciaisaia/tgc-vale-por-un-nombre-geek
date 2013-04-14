@@ -9,14 +9,14 @@ using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 {
-    class Personaje
+    class Character
     {
         TgcSkeletalMesh personaje;
 
         Vector3? objetivo;
 
 
-        public Personaje(Vector3 _position)
+        public Character(Vector3 _position)
         {
             TgcSkeletalLoader skeletalLoader = new TgcSkeletalLoader();
             personaje = skeletalLoader.loadMeshAndAnimationsFromFile(
@@ -57,7 +57,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
                 personaje.playAnimation("Walk", true);
                 personaje.move(direccion);
 
-                if (MetodosGenerales.estaCerca(personaje.Position, (Vector3)this.objetivo))
+                if (GeneralMethods.isCloseTo(personaje.Position, (Vector3)this.objetivo))
                 {
                     personaje.playAnimation("StandBy", true);
                     objetivo = null;
