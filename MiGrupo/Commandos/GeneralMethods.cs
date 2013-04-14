@@ -8,17 +8,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 {
     class GeneralMethods //TODO darle un mejor nombre
     {
+        private const float TOLERANCIA = 1;
+
         public static bool isCloseTo(float a, float b)
         {
-            if (a < b + 1 && a > b - 1) return true;
+            if (a < b + TOLERANCIA && a > b - TOLERANCIA) return true;
             return false;
         }
 
         public static bool isCloseTo(Vector3 a, Vector3 b)
         {
-            if (a.X < b.X + 1 && a.X > b.X - 1 &&
-                a.Y < b.Y + 1 && a.Y > b.Y - 1 &&
-                a.Z < b.Z + 1 && a.Z > b.Z - 1) return true;
+            if (a.X < b.X + TOLERANCIA && a.X > b.X - TOLERANCIA &&
+                a.Y < b.Y + TOLERANCIA && a.Y > b.Y - TOLERANCIA &&
+                a.Z < b.Z + TOLERANCIA && a.Z > b.Z - TOLERANCIA) return true;
             return false;
         }
     }

@@ -7,6 +7,8 @@ using TgcViewer;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.target;
+using TgcViewer.Utils.TgcGeometry;
+using System.Drawing;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 {
@@ -52,12 +54,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 
             if (this.target != null)
             {
+                //primero nos movemos
                 Vector3 direccion = this.target.getPosition() - this.personaje.Position;
                 direccion = direccion * (1 / direccion.Length());
 
                 personaje.playAnimation("Walk", true);
                 personaje.move(direccion);
 
+                //marcamos hacia donde vamos
+                TgcBox marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
+                marcaDePicking.Position = this.target.getPosition();
+                marcaDePicking.render();
+
+                //nos fijamos si ya estamos en la posicion (o lo suficientemente cerca)
                 if (GeneralMethods.isCloseTo(personaje.Position, this.target.getPosition()))
                 {
                     personaje.playAnimation("StandBy", true);
