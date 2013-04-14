@@ -28,6 +28,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         Camera camera;
         Character character;
         Terrain terrain;
+        MovementPicking picking;
 
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
@@ -72,6 +73,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             //Cargar HeightMap
             terrain = new Terrain();
 
+            //Picking
+            picking = new MovementPicking(terrain);
+
             //Crear personaje
             character = new Character(terrain.getPosition(0, 0));
             character.setPositionTarget(terrain.getPosition(500, 500));
@@ -92,6 +96,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         public override void render(float elapsedTime)
         {
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
+
+            Vector3 pickingPosition;
+            if (picking.thereIsPicking(out pickingPosition))
+            {
+                character.setPositionTarget(pickingPosition);
+            }
 
             camera.refresh(500);
             sky.render();
