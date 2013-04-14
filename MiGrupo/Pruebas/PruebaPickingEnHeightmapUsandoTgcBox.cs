@@ -120,26 +120,32 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
                 //Detectar colisión Ray-AABB
                 if (TgcCollisionUtils.intersectRayAABB(pickingRay.Ray, planoAuxiliar.BoundingBox, out colisionPlano)){
 
-
                     planeCollisionPointMesh.Position = colisionPlano;
-                    //Proyectar punto en el heightmap
-                    //p = new Vector3(colisionPlano.X, terrain.getHeight(colisionPlano), colisionPlano.Z);
+
                     p = new Vector3(colisionPlano.X, colisionPlano.Y, colisionPlano.Z);
 
-                    float i;
+                    Vector3 origen = pickingRay.Ray.Origin;
+                    Vector3 director = pickingRay.Ray.Direction;
 
-                    //calculamos posicion real en z
-                    for (i = pickingRay.Ray.Origin.Z; i <= p.Z; i++)
+                    float i = 0;
+
+                    Vector3 unPunto;
+
+                    while (true)
                     {
-                        if ((pickingRay.Ray.Origin.Y / Math.Abs(p.Z - pickingRay.Ray.Origin.Z)) < (terrain.getHeight(p.X, i) / Math.Abs(p.Z - i)))
+                        unPunto = origen + i * director;
+                        if (estaCerca(unPunto.Y, terrain.getHeight(unPunto.X, unPunto.Z)))
                         {
-                            p = new Vector3(p.X, terrain.getHeight(p.X, i), i);
+                            //encontramos el punto de interseccion
+                            p = unPunto;
                             break;
                         }
+
+                        if (unPunto.Y < colisionPlano.Y) break;
+
+                        i++;
                     }
-
                     return true;
-
                 }                    
             }
 
@@ -147,6 +153,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
             return false;
         }
 
+        private bool estaCerca(float a, float b)
+        {
+            if (a < b + 1 && a < b + 1) return true;
+            return false;
+        }
 
         public override void close()
         {
