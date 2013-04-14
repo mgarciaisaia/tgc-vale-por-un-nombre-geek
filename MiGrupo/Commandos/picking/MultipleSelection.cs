@@ -16,18 +16,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
         private Vector3 initSelectionPoint;
         TgcPickingRay pickingRay;
         TgcBox selectionBox;
+        Terrain terrain;
 
-        private const float SELECTION_BOX_HEIGHT = 400;
+        private const float SELECTION_BOX_HEIGHT = 75;
 
 
-        public MultipleSelection()
+        public MultipleSelection(Terrain _terrain)
         {
             //Crear caja para marcar en que lugar hubo colision
-            selectionBox = TgcBox.fromSize(new Vector3(3, SELECTION_BOX_HEIGHT, 3), Color.Red);
-            selectionBox.BoundingBox.setRenderColor(Color.Red);
+            this.selectionBox = TgcBox.fromSize(new Vector3(3, SELECTION_BOX_HEIGHT, 3), Color.Red);
+            this.selectionBox.AlphaBlendEnable = true;
+            this.selectionBox.Color = Color.FromArgb(150, Color.Green);
 
             //Iniciarlizar PickingRay
-            pickingRay = new TgcPickingRay();
+            this.pickingRay = new TgcPickingRay();
+
+            this.terrain = _terrain;
         }
 
         public void update()
@@ -41,43 +45,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
                 //Detectar nuevo punto de colision con el piso
                 pickingRay.updateRay();
 
-                Vector3 origin;
-                Vector3 direction;
-                float t;
-
-                origin = pickingRay.Ray.Origin;
-                direction = pickingRay.Ray.Direction;
-
-                t = -(origin.Y / direction.Y);
-
-
-
 
                 //primera vez
                 if (!selecting)
                 {
-                    pickingRay.updateRay();
-
-
-                    this.initSelectionPoint = origin + t * direction;
-
+                    this.initSelectionPoint = GeneralMethods.intersectionPoint(pickingRay.Ray.Origin, pickingRay.Ray.Direction, this.terrain);
                     selecting = true;
                 }
                 //Si se está seleccionado, generar box de seleccion
                 else
                 {
-                    Vector3 collisionPoint = origin + t * direction;
-                    
-                    Vector3 min = Vector3.Minimize(initSelectionPoint, collisionPoint);
-                    Vector3 max = Vector3.Maximize(initSelectionPoint, collisionPoint);
+                    Vector3 pointA = this.initSelectionPoint;
+                    Vector3 pointB = GeneralMethods.intersectionPoint(pickingRay.Ray.Origin, pickingRay.Ray.Direction, this.terrain);
+                    float selectionBoxHeight = GeneralMethods.max(pointA.Y, pointB.Y) + SELECTION_BOX_HEIGHT;
+
+                    pointA.Y = 0;
+                    pointB.Y = 0;
+
+                    Vector3 min = Vector3.Minimize(pointA, pointB);
+                    Vector3 max = Vector3.Maximize(pointA, pointB);
                     min.Y = 0;
-                    max.Y = SELECTION_BOX_HEIGHT;
+                    max.Y = selectionBoxHeight;
 
                     //Configurar BOX
                     selectionBox.setExtremes(min, max);
                     selectionBox.updateValues();
 
-                    selectionBox.BoundingBox.render();
+                    selectionBox.render();
                 }
             }
 
@@ -88,6 +82,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
             if (GuiController.Instance.D3dInput.buttonUp(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
                 selecting = false;
+                
+                //TODO select items
+
                 /*
                 //Ver que modelos quedaron dentro del area de selección seleccionados
                 foreach (TgcMesh mesh in modelos)
@@ -100,6 +97,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
                 }
                  */
             }
+        }
+
+        public void dispose()
+        {
+            selectionBox.dispose();
         }
     }
 }

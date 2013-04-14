@@ -23,5 +23,30 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
                 a.Z < b.Z + TOLERANCIA && a.Z > b.Z - TOLERANCIA) return true;
             return false;
         }
+
+        public static float max(float a, float b){
+            if (a > b) return a; else return b;
+        }
+
+        public static Vector3 intersectionPoint(Vector3 origin, Vector3 direction, Terrain terrain)
+        {
+            Vector3 aPoint;
+            float i = 0;
+
+            while (true)
+            {
+                aPoint = origin + i * direction;
+                if (GeneralMethods.isCloseTo(aPoint.Y, terrain.getHeight(aPoint.X, aPoint.Z)))
+                {
+                    //encontramos el punto de interseccion
+                    return aPoint;
+                }
+                if (aPoint.Y <= 0){
+                    //ya nos estamos llendo al subsuelo...
+                    return aPoint;
+                }
+                i++;
+            }
+        }
     }
 }

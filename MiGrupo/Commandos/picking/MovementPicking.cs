@@ -28,7 +28,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
             {
                 pickingRay.updateRay();
 
-                Vector3 origin = pickingRay.Ray.Origin;
+                p = GeneralMethods.intersectionPoint(pickingRay.Ray.Origin, pickingRay.Ray.Direction, this.terrain);
+                return true;
+
+                /*Vector3 origin = pickingRay.Ray.Origin;
                 Vector3 direction = pickingRay.Ray.Direction;
 
                 float i = 0;
@@ -51,7 +54,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
                     }
 
                     i++;
-                }
+                }*/
             }
 
             p = Vector3.Empty;
