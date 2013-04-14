@@ -7,6 +7,7 @@ using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
 using System.Drawing;
+using System.Collections;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
 {
@@ -14,14 +15,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
     {
         private bool selecting = false;
         private Vector3 initSelectionPoint;
+
         TgcPickingRay pickingRay;
         TgcBox selectionBox;
+
         Terrain terrain;
+        List<Character> selectedCharacters;
+        List<Character> selectableCharacters;
 
         private const float SELECTION_BOX_HEIGHT = 75;
 
 
-        public MultipleSelection(Terrain _terrain)
+        public MultipleSelection(Terrain _terrain, List<Character> _selectableCharacters)
         {
             //Crear caja para marcar en que lugar hubo colision
             this.selectionBox = TgcBox.fromSize(new Vector3(3, SELECTION_BOX_HEIGHT, 3), Color.Red);
@@ -32,6 +37,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
             this.pickingRay = new TgcPickingRay();
 
             this.terrain = _terrain;
+            this.selectedCharacters = new List<Character>();
+            this.selectableCharacters = _selectableCharacters;
         }
 
         public void update()
@@ -82,26 +89,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
             if (GuiController.Instance.D3dInput.buttonUp(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
                 selecting = false;
-                
-                //TODO select items
+                this.selectedCharacters.Clear();
 
-                /*
                 //Ver que modelos quedaron dentro del area de selección seleccionados
-                foreach (TgcMesh mesh in modelos)
+                foreach (Character ch in this.selectableCharacters)
                 {
                     //Colisión de AABB entre área de selección y el modelo
-                    if (TgcCollisionUtils.testAABBAABB(selectionBox.BoundingBox, mesh.BoundingBox))
+                    if (TgcCollisionUtils.testAABBAABB(this.selectionBox.BoundingBox, ch.BoundingBox()))
                     {
-                        modelosSeleccionados.Add(mesh);
+                        this.selectedCharacters.Add(ch);
+                        ch.drawBoundingBox = true;
+                    }
+                    else
+                    {
+                        ch.drawBoundingBox = false;
                     }
                 }
-                 */
             }
         }
 
         public void dispose()
         {
             selectionBox.dispose();
+        }
+
+        public List<Character> getSelectedCharacters()
+        {
+            return this.selectedCharacters;
         }
     }
 }
