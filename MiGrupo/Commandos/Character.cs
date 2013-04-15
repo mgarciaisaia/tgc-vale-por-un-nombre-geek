@@ -74,7 +74,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
                 }
             }
 
-
+            personaje.updateAnimation();
             personaje.render();
             if (this.drawBoundingBox) personaje.BoundingBox.render();
         }
