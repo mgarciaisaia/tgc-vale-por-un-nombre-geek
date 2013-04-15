@@ -67,14 +67,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaMoverPersonaje
             TgcTexture pisoTexture = TgcTexture.createTexture(d3dDevice, GuiController.Instance.ExamplesMediaDir + "Texturas\\tierra.jpg");
             piso = TgcBox.fromSize(new Vector3(0, -60, 0), new Vector3(1000, 5, 1000), pisoTexture);
 
-
+            String mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\";
            
 
            //Cargar modelo con una animación Key Frame
-            string pathMesh = GuiController.Instance.AlumnoEjemplosMediaDir + "pez-TgcKeyFrameMesh.xml";
+            string pathMesh = mediaDir  + "Pez//" + "pez-TgcKeyFrameMesh.xml";
             string[] animationsPath = new string[] {
-                GuiController.Instance.AlumnoEjemplosMediaDir + "Animaciones//pez//nadar-TgcKeyFrameAnim.xml",
-                 GuiController.Instance.AlumnoEjemplosMediaDir + "Animaciones//pez//quieto-TgcKeyFrameAnim.xml"
+                mediaDir + "Pez//Animaciones//nadar-TgcKeyFrameAnim.xml",
+                mediaDir + "Pez//Animaciones//quieto-TgcKeyFrameAnim.xml"
             };
             personaje = (TgcKeyFrameMesh)loader.loadMeshAndAnimationsFromFile(pathMesh, animationsPath);
 
@@ -84,7 +84,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaMoverPersonaje
 
             //Cargar sonido
             sonidoChapoteo = new TgcStaticSound();
-            sonidoChapoteo.loadSound(GuiController.Instance.AlumnoEjemplosMediaDir + "Sound//WATER.WAV");
+            sonidoChapoteo.loadSound(mediaDir+ "Pez//" + "Sound//WATER.WAV");
 
             //Posicion inicial
             personaje.Position = new Vector3(0, -45, 0);
@@ -107,7 +107,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaMoverPersonaje
 
 
             //Musica :D
-            GuiController.Instance.Mp3Player.FileName = GuiController.Instance.AlumnoEjemplosMediaDir + "Music//UWSDWF.mp3";
+            GuiController.Instance.Mp3Player.FileName = mediaDir + "Pez//" + "Music//UWSDWF.mp3";
             GuiController.Instance.Mp3Player.play(true);
             reproduciendo = true;
             GuiController.Instance.Modifiers.addBoolean("Musica", "Reproducir", true);

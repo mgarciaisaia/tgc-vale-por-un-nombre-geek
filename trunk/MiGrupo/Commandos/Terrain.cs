@@ -34,7 +34,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
         {
             string pathHeightmap;
             string pathTextura;
-            string mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir;
+            string mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\"; ;
             pathHeightmap = mediaDir + "Heightmaps\\" + "heightmap.jpg";
             pathTextura = mediaDir + "Heightmaps\\" + "TerrainTexture5.jpg";
 
