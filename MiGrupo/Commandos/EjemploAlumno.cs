@@ -2,6 +2,7 @@ using TgcViewer.Example;
 using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
 using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking;
+using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking.selection;
 using System.Collections.Generic;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -108,7 +109,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         {
             sky.dispose();
             terrain.dispose();
-            selection.dispose();
             foreach (Character ch in this.characters)
             {
                 ch.dispose();
