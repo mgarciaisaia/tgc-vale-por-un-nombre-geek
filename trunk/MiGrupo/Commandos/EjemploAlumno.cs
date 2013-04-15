@@ -65,8 +65,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             this.characters = new List<Character>();
             this.characters.Add(new Character(terrain.getPosition(-200, 200)));
             this.characters.Add(new Character(terrain.getPosition(200, 200)));
-            this.characters.Add(new Enemy(terrain.getPosition(300, 200)));
-
+       
             //Inicializar camara
             camera = new StaticCamera(this.terrain.getPosition(0, 150));
 
