@@ -51,7 +51,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking.selection.states
 
             if (GuiController.Instance.D3dInput.buttonUp(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
-                this.selection.selectCharactersInBox(this.selectionBox);
+                if(GeneralMethods.isCloseTo(pointA, pointB)){
+                    this.selection.selectCharactersByRay(PickingRayHome.getInstance().getRay());
+                }
+                else
+                {
+                    this.selection.selectCharactersInBox(this.selectionBox);
+                }
                 this.selectionBox.dispose();
                 this.selection.setState(new Waiting(this.selection, this.terrain));
             }
