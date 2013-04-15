@@ -7,7 +7,7 @@ using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using TgcViewer;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking.selection.states
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.states
 {
     class Selecting : SelectionState
     {

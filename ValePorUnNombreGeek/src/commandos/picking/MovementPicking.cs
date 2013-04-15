@@ -8,7 +8,7 @@ using System.Drawing;
 using TgcViewer;
 using TgcViewer.Utils._2D;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 {
     class MovementPicking
     {

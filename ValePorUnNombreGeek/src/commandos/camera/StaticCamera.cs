@@ -7,7 +7,7 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class StaticCamera
     {

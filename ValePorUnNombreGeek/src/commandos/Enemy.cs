@@ -8,9 +8,9 @@ using TgcViewer;
 using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
-using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
    
     public class Enemy : Character

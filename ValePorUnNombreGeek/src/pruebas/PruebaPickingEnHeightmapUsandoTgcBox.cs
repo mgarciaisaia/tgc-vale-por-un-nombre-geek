@@ -5,9 +5,9 @@ using System.Drawing;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 using TgcViewer.Utils._2D;
-using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaEscenario
 {
     /// <summary>
     /// Prueba de picking en Heightmap usando TgcBox

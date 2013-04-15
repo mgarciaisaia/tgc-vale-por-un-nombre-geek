@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.DirectX;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.target
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target
 {
     class TargeteablePosition : Targeteable
     {

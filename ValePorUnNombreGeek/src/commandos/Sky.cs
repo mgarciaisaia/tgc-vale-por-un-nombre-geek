@@ -6,7 +6,7 @@ using TgcViewer.Utils.Terrain;
 using Microsoft.DirectX;
 using TgcViewer;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class Sky : TgcSkyBox
     {
