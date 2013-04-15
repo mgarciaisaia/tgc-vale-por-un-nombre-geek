@@ -7,7 +7,7 @@ using TgcViewer.Utils.TgcSkeletalAnimation;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.Pruebas;
-using AlumnoEjemplos.MiGrupo.Commandos;
+using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
 using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
@@ -17,7 +17,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
     /// </summary>
     public class PruebaEscenario : TgcExample
     {
-        Terrain terrain;
+        Pruebas.Terrain terrain;
         TgcSkeletalMesh personaje;
         FreeCamera camara;
         string pathHeightmap;
@@ -56,7 +56,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 
            
            //Cargar heightmap          
-            terrain = new Terrain();
+            terrain = new Pruebas.Terrain();
             terrain.loadHeightmap(pathHeightmap, 20f, 2f, new Vector3(0, 0, 0));
             terrain.loadTexture(pathTextura);
         

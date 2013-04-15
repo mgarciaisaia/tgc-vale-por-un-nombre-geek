@@ -12,7 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
     public class EjemploAlumno : TgcExample
     {
         Sky sky;
-        Camera camera;
+        StaticCamera camera;
         List<Character> characters;
         Terrain terrain;
 
@@ -63,7 +63,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             this.characters.Add(new Character(terrain.getPosition(200, 200)));
 
             //Inicializar camara
-            camera = new Camera(this.terrain.getPosition(0, 150));
+            camera = new StaticCamera(this.terrain.getPosition(0, 150));
 
             //Movimiento por picking
             picking = new MovementPicking(this.terrain);
