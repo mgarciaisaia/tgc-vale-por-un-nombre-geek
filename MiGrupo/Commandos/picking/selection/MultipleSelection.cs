@@ -50,11 +50,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking.selection
                 if (TgcCollisionUtils.intersectRayAABB(_ray, ch.BoundingBox(), out collisionPoint))
                 {
                     this.selectedCharacters.Add(ch);
-                    ch.drawBoundingBox = true;
+                    ch.selected = true;
                 }
                 else
                 {
-                    ch.drawBoundingBox = false;
+                    ch.selected = false;
                 }
             }
         }
@@ -68,11 +68,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking.selection
                 if (TgcCollisionUtils.testAABBAABB(_selectionBox.BoundingBox, ch.BoundingBox()))
                 {
                     this.selectedCharacters.Add(ch);
-                    ch.drawBoundingBox = true;
+                    ch.selected = true;
                 }
                 else
                 {
-                    ch.drawBoundingBox = false;
+                    ch.selected = false;
                 }
             }
         }

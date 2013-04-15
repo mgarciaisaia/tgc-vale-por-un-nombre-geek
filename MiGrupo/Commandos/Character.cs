@@ -17,7 +17,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
         TgcSkeletalMesh personaje;
 
         private Targeteable target;
-        public bool drawBoundingBox = false;
+        public bool selected = false;
 
         public Character(Vector3 _position)
         {
@@ -62,14 +62,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
             }
             */
 
-            if (this.target != null)
+            if (this.hasTarget())
             {
-                goToTarget();
+                this.goToTarget();
             }
 
             personaje.updateAnimation();
             personaje.render();
-            if (this.drawBoundingBox) personaje.BoundingBox.render();
+            if (this.selected)
+            {
+                personaje.BoundingBox.render();
+
+                if (this.hasTarget())
+                {
+                    //marcamos hacia donde vamos
+                    TgcBox marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
+                    marcaDePicking.Position = this.target.getPosition();
+                    marcaDePicking.render();
+                }
+            }
         }
 
         protected virtual void goToTarget()
@@ -81,17 +92,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
             personaje.playAnimation("Walk", true);
             personaje.move(direccion);
 
-            //marcamos hacia donde vamos
-            TgcBox marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
-            marcaDePicking.Position = this.target.getPosition();
-            marcaDePicking.render();
-
             //nos fijamos si ya estamos en la posicion (o lo suficientemente cerca)
             if (GeneralMethods.isCloseTo(personaje.Position, this.target.getPosition()))
             {
                 personaje.playAnimation("StandBy", true);
                 this.target = null;
             }
+        }
+
+        private bool hasTarget()
+        {
+            return this.target != null;
         }
 
         public void dispose()
