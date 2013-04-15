@@ -20,6 +20,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
         public Enemy(Vector3 _position)
             : base(_position)
         {
+            GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 1000, 500);
+            GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 360, 90);
 
         }
              
