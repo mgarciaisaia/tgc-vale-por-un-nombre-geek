@@ -11,7 +11,14 @@ using Microsoft.DirectX.DirectInput;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 {
     /// <summary>
-    /// Camara rotacional levemente
+    /// Camara rotacional levemente modificada
+    /// Controles:
+    /// 
+    /// Pan: Flechas si desplazamientoFechas = true (default)
+    ///      Poniendo mouse en el borde si desplazamientoMouse = true (default)
+    /// Zoom: Mouse scroll
+    /// Rotacion: Mantener apretado boton central del mouse
+    /// Top view: tecla T
     /// </summary>
     class FreeCamera:TgcCamera
     {
@@ -32,7 +39,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
         Matrix viewMatrix;
         float rotationSpeed;
         float panSpeed;
-
+      
 
         public FreeCamera()
         {
@@ -156,8 +163,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
             cameraDistance = DEFAULT_CAMERA_DISTANCE;
             zoomFactor = DEFAULT_ZOOM_FACTOR;
             rotationSpeed = DEFAULT_ROTATION_SPEED;
-            rotationButton = TgcD3dInput.MouseButtons.BUTTON_RIGHT;
+            rotationButton = TgcD3dInput.MouseButtons.BUTTON_MIDDLE;
             desplazamientoMouse = true;
+            desplazamientoFlechas = true;
             diffX = 0f;
             diffY = 3.6f;
             diffZ = 1.0f;
@@ -189,13 +197,29 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 
                 diffX += mouseX * elapsedTime * rotationSpeed;
                 diffY += mouseY * elapsedTime * rotationSpeed;
+
+               
             }
             else
             {
+               
                 diffX += mouseX;
                 diffY += mouseY;
             }
-            
+
+            if (d3dInput.keyDown(Key.T))
+            {
+              
+                nextPos = new Vector3(0, 0, 0);
+                diffX = 0f;
+                diffY = 3.6f;
+                diffZ = 1.0f;
+                cameraDistance = DEFAULT_CAMERA_DISTANCE * 2;
+              
+
+               
+             }
+          
 
 
             //Calcular rotacion a aplicar
@@ -229,6 +253,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
             {
                 diffZ += zoomFactor * d3dInput.WheelPos * -1;
             }
+           
             float distance = -cameraDistance * diffZ;
 
             //Limitar el zoom a 0
@@ -255,7 +280,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
             {
                 desplazarCuandoMouseEstaEnBorde(distance);
             }
-            else
+            if(desplazamientoFlechas)
             {
                 desplazarConFlechas(distance);
             }
@@ -412,5 +437,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
         public TgcD3dInput.MouseButtons rotationButton { get; set; }
 
         public bool desplazamientoMouse { get; set; }
+
+        public bool desplazamientoFlechas { get; set; }
     }
 }
