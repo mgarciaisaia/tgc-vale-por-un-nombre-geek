@@ -6,7 +6,6 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.TgcSkeletalAnimation;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
-using AlumnoEjemplos.ValePorUnNombreGeek.Pruebas;
 using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
 using TgcViewer.Utils.TgcGeometry;
 
@@ -17,7 +16,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
     /// </summary>
     public class PruebaEscenario : TgcExample
     {
-        Pruebas.Terrain terrain;
+        Terrain terrain;
         TgcSkeletalMesh personaje;
         FreeCamera camara;
         string pathHeightmap;
@@ -56,7 +55,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 
            
            //Cargar heightmap          
-            terrain = new Pruebas.Terrain();
+            terrain = new Terrain();
             terrain.loadHeightmap(pathHeightmap, 20f, 2f, new Vector3(0, 0, 0));
             terrain.loadTexture(pathTextura);
         
@@ -90,8 +89,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
             //Modificador para el calculo de movimiento en y
             GuiController.Instance.Modifiers.addFloat("disminucion dy", 1, 300, 25);
 
-
-            GuiController.Instance.Modifiers.addBoolean("Terrain", "wireframe", false);
             
         }
 
