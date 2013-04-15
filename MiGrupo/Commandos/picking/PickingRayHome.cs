@@ -28,7 +28,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
             this.pickingRay.updateRay();
         }
 
-        private TgcRay getRay()
+        public TgcRay getRay()
         {
             return this.pickingRay.Ray;
         }

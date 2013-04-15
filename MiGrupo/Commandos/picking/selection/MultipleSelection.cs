@@ -41,6 +41,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking.selection
             this.state = _state;
         }
 
+        public void selectCharactersByRay(TgcRay _ray)
+        {
+            this.selectedCharacters.Clear();
+            foreach (Character ch in this.selectableCharacters)
+            {
+                Vector3 collisionPoint; //useless
+                if (TgcCollisionUtils.intersectRayAABB(_ray, ch.BoundingBox(), out collisionPoint))
+                {
+                    this.selectedCharacters.Add(ch);
+                    ch.drawBoundingBox = true;
+                }
+                else
+                {
+                    ch.drawBoundingBox = false;
+                }
+            }
+        }
+
         public void selectCharactersInBox(TgcBox _selectionBox)
         {
             this.selectedCharacters.Clear();
