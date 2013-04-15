@@ -12,22 +12,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 
         public static bool isCloseTo(float a, float b)
         {
-            if (a < b + TOLERANCIA && a > b - TOLERANCIA) return true;
-            return false;
+            return Math.Abs(a - b) < TOLERANCIA;
         }
 
         public static bool isCloseTo(Vector3 a, Vector3 b)
         {
-            if (a.X < b.X + TOLERANCIA && a.X > b.X - TOLERANCIA &&
-                a.Y < b.Y + TOLERANCIA && a.Y > b.Y - TOLERANCIA &&
-                a.Z < b.Z + TOLERANCIA && a.Z > b.Z - TOLERANCIA) return true;
-            return false;
+
+           return Math.Abs(a.X - b.X) < TOLERANCIA && 
+                  Math.Abs(a.Y-b.Y)  < TOLERANCIA && 
+                  Math.Abs (a.Z - b.Z) < TOLERANCIA; 
         }
 
-        public static float max(float a, float b){
-            if (a > b) return a; else return b;
-        }
-
+      
         public static Vector3 intersectionPoint(Vector3 origin, Vector3 direction, Terrain terrain)
         {
             Vector3 aPoint;
@@ -41,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
                     //encontramos el punto de interseccion
                     return aPoint;
                 }
-                if (aPoint.Y <= 0){
+                if (aPoint.Y <= terrain.Position.Y){
                     //ya nos estamos llendo al subsuelo...
                     return aPoint;
                 }
