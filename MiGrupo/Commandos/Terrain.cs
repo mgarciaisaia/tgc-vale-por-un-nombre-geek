@@ -60,18 +60,51 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 
         }
 
-
-        public int getHeight(float x, float z)
+        public bool xzToHeightmapCoords(float x, float z, out Vector2 coords)
         {
-            int height;
             int i, j;
+
+
 
             i = (int)(x / scaleXZ + halfWidth);
             j = (int)(z / scaleXZ + halfLength);
 
-            if (i >= HeightmapData.GetLength(0) || j >= HeightmapData.GetLength(1) || j < 0 || i < 0) return 0;
+           
+            coords = new Vector2(i, j);
 
-            height = (int)(HeightmapData[i, j] * scaleY);
+            if (coords.X >= HeightmapData.GetLength(0) || coords.Y >= HeightmapData.GetLength(1) || coords.Y < 0 || coords.X < 0) return false;
+
+            return true;
+        }
+
+
+        public bool heightmapCoordsToXYZ(Vector2 coords, out  Vector3 XYZ)
+        {
+            int i = (int)coords.X;
+            int j = (int)coords.Y;
+            float x,z;
+
+            /*         i = (int)(x / scaleXZ + halfWidth);
+                         j = (int)(z / scaleXZ + halfLength);
+*/
+            XYZ = Vector3.Empty;
+            if (coords.X >= HeightmapData.GetLength(0) || coords.Y >= HeightmapData.GetLength(1) || coords.Y < 0 || coords.X < 0) return false;
+
+            XYZ= new Vector3(
+                 (int)((i-halfWidth)* scaleXZ ),
+                 (int)(HeightmapData[i,j] * scaleY),
+                 (int)((j - halfLength) * scaleXZ)
+                 );
+            return true;
+         }
+        public int getHeight(float x, float z)
+        {
+            int height;
+            Vector2 coords;
+            
+            if (!xzToHeightmapCoords(x, z, out coords)) return 0;
+
+            height = (int)(HeightmapData[(int)coords.X, (int)coords.Y] * scaleY);
            
             return height;
         }

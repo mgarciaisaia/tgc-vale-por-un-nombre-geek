@@ -4,8 +4,8 @@ using TgcViewer;
 using System.Drawing;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
-using AlumnoEjemplos.ValePorUnNombreGeek.Pruebas;
 using TgcViewer.Utils._2D;
+using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 {
@@ -57,7 +57,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 
             pathTextura = mediaDir + "Heightmaps\\" + "TerrainTexture5.jpg";
 
-
+            GuiController.Instance.UserVars.addVar("PuntoClick");
+            GuiController.Instance.UserVars.addVar("Caja");
+           
             //Cargar heightmap          
             terrain = new Terrain();
             terrain.loadHeightmap(pathHeightmap, 20f, 2f, new Vector3(0, 0, 0));
@@ -77,7 +79,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
             GuiController.Instance.ThirdPersonCamera.setCamera(new Vector3(0, terrain.getHeight(0,0),0), 500, -120);
 
 
-            GuiController.Instance.Modifiers.addBoolean("Terrain", "wireframe", true);
             
 
         }
@@ -89,14 +90,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
         {
             Utils.desplazarVistaConMouse(200);
 
-            if(picking(out newPosition))
+            if (picking(out newPosition))
+            {
+                Vector2 coords;
+                terrain.xzToHeightmapCoords(newPosition.X, newPosition.Z, out coords);
+                       
                 collisionPointMesh.Position = newPosition;
-
-
+                GuiController.Instance.UserVars.setValue("Caja", newPosition);
+                GuiController.Instance.UserVars.setValue("PuntoClick", coords);
+               
+            }
             if ((bool)GuiController.Instance.Modifiers.getValue("Terrain"))
             {
                 planoAuxiliar.render();
                 planeCollisionPointMesh.render();
+                
                 terrain.renderWireframe();
             }
             else terrain.render();
