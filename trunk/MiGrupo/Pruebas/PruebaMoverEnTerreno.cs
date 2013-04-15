@@ -7,6 +7,8 @@ using TgcViewer.Utils.TgcSkeletalAnimation;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.Pruebas;
+using AlumnoEjemplos.MiGrupo.Commandos;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 {
@@ -17,6 +19,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
     {
         Terrain terrain;
         TgcSkeletalMesh personaje;
+        FreeCamera camara;
         string pathHeightmap;
         string pathTextura;
     
@@ -72,16 +75,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
 
             //Posicion inicial
             personaje.Position = new Vector3(0, terrain.getHeight(0,0), 0);
-
-            //Rotarlo 180° porque esta mirando para el otro lado
-            personaje.rotateY(Geometry.DegreeToRadian(180f));
-
-            
+           
+         
+            camara = new FreeCamera(personaje.Position, true);
+           
             
             //Configurar camara en Tercer Persona
-            GuiController.Instance.ThirdPersonCamera.Enable = true;
+           /* GuiController.Instance.ThirdPersonCamera.Enable = true;
             GuiController.Instance.ThirdPersonCamera.setCamera(personaje.Position,80, -120);
             GuiController.Instance.ThirdPersonCamera.TargetDisplacement = new Vector3(0, 45, 0);
+            */
 
 
             //Modificador para el calculo de movimiento en y

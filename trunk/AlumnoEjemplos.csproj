@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MiGrupo\Commandos\FreeCamera.cs" />
     <Compile Include="MiGrupo\Commandos\picking\MovementPicking.cs" />
     <Compile Include="MiGrupo\Commandos\picking\MultipleSelection.cs" />
     <Compile Include="MiGrupo\Commandos\Sky.cs" />
