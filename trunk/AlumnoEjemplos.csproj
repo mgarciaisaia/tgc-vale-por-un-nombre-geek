@@ -102,7 +102,7 @@
     <Compile Include="MiGrupo\Commandos\target\Targeteable.cs" />
     <Compile Include="MiGrupo\Commandos\target\TargeteablePosition.cs" />
     <Compile Include="MiGrupo\Commandos\Terrain.cs" />
-    <Compile Include="MiGrupo\Pruebas\Enemy.cs" />
+    <Compile Include="MiGrupo\Commandos\Enemy.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaVision.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaMoverEnTerreno.cs" />
     <Compile Include="MiGrupo\Pruebas\PruebaMoverPersonaje.cs" />

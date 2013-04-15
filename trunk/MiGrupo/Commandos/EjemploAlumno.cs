@@ -5,6 +5,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking;
 using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking.selection;
 using System.Collections.Generic;
 
+
 namespace AlumnoEjemplos.ValePorUnNombreGeek
 {
     /// <summary>
@@ -58,10 +59,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             //Cargar HeightMap
             terrain = new Terrain();
 
+
+
             //Crear personajes
             this.characters = new List<Character>();
             this.characters.Add(new Character(terrain.getPosition(-200, 200)));
             this.characters.Add(new Character(terrain.getPosition(200, 200)));
+            this.characters.Add(new Enemy(terrain.getPosition(300, 200)));
 
             //Inicializar camara
             camera = new StaticCamera(this.terrain.getPosition(0, 150));
