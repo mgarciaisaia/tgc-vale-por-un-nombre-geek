@@ -6,10 +6,10 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.TgcSkeletalAnimation;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
-using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 using TgcViewer.Utils.TgcGeometry;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaEscenario
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaEscenario
 {
     /// <summary>
     /// Prueba de movimiento en heightmap

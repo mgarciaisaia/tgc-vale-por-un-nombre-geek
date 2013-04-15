@@ -5,7 +5,7 @@ using System.Text;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 {
     class PickingRayHome
     {

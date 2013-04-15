@@ -5,7 +5,7 @@ using System.Text;
 using TgcViewer;
 using Microsoft.DirectX;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking.selection.states
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.states
 {
     class Waiting : SelectionState
     {

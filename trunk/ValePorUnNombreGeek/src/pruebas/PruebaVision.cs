@@ -6,10 +6,10 @@ using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.TgcSkeletalAnimation;
 using System;
 using System.Drawing;
-using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaVision
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 {
     /// <summary>
     /// Prueba de vision

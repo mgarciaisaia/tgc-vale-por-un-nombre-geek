@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.DirectX;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class GeneralMethods //TODO darle un mejor nombre
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking.selection.states
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.states
 {
     abstract class SelectionState
     {

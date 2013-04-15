@@ -1,7 +1,7 @@
 ﻿using TgcViewer;
 using Microsoft.DirectX;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 {
     class Utils
     {

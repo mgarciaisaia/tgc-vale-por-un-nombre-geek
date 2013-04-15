@@ -3,7 +3,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using TgcViewer;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class Terrain : TgcSimpleTerrain
     {

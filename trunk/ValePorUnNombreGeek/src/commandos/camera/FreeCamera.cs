@@ -8,7 +8,7 @@ using TgcViewer.Utils.TgcGeometry;
 using TgcViewer;
 using Microsoft.DirectX.DirectInput;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     /// <summary>
     /// Camara rotacional levemente modificada

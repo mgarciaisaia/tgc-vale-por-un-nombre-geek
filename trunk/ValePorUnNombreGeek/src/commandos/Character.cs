@@ -6,11 +6,11 @@ using TgcViewer.Utils.TgcSkeletalAnimation;
 using TgcViewer;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
-using AlumnoEjemplos.ValePorUnNombreGeek.Commandos.target;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
 using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     public class Character : Targeteable
     {
