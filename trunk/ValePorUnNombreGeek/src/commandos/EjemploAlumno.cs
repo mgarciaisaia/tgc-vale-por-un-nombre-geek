@@ -4,6 +4,8 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
 using System.Collections.Generic;
+using TgcViewer;
+using Microsoft.DirectX.DirectInput;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -106,6 +108,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
                 ch.render(elapsedTime);
             }
             selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
+
+            if (GuiController.Instance.D3dInput.keyPressed(Key.X))
+            {
+                foreach (Character ch in this.characters)
+                {
+                    ch.die();
+
+                }
+
+            }
         }
 
         /// <summary>

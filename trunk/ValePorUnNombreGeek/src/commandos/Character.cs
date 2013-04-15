@@ -18,6 +18,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         private Targeteable target;
         public bool selected = false;
+        private bool dead;
+        
 
         public Character(Vector3 _position)
         {
@@ -25,16 +27,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             personaje = skeletalLoader.loadMeshAndAnimationsFromFile(
                 getMesh(),
                 getAnimations());
+
             personaje.playAnimation("StandBy", true);
             personaje.Position = _position;
+            this.dead = false;
         }
 
         protected virtual string[] getAnimations()
         {
+            String mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\";
+           
+
             return new string[] { 
                     GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "Walk-TgcSkeletalAnim.xml",
                     GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "StandBy-TgcSkeletalAnim.xml",
-                    GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "Jump-TgcSkeletalAnim.xml"
+                     GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "Jump-TgcSkeletalAnim.xml",
+                     mediaDir+"\\SkeletalAnimations\\BasicHuman\\Animations\\" + "Die-TgcSkeletalAnim.xml"
                 };
         }
 
@@ -69,7 +77,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
             personaje.updateAnimation();
             personaje.render();
-            if (this.selected)
+            if (this.selected && !dead)
             {
                 personaje.BoundingBox.render();
 
@@ -100,6 +108,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             }
         }
 
+        public void die()
+        {
+            this.dead = true;
+            this.personaje.playAnimation("Die", false);
+        }
         private bool hasTarget()
         {
             return this.target != null;
