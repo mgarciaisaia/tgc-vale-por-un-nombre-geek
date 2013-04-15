@@ -2,12 +2,11 @@
 using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using AlumnoEjemplos.MiGrupo.ValePorUnNombreGeek.Enemy;
 using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.TgcSkeletalAnimation;
 using System;
 using System.Drawing;
+using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaVision
@@ -53,27 +52,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaVision
 
             caja = TgcBox.fromSize(new Vector3(0, 0, -10), new Vector3(10, 100, 10), Color.Blue);
 
-            //Crear loader
-            TgcSkeletalLoader loader = new TgcSkeletalLoader();
-
-            //Configurar MeshFactory customizado
-            loader.MeshFactory = new EnemyFactory();
-
-                   
-
-            enemigo = (Enemy)loader.loadMeshAndAnimationsFromFile(
-                mediaDir + "SkeletalAnimations\\BasicHuman\\" + "BasicHuman-TgcSkeletalMesh.xml",
-                new string[] { 
-                    mediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "Walk-TgcSkeletalAnim.xml",
-                    mediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\" + "StandBy-TgcSkeletalAnim.xml",
-                      });
+           
 
 
-            enemigo.playAnimation("StandBy");
+            enemigo = new Enemy(new Vector3(0,0,0));
 
-            enemigo.Position = new Vector3(0, 0, 0);
 
-            GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox);
+           
+
+            GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox());
             GuiController.Instance.Modifiers.addVertex3f("posicionCaja", new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000), new Vector3(0, 0, -20));
 
                  
@@ -88,7 +75,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.PruebaVision
         public override void render(float elapsedTime)
         {
            piso.render();
-           enemigo.render();
+           enemigo.render(elapsedTime);
            caja.Position = (Vector3)GuiController.Instance.Modifiers.getValue("posicionCaja");
            if (enemigo.puedeVer(caja)) caja.Color = Color.Green; else caja.Color = Color.Red;
            caja.updateValues();

@@ -8,20 +8,25 @@ using TgcViewer;
 using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
+using AlumnoEjemplos.ValePorUnNombreGeek.Commandos;
 
-namespace AlumnoEjemplos.MiGrupo.ValePorUnNombreGeek.Enemy
+namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
 {
    
-    public class Enemy : TgcSkeletalMesh
+    public class Enemy : Character
     {
-        
 
-       
-        public Enemy(Mesh mesh, string name, MeshRenderType renderType, TgcSkeletalBone[] bones)
-            : base(mesh, name, renderType, bones)
+
+        public Enemy(Vector3 _position)
+            : base(_position)
         {
-            GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 1000, 500);
-            GuiController.Instance.Modifiers.addFloat("AnguloVision",0,360,90);
+
+        }
+             
+        protected override string getMesh()
+        {
+            return GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\" + "CS_Arctic-TgcSkeletalMesh.xml";
+      
         }
 
         public bool puedeVer(TgcBox target)
@@ -38,12 +43,13 @@ namespace AlumnoEjemplos.MiGrupo.ValePorUnNombreGeek.Enemy
 
     }
 
-    public class EnemyFactory : TgcSkeletalLoader.IMeshFactory
+
+    /* class EnemyFactory : TgcSkeletalLoader.IMeshFactory
     {
         public TgcSkeletalMesh createNewMesh(Mesh d3dMesh, string meshName, TgcSkeletalMesh.MeshRenderType renderType, TgcSkeletalBone[] bones)
         {
             return new Enemy(d3dMesh, meshName, renderType, bones);
         }
-    }
+    }*/
 
 }
