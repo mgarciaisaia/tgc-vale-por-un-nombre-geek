@@ -87,27 +87,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MiGrupo\Commandos\camera\FreeCamera.cs" />
-    <Compile Include="MiGrupo\Commandos\picking\MovementPicking.cs" />
-    <Compile Include="MiGrupo\Commandos\picking\selection\MultipleSelection.cs" />
-    <Compile Include="MiGrupo\Commandos\picking\PickingRayHome.cs" />
-    <Compile Include="MiGrupo\Commandos\picking\selection\states\Waiting.cs" />
-    <Compile Include="MiGrupo\Commandos\picking\selection\states\Selecting.cs" />
-    <Compile Include="MiGrupo\Commandos\picking\selection\states\SelectionState.cs" />
-    <Compile Include="MiGrupo\Commandos\Sky.cs" />
-    <Compile Include="MiGrupo\Commandos\camera\StaticCamera.cs" />
-    <Compile Include="MiGrupo\Commandos\EjemploAlumno.cs" />
-    <Compile Include="MiGrupo\Commandos\GeneralMethods.cs" />
-    <Compile Include="MiGrupo\Commandos\Character.cs" />
-    <Compile Include="MiGrupo\Commandos\target\Targeteable.cs" />
-    <Compile Include="MiGrupo\Commandos\target\TargeteablePosition.cs" />
-    <Compile Include="MiGrupo\Commandos\Terrain.cs" />
-    <Compile Include="MiGrupo\Commandos\Enemy.cs" />
-    <Compile Include="MiGrupo\Pruebas\PruebaVision.cs" />
-    <Compile Include="MiGrupo\Pruebas\PruebaMoverEnTerreno.cs" />
-    <Compile Include="MiGrupo\Pruebas\PruebaMoverPersonaje.cs" />
-    <Compile Include="MiGrupo\Pruebas\PruebaPickingEnHeightmapUsandoTgcBox.cs" />
-    <Compile Include="MiGrupo\Pruebas\Utils.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\camera\FreeCamera.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\picking\MovementPicking.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\picking\selection\MultipleSelection.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\picking\PickingRayHome.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\picking\selection\states\Waiting.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\picking\selection\states\Selecting.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\picking\selection\states\SelectionState.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\Sky.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\camera\StaticCamera.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\EjemploAlumno.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\GeneralMethods.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\Character.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\target\Targeteable.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\target\TargeteablePosition.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\Terrain.cs" />
+    <Compile Include="ValePorUnNombreGeek\Commandos\Enemy.cs" />
+    <Compile Include="ValePorUnNombreGeek\Pruebas\PruebaVision.cs" />
+    <Compile Include="ValePorUnNombreGeek\Pruebas\PruebaMoverEnTerreno.cs" />
+    <Compile Include="ValePorUnNombreGeek\Pruebas\PruebaMoverPersonaje.cs" />
+    <Compile Include="ValePorUnNombreGeek\Pruebas\PruebaPickingEnHeightmapUsandoTgcBox.cs" />
+    <Compile Include="ValePorUnNombreGeek\Pruebas\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
