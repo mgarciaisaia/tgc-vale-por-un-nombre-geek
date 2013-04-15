@@ -90,6 +90,7 @@
     <Compile Include="MiGrupo\Commandos\camera\FreeCamera.cs" />
     <Compile Include="MiGrupo\Commandos\picking\MovementPicking.cs" />
     <Compile Include="MiGrupo\Commandos\picking\MultipleSelection.cs" />
+    <Compile Include="MiGrupo\Commandos\picking\PickingRayHome.cs" />
     <Compile Include="MiGrupo\Commandos\Sky.cs" />
     <Compile Include="MiGrupo\Commandos\camera\StaticCamera.cs" />
     <Compile Include="MiGrupo\Commandos\EjemploAlumno.cs" />

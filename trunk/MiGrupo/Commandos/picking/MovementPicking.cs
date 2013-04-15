@@ -12,23 +12,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
 {
     class MovementPicking
     {
-        TgcPickingRay pickingRay;
         Terrain terrain;
 
         public MovementPicking(Terrain _terrain)
         {
             this.terrain = _terrain;
-            this.pickingRay = new TgcPickingRay();
         }
-
 
         public bool thereIsPicking(out Vector3 p)
         {
             if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_RIGHT))
             {
-                pickingRay.updateRay();
-
-                p = GeneralMethods.intersectionPoint(pickingRay.Ray.Origin, pickingRay.Ray.Direction, this.terrain);
+                PickingRayHome.getInstance().updateRay();
+                p = PickingRayHome.getInstance().getRayIntersection(this.terrain);
                 return true;
             }
 

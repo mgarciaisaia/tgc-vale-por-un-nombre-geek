@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
         }
 
       
-        public static Vector3 intersectionPoint(Vector3 origin, Vector3 direction, Terrain terrain)
+        /*public static Vector3 intersectionPoint(Vector3 origin, Vector3 direction, Terrain terrain)
         {
             Vector3 aPoint;
             float i = 0;
@@ -43,6 +43,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos
                 }
                 i++;
             }
-        }
+        }*/
     }
 }

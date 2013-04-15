@@ -50,20 +50,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
             if (GuiController.Instance.D3dInput.buttonDown(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
                 //Detectar nuevo punto de colision con el piso
-                pickingRay.updateRay();
+                PickingRayHome.getInstance().updateRay();
 
 
                 //primera vez
                 if (!selecting)
                 {
-                    this.initSelectionPoint = GeneralMethods.intersectionPoint(pickingRay.Ray.Origin, pickingRay.Ray.Direction, this.terrain);
+                    this.initSelectionPoint = PickingRayHome.getInstance().getRayIntersection(this.terrain);
                     selecting = true;
                 }
                 //Si se está seleccionado, generar box de seleccion
                 else
                 {
                     Vector3 pointA = this.initSelectionPoint;
-                    Vector3 pointB = GeneralMethods.intersectionPoint(pickingRay.Ray.Origin, pickingRay.Ray.Direction, this.terrain);
+                    Vector3 pointB = PickingRayHome.getInstance().getRayIntersection(this.terrain);
                     float selectionBoxHeight = Math.Max(pointA.Y, pointB.Y) + SELECTION_BOX_HEIGHT;
 
                     pointA.Y = 0;
