@@ -61,19 +61,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
 
 
-            //Crear personajes
-            this.characters = new List<Character>();
-            this.characters.Add(new Character(terrain.getPosition(-200, 200)));
-            this.characters.Add(new Character(terrain.getPosition(200, 200)));
-       
-            //Inicializar camara
-            camera = new StaticCamera(this.terrain.getPosition(0, 150));
+            //Crear personajes seleccionables
+            List<Character> selectableCharacters = new List<Character>();
+            selectableCharacters.Add(new Character(terrain.getPosition(-200, 200)));
+            selectableCharacters.Add(new Character(terrain.getPosition(200, 200)));
+
+            //Seleccion multiple
+            selection = new MultipleSelection(this.terrain, selectableCharacters);
+
+            //Crear el resto de los personajes
+            this.characters = new List<Character>(selectableCharacters);
+            this.characters.Add(new Enemy(terrain.getPosition(400, 200)));
 
             //Movimiento por picking
             picking = new MovementPicking(this.terrain);
-
-            //Seleccion multiple
-            selection = new MultipleSelection(this.terrain, this.characters);
+       
+            //Inicializar camara
+            camera = new StaticCamera(this.terrain.getPosition(0, 150));
         }
 
 
