@@ -64,7 +64,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.Commandos.picking
                 {
                     Vector3 pointA = this.initSelectionPoint;
                     Vector3 pointB = GeneralMethods.intersectionPoint(pickingRay.Ray.Origin, pickingRay.Ray.Direction, this.terrain);
-                    float selectionBoxHeight = GeneralMethods.max(pointA.Y, pointB.Y) + SELECTION_BOX_HEIGHT;
+                    float selectionBoxHeight = Math.Max(pointA.Y, pointB.Y) + SELECTION_BOX_HEIGHT;
 
                     pointA.Y = 0;
                     pointB.Y = 0;
