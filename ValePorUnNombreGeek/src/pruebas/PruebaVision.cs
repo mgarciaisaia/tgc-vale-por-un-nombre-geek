@@ -7,6 +7,7 @@ using TgcViewer.Utils.TgcSkeletalAnimation;
 using System;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision

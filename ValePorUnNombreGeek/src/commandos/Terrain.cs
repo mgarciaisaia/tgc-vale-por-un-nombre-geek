@@ -82,7 +82,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         {
             int i = (int)coords.X;
             int j = (int)coords.Y;
-            float x,z;
+            //float x,z;
 
             /*         i = (int)(x / scaleXZ + halfWidth);
                          j = (int)(z / scaleXZ + halfLength);
