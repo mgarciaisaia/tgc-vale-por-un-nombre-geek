@@ -12,6 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
     class Selecting : SelectionState
     {
         private Vector3 initSelectionPoint;
+        private Vector3 lastSelectionPoint;
         private TgcBox selectionBox;
         private const float SELECTION_BOX_HEIGHT = 75;
 
@@ -19,6 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
             : base(_selection, _terrain)
         {
             this.initSelectionPoint = _initSelectionPoint;
+            this.lastSelectionPoint = Vector3.Empty;
 
             //Inicializamos la selectionBox
             this.selectionBox = TgcBox.fromSize(new Vector3(3, SELECTION_BOX_HEIGHT, 3), Color.Red);
@@ -32,19 +34,27 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
         {
             PickingRayHome.getInstance().updateRay();
             Vector3 pointA = this.initSelectionPoint;
-            Vector3 pointB = PickingRayHome.getInstance().getRayIntersection(this.terrain);
-            float selectionBoxHeight = Math.Max(pointA.Y, pointB.Y) + SELECTION_BOX_HEIGHT;
 
-            pointA.Y = 0;
-            pointB.Y = 0;
+            //verificamos que el rayo halla variado su posicion. si no, volver a calcular todo es al pedo.
+            Vector3 pointB = PickingRayHome.getInstance().getRayGroundIntersection(this.terrain); //usamos getRayGroundIntersection por que es MUCHO mas rapido que getRayIntersection
+            if (!GeneralMethods.isCloseTo(pointB, this.lastSelectionPoint))
+            {
+                this.lastSelectionPoint = pointB; //guardamos la nueva posicion para en el proximo render volver a comparar
 
-            Vector3 min = Vector3.Minimize(pointA, pointB);
-            Vector3 max = Vector3.Maximize(pointA, pointB);
-            min.Y = 0;
-            max.Y = selectionBoxHeight;
+                pointB = PickingRayHome.getInstance().getRayIntersection(this.terrain);
+                float selectionBoxHeight = Math.Max(pointA.Y, pointB.Y) + SELECTION_BOX_HEIGHT;
 
-            this.selectionBox.setExtremes(min, max);
-            this.selectionBox.updateValues();
+                pointA.Y = 0;
+                pointB.Y = 0;
+
+                Vector3 min = Vector3.Minimize(pointA, pointB);
+                Vector3 max = Vector3.Maximize(pointA, pointB);
+                min.Y = 0;
+                max.Y = selectionBoxHeight;
+
+                this.selectionBox.setExtremes(min, max);
+                this.selectionBox.updateValues();
+            }
 
             this.selectionBox.render();
 
