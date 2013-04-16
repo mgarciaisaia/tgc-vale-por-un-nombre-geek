@@ -104,6 +104,8 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\target\TargeteablePosition.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Terrain.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Enemy.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\pruebas\Cono.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\pruebas\CrearCono.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaVision.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaMoverEnTerreno.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaMoverPersonaje.cs" />
