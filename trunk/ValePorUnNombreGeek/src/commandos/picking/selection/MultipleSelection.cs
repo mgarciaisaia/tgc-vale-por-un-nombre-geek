@@ -9,6 +9,7 @@ using Microsoft.DirectX;
 using System.Drawing;
 using System.Collections;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.states;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
 {

@@ -6,6 +6,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
 using System.Collections.Generic;
 using TgcViewer;
 using Microsoft.DirectX.DirectInput;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -65,8 +66,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Crear personajes seleccionables
             List<Character> selectableCharacters = new List<Character>();
-            selectableCharacters.Add(new Character(terrain.getPosition(-200, 200)));
-            selectableCharacters.Add(new Character(terrain.getPosition(200, 200)));
+            selectableCharacters.Add(new Walker(terrain.getPosition(-200, 200)));
+            selectableCharacters.Add(new Walker(terrain.getPosition(200, 200)));
 
             //Seleccion multiple
             selection = new MultipleSelection(this.terrain, selectableCharacters);
@@ -94,7 +95,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             Vector3 pickingPosition;
             if (picking.thereIsPicking(out pickingPosition))
             {
-                foreach (Character ch in selection.getSelectedCharacters())
+                foreach (Walker ch in selection.getSelectedCharacters())
                 {
                     ch.setPositionTarget(pickingPosition);
                 }
