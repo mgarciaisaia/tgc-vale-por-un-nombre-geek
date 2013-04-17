@@ -81,6 +81,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
 
 
+
         /// <summary>
         /// Transforma coordenadas relativas del heightmap en coordenadas del mundo.
         /// </summary>
