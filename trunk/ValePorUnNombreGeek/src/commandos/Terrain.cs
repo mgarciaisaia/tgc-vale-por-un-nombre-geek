@@ -96,7 +96,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
                  (int)((j - halfLength) * scaleXZ)
                  );
             return true;
-         }
+        }
+
+        public bool getY(float x, float z, out float y)
+        {
+            y = 0;
+            Vector3 position;
+            Vector2 coords;
+            if (!this.xzToHeightmapCoords(x, z, out coords)) return false;
+            bool thereIsY = this.heightmapCoordsToXYZ(coords, out position);
+            y = position.Y;
+            return thereIsY;
+        }
+
         public int getHeight(float x, float z)
         {
             int height;

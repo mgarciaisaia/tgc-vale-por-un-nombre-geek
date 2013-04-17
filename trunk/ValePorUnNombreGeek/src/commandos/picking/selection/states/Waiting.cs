@@ -18,9 +18,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
         {
             if (GuiController.Instance.D3dInput.buttonDown(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
-                PickingRayHome.getInstance().updateRay();
-                Vector3 initSelectionPoint = PickingRayHome.getInstance().getRayIntersection(this.terrain);
-                this.selection.setState(new Selecting(this.selection, this.terrain, initSelectionPoint));
+                Vector3 initSelectionPoint;
+                if (PickingRayHome.getInstance().terrainIntersection(this.terrain, out initSelectionPoint))
+                    this.selection.setState(new Selecting(this.selection, this.terrain, initSelectionPoint));
             }
         }
     }
