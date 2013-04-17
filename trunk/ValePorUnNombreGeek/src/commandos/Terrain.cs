@@ -98,33 +98,44 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             return true;
         }
 
+
+
         public bool getY(float x, float z, out float y)
         {
             y = 0;
-            Vector3 position;
             Vector2 coords;
             if (!this.xzToHeightmapCoords(x, z, out coords)) return false;
-            bool thereIsY = this.heightmapCoordsToXYZ(coords, out position);
+
+            Vector3 position;
+            if (!this.heightmapCoordsToXYZ(coords, out position)) return false;
+            //no tiene sentido llamar a dos funciones que por nombre hacen lo inverso...
+
             y = position.Y;
-            return thereIsY;
+            return true;
         }
 
-        public int getHeight(float x, float z)
+        public bool getPosition(float x, float z, out Vector3 ret)
         {
-            int height;
-            Vector2 coords;
-            
-            if (!xzToHeightmapCoords(x, z, out coords)) return 0;
+            //devuelve la posicion y true si es parte del heightmap
+            float y;
+            ret = Vector3.Empty;
 
-            height = (int)(HeightmapData[(int)coords.X, (int)coords.Y] * scaleY);
-           
-            return height;
+            if (!this.getY(x, z, out y)) return false;
+
+            ret = new Vector3(x, y, z);
+            return true;
         }
 
         public Vector3 getPosition(float x, float z)
         {
-            return new Vector3(x, this.getHeight(x, z), z);
+            //devuelve la posicion, sin fijarse si pertenece al heightmap
+            Vector3 ret;
+            this.getPosition(x, z, out ret);
+            return ret;
         }
+
+
+
 
         public new void render()
         {
