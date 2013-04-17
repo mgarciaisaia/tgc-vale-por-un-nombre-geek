@@ -8,18 +8,23 @@ using TgcViewer;
 using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
    
     class Enemy : Walker
     {
-
+        private ConoDeVision cono;
+      
         public Enemy(Vector3 _position)
             : base(_position)
         {
-            GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 1000, 500);
-            GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 360, 90);
+            float alturaCabeza = (this.personaje.BoundingBox.PMax.Y - this.personaje.BoundingBox.PMin.Y)*9/10;
+            cono = new ConoDeVision(new Vector3(this.getPosition().X,this.getPosition().Y + alturaCabeza,this.getPosition().Z) , 500, 90);
+            cono.Enabled = false;
+            cono.AutoTransformEnable = false;
+
         }
 
         protected new static string getMesh()
@@ -30,14 +35,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public bool puedeVer(TgcBox target)
         {
-            float radioVision = (float)GuiController.Instance.Modifiers.getValue("RadioVision");
-            float anguloVision = (float)GuiController.Instance.Modifiers.getValue("AnguloVision");
-            //TODO
-            return false;
+            
+            return cono.colisionaCon(target);
         }
 
-     
+        protected override void update()
+        {
+            base.update();
+            this.cono.Transform = this.personaje.Transform;
+            if (cono.Enabled) cono.render();
+        }
 
+
+        
+
+        public float VisionAngle { get { return cono.Angle; } set { cono.Angle = value; } }
+
+        public float VisionRadius { get { return cono.Radius; } set { cono.Radius = value; } }
+
+        public bool ConeEnabled { get { return cono.Enabled; } set { cono.Enabled = value; } }
     }
 
 
