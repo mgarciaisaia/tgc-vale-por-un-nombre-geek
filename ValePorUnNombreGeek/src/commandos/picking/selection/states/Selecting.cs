@@ -32,7 +32,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
 
         public override void update()
         {
-            PickingRayHome.getInstance().updateRay();
             Vector3 pointA = this.initSelectionPoint;
 
             //verificamos que el rayo halla variado su posicion. si no, volver a calcular todo es al pedo.
@@ -41,19 +40,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
             {
                 this.lastSelectionPoint = pointB; //guardamos la nueva posicion para en el proximo render volver a comparar
 
-                pointB = PickingRayHome.getInstance().getRayIntersection(this.terrain);
-                float selectionBoxHeight = Math.Max(pointA.Y, pointB.Y) + SELECTION_BOX_HEIGHT;
+                if (PickingRayHome.getInstance().terrainIntersection(this.terrain, out pointB))
+                {
+                    float selectionBoxHeight = Math.Max(pointA.Y, pointB.Y) + SELECTION_BOX_HEIGHT;
 
-                pointA.Y = 0;
-                pointB.Y = 0;
+                    pointA.Y = 0;
+                    pointB.Y = 0;
 
-                Vector3 min = Vector3.Minimize(pointA, pointB);
-                Vector3 max = Vector3.Maximize(pointA, pointB);
-                min.Y = 0;
-                max.Y = selectionBoxHeight;
+                    Vector3 min = Vector3.Minimize(pointA, pointB);
+                    Vector3 max = Vector3.Maximize(pointA, pointB);
+                    min.Y = 0;
+                    max.Y = selectionBoxHeight;
 
-                this.selectionBox.setExtremes(min, max);
-                this.selectionBox.updateValues();
+                    this.selectionBox.setExtremes(min, max);
+                    this.selectionBox.updateValues();
+                }
             }
 
             this.selectionBox.render();
