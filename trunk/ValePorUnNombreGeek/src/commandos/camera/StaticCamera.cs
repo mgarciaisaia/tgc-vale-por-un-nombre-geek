@@ -11,6 +11,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class StaticCamera
     {
+        public static int ANCHO_DESPLAZAMIENTO = 50;
+
         public StaticCamera(Vector3 _posInicial)
         {
             GuiController.Instance.ThirdPersonCamera.Enable = true;
@@ -29,25 +31,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             TgcD3dInput d3dInput = GuiController.Instance.D3dInput;
 
             //move up
-            if (mouseEnabled && (d3dInput.Ypos <= 100 && d3dInput.Ypos > 0) || d3dInput.keyDown(Key.UpArrow))
+            if (mouseEnabled && (GuiController.Instance.D3dInput.Ypos <= 20 && GuiController.Instance.D3dInput.Ypos > -20 && Math.Abs(GuiController.Instance.D3dInput.Xpos - screenWidth / 2) < ANCHO_DESPLAZAMIENTO) || d3dInput.keyDown(Key.UpArrow))
             {
                 dz = cameraSpeed * GuiController.Instance.ElapsedTime;
             }
 
             //move down
-            if (mouseEnabled && (d3dInput.Ypos >= screenHeight - 100 && d3dInput.Ypos < screenHeight) || d3dInput.keyDown(Key.DownArrow))
+            if (mouseEnabled && (GuiController.Instance.D3dInput.Ypos >= screenHeight - 20 && GuiController.Instance.D3dInput.Ypos < screenHeight && Math.Abs(GuiController.Instance.D3dInput.Xpos - screenWidth / 2) < ANCHO_DESPLAZAMIENTO) || d3dInput.keyDown(Key.DownArrow))
             {
                 dz = -cameraSpeed * GuiController.Instance.ElapsedTime;
             }
 
             //move left
-            if (mouseEnabled && (d3dInput.Xpos <= 100 && d3dInput.Xpos > 0) || d3dInput.keyDown(Key.LeftArrow))
+            if (mouseEnabled && (GuiController.Instance.D3dInput.Xpos <= 20 && GuiController.Instance.D3dInput.Xpos > 0 && Math.Abs(GuiController.Instance.D3dInput.Ypos - screenHeight / 2) < ANCHO_DESPLAZAMIENTO) || d3dInput.keyDown(Key.LeftArrow))
             {
                 dx = -cameraSpeed * GuiController.Instance.ElapsedTime;
             }
 
             //move right
-            if (mouseEnabled && (d3dInput.Xpos >= screenWidth - 100 && d3dInput.Xpos < screenWidth) || d3dInput.keyDown(Key.RightArrow))
+            if (mouseEnabled && (GuiController.Instance.D3dInput.Xpos >= screenWidth - 20 && GuiController.Instance.D3dInput.Xpos < screenWidth && Math.Abs(GuiController.Instance.D3dInput.Ypos - screenHeight / 2) < ANCHO_DESPLAZAMIENTO) || d3dInput.keyDown(Key.RightArrow))
             {
                 dx = cameraSpeed * GuiController.Instance.ElapsedTime;
             }

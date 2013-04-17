@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TgcViewer;
 using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
+using System;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -24,7 +25,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
         MovementPicking picking;
         MultipleSelection selection;
-
+    
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
         /// Influye en donde se va a haber en el árbol de la derecha de la pantalla.
@@ -87,6 +88,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
        
             //Inicializar camara
             camera = new StaticCamera(this.terrain.getPosition(0, 150));
+
+
         }
 
 
