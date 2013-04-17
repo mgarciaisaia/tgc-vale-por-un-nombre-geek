@@ -62,8 +62,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaEscenario
            
             //Cargar heightmap          
             terrain = new Terrain();
-            terrain.loadHeightmap(pathHeightmap, 20f, 2f, new Vector3(0, 0, 0));
-            terrain.loadTexture(pathTextura);
+           // terrain.loadHeightmap(pathHeightmap, 20f, 2f, new Vector3(0, 0, 0));
+           // terrain.loadTexture(pathTextura);
 
 
 
