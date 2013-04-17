@@ -27,8 +27,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 60;
 
-        public Enemy(Vector3 _position)
-            : base(_position)
+        public Enemy(Vector3 _position, Terrain _terrain)
+            : base(_position, _terrain)
         {
 
             crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);
@@ -43,8 +43,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             //cono.Enabled = false;
             cono.AutoTransformEnable = false;
         }
-        public Enemy(Vector3[] waitpoints)
-            :base(waitpoints[0])
+        public Enemy(Vector3[] waitpoints, Terrain _terrain)
+            : base(waitpoints[0], _terrain)
         {
             this.Waitpoints = waitpoints;
             crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);

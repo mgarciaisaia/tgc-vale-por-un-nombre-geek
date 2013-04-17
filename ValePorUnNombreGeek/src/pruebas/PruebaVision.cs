@@ -53,10 +53,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 
             caja = TgcBox.fromSize(new Vector3(0, 0, -10), new Vector3(10, 100, 10), Color.Blue);
 
-           
 
 
-            enemigo = new Enemy(new Vector3(0,0,0));
+
+            enemigo = new Enemy(new Vector3(0, 0, 0), null); //TODO arreglar
 
 
 
