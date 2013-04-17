@@ -68,8 +68,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Crear personajes seleccionables
             List<Character> selectableCharacters = new List<Character>();
-            selectableCharacters.Add(new Walker(terrain.getPosition(-200, 200)));
-            selectableCharacters.Add(new Walker(terrain.getPosition(200, 200)));
+            selectableCharacters.Add(new Walker(terrain.getPosition(-200, 200), terrain));
+            selectableCharacters.Add(new Walker(terrain.getPosition(200, 200), terrain));
 
             //Seleccion multiple
             selection = new MultipleSelection(this.terrain, selectableCharacters);
@@ -81,7 +81,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             terrain.heightmapCoordsToXYZ(new Vector2(73,81), out waitpoints[0]);
             terrain.heightmapCoordsToXYZ(new Vector2(22,80), out waitpoints[1]);
             terrain.heightmapCoordsToXYZ(new Vector2(10,37), out waitpoints[2]);
-            this.characters.Add(new Enemy(waitpoints));
+            this.characters.Add(new Enemy(waitpoints, terrain));
 
             //Movimiento por picking
             picking = new MovementPicking(this.terrain);

@@ -13,15 +13,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
     class Walker : Character
     {
         private Targeteable target;
+        private Terrain terrain;
 
 
         /*****************************************
          * INICIALIZACION
          * ***************************************/
 
-        public Walker(Vector3 _position) : base(getMesh(), getAnimations(), _position)
+        public Walker(Vector3 _position, Terrain _terrain)
+            : base(getMesh(), getAnimations(), _position)
         {
-            //nothing to do....
+            this.terrain = _terrain;
         }
 
         private static string[] getAnimations()
@@ -75,6 +77,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             this.personaje.playAnimation("Walk", true);
             this.personaje.move(direccion);
+            this.personaje.Position = this.terrain.getPosition(this.personaje.Position.X, this.personaje.Position.Z);
 
             //nos fijamos si ya estamos en la posicion (o lo suficientemente cerca)
             if (GeneralMethods.isCloseTo(personaje.Position, this.target.getPosition()))
