@@ -44,7 +44,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             this.loadHeightmap(pathHeightmap, 20f, 1f, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
 
-            GuiController.Instance.Modifiers.addBoolean("Terrain", "wireframe", false);
+            GuiController.Instance.Modifiers.addBoolean("TerrainWireframe", "Visible", false);
         }
 
 
@@ -116,7 +116,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         public new void render()
         {
-            if ((bool)GuiController.Instance.Modifiers.getValue("Terrain"))
+            if ((bool)GuiController.Instance.Modifiers.getValue("TerrainWireframe"))
             {
                 this.renderWireframe();
             }

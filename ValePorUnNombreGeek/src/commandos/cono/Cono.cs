@@ -19,7 +19,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         private const float DEFAULT_RADIUS = 10;
 
         VertexBuffer vertexBuffer;
-        Vector3 vertex;
         Vector3[] circunferencia;
        
         CustomVertex.PositionColored[] vertices;
@@ -67,12 +66,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         {
             get
             {
-                return Vector3.TransformCoordinate(vertex, this.transform);
+                return this.translation;
                 
 
             }
 
-            set { this.vertex = value; }
+            set { this.translation = value; }
         }
 
 
@@ -94,16 +93,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
         private void config(Vector3 vertex, float radius, float angle, int triangles)
         {
-            this.vertex = vertex;
+           
+         
             this.radius = radius;
             this.angle = angle;
             this.triangles = triangles;
 
             this.autoTransformEnable = true;
-            this.transform = Matrix.Identity;
-            this.translation = new Vector3(0, 0, 0);
+           
+            this.translation = vertex;
             this.rotation = new Vector3(0, 0, 0);
             this.enabled = true;
+            this.transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
             this.autoUpdateEnabled = true;
             
             
@@ -113,10 +114,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         {
             config(vertex, radius, angle, DEFAULT_TRIANGLES);
 
-            this.autoTransformEnable = true;
-            this.transform = Matrix.Identity;
-            this.translation = new Vector3(0, 0, 0);
-            this.rotation = new Vector3(0, 0, 0);
 
         }
 
@@ -175,15 +172,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
                                *     circunferencia[j]------------ circunferencia[j+1]  
                                */
 
-                vertices[i] = new CustomVertex.PositionColored(vertex.X, vertex.Y, vertex.Z, Color.LimeGreen.ToArgb());
-                vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X + vertex.X, circunferencia[j].Y + vertex.Y, circunferencia[j].Z + vertex.Z, Color.Aqua.ToArgb());
-                vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[j + 1].X + vertex.X, circunferencia[j + 1].Y + vertex.Y, circunferencia[j + 1].Z + vertex.Z, Color.Aqua.ToArgb());
+                vertices[i] = new CustomVertex.PositionColored(0, 0, 0, Color.LimeGreen.ToArgb());
+                vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X,  circunferencia[j].Y , circunferencia[j].Z , Color.Aqua.ToArgb());
+                vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[j + 1].X , circunferencia[j + 1].Y , circunferencia[j + 1].Z, Color.Aqua.ToArgb());
 
             }
 
-            vertices[i] = new CustomVertex.PositionColored(vertex.X, vertex.Y, vertex.Z, Color.LimeGreen.ToArgb());
-            vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X + vertex.X, circunferencia[j].Y + vertex.Y, circunferencia[j].Z + vertex.Z, Color.Aqua.ToArgb());
-            vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[0].X + vertex.X, circunferencia[0].Y + vertex.Y, circunferencia[0].Z + vertex.Z, Color.Aqua.ToArgb());
+            vertices[i] = new CustomVertex.PositionColored(0, 0, 0, Color.LimeGreen.ToArgb());
+            vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X , circunferencia[j].Y , circunferencia[j].Z, Color.Aqua.ToArgb());
+            vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[0].X , circunferencia[0].Y , circunferencia[0].Z , Color.Aqua.ToArgb());
 
 
         }
@@ -215,7 +212,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
 
 
-        public void render()
+        public virtual void render()
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
 

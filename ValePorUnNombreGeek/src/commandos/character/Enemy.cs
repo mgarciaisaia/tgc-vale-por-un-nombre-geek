@@ -23,28 +23,31 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private bool waiting=false;
         private bool chasing=false;
         private int currentWaitpoint;
+        private float alturaCabeza;
+        private const float DEFAULT_VISION_RADIUS = 400;
+        private const float DEFAULT_VISION_ANGLE = 60;
 
         public Enemy(Vector3 _position)
             : base(_position)
         {
 
-            crearConoDeVision();
+            crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);
             
 
         }
 
-        private void crearConoDeVision()
+        private void crearConoDeVision(float radius, float angle )
         {
-            float alturaCabeza = (this.personaje.BoundingBox.PMax.Y - this.personaje.BoundingBox.PMin.Y) * 9 / 10;
-            cono = new ConoDeVision(new Vector3(this.getPosition().X, this.getPosition().Y + alturaCabeza, this.getPosition().Z), 30, 30);
-            cono.Enabled = false;
+            alturaCabeza = (this.personaje.BoundingBox.PMax.Y - this.personaje.BoundingBox.PMin.Y) * 9 / 10;
+            cono = new ConoDeVision(new Vector3(this.getPosition().X, this.getPosition().Y + alturaCabeza, this.getPosition().Z), radius, angle);
+            //cono.Enabled = false;
             cono.AutoTransformEnable = false;
         }
         public Enemy(Vector3[] waitpoints)
             :base(waitpoints[0])
         {
             this.Waitpoints = waitpoints;
-            crearConoDeVision();
+            crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);
         }
         protected new static string getMesh()
         {
@@ -84,8 +87,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             base.update();
 
 
-            this.cono.Transform = this.personaje.Transform; //Hacer que el cono se mueva con el personaje
-            if (cono.Enabled) cono.render();
+            this.cono.Transform = this.personaje.Transform * Matrix.Translation(new Vector3(0,alturaCabeza,0)); //Hacer que el cono se mueva con el personaje
+            cono.render();
         }
 
 
