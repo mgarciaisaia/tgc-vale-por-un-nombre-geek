@@ -24,6 +24,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             cono = new ConoDeVision(new Vector3(this.getPosition().X,this.getPosition().Y + alturaCabeza,this.getPosition().Z) , 500, 90);
             cono.Enabled = false;
             cono.AutoTransformEnable = false;
+            
 
         }
 
@@ -42,7 +43,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected override void update()
         {
             base.update();
-            this.cono.Transform = this.personaje.Transform;
+            this.cono.Transform = this.personaje.Transform; //Hacer que el cono se mueva con el personaje
             if (cono.Enabled) cono.render();
         }
 

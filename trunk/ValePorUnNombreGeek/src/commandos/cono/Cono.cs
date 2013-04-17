@@ -175,13 +175,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
                                *     circunferencia[j]------------ circunferencia[j+1]  
                                */
 
-                vertices[i] = new CustomVertex.PositionColored(vertex.X, vertex.Y, vertex.Z, Color.Green.ToArgb());
+                vertices[i] = new CustomVertex.PositionColored(vertex.X, vertex.Y, vertex.Z, Color.LimeGreen.ToArgb());
                 vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X + vertex.X, circunferencia[j].Y + vertex.Y, circunferencia[j].Z + vertex.Z, Color.Aqua.ToArgb());
                 vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[j + 1].X + vertex.X, circunferencia[j + 1].Y + vertex.Y, circunferencia[j + 1].Z + vertex.Z, Color.Aqua.ToArgb());
 
             }
 
-            vertices[i] = new CustomVertex.PositionColored(vertex.X, vertex.Y, vertex.Z, Color.Green.ToArgb());
+            vertices[i] = new CustomVertex.PositionColored(vertex.X, vertex.Y, vertex.Z, Color.LimeGreen.ToArgb());
             vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X + vertex.X, circunferencia[j].Y + vertex.Y, circunferencia[j].Z + vertex.Z, Color.Aqua.ToArgb());
             vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[0].X + vertex.X, circunferencia[0].Y + vertex.Y, circunferencia[0].Z + vertex.Z, Color.Aqua.ToArgb());
 
