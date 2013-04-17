@@ -108,9 +108,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\cono\Cono.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\CrearCono.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaVision.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaMoverEnTerreno.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaMoverPersonaje.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaPickingEnHeightmapUsandoTgcBox.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
