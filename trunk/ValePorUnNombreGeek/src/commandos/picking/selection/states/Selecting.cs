@@ -35,12 +35,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
             Vector3 pointA = this.initSelectionPoint;
 
             //verificamos que el rayo halla variado su posicion. si no, volver a calcular todo es al pedo.
-            Vector3 pointB = PickingRayHome.getInstance().getRayGroundIntersection(this.terrain); //usamos getRayGroundIntersection por que es MUCHO mas rapido que getRayIntersection
+            Vector3 pointB = TerrainPickingRaySingleton.Instance.getRayGroundIntersection(this.terrain); //usamos getRayGroundIntersection por que es MUCHO mas rapido que getRayIntersection
             if (!GeneralMethods.isCloseTo(pointB, this.lastSelectionPoint))
             {
                 this.lastSelectionPoint = pointB; //guardamos la nueva posicion para en el proximo render volver a comparar
 
-                if (PickingRayHome.getInstance().terrainIntersection(this.terrain, out pointB))
+                if (TerrainPickingRaySingleton.Instance.terrainIntersection(this.terrain, out pointB))
                 {
                     float selectionBoxHeight = Math.Max(pointA.Y, pointB.Y) + SELECTION_BOX_HEIGHT;
 
@@ -63,7 +63,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
             if (GuiController.Instance.D3dInput.buttonUp(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
                 if(GeneralMethods.isCloseTo(pointA, pointB)){
-                    this.selection.selectCharactersByRay(PickingRayHome.getInstance().getRay());
+                    this.selection.selectCharactersByRay(TerrainPickingRaySingleton.Instance.Ray);
                 }
                 else
                 {
