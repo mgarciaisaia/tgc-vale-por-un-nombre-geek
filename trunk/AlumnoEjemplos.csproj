@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\FreeCamera.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\cono\ConoDeVision.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Walker.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\MovementPicking.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\MultipleSelection.cs" />
@@ -104,7 +105,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\target\TargeteablePosition.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Terrain.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Enemy.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\pruebas\Cono.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\cono\Cono.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\CrearCono.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaVision.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaMoverEnTerreno.cs" />

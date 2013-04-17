@@ -59,8 +59,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             enemigo = new Enemy(new Vector3(0,0,0));
 
 
-           
 
+
+            GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 1000, 500);
+            GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 360, 90);
+            GuiController.Instance.Modifiers.addBoolean("Cono", "Visible", false);
             GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox());
             GuiController.Instance.Modifiers.addVertex3f("posicionCaja", new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000), new Vector3(0, 0, -20));
 
@@ -75,6 +78,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 
         public override void render(float elapsedTime)
         {
+
+        
+          
+           enemigo.VisionAngle = (float)GuiController.Instance.Modifiers.getValue("AnguloVision");
+           enemigo.VisionRadius = (float)GuiController.Instance.Modifiers.getValue("RadioVision");
+           enemigo.ConeEnabled = (bool)GuiController.Instance.Modifiers.getValue("Cono");
+
            piso.render();
            enemigo.render(elapsedTime);
            caja.Position = (Vector3)GuiController.Instance.Modifiers.getValue("posicionCaja");

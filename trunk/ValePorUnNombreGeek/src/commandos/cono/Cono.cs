@@ -9,7 +9,7 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
 using TgcViewer.Utils.TgcGeometry;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 {
     
     class Cono
@@ -41,7 +41,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             get { return enabled; }
             set { enabled = value; }
         }
+
+        public bool AutoUpdateEnabled
+        {
+            get { return autoUpdateEnabled; }
+            set { autoUpdateEnabled = value; }
+        }
         private bool dirtyValues=true;
+        private bool autoUpdateEnabled;
 
         public bool AutoTransformEnable
         {
@@ -97,6 +104,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             this.translation = new Vector3(0, 0, 0);
             this.rotation = new Vector3(0, 0, 0);
             this.enabled = true;
+            this.autoUpdateEnabled = true;
             
             
         }
@@ -194,7 +202,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
               circunferencia[i] = new Vector3(
                         cradius*FastMath.Cos(theta),
                         cradius*FastMath.Sin(theta),
-                        radius
+                        -radius
                    );
            }
 
@@ -212,7 +220,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             Device d3dDevice = GuiController.Instance.D3dDevice;
 
             if(!enabled) return;
-            if (dirtyValues) updateValues();
+            if (dirtyValues || autoUpdateEnabled) updateValues();
+
          
 
             

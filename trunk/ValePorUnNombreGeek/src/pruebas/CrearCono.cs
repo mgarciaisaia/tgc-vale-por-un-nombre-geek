@@ -7,6 +7,7 @@ using Microsoft.DirectX.Direct3D;
 using System.Drawing;
 using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 {
@@ -53,7 +54,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             cono.Radius = (float)GuiController.Instance.Modifiers.getValue("Radius");
             cono.Angle = (float)GuiController.Instance.Modifiers.getValue("Angle");
             cono.Triangles = (int)GuiController.Instance.Modifiers.getValue("Triangles");
-            cono.updateValues();
+           
             cono.render();
 
         }
