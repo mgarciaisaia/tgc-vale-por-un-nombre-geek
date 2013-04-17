@@ -26,6 +26,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.terrain = _terrain;
         }
 
+        public Walker(Vector3 _position)
+            : base(getMesh(), getAnimations(), _position)
+        {
+           
+        }
+
+
         private static string[] getAnimations()
         {
             String myMediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\SkeletalAnimations\\BasicHuman\\Animations\\";
@@ -77,7 +84,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             this.personaje.playAnimation("Walk", true);
             this.personaje.move(direccion);
-            this.personaje.Position = this.terrain.getPosition(this.personaje.Position.X, this.personaje.Position.Z);
+            if(this.terrain!=null)this.personaje.Position = this.terrain.getPosition(this.personaje.Position.X, this.personaje.Position.Z);
 
             //nos fijamos si ya estamos en la posicion (o lo suficientemente cerca)
             if (GeneralMethods.isCloseTo(personaje.Position, this.target.getPosition()))

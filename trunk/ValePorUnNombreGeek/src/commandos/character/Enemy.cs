@@ -36,6 +36,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         }
 
+        public Enemy(Vector3 _position)
+            : base(_position)
+        {
+
+            crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);
+
+
+        }
+
+
         private void crearConoDeVision(float radius, float angle )
         {
             alturaCabeza = (this.personaje.BoundingBox.PMax.Y - this.personaje.BoundingBox.PMin.Y) * 9 / 10;
