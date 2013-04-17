@@ -60,6 +60,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         }
 
+        /// <summary>
+        /// Transforma coordenadas del mundo en coordenadas relativas del heightmap que no tienen en cuenta la escala.
+        /// </summary>
         public bool xzToHeightmapCoords(float x, float z, out Vector2 coords)
         {
             int i, j;
@@ -78,6 +81,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
 
 
+        /// <summary>
+        /// Transforma coordenadas relativas del heightmap en coordenadas del mundo.
+        /// </summary>
         public bool heightmapCoordsToXYZ(Vector2 coords, out  Vector3 XYZ)
         {
             int i = (int)coords.X;
@@ -99,18 +105,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
 
 
-
+        /// <summary>
+        /// Obtiene la altura de un punto.
+        /// </summary>
         public bool getY(float x, float z, out float y)
         {
             y = 0;
             Vector2 coords;
             if (!this.xzToHeightmapCoords(x, z, out coords)) return false;
 
-            Vector3 position;
-            if (!this.heightmapCoordsToXYZ(coords, out position)) return false;
-            //no tiene sentido llamar a dos funciones que por nombre hacen lo inverso...
+            
+            y = HeightmapData[(int)coords.X, (int)coords.Y] * scaleY;
 
-            y = position.Y;
             return true;
         }
 
