@@ -73,7 +73,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
 
 
-
+/*
         /// <summary>
         /// Transforma coordenadas relativas del heightmap en coordenadas del mundo.
         /// </summary>
@@ -81,11 +81,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         {
             int i = (int)coords.X;
             int j = (int)coords.Y;
-            //float x,z;
 
-            /*         i = (int)(x / scaleXZ + halfWidth);
-                         j = (int)(z / scaleXZ + halfLength);
-*/
             XYZ = Vector3.Empty;
             if (coords.X >= HeightmapData.GetLength(0) || coords.Y >= HeightmapData.GetLength(1) || coords.Y < 0 || coords.X < 0) return false;
 
@@ -96,10 +92,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
                  );
             return true;
         }
-
+*/
 
         /// <summary>
-        /// Obtiene la altura de un punto.
+        /// Obtiene la altura de un punto, si el punto pertenece al heightmap.
         /// </summary>
         public bool getY(float x, float z, out float y)
         {
@@ -113,6 +109,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             return true;
         }
 
+        /// <summary>
+        /// Obteniendo la altura de un punto, devuelve la posicion como una terna si el punto pertenece al heightmap.
+        /// </summary>
         public bool getPosition(float x, float z, out Vector3 ret)
         {
             //devuelve la posicion y true si es parte del heightmap
@@ -125,6 +124,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             return true;
         }
 
+        /// <summary>
+        /// Obteniendo la altura de un punto, devuelve la posicion como una terna, sea o no parte del heightmap.
+        /// </summary>
         public Vector3 getPosition(float x, float z)
         {
             //devuelve la posicion, sin fijarse si pertenece al heightmap
@@ -134,12 +136,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
 
 
+        /// <summary>
+        /// Devuelve el valor de Y mas bajo del mapa.
+        /// </summary>
         public float minY()
         {
             return this.Position.Y;
         }
 
-     
+        /// <summary>
+        /// Devuelve el valor de Y mas alto del mapa.
+        /// </summary>
+        public float maxY()
+        {
+            return 255 * this.scaleY;
+        }
+
 
         public void renderWireframe()
         {
@@ -155,9 +167,5 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             device.RenderState.FillMode = FillMode.Solid;
         }
 
-        public float maxY()
-        {
-            return 255 * this.scaleY;
-        }
     }
 }
