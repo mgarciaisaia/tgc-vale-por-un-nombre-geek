@@ -96,6 +96,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                 }
             }
 
+            /*Pablo: no se podria hacer un state?
+             * con tres estados:
+             * -llendo al waitpoint
+             * -esperando
+             * -(y proximamente) persiguiendo personaje
+            */
+
+
             base.update();  //Hago que se actualice la matriz de transformacion
 
 

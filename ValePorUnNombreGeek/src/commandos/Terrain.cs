@@ -55,7 +55,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         /// <summary>
         /// Transforma coordenadas del mundo en coordenadas relativas del heightmap que no tienen en cuenta la escala.
         /// </summary>
-        public bool xzToHeightmapCoords(float x, float z, out Vector2 coords)
+        private bool xzToHeightmapCoords(float x, float z, out Vector2 coords)
         {
             int i, j;
 
@@ -77,7 +77,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         /// <summary>
         /// Transforma coordenadas relativas del heightmap en coordenadas del mundo.
         /// </summary>
-        public bool heightmapCoordsToXYZ(Vector2 coords, out  Vector3 XYZ)
+        private bool heightmapCoordsToXYZ(Vector2 coords, out  Vector3 XYZ)
         {
             int i = (int)coords.X;
             int j = (int)coords.Y;
