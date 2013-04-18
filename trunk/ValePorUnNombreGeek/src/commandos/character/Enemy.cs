@@ -67,17 +67,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             return cono.colisionaCon(target);
         }
 
-        protected override void update()
-        {
-            watch();
 
-            goToTarget();
-                        
-        }
-
-        protected void watch()
+        protected bool watch()
         {
-            //Si ve a un commando lo setea como objetivo
+            //Si ve a un character lo setea como objetivo y devuelve true
+            return false;
         }
 
 
