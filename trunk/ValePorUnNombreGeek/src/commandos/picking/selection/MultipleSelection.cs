@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Collections;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.states;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
 {

@@ -10,6 +10,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek;
 using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.EscenarioRio
 {

@@ -5,6 +5,7 @@ using System.Text;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
 using TgcViewer;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 {

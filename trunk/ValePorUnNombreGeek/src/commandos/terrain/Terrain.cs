@@ -3,7 +3,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using TgcViewer;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
 {
     class Terrain : TgcSimpleTerrain
     {
@@ -20,7 +20,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         public float getScaleY() { return scaleY; }
 
 
-        public Terrain(string pathHeightmap, string pathTextura, float scaleXZ, float scaleY):base()
+        public Terrain(string pathHeightmap, string pathTextura, float scaleXZ, float scaleY)
+            :base()
         {
             this.loadHeightmap(pathHeightmap, scaleXZ, scaleY, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
@@ -43,7 +44,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
 
 
-        public new void loadHeightmap(string heightmapPath, float scaleXZ, float scaleY, Vector3 center)
+        private new void loadHeightmap(string heightmapPath, float scaleXZ, float scaleY, Vector3 center)
         {
             this.scaleXZ = scaleXZ;
             this.scaleY = scaleY;
@@ -97,7 +98,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         /// <summary>
         /// Obtiene la altura de un punto, si el punto pertenece al heightmap.
         /// </summary>
-        public bool getY(float x, float z, out float y)
+        public virtual bool getY(float x, float z, out float y)
         {
             y = 0;
             Vector2 coords;
@@ -152,8 +153,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             return 255 * this.scaleY;
         }
 
-
-        public void renderWireframe()
+        /*
+        private void renderWireframe()
         {
             Device device = GuiController.Instance.D3dDevice;
 
@@ -166,6 +167,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             //Restrablecemos modo solido
             device.RenderState.FillMode = FillMode.Solid;
         }
-
+        */
     }
 }
