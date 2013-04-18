@@ -25,6 +25,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                     GuiController.Instance.UserVars.addVar("WorldX");
                     GuiController.Instance.UserVars.addVar("WorldY");
                     GuiController.Instance.UserVars.addVar("WorldZ");
+                    GuiController.Instance.UserVars.addVar("hmX");
+                    GuiController.Instance.UserVars.addVar("hmY");
                 }
                 return instance;
             }
@@ -54,6 +56,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                         GuiController.Instance.UserVars.setValue("WorldX", position.X);
                         GuiController.Instance.UserVars.setValue("WorldY", position.Y);
                         GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
+
+                        Vector2 hmCoords;
+                        terrain.xzToHeightmapCoords(myPoint.X, myPoint.Z, out hmCoords);
+                        GuiController.Instance.UserVars.setValue("hmX", hmCoords.X);
+                        GuiController.Instance.UserVars.setValue("hmY", hmCoords.Y);
 
                         return true;
                     }

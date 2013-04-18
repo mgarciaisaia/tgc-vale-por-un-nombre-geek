@@ -56,7 +56,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         /// <summary>
         /// Transforma coordenadas del mundo en coordenadas relativas del heightmap que no tienen en cuenta la escala.
         /// </summary>
-        private bool xzToHeightmapCoords(float x, float z, out Vector2 coords)
+        public bool xzToHeightmapCoords(float x, float z, out Vector2 coords)
         {
             int i, j;
 
@@ -74,11 +74,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         }
 
 
-/*
+
         /// <summary>
         /// Transforma coordenadas relativas del heightmap en coordenadas del mundo.
         /// </summary>
-        private bool heightmapCoordsToXYZ(Vector2 coords, out  Vector3 XYZ)
+        public bool heightmapCoordsToXYZ(Vector2 coords, out  Vector3 XYZ)
         {
             int i = (int)coords.X;
             int j = (int)coords.Y;
@@ -93,7 +93,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
                  );
             return true;
         }
-*/
+
 
         /// <summary>
         /// Obtiene la altura de un punto, si el punto pertenece al heightmap.
