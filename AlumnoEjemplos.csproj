@@ -90,7 +90,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\FreeCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\characterRepresentation\EnemyRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\characterRepresentation\ICharacterRepresentation.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\character\characterRepresentation\SkeletalCharacter.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\character\characterRepresentation\SkeletalRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\cono\ConoDeVision.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Walker.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\MovementPicking.cs" />

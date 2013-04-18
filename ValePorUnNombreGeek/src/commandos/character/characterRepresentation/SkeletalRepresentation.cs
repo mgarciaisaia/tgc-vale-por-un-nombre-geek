@@ -9,7 +9,7 @@ using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation
 {
-    class SkeletalCharacter : AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation.ISkeletalCharacter
+    class SkeletalRepresentation : ICharacterRepresentation
     {
         TgcSkeletalMesh mesh;
         private bool selected;
@@ -62,7 +62,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
 
       
-        public SkeletalCharacter(Vector3 position)
+        public SkeletalRepresentation(Vector3 position)
         {
 
             TgcSkeletalLoader skeletalLoader = new TgcSkeletalLoader();

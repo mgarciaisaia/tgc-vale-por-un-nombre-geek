@@ -3,7 +3,7 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation
 {
-    interface ISkeletalCharacter
+    interface ICharacterRepresentation
     {
         
              

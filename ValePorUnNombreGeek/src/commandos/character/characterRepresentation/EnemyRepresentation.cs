@@ -7,7 +7,7 @@ using Microsoft.DirectX;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation
 {
-    class EnemyRepresentation:SkeletalCharacter
+    class EnemyRepresentation:SkeletalRepresentation
     {
 
         public EnemyRepresentation(Vector3 position)
