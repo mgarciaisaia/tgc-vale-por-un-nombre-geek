@@ -6,9 +6,14 @@ using Microsoft.DirectX;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target
 {
-    interface Targeteable //TODO ponerle un nombre lindo! no sabia como ponerle!
+    interface ITargeteable //TODO ponerle un nombre lindo! no sabia como ponerle!
     {
-        Vector3 getPosition();
+         Vector3 Position
+        {
+
+            get;
+            set;
+        }
 
         //esta interfaz solo existe para poder luego implementar persecucion entre personajes.
     }

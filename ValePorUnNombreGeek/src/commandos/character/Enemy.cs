@@ -10,6 +10,7 @@ using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -45,11 +46,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         }
 
+        protected override void loadCharacterRepresentation(Vector3 position)
+        {
+            this.representation = new EnemyRepresentation(position);
+        }
+
 
         private void crearConoDeVision(float radius, float angle )
         {
-            alturaCabeza = (this.personaje.BoundingBox.PMax.Y - this.personaje.BoundingBox.PMin.Y) * 9 / 10;
-            cono = new ConoDeVision(new Vector3(this.getPosition().X, this.getPosition().Y + alturaCabeza, this.getPosition().Z), radius, angle);
+            alturaCabeza = (this.representation.BoundingBox.PMax.Y - this.representation.BoundingBox.PMin.Y) * 9 / 10;
+            cono = new ConoDeVision(new Vector3(this.Position.X, this.Position.Y + alturaCabeza, this.Position.Z), radius, angle);
             //cono.Enabled = false;
             cono.AutoTransformEnable = false;
         }
@@ -59,11 +65,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Waitpoints = waitpoints;
             crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);
         }
-        protected new static string getMesh()
-        {
-            return GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\" + "CS_Arctic-TgcSkeletalMesh.xml";
-      
-        }
+       
 
         public bool puedeVer(TgcBox target)
         {
@@ -87,7 +89,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                         this.setPositionTarget(waitpoints[currentWaitpoint]);
                     }
                 }
-                else if (GeneralMethods.isCloseTo(this.getPosition(),(waitpoints[currentWaitpoint])))
+                else if (GeneralMethods.isCloseTo(this.Position,(waitpoints[currentWaitpoint])))
                 { //Si llego a un waitpoint, esperar.
                     waiting = true;
                     waitingTime = 0;
@@ -98,7 +100,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
 
             //Aplico las mismas modificaciones al cono(mas la modificacion para la altura)
-            this.cono.Transform = this.personaje.Transform * Matrix.Translation(new Vector3(0,alturaCabeza,0));
+            this.cono.Transform = this.representation.Transform * Matrix.Translation(new Vector3(0,alturaCabeza,0));
             cono.renderWireframe();
         }
 
@@ -111,7 +113,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public bool ConeEnabled { get { return cono.Enabled; } set { cono.Enabled = value; } }
 
-        public Vector3[] Waitpoints { get { return waitpoints; } set { waitpoints = value; currentWaitpoint = 0; this.personaje.Position = waitpoints[0]; waitingTime = 0; } }
+        public Vector3[] Waitpoints { get { return waitpoints; } set { waitpoints = value; currentWaitpoint = 0; this.representation.Position = waitpoints[0]; waitingTime = 0; } }
     }
 
 
