@@ -18,6 +18,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         Vector3 Position { get; set; }
         Matrix Transform { get; set; }
         Vector3 Rotation { get; set; }
+        Vector3 Scale { get; set; }
         bool AutoTransformEnable { get; set; }
 
         TgcBoundingBox BoundingBox { get; }

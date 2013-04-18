@@ -47,6 +47,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             set { this.mesh.Transform = value; }
         }
 
+        public Vector3 Scale
+        {
+            get { return this.mesh.Scale; }
+            set { this.mesh.Scale = value; }
+        }
+
         public Vector3 Rotation
         {
             get { return this.mesh.Rotation; }
