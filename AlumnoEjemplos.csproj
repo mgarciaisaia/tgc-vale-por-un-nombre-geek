@@ -110,6 +110,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Enemy.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\cono\Cono.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\CrearCono.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\pruebas\escenarioRio.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaVision.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaMoverPersonaje.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\Utils.cs" />
@@ -142,10 +143,10 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\bigheightmap.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\heightmap.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\Heightmap3.jpg" />
-    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\hmrio.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\HeightmapRio.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\TerrainTexture3.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\TerrainTexture5.jpg" />
-    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\texrio.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\TerrainRioTexture.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Animaciones\nadar-TgcKeyFrameAnim.xml" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Animaciones\quieto-TgcKeyFrameAnim.xml" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Music\UWSDWF.mp3" />
