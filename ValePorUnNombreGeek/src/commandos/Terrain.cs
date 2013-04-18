@@ -44,7 +44,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             this.loadHeightmap(pathHeightmap, 20f, 1f, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
 
-            GuiController.Instance.Modifiers.addBoolean("TerrainWireframe", "Visible", false);
         }
 
 
@@ -142,16 +141,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
 
 
-
-
-        public new void render()
+        public float minY()
         {
-            if ((bool)GuiController.Instance.Modifiers.getValue("TerrainWireframe"))
-            {
-                this.renderWireframe();
-            }
-            else base.render();
+            return this.Position.Y;
         }
+
+     
 
         public void renderWireframe()
         {
@@ -165,6 +160,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
             //Restrablecemos modo solido
             device.RenderState.FillMode = FillMode.Solid;
+        }
+
+        public float maxY()
+        {
+            return 255 * this.scaleY;
         }
     }
 }

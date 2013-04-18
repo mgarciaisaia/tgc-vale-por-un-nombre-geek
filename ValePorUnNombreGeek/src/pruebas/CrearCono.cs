@@ -17,10 +17,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
     /// </summary>
     public class ConoVertexBuffer : TgcExample
     {
-
-        //Vertex buffer que se va a utilizar
-        VertexBuffer vertexBuffer;
-
         public override string getCategory()
         {
             return "AlumnoEjemplos";

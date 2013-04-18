@@ -94,11 +94,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                 }
             }
 
-            base.update();
+            base.update();  //Hago que se actualice la matriz de transformacion
 
 
-            this.cono.Transform = this.personaje.Transform * Matrix.Translation(new Vector3(0,alturaCabeza,0)); //Hacer que el cono se mueva con el personaje
-            cono.render();
+            //Aplico las mismas modificaciones al cono(mas la modificacion para la altura)
+            this.cono.Transform = this.personaje.Transform * Matrix.Translation(new Vector3(0,alturaCabeza,0));
+            cono.renderWireframe();
         }
 
 
