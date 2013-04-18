@@ -7,6 +7,7 @@ using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
 using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {

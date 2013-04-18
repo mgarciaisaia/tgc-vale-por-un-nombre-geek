@@ -11,6 +11,7 @@ using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {

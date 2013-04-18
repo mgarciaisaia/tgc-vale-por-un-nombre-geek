@@ -8,6 +8,7 @@ using TgcViewer;
 using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using System;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -62,6 +63,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             sky = new Sky();
 
             //Cargar HeightMap
+            //terrain = new Terrain();
             terrain = new Terrain();
 
 
