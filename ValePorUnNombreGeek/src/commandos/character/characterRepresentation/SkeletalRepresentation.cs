@@ -11,7 +11,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 {
     class SkeletalRepresentation : ICharacterRepresentation
     {
-        TgcSkeletalMesh mesh;
+        protected TgcSkeletalMesh mesh;
         private bool selected;
 
         public bool Selected
@@ -20,7 +20,73 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             get { return selected; }
             set { this.selected = value; }
         }
+             
+              
+        public SkeletalRepresentation(Vector3 position)
+        {
 
+            TgcSkeletalLoader skeletalLoader = new TgcSkeletalLoader();
+            this.mesh = skeletalLoader.loadMeshAndAnimationsFromFile(
+                getMesh(),
+                getAnimations());
+
+            this.mesh.playAnimation("StandBy", true);
+            this.mesh.Position = position;
+
+
+        }
+
+        protected virtual string getMesh()
+        {
+            return GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\" + "BasicHuman-TgcSkeletalMesh.xml";
+        }
+
+        protected virtual string[] getAnimations()
+        {
+            String myMediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\SkeletalAnimations\\BasicHuman\\Animations\\";
+            String exMediaDir = GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\";
+            return new string[] { 
+                    exMediaDir + "Walk-TgcSkeletalAnim.xml",
+                    exMediaDir + "StandBy-TgcSkeletalAnim.xml",
+                    exMediaDir + "Jump-TgcSkeletalAnim.xml",
+                    myMediaDir + "Die-TgcSkeletalAnim.xml"
+                };
+        }
+
+  
+        public void render()
+        {
+            this.mesh.animateAndRender();
+            if (this.Selected) this.mesh.BoundingBox.render();
+        }
+
+
+        public void dispose()
+        {
+            this.mesh.dispose();
+        }
+
+        //Animaciones
+
+        public void standBy()
+        {
+            this.mesh.playAnimation("StandBy", true);
+        }
+
+
+        public void die()
+        {
+            this.mesh.playAnimation("Die", false);
+        }
+
+     
+        public void walk()
+        {
+            this.mesh.playAnimation("Walk", true);
+        }
+
+
+        //Wrappers de SkeletalMesh
         public Vector3 Position
         {
 
@@ -66,71 +132,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             set { this.mesh.AutoTransformEnable = value; }
         }
 
-
-      
-        public SkeletalRepresentation(Vector3 position)
-        {
-
-            TgcSkeletalLoader skeletalLoader = new TgcSkeletalLoader();
-            this.mesh = skeletalLoader.loadMeshAndAnimationsFromFile(
-                getMesh(),
-                getAnimations());
-
-            this.mesh.playAnimation("StandBy", true);
-            this.mesh.Position = position;
-
-
-        }
-
-        protected virtual string getMesh()
-        {
-            return GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\" + "BasicHuman-TgcSkeletalMesh.xml";
-        }
-
-        protected virtual string[] getAnimations()
-        {
-            String myMediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\SkeletalAnimations\\BasicHuman\\Animations\\";
-            String exMediaDir = GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\";
-            return new string[] { 
-                    exMediaDir + "Walk-TgcSkeletalAnim.xml",
-                    exMediaDir + "StandBy-TgcSkeletalAnim.xml",
-                    exMediaDir + "Jump-TgcSkeletalAnim.xml",
-                    myMediaDir + "Die-TgcSkeletalAnim.xml"
-                };
-        }
-
-  
-        public void render()
-        {
-            this.mesh.animateAndRender();
-            if (this.Selected) this.mesh.BoundingBox.render();
-        }
-
-        public void die()
-        {
-            this.mesh.playAnimation("Die", false);
-        }
-
-     
-        public void walk()
-        {
-            this.mesh.playAnimation("Walk", true);
-        }
-
         public void move(Vector3 direction)
         {
             this.mesh.move(direction);
         }
 
-        public void standBy()
-        {
-            this.mesh.playAnimation("StandBy", true);
+        public  void moveOrientedY(float movement ){
+            
+            mesh.moveOrientedY(movement);
+
         }
 
-        public void dispose()
-        {
-            this.mesh.dispose();
-        }
+
+
+      
+
 
     }
 }

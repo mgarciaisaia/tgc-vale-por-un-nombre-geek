@@ -5,8 +5,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 {
     interface ICharacterRepresentation
     {
-        
-             
+                    
         void die();
         void standBy();
         void walk();
@@ -14,6 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         bool Selected { get; set; }
 
         void move(Vector3 direction);
+        void moveOrientedY(float movement);
 
         Vector3 Position { get; set; }
         Matrix Transform { get; set; }
