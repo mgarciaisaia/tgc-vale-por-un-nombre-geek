@@ -18,7 +18,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
        
         
         private bool dead;
-        protected SkeletalCharacter representation;
+        protected ICharacterRepresentation representation;
 
         public Vector3 Position
         {
@@ -58,7 +58,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         //Sobreescribible para que los hijos puedan usar otra representacion
         protected virtual void loadCharacterRepresentation(Vector3 position)
         {
-            this.representation = new SkeletalCharacter(position);
+            this.representation = new SkeletalRepresentation(position);
         }
 
         public void render(float elapsedTime)
