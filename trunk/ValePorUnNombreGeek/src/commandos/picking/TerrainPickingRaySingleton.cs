@@ -36,11 +36,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
         public bool terrainIntersection(Terrain terrain, out Vector3 position)
         {
             //Version que va "de la tierra al cielo" -> beneficia ENORMEMENTE picking en terrenos bajos
-            instance.updateRay();
+            this.updateRay();
 
             Vector3 myPoint;
             float terrainY;
-            float i0 = (terrain.Position.Y - instance.Ray.Origin.Y) / instance.Ray.Direction.Y;
+            float i0 = (terrain.Position.Y - this.Ray.Origin.Y) / this.Ray.Direction.Y;
             float i = i0;
             Vector2 coords;
             while (true)
@@ -62,7 +62,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                         return true;
                     }
                 }
-                else if (myPoint.Y >= 255 * terrain.getScaleY())
+                else if (myPoint.Y >= terrain.maxY() || myPoint.Y < terrain.minY())
                 {
                     //ya nos estamos llendo al cielo...
                     position = Vector3.Empty;

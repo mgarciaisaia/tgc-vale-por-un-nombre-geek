@@ -14,16 +14,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
     
     class Cono
     {
-        private const int DEFAULT_TRIANGLES = 24;
-        private const float DEFAULT_ANGLE = 30;
-        private const float DEFAULT_RADIUS = 10;
+        protected const int DEFAULT_TRIANGLES = 24;
+        protected const float DEFAULT_ANGLE = 30;
+        protected const float DEFAULT_RADIUS = 10;
 
-        VertexBuffer vertexBuffer;
-        Vector3[] circunferencia;
+        protected VertexBuffer vertexBuffer;
+        protected Vector3[] circunferencia;
        
         CustomVertex.PositionColored[] vertices;
-        float angle, radius;
-        int triangles;
+        protected float angle, radius;
+        protected int triangles;
         private bool autoTransformEnable;
       
         private Matrix transform;
@@ -185,7 +185,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
         }
 
-        private void crearCircunferencia(float cradius,int cantPuntos)
+        protected virtual void crearCircunferencia(float cradius,int cantPuntos)
         {
  	       float theta;
            float dtheta = 2*FastMath.PI/cantPuntos;
@@ -209,7 +209,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         }
 
 
-
+        public virtual void renderWireframe()
+        {
+            Device d3dDevice = GuiController.Instance.D3dDevice;
+            d3dDevice.RenderState.FillMode = FillMode.WireFrame;
+            this.render();
+            d3dDevice.RenderState.FillMode = FillMode.Solid;
+        }
 
 
         public virtual void render()
@@ -242,7 +248,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
 
             vertexBuffer.SetData(vTrans, 0, LockFlags.None);
-
+            
             //Especificar formato de triangulos
             d3dDevice.VertexFormat = CustomVertex.PositionColored.Format;
             //Cargar VertexBuffer a renderizar

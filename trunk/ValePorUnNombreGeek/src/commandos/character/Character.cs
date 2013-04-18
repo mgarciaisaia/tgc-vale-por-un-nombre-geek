@@ -29,7 +29,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             this.personaje.playAnimation("StandBy", true);
             this.personaje.Position = _position;
-
+            
             this.selected = false;
             this.dead = false;
         }
