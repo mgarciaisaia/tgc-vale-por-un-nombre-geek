@@ -70,8 +70,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Crear personajes seleccionables
             List<Character> selectableCharacters = new List<Character>();
-            selectableCharacters.Add(new Walker(terrain.getPosition(-200, 200), terrain));
-            selectableCharacters.Add(new Walker(terrain.getPosition(200, 200), terrain));
+            selectableCharacters.Add(new Character(terrain.getPosition(-200, 200), terrain));
+            selectableCharacters.Add(new Character(terrain.getPosition(200, 200), terrain));
 
             //Seleccion multiple
             selection = new MultipleSelection(this.terrain, selectableCharacters);
@@ -110,7 +110,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             Vector3 pickingPosition;
             if (picking.thereIsPicking(out pickingPosition))
             {
-                foreach (Walker ch in selection.getSelectedCharacters())
+                foreach (Character ch in selection.getSelectedCharacters())
                 {
                     ch.setPositionTarget(pickingPosition);
                 }
