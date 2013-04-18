@@ -40,6 +40,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             return false;
         }
 
+        /* Para crear elipse en vez de circunferencia. Se ve mejor pero es mas dificil calcular colision.
         protected override void crearCircunferencia(float radiusA, int cantPuntos)
         {
             float theta;
@@ -59,7 +60,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
                           -radius
                      );
             }
-        }
+        }*/
        
     }
 
