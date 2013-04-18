@@ -12,12 +12,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
     {
 
         public Vector3[] waitpoints;
-        public Vector3[] Waitpoints { get { return waitpoints; } set { waitpoints = value; currentWaitpoint = 0; this.representation.Position = waitpoints[0]; waitingTime = 0; } }
+        public Vector3[] Waitpoints { 
+            get { return waitpoints; } 
+            set { 
+                waitpoints = value; 
+                currentWaitpoint = 0; 
+                this.representation.Position = waitpoints[0]; 
+                waitingTime = 0; 
+                waiting = true; } 
+        }
  
         public int maxWaitingTime = 5;
         private float waitingTime;
         private bool waiting = false;
-        private bool chasing = false;
         private int currentWaitpoint;
 
         public Soldier(Vector3[] waitpoints, Terrain _terrain)
@@ -28,15 +35,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
         protected override void update()
         {
-            watch();
-            if(!this.hasTarget()) recorrerWaitpoints();
-            goToTarget();
+
+            if (this.watch())
+            {
+                waiting = false;
+                chase();
+
+            }
+            else
+            {
+                recorrerWaitpoints();
+            }
+           
         }
 
-        private void recorrerWaitpoints()
+          private void recorrerWaitpoints()
         {
-            if (waitpoints != null && !chasing) //Si no esta persiguiendo
+            if (waitpoints != null) 
             {
+
                 if (waiting)
                 {
                     //Si espero suficiente tiempo, fijar el proximo waitpoint como objetivo
@@ -48,11 +65,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                         this.setPositionTarget(waitpoints[currentWaitpoint]);
                     }
                 }
-                else if (GeneralMethods.isCloseTo(this.Position, (waitpoints[currentWaitpoint])))
-                { //Si llego a un waitpoint, esperar.
-                    waiting = true;
-                    waitingTime = 0;
-                }
+                else
+                {
+                    this.setPositionTarget(waitpoints[currentWaitpoint]);
+                    goToTarget();
+                    if (!this.hasTarget())
+                    { //Si llego a un waitpoint, esperar.
+                        waiting = true;
+                        waitingTime = 0;
+                    }
+                } 
             }
 
             /*Pablo: no se podria hacer un state?
@@ -64,5 +86,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
              * Daniela: si
             */
         }
+
+          protected void chase()
+          {
+              goToTarget();
+              /*
+               * if(jugador esta a distancia de asesinato){
+               *       jugador.die()
+               * }
+               */
+          }
+    
     }
 }
