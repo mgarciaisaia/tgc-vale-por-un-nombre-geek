@@ -16,7 +16,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
    
-    class Enemy : Walker
+    class Enemy : Character
     {
         private ConoDeVision cono;
 
