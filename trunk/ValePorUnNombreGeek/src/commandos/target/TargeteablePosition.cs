@@ -6,23 +6,28 @@ using Microsoft.DirectX;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target
 {
-    class TargeteablePosition : Targeteable
+    class TargeteablePosition : ITargeteable
     {
         private Vector3 position;
+
+
+        public Vector3 Position
+        {
+            get { return this.position;}
+            set { this.position = value; }
+        }
 
         public TargeteablePosition(float x, float y, float z)
         {
             this.position = new Vector3(x, y, z);
         }
 
-        public TargeteablePosition(Vector3 pos)
+        public TargeteablePosition(Vector3 p)
         {
-            this.position = pos;
+            this.position = p;
         }
+       
+       
 
-        public Vector3 getPosition()
-        {
-            return this.position;
-        }
     }
 }

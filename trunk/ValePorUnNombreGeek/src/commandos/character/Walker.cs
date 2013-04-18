@@ -12,7 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
     class Walker : Character
     {
-        private Targeteable target;
+        private ITargeteable target;
         private Terrain terrain;
 
 
@@ -21,34 +21,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
          * ***************************************/
 
         public Walker(Vector3 _position, Terrain _terrain)
-            : base(getMesh(), getAnimations(), _position)
+            : base(_position)
         {
             this.terrain = _terrain;
         }
 
         public Walker(Vector3 _position)
-            : base(getMesh(), getAnimations(), _position)
+            : base(_position)
         {
            
         }
 
 
-        private static string[] getAnimations()
-        {
-            String myMediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\SkeletalAnimations\\BasicHuman\\Animations\\";
-            String exMediaDir = GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\";
-            return new string[] { 
-                    exMediaDir + "Walk-TgcSkeletalAnim.xml",
-                    exMediaDir + "StandBy-TgcSkeletalAnim.xml",
-                    exMediaDir + "Jump-TgcSkeletalAnim.xml",
-                    myMediaDir + "Die-TgcSkeletalAnim.xml"
-                };
-        }
-
-        protected static string getMesh()
-        {
-            return GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\" + "BasicHuman-TgcSkeletalMesh.xml";
-        }
+     
 
         /*****************************************
          * UPDATE & RENDER
@@ -57,11 +42,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected override void update()
         {
             if (this.hasTarget()) this.goToTarget();
-            if (this.selected && this.hasTarget())
+            if (this.Selected && this.hasTarget())
             {
                 //marcamos hacia donde vamos
                 TgcBox marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
-                marcaDePicking.Position = this.target.getPosition();
+                marcaDePicking.Position = this.target.Position;
                 marcaDePicking.render();
             }
         }
@@ -79,22 +64,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private void goToTarget()
         {
             //primero nos movemos
-            Vector3 direccion = this.target.getPosition() - this.personaje.Position;
+            Vector3 direccion = this.target.Position - this.representation.Position;
             direccion = direccion * (1 / direccion.Length());
 
-            this.personaje.playAnimation("Walk", true);
-            this.personaje.move(direccion);
-            if(this.terrain!=null)this.personaje.Position = this.terrain.getPosition(this.personaje.Position.X, this.personaje.Position.Z);
+            this.representation.walk();
+            this.representation.move(direccion);
+            if(this.terrain!=null)this.representation.Position = this.terrain.getPosition(this.representation.Position.X, this.representation.Position.Z);
 
             //nos fijamos si ya estamos en la posicion (o lo suficientemente cerca)
-            if (GeneralMethods.isCloseTo(personaje.Position, this.target.getPosition()))
+            if (GeneralMethods.isCloseTo(representation.Position, this.target.Position))
             {
-                this.personaje.playAnimation("StandBy", true);
+                this.representation.standBy();
                 this.target = null;
             }
         }
 
-        private void setTarget(Targeteable _target)
+        private void setTarget(ITargeteable _target)
         {
             this.target = _target;
         }
