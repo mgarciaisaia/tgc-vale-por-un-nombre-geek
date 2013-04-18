@@ -11,7 +11,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class StaticCamera
     {
-        public static int ANCHO_DESPLAZAMIENTO = 50;
+        public static int ANCHO_DESPLAZAMIENTO = 100;
 
         public StaticCamera(Vector3 _posInicial)
         {
