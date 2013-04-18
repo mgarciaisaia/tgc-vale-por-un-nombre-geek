@@ -15,10 +15,10 @@
     <void property="methods">
      <void property="text">
       <string>+setTarget(Targeteable)
+#loadCharacterRepresentation(Position)
 +render(elapsedTime)
 #update(elapsedTime)
-#loadCharacterRepresentation(Position)
--goToPosition(Point)
+#goToTarget(Point)
 +die()</string>
      </void>
     </void>
@@ -92,7 +92,9 @@
       <string>#update()
 
 +setWaitpoints(Point[])
--chase(Character)
+-recorrerWaitpoints()
+-chase()
+
 
 
 </string>
@@ -173,7 +175,8 @@ direction</string>
    <object class="com.horstmann.violet.ClassNode" id="ClassNode4">
     <void property="methods">
      <void property="text">
-      <string>#update(elapsedTime)
+      <string>+render(elapsedTime)
+#update(elapsedTime)
 #loadCharacterRepresentation(Position)
 +watch()</string>
      </void>
@@ -277,19 +280,19 @@ Targeteable</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double7"/>
-      <double>836.4142135623731</double>
+      <double>824.4142135623731</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double7"/>
-      <double>453.82337649086287</double>
+      <double>471.82337649086287</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>836.4142135623731</double>
-     <double>453.82337649086287</double>
+     <double>824.4142135623731</double>
+     <double>471.82337649086287</double>
     </void>
    </object>
   </void>
