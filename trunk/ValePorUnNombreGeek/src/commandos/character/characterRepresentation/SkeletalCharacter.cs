@@ -31,7 +31,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         public TgcBoundingBox BoundingBox
         {
             get { return this.mesh.BoundingBox; }
-            
+            set { this.mesh.BoundingBox = value; }
         }
 
         public bool Enabled
