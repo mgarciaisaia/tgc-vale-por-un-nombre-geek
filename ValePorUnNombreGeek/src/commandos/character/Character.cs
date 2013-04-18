@@ -21,7 +21,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private bool dead;
         protected ICharacterRepresentation representation;
         private ITargeteable target;
-        private Terrain terrain;
+        protected Terrain terrain;
 
 
         public Vector3 Position
@@ -65,18 +65,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.dead = false;
         }
 
+
+
         //Sobreescribible para que los hijos puedan usar otra representacion
         protected virtual void loadCharacterRepresentation(Vector3 position)
         {
             this.representation = new SkeletalRepresentation(position);
         }
 
-        public virtual void render(float elapsedTime)
-        {
-            this.update();
 
-            representation.render();
-        }
 
       
         public void die()
@@ -100,7 +97,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         protected virtual void update()
         {
-            if (this.hasTarget()) this.goToTarget();
+            goToTarget();
+        }
+
+
+        public virtual void render(float elapsedTime)
+        {
+            update();
+
             if (this.Selected && this.hasTarget())
             {
                 //marcamos hacia donde vamos
@@ -108,6 +112,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                 marcaDePicking.Position = this.target.Position;
                 marcaDePicking.render();
             }
+
+            representation.render();
         }
 
 
@@ -115,13 +121,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
          * TARGET
          * ***************************************/
 
-        private bool hasTarget()
+        protected bool hasTarget()
         {
             return this.target != null;
         }
 
-        private void goToTarget()
+        protected void goToTarget()
         {
+
+            if (!this.hasTarget()) return;
+
             //primero nos movemos
             Vector3 direccion = this.target.Position - this.representation.Position;
             direccion = direccion * (1 / direccion.Length());

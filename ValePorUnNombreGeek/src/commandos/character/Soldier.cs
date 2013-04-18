@@ -28,9 +28,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
         protected override void update()
         {
-
-            recorrerWaitpoints();
-            base.update();
+            watch();
+            if(!this.hasTarget()) recorrerWaitpoints();
+            goToTarget();
         }
 
         private void recorrerWaitpoints()
