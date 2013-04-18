@@ -21,7 +21,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 {
                     instance = new TerrainPickingRaySingleton();
                     
-                    GuiController.Instance.UserVars.addVar("HeightmapCoords");
+                    //GuiController.Instance.UserVars.addVar("HeightmapCoords"); //sigo insistiendo, esto no deberia existir.
+                    //las coordenadas del heightmap son problema del heightmap. todo se deberia tratar en terminos de coordenadas del mundo
                     GuiController.Instance.UserVars.addVar("WorldCoords");
                 }
                 return instance;
@@ -38,21 +39,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
             float terrainY;
             float i0 = (terrain.Position.Y - this.Ray.Origin.Y) / this.Ray.Direction.Y;
             float i = i0;
-            Vector2 coords;
             while (true)
             {
                 myPoint = this.Ray.Origin + i * this.Ray.Direction;
 
-                if (terrain.xzToHeightmapCoords(myPoint.X, myPoint.Z, out coords))
+                if (terrain.getY(myPoint.X, myPoint.Z, out terrainY))
                 {
-                    terrainY = terrain.HeightmapData[(int)coords.X, (int) coords.Y] * terrain.getScaleY();
-                   
                     if (GeneralMethods.isCloseTo(myPoint.Y, terrainY))
                     {
                         //encontramos el punto de interseccion
                         position = myPoint;
 
-                        GuiController.Instance.UserVars.setValue("HeightmapCoords", coords);
+                        //GuiController.Instance.UserVars.setValue("HeightmapCoords", coords);
                         GuiController.Instance.UserVars.setValue("WorldCoords", position);
 
                         return true;
