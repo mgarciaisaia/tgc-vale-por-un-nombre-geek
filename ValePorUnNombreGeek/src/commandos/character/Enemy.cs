@@ -19,12 +19,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
     class Enemy : Walker
     {
         private ConoDeVision cono;
-        public Vector3[] waitpoints;
-        public int maxWaitingTime = 5;
-        private float waitingTime;
-        private bool waiting=false;
-        private bool chasing=false;
-        private int currentWaitpoint;
+
+     
         private float alturaCabeza;
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 60;
@@ -60,12 +56,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             //cono.Enabled = false;
             cono.AutoTransformEnable = false;
         }
-        public Enemy(Vector3[] waitpoints, Terrain _terrain)
-            : base(waitpoints[0], _terrain)
-        {
-            this.Waitpoints = waitpoints;
-            crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);
-        }
+
        
 
         public bool puedeVer(TgcBox target)
@@ -77,46 +68,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected override void update()
         {
 
-            if (waitpoints != null && !chasing) //Si no esta persiguiendo
-            {
-                if (waiting)
-                {  
-                    //Si espero suficiente tiempo, fijar el proximo waitpoint como objetivo
-                    waitingTime += GuiController.Instance.ElapsedTime;
-                    if (waitingTime > maxWaitingTime)
-                    {
-                        currentWaitpoint = (currentWaitpoint + 1) % waitpoints.Length;
-                        waiting = false;
-                        this.setPositionTarget(waitpoints[currentWaitpoint]);
-                    }
-                }
-                else if (GeneralMethods.isCloseTo(this.Position,(waitpoints[currentWaitpoint])))
-                { //Si llego a un waitpoint, esperar.
-                    waiting = true;
-                    waitingTime = 0;
-                }
-            }
-
-            /*Pablo: no se podria hacer un state?
-             * con tres estados:
-             * -llendo al waitpoint
-             * -esperando
-             * -(y proximamente) persiguiendo personaje
-             * 
-             * Daniela: si
-            */
+         
 
 
             base.update();  //Hago que se actualice la matriz de transformacion
 
 
-            //Aplico las mismas modificaciones al cono(mas la modificacion para la altura)
-            this.cono.Transform = this.representation.Transform * Matrix.Translation(new Vector3(0,alturaCabeza,0));
-            cono.renderWireframe();
+            
         }
 
 
-        
+        public override void render(float elapsedTime) 
+        {
+            base.render(elapsedTime);
+            //Aplico las mismas modificaciones al cono(mas la modificacion para la altura). En la nueva version del cono se van a aplicar solas.
+            this.cono.Transform = this.representation.Transform * Matrix.Translation(new Vector3(0, alturaCabeza, 0));
+            cono.renderWireframe();
+        }
 
         public float VisionAngle { get { return cono.Angle; } set { cono.Angle = value; } }
 
@@ -124,8 +92,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public bool ConeEnabled { get { return cono.Enabled; } set { cono.Enabled = value; } }
 
-        public Vector3[] Waitpoints { get { return waitpoints; } set { waitpoints = value; currentWaitpoint = 0; this.representation.Position = waitpoints[0]; waitingTime = 0; } }
-    }
+        }
 
 
     /* class EnemyFactory : TgcSkeletalLoader.IMeshFactory
