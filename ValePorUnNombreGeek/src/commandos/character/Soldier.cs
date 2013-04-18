@@ -90,11 +90,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
           protected void chase()
           {
               goToTarget();
-              /*
-               * if(jugador esta a distancia de asesinato){
-               *       jugador.die()
-               * }
-               */
+              //Intentar matarlo(?)
           }
     
     }
