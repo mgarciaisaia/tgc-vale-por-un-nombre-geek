@@ -24,6 +24,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private float alturaCabeza;
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 60;
+        public float VisionAngle { get { return cono.Angle; } set { cono.Angle = value; } }
+        public float VisionRadius { get { return cono.Radius; } set { cono.Radius = value; } }
+        public bool ConeEnabled { get { return cono.Enabled; } set { cono.Enabled = value; } }
 
         public Enemy(Vector3 _position, Terrain _terrain)
             : base(_position, _terrain)
@@ -31,7 +34,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);
             
-
         }
 
         public Enemy(Vector3 _position)
@@ -59,7 +61,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
        
 
-        public bool puedeVer(TgcBox target)
+        public bool canSee(TgcBox target)
         {
             
             return cono.colisionaCon(target);
@@ -67,14 +69,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         protected override void update()
         {
+            watch();
 
-         
+            goToTarget();
+                        
+        }
 
-
-            base.update();  //Hago que se actualice la matriz de transformacion
-
-
-            
+        protected void watch()
+        {
+            //Si ve a un commando lo setea como objetivo
         }
 
 
@@ -86,21 +89,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             cono.renderWireframe();
         }
 
-        public float VisionAngle { get { return cono.Angle; } set { cono.Angle = value; } }
-
-        public float VisionRadius { get { return cono.Radius; } set { cono.Radius = value; } }
-
-        public bool ConeEnabled { get { return cono.Enabled; } set { cono.Enabled = value; } }
+       
 
         }
 
 
-    /* class EnemyFactory : TgcSkeletalLoader.IMeshFactory
-    {
-        public TgcSkeletalMesh createNewMesh(Mesh d3dMesh, string meshName, TgcSkeletalMesh.MeshRenderType renderType, TgcSkeletalBone[] bones)
-        {
-            return new Enemy(d3dMesh, meshName, renderType, bones);
-        }
-    }*/
 
 }

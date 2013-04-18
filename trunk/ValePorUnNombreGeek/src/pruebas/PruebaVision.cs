@@ -87,7 +87,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
            piso.render();
            enemigo.render(elapsedTime);
            caja.Position = (Vector3)GuiController.Instance.Modifiers.getValue("posicionCaja");
-           if (enemigo.puedeVer(caja)) caja.Color = Color.Green; else caja.Color = Color.Red;
+           if (enemigo.canSee(caja)) caja.Color = Color.Green; else caja.Color = Color.Red;
            caja.updateValues();
            caja.render();
 
