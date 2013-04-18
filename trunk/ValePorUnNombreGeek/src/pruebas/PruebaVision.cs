@@ -40,7 +40,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
         }
 
         TgcBox piso, caja;
-        Enemy enemigo;
+        Soldier enemigo;
 
         public override void init(){
         
@@ -56,7 +56,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 
 
 
-            enemigo = new Enemy(new Vector3(0, 0, 0), null); //TODO arreglar
+            enemigo = new Soldier(new Vector3(0, 0, 0), null); //TODO arreglar
 
 
 
