@@ -17,9 +17,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         float verticalAngle;
         public float MaxVerticalAngle { get { return this.verticalAngle; } set { this.verticalAngle = value; } }
         public float MaxHorizontalAngle { get { return this.angle; } set { this.angle = value; } }
-        ICharacterRepresentation characterRepresentation;
-
         public float MaxDistance { get { return this.radius; } set { this.radius = value; } }
+        ICharacterRepresentation characterRepresentation;
 
         public ConoDeVision2(ICharacterRepresentation characterRepresentation, float maxDistance, float maxHorizontalAngle, float maxVerticalAngle)
             : base(characterRepresentation.Position + characterRepresentation.getEyeLevel(), maxDistance, maxHorizontalAngle)
@@ -27,7 +26,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
             this.AutoTransformEnable = false;
             this.characterRepresentation = characterRepresentation;
-            GuiController.Instance.Modifiers.addBoolean("Cono", "Visible", false);
+            GuiController.Instance.Modifiers.addBoolean("Cono", "Visible", false); //Creo que puede explotar si hay otro cono mas 
         }
 
         public override void render()
