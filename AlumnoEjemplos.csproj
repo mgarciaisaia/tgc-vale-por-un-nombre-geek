@@ -138,7 +138,34 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\bigheightmap.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\heightmap.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\Heightmap3.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\hmrio.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\TerrainTexture3.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\TerrainTexture5.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\texrio.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Animaciones\nadar-TgcKeyFrameAnim.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Animaciones\quieto-TgcKeyFrameAnim.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Music\UWSDWF.mp3" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\pez-TgcKeyFrameMesh.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Sound\WATER.WAV" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Textures\fish.bmp" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Die-TgcSkeletalAnim.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Run-TgcSkeletalAnim.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\StandBy-TgcSkeletalAnim.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Walk-TgcSkeletalAnim.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\BasicHuman-TgcSkeletalMesh.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_body.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_head.jpg" />
+    <Content Include="ValePorUnNombreGeek\documentacion\com.horstmann.violet-0.21.1.jar" />
+    <Content Include="ValePorUnNombreGeek\documentacion\umlCharacter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
+    <None Include="ValePorUnNombreGeek\documentacion\umlCharacter.class.violet" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
