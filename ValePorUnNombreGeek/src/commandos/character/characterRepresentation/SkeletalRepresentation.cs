@@ -86,6 +86,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         }
 
 
+        public Vector3 getEyeLevel() 
+        {
+            return new Vector3(0, (this.mesh.BoundingBox.PMax.Y - this.mesh.BoundingBox.PMin.Y) * 9 / 10, 0);
+        }
+
         //Wrappers de SkeletalMesh
         public Vector3 Position
         {

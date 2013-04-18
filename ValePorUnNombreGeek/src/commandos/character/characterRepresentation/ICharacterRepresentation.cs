@@ -26,8 +26,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         void render();
         bool Enabled { get; set; }
         void dispose();
-           
-       
-        
+
+        Vector3 getEyeLevel();
     }
 }
