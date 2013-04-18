@@ -22,12 +22,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         public Terrain(string pathHeightmap, string pathTextura, float scaleXZ, float scaleY):base()
         {
-            
             this.loadHeightmap(pathHeightmap, scaleXZ, scaleY, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
             
             GuiController.Instance.Modifiers.addBoolean("Terrain", "wireframe", false);
-
         }
 
         public Terrain() : base()
@@ -38,12 +36,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             pathHeightmap = mediaDir + "Heightmaps\\" + "heightmap.jpg";
             pathTextura = mediaDir + "Heightmaps\\" + "TerrainTexture5.jpg";
 
-
-
             //Cargar heightmap
             this.loadHeightmap(pathHeightmap, 20f, 1f, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
-
         }
 
 
@@ -55,8 +50,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             base.loadHeightmap(heightmapPath, scaleXZ, scaleY, center);
             halfWidth = (float)HeightmapData.GetLength(0) / 2;
             halfLength = (float)HeightmapData.GetLength(1) / 2;
-
-
         }
 
         /// <summary>
