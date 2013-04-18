@@ -61,7 +61,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.representation = new SkeletalRepresentation(position);
         }
 
-        public void render(float elapsedTime)
+        public virtual void render(float elapsedTime)
         {
             this.update();
 
