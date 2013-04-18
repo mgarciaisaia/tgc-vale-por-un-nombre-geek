@@ -21,9 +21,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 {
                     instance = new TerrainPickingRaySingleton();
                     
-                    //GuiController.Instance.UserVars.addVar("HeightmapCoords"); //sigo insistiendo, esto no deberia existir.
-                    //las coordenadas del heightmap son problema del heightmap. todo se deberia tratar en terminos de coordenadas del mundo
-                    GuiController.Instance.UserVars.addVar("WorldCoords");
+                    GuiController.Instance.UserVars.addVar("WorldX");
+                    GuiController.Instance.UserVars.addVar("WorldY");
+                    GuiController.Instance.UserVars.addVar("WorldZ");
                 }
                 return instance;
             }
@@ -50,8 +50,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                         //encontramos el punto de interseccion
                         position = myPoint;
 
-                        //GuiController.Instance.UserVars.setValue("HeightmapCoords", coords);
-                        GuiController.Instance.UserVars.setValue("WorldCoords", position);
+                        GuiController.Instance.UserVars.setValue("WorldX", position.X);
+                        GuiController.Instance.UserVars.setValue("WorldY", position.Y);
+                        GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
 
                         return true;
                     }

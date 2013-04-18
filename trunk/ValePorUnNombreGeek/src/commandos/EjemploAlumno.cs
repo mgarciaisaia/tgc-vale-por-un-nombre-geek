@@ -75,12 +75,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             selection = new MultipleSelection(this.terrain, selectableCharacters);
 
             //Crear el resto de los personajes
-            this.characters = new List<Character>(selectableCharacters);
+            this.characters = new List<Character>();
+            this.characters.AddRange(selectableCharacters);
 
             Vector3[] waitpoints = new Vector3[3];
-            terrain.heightmapCoordsToXYZ(new Vector2(73,81), out waitpoints[0]);
-            terrain.heightmapCoordsToXYZ(new Vector2(22,80), out waitpoints[1]);
-            terrain.heightmapCoordsToXYZ(new Vector2(10,37), out waitpoints[2]);
+            waitpoints[0] = new Vector3(560, 0, 560);
+            waitpoints[1] = new Vector3(-560, 0, 560);
+            waitpoints[2] = new Vector3(-560, 0, -560);
             this.characters.Add(new Enemy(waitpoints, terrain));
 
             //Movimiento por picking
