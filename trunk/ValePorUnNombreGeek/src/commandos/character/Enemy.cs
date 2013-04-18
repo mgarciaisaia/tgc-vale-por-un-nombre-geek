@@ -18,31 +18,38 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
    
     class Enemy : Character
     {
-        private ConoDeVision cono;
+        private ConoDeVision vision;
 
      
         private float alturaCabeza;
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 60;
-        public float VisionAngle { get { return cono.Angle; } set { cono.Angle = value; } }
-        public float VisionRadius { get { return cono.Radius; } set { cono.Radius = value; } }
-        public bool ConeEnabled { get { return cono.Enabled; } set { cono.Enabled = value; } }
+        public float VisionAngle { get { return vision.Angle; } set { vision.Angle = value; } }
+        public float VisionRadius { get { return vision.Radius; } set { vision.Radius = value; } }
+        public bool ConeEnabled { get { return vision.Enabled; } set { vision.Enabled = value; } }
 
         public Enemy(Vector3 _position, Terrain _terrain)
             : base(_position, _terrain)
         {
-
-            crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);
+            inicializar();
             
         }
+
+  
 
         public Enemy(Vector3 _position)
             : base(_position)
         {
 
+              inicializar();
+
+
+        }
+
+        private void inicializar()
+        {
+
             crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);
-
-
         }
 
         protected override void loadCharacterRepresentation(Vector3 position)
@@ -53,10 +60,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         private void crearConoDeVision(float radius, float angle )
         {
-            alturaCabeza = (this.representation.BoundingBox.PMax.Y - this.representation.BoundingBox.PMin.Y) * 9 / 10;
-            cono = new ConoDeVision(new Vector3(this.Position.X, this.Position.Y + alturaCabeza, this.Position.Z), radius, angle);
-            //cono.Enabled = false;
-            cono.AutoTransformEnable = false;
+            vision = new ConoDeVision(this.representation, radius, angle);
         }
 
        
@@ -64,7 +68,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public bool canSee(TgcBox target)
         {
             
-            return cono.colisionaCon(target);
+            return vision.isInsideVisionRange(target);
         }
 
 
@@ -78,9 +82,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public override void render(float elapsedTime) 
         {
             base.render(elapsedTime);
-            //Aplico las mismas modificaciones al cono(mas la modificacion para la altura). En la nueva version del cono se van a aplicar solas.
-            this.cono.Transform = this.representation.Transform * Matrix.Translation(new Vector3(0, alturaCabeza, 0));
-            cono.renderWireframe();
+            vision.renderWireframe();
         }
 
        

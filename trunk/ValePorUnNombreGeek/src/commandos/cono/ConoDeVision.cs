@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 using TgcViewer;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 {
@@ -12,27 +13,29 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
     {
         float radiusB;
         public float RadiusB { get{return radiusB;} set{radiusB=value;}}
-        public ConoDeVision(Vector3 vertex, float radius, float angle)
-            : base(vertex, radius, angle)
-        {
-            GuiController.Instance.Modifiers.addBoolean("Cono", "Visible", false);
+        ICharacterRepresentation rep;
 
+        public ConoDeVision(ICharacterRepresentation rep, float radius, float angle)
+            : base(rep.Position+rep.getEyeLevel(), radius, angle)
+        {
+            this.rep = rep;
+            this.AutoTransformEnable = false;
         }
 
         public override void render()
         {
-            this.Enabled = (bool)GuiController.Instance.Modifiers.getValue("Cono");
+            this.Transform = rep.Transform * Matrix.Translation(rep.getEyeLevel());
             base.render();
         }
 
         public override void renderWireframe()
         {
-            this.Enabled = (bool)GuiController.Instance.Modifiers.getValue("Cono");
+            this.Transform = rep.Transform * Matrix.Translation(rep.getEyeLevel());
             base.renderWireframe();
         }
 
 
-        public bool colisionaCon(TgcBox target)
+        public bool isInsideVisionRange(TgcBox target)
         {
             return false;
         }

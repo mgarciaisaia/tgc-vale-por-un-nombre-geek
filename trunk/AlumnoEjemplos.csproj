@@ -93,7 +93,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\characterRepresentation\SkeletalRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Soldier.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\cono\ConoDeVision.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\cono\ConoDeVision2.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\cono\ConoDeVisionBis.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\MovementPicking.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\MultipleSelection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\TerrainPickingRaySingleton.cs" />

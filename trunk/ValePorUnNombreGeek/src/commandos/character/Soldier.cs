@@ -33,6 +33,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Waitpoints = waitpoints;
           
         }
+
+        public Soldier(Vector3 position, Terrain _terrain)
+            : base(position, _terrain)
+        {
+          
+        }
         protected override void update()
         {
 
