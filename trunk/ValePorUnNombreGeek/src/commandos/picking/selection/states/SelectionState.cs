@@ -16,6 +16,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
             this.terrain = _terrain;
         }
 
-        abstract public void update();
+        abstract public SelectionState update();
     }
 }

@@ -29,7 +29,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
 
         public void update()
         {
-            this.state.update();
+            this.state = this.state.update();
         }
 
         public List<Character> getSelectedCharacters()
@@ -37,10 +37,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             return this.selectedCharacters;
         }
 
-        public void setState(SelectionState _state)
+        /*public void setState(SelectionState _state)
         {
             this.state = _state;
-        }
+        }*/
 
         public void selectCharactersByRay(TgcRay _ray)
         {
