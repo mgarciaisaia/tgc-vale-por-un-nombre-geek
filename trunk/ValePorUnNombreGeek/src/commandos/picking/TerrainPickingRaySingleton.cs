@@ -10,7 +10,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 {
     class TerrainPickingRaySingleton : TgcPickingRay
     {
-
         private static TerrainPickingRaySingleton instance;
 
 
@@ -27,15 +26,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 }
                 return instance;
             }
-
         }
-
-
 
 
         public bool terrainIntersection(Terrain terrain, out Vector3 position)
         {
-            //Version que va "de la tierra al cielo" -> beneficia ENORMEMENTE picking en terrenos bajos
+            //Version que va "de la tierra al cielo"
             this.updateRay();
 
             Vector3 myPoint;
@@ -79,10 +75,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
             //(pablo) lo uso para ver si el rayo vario su posicion. es mucho mas rapido que getRayIntersection; salva fps.
             this.updateRay();
 
-            float t0 = (terrain.Position.Y - this.Ray.Origin.Y) / this.Ray.Direction.Y;
+            float t0 = (terrain.minY() - this.Ray.Origin.Y) / this.Ray.Direction.Y;
             return this.Ray.Origin + t0 * this.Ray.Direction;
         }
-
     }
-  
 }
