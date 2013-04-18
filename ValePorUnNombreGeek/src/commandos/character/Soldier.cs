@@ -16,7 +16,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
    
-    class Enemy : Walker
+    class Soldier : Walker
     {
         private ConoDeVision cono;
         public Vector3[] waitpoints;
@@ -29,7 +29,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 60;
 
-        public Enemy(Vector3 _position, Terrain _terrain)
+        public Soldier(Vector3 _position, Terrain _terrain)
             : base(_position, _terrain)
         {
 
@@ -38,7 +38,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         }
 
-        public Enemy(Vector3 _position)
+        public Soldier(Vector3 _position)
             : base(_position)
         {
 
@@ -60,7 +60,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             //cono.Enabled = false;
             cono.AutoTransformEnable = false;
         }
-        public Enemy(Vector3[] waitpoints, Terrain _terrain)
+        public Soldier(Vector3[] waitpoints, Terrain _terrain)
             : base(waitpoints[0], _terrain)
         {
             this.Waitpoints = waitpoints;
@@ -102,6 +102,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
              * -llendo al waitpoint
              * -esperando
              * -(y proximamente) persiguiendo personaje
+             * 
+             * Daniela: si
             */
 
 
