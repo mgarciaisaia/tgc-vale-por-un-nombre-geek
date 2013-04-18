@@ -17,6 +17,7 @@
       <string>+setTarget(Targeteable)
 +render(elapsedTime)
 #update(elapsedTime)
+#loadCharacterRepresentation(Position)
 -goToPosition(Point)
 +die()</string>
      </void>
@@ -32,19 +33,19 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double0"/>
-      <double>541.1665360606639</double>
+      <double>521.3675461874406</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double0"/>
-      <double>100.16255653005993</double>
+      <double>204.81436014566893</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>541.1665360606639</double>
-     <double>100.16255653005993</double>
+     <double>521.3675461874406</double>
+     <double>204.81436014566893</double>
     </void>
    </object>
   </void>
@@ -61,19 +62,19 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double1"/>
-      <double>784.7088333309307</double>
+      <double>905.2357452655117</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double1"/>
-      <double>161.9200482451715</double>
+      <double>297.341404482481</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>784.7088333309307</double>
-     <double>161.9200482451715</double>
+     <double>905.2357452655117</double>
+     <double>297.341404482481</double>
     </void>
    </object>
   </void>
@@ -108,19 +109,19 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double2"/>
-      <double>527.7828157898532</double>
+      <double>559.9838259166298</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double2"/>
-      <double>483.077298734426</double>
+      <double>607.7291023500354</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>527.7828157898532</double>
-     <double>483.077298734426</double>
+     <double>559.9838259166298</double>
+     <double>607.7291023500354</double>
     </void>
    </object>
   </void>
@@ -152,19 +153,19 @@ direction</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double3"/>
-      <double>307.88477534391984</double>
+      <double>297.08578547069646</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double3"/>
-      <double>293.3810672504082</double>
+      <double>415.03287086601716</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>307.88477534391984</double>
-     <double>293.3810672504082</double>
+     <double>297.08578547069646</double>
+     <double>415.03287086601716</double>
     </void>
    </object>
   </void>
@@ -173,6 +174,7 @@ direction</string>
     <void property="methods">
      <void property="text">
       <string>#update(elapsedTime)
+#loadCharacterRepresentation(Position)
 +watch()</string>
      </void>
     </void>
@@ -187,19 +189,19 @@ direction</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double4"/>
-      <double>534.0</double>
+      <double>514.2010101267766</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double4"/>
-      <double>334.0</double>
+      <double>438.651803615609</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>534.0</double>
-     <double>334.0</double>
+     <double>514.2010101267766</double>
+     <double>438.651803615609</double>
     </void>
    </object>
   </void>
@@ -217,19 +219,19 @@ Targeteable</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double5"/>
-      <double>306.0</double>
+      <double>349.8406204335659</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double5"/>
-      <double>150.0</double>
+      <double>260.3086578651014</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>306.0</double>
-     <double>150.0</double>
+     <double>349.8406204335659</double>
+     <double>260.3086578651014</double>
     </void>
    </object>
   </void>
@@ -246,19 +248,19 @@ Targeteable</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double6"/>
-      <double>506.0</double>
+      <double>527.3725830020304</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double6"/>
-      <double>6.0</double>
+      <double>65.63961030678925</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>506.0</double>
-     <double>6.0</double>
+     <double>527.3725830020304</double>
+     <double>65.63961030678925</double>
     </void>
    </object>
   </void>
@@ -275,19 +277,88 @@ Targeteable</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double7"/>
-      <double>777.0</double>
+      <double>836.4142135623731</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double7"/>
-      <double>339.0</double>
+      <double>453.82337649086287</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>777.0</double>
-     <double>339.0</double>
+     <double>836.4142135623731</double>
+     <double>453.82337649086287</double>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode6">
+    <void property="methods">
+     <void property="text">
+      <string>#getMesh()</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>SkeletalRepresentation</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double8">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double8"/>
+      <double>827.5319625684642</double>
+     </void>
+    </void>
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>y</string>
+     <void method="set">
+      <object idref="Point2D$Double8"/>
+      <double>64.22539674441614</double>
+     </void>
+    </void>
+    <void method="setLocation">
+     <double>827.5319625684642</double>
+     <double>64.22539674441614</double>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ClassNode" id="ClassNode7">
+    <void property="methods">
+     <void property="text">
+      <string>#getMesh()</string>
+     </void>
+    </void>
+    <void property="name">
+     <void property="text">
+      <string>EnemyRepresentation
+</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double9">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double9"/>
+      <double>910.9634200735409</double>
+     </void>
+    </void>
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>y</string>
+     <void method="set">
+      <object idref="Point2D$Double9"/>
+      <double>173.18376618407356</double>
+     </void>
+    </void>
+    <void method="setLocation">
+     <double>910.9634200735409</double>
+     <double>173.18376618407356</double>
     </void>
    </object>
   </void>
@@ -377,6 +448,33 @@ Targeteable</string>
    </object>
    <object idref="ClassNode5"/>
    <object idref="ClassNode4"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/>
+    </void>
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/>
+    </void>
+    <void property="lineStyle">
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/>
+    </void>
+   </object>
+   <object idref="ClassNode6"/>
+   <object idref="InterfaceNode1"/>
+  </void>
+  <void method="connect">
+   <object class="com.horstmann.violet.ClassRelationshipEdge">
+    <void property="bentStyle">
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/>
+    </void>
+    <void property="endArrowHead">
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/>
+    </void>
+   </object>
+   <object idref="ClassNode7"/>
+   <object idref="ClassNode6"/>
   </void>
  </object>
 </java>
