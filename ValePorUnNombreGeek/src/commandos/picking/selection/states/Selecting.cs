@@ -59,7 +59,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
             this.selectionBox.updateValues();
         }
 
-        public override void update()
+        public override SelectionState update()
         {
             this.calculateSelectionBox();
             this.selectionBox.render();
@@ -72,8 +72,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
                     this.selection.selectCharactersInBox(this.selectionBox);
 
                 this.selectionBox.dispose();
-                this.selection.setState(new Waiting(this.selection, this.terrain));
+                return new Waiting(this.selection, this.terrain);
             }
+
+            return this;
         }
     }
 }
