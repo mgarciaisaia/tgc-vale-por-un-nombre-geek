@@ -8,6 +8,7 @@ using System;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
+using Microsoft.DirectX.Direct3D;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
@@ -39,7 +40,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             return "Prueba de vision";
         }
 
-        TgcBox piso, caja;
+        TgcBox piso;
+        Character pj;
         Enemy enemigo;
 
         public override void init(){
@@ -51,8 +53,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             
             piso = TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(1000, 5, 1000), pisoTexture);
 
-            caja = TgcBox.fromSize(new Vector3(0, 0, -10), new Vector3(10, 100, 10), Color.Blue);
-
+            pj = new Character(new Vector3(0, 0, -10));
 
 
 
@@ -65,7 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 90, 45);
            
             GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox());
-            GuiController.Instance.Modifiers.addVertex3f("posicionCaja", new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000), new Vector3(0, 0, -20));
+            GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000), new Vector3(0, 0, -20));
 
                  
 
@@ -86,10 +87,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
          
            piso.render();
            enemigo.render(elapsedTime);
-           caja.Position = (Vector3)GuiController.Instance.Modifiers.getValue("posicionCaja");
-           if (enemigo.canSee(caja)) caja.Color = Color.Green; else caja.Color = Color.Red;
-           caja.updateValues();
-           caja.render();
+           pj.Position = (Vector3)GuiController.Instance.Modifiers.getValue("posicionTarget");
+           if (enemigo.canSee(pj)){
+               pj.render(elapsedTime);
+           }else{
+                     
+                    GuiController.Instance.D3dDevice.RenderState.FillMode = FillMode.WireFrame;
+                    pj.render(elapsedTime);
+                    GuiController.Instance.D3dDevice.RenderState.FillMode = FillMode.Solid;
+               }
+                      
 
         }
 
