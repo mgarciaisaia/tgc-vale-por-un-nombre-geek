@@ -13,7 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         private float cosAngle;
         public Vector3 Direction
         {
-            get{ return Vector3.Normalize( Vector3.TransformCoordinate( new Vector3(0, 1, 0), this.Transform));}
+            get{ return Vector3.Normalize( Vector3.TransformCoordinate( new Vector3(0, 0, 1), this.Transform));}
            
         }
        
@@ -53,7 +53,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
         public bool isInsideVisionRange(Character target) 
         {
-            return false; 
+             return false;
         }
 
          public bool isInsideVisionRange(Character target, Terrain terrain)
