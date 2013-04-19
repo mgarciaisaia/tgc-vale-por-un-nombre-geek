@@ -8,6 +8,7 @@ using System.Drawing;
 using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 {
@@ -48,7 +49,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
         public override void render(float elapsedTime)
         {
             cono.Length = (float)GuiController.Instance.Modifiers.getValue("Length");
-            cono.Angle = (float)GuiController.Instance.Modifiers.getValue("Angle");
+            cono.Angle = FastMath.ToRad((float)GuiController.Instance.Modifiers.getValue("Angle"));
             cono.Triangles = (int)GuiController.Instance.Modifiers.getValue("Triangles");
            
             cono.render();

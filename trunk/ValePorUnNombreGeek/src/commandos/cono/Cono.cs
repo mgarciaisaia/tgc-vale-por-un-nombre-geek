@@ -136,7 +136,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
                    
             //La circunferencia tiene un punto menos porque no contiene al vertice
 
-            crearCircunferencia(length*FastMath.Atan(FastMath.ToRad(angle)),cantPuntos-1);
+            crearCircunferencia(length*FastMath.Atan(angle),cantPuntos-1);
 
             crearTriangulos();
 
