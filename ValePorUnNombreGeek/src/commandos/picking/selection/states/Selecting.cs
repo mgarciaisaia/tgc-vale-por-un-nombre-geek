@@ -27,9 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
         {
             this.initTerrainPoint = _initTerrainPoint;
             this.initGroundPoint = _initGroundPoint;
-
-            //this.lastTerrainPoint = Vector3.Empty;
-            this.lastGroundPoint = Vector3.Empty;
+            this.lastGroundPoint = _initGroundPoint;
 
             //Inicializamos la selectionBox
             this.selectionBox = TgcBox.fromSize(new Vector3(3, SELECTION_BOX_HEIGHT, 3), Color.Red);

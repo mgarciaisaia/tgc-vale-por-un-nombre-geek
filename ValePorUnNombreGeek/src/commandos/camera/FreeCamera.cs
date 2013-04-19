@@ -8,7 +8,7 @@ using TgcViewer.Utils.TgcGeometry;
 using TgcViewer;
 using Microsoft.DirectX.DirectInput;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 {
     /// <summary>
     /// Camara rotacional levemente modificada
@@ -46,19 +46,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             resetValues();
         }
 
-        public FreeCamera(Vector3 center, bool enabled)
+        public FreeCamera(Vector3 center, bool enabled) : this()
         {
-            resetValues();
             this.CameraCenter = center;
             this.Enable = enabled;
         }
 
-        public FreeCamera(Vector3 center, int distance, bool enabled)
+        public FreeCamera(Vector3 center, int distance, bool enabled) : this(center, enabled)
         {
-            resetValues();
-            this.CameraCenter = center;
             this.CameraDistance = distance;
-            this.Enable = enabled;
         }
 
 
