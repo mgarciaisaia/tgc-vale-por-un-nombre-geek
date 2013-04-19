@@ -13,6 +13,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
     {
         protected TgcSkeletalMesh mesh;
         private bool selected;
+        private Vector3 meshRotationAxis; //rotacion manual
+        private Matrix meshRotationMatrix; //rotacion manual
 
         public bool Selected
         {
@@ -31,9 +33,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
                 getAnimations());
 
             this.mesh.playAnimation("StandBy", true);
-            this.mesh.Position = position;
+            this.Position = position;
 
+            //rotacion manual
+            this.meshRotationAxis = new Vector3(0, 0, -1);
+            this.meshRotationMatrix = Matrix.Identity;
+            this.AutoTransformEnable = false;
 
+            //por algun motivo hay que volver a actualizar la posicion del personaje
+            this.Transform = Matrix.Translation(this.Position); //en este caso transladandolo desde el (0,0,0)
         }
 
         protected virtual string getMesh()
@@ -139,7 +147,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         public void move(Vector3 direction)
         {
+            this.faceTo(direction);
             this.mesh.move(direction);
+        }
+
+        private void faceTo(Vector3 direction) //rotacion manual
+        {
+            float angle = FastMath.Acos(Vector3.Dot(this.meshRotationAxis, direction));
+            Vector3 axisRotation = Vector3.Cross(this.meshRotationAxis, direction);
+            this.meshRotationMatrix = Matrix.RotationAxis(axisRotation, angle);
+            this.Transform = this.meshRotationMatrix * Matrix.Translation(this.Position);
         }
 
         public  void moveOrientedY(float movement ){
@@ -147,7 +164,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             mesh.moveOrientedY(movement);
 
         }
-
 
 
       
