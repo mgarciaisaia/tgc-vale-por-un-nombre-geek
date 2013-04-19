@@ -42,7 +42,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
 
         public new void render()
         {
-            //pablo. no puedo hacer que sobreescriba a tgcsimpleterrain.render :( help!
             water.render();
             base.render();
         }
