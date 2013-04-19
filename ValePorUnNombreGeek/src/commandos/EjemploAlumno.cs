@@ -20,14 +20,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
     public class EjemploAlumno : TgcExample
     {
         Sky sky;
-        FreeCamera camera;
         List<Character> characters;
         Terrain terrain;
 
-
         MovementPicking picking;
         MultipleSelection selection;
-    
+
+        FreeCamera camera;
+
+        #region Details
+
         /// <summary>
         /// Categoría a la que pertenece el ejemplo.
         /// Influye en donde se va a haber en el árbol de la derecha de la pantalla.
@@ -53,6 +55,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             return "Implementación del Commandos";
         }
 
+        #endregion
+
+
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
         /// Escribir aquí todo el código de inicialización: cargar modelos, texturas, modifiers, uservars, etc.
@@ -64,7 +69,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             sky = new Sky();
 
             //Cargar HeightMap
-            terrain = new Terrain();
+            terrain = new Land();
 
 
 
@@ -135,6 +140,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             }
         }
+
 
         /// <summary>
         /// Método que se llama cuando termina la ejecución del ejemplo.
