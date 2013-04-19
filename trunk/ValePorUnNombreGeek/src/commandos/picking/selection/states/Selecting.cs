@@ -37,11 +37,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
 
         private void calculateSelectionBox()
         {
-            Vector3 actualGroundPoint = TerrainPickingRaySingleton.Instance.getRayGroundIntersection(this.terrain);
+            Vector3 actualGroundPoint = PickingRaySingleton.Instance.getRayGroundIntersection(this.terrain);
             if (GeneralMethods.isCloseTo(actualGroundPoint, this.lastGroundPoint)) return; else this.lastGroundPoint = actualGroundPoint;
 
             Vector3 terrainPointB;
-            if(!TerrainPickingRaySingleton.Instance.terrainIntersection(this.terrain, out terrainPointB)) return;
+            if(!PickingRaySingleton.Instance.terrainIntersection(this.terrain, out terrainPointB)) return;
             Vector3 terrainPointA = this.initTerrainPoint;
 
             float selectionBoxHeight = Math.Max(terrainPointA.Y, terrainPointB.Y) + SELECTION_BOX_HEIGHT;
@@ -66,7 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
             if (GuiController.Instance.D3dInput.buttonUp(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
                 if(GeneralMethods.isCloseTo(this.initGroundPoint, this.lastGroundPoint))
-                    this.selection.selectCharactersByRay(TerrainPickingRaySingleton.Instance.Ray);
+                    this.selection.selectCharactersByRay(PickingRaySingleton.Instance.Ray);
                 else
                     this.selection.selectCharactersInBox(this.selectionBox);
 

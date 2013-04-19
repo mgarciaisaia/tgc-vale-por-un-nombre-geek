@@ -10,9 +10,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
 {
     class TerrainWithWater : Terrain
     {
-        private float waterLevel;
         private TgcBox water;
 
+        #region Initialize
 
         public TerrainWithWater(float _waterLevel)
             : base()
@@ -28,22 +28,35 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
 
         private void setWaterLevel(float _waterLevel)
         {
-            this.waterLevel = _waterLevel;
-            Vector3 waterPosition = new Vector3(this.Position.X, this.Position.Y + this.waterLevel, this.Position.Z);
+            Vector3 waterPosition = new Vector3(this.Position.X, this.Position.Y + _waterLevel, this.Position.Z);
             this.water = TgcBox.fromSize(waterPosition, new Vector3(this.getWidth() * this.getScaleXZ(), 50 * this.getScaleY(), this.getLength() * this.getScaleXZ()), Color.LightSlateGray);
+            this.water.AlphaBlendEnable = true;
+            this.water.Color = Color.FromArgb(150, Color.Aqua);
         }
 
-        public override bool getY(float x, float z, out float y)
+        #endregion
+
+        #region Getters
+
+        public float waterLevel
         {
-            bool ret = base.getY(x, z, out y);
-            if (ret == true && y < this.waterLevel) ret = false;
-            return ret;
+            get
+            {
+                return this.water.Position.Y;
+            }
         }
+
+        #endregion
 
         public new void render()
         {
             water.render();
             base.render();
+        }
+
+        public override bool positionAvailableForCharacter(Vector3 coords)
+        {
+            if (coords.Y >= this.waterLevel) return true; else return false;
         }
     }
 }

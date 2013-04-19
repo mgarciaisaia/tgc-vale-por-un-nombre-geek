@@ -24,8 +24,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
         {
             if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_RIGHT))
             {
-                if(TerrainPickingRaySingleton.Instance.terrainIntersection(this.terrain, out p)) return true;
-
+                if(PickingRaySingleton.Instance.terrainIntersection(this.terrain, out p) &&
+                    terrain.positionAvailableForCharacter(p)) return true;
                 else return false;
             }
 

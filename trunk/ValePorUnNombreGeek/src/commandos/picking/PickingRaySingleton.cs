@@ -9,18 +9,18 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 {
-    class TerrainPickingRaySingleton : TgcPickingRay
+    class PickingRaySingleton : TgcPickingRay
     {
-        private static TerrainPickingRaySingleton instance;
+        private static PickingRaySingleton instance;
 
 
-        public static TerrainPickingRaySingleton Instance
+        public static PickingRaySingleton Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new TerrainPickingRaySingleton();
+                    instance = new PickingRaySingleton();
                     
                     GuiController.Instance.UserVars.addVar("WorldX");
                     GuiController.Instance.UserVars.addVar("WorldY");
@@ -33,9 +33,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
         }
 
 
+        /// <summary>
+        /// Busca la interseccion rayo-heightmap, y devuelve true si existe.
+        /// </summary>
         public bool terrainIntersection(Terrain terrain, out Vector3 position)
         {
-            //Version que va "de la tierra al cielo"
             this.updateRay();
 
             Vector3 myPoint;
@@ -53,6 +55,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                         //encontramos el punto de interseccion
                         position = myPoint;
 
+                        //muestra el punto encontrado
                         GuiController.Instance.UserVars.setValue("WorldX", position.X);
                         GuiController.Instance.UserVars.setValue("WorldY", position.Y);
                         GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
@@ -67,7 +70,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 }
                 else if (myPoint.Y >= terrain.maxY() || myPoint.Y < terrain.minY())
                 {
-                    //ya nos estamos llendo al cielo...
+                    //ya nos fuimos o muy arriba o muy abajo
                     position = Vector3.Empty;
                     return false;
                 }
@@ -76,6 +79,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
             }
         }
 
+        /// <summary>
+        /// Busca la interseccion rayo-plano y=0.
+        /// </summary>
         public Vector3 getRayGroundIntersection(Terrain terrain)
         {
             //retorna el punto de colision con el plano y=0

@@ -5,12 +5,14 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
 {
-    class Terrain : TgcSimpleTerrain
+    abstract class Terrain : TgcSimpleTerrain
     {
         float scaleXZ;
         float scaleY;
-        float halfWidth;//Se usa mas la mitad que el total
+        float halfWidth; //Se usa mas la mitad que el total
         float halfLength;
+
+        #region Getters
 
         public float getHalfWidth() { return halfWidth; }
         public float getHalfLength() { return halfLength; }
@@ -19,6 +21,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         public float getScaleXZ() { return scaleXZ; }
         public float getScaleY() { return scaleY; }
 
+        #endregion
+
+        #region Initialize
 
         public Terrain(string pathHeightmap, string pathTextura, float scaleXZ, float scaleY)
             :base()
@@ -53,6 +58,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             halfLength = (float)HeightmapData.GetLength(1) / 2;
         }
 
+        #endregion
+
+        #region Position Transform
+
         /// <summary>
         /// Transforma coordenadas del mundo en coordenadas relativas del heightmap que no tienen en cuenta la escala.
         /// </summary>
@@ -73,8 +82,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             return true;
         }
 
-
-
         /// <summary>
         /// Transforma coordenadas relativas del heightmap en coordenadas del mundo.
         /// </summary>
@@ -94,11 +101,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             return true;
         }
 
+        #endregion
+
+        #region Y-Getters
 
         /// <summary>
         /// Obtiene la altura de un punto, si el punto pertenece al heightmap.
         /// </summary>
-        public virtual bool getY(float x, float z, out float y)
+        public bool getY(float x, float z, out float y)
         {
             y = 0;
             Vector2 coords;
@@ -136,6 +146,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             return ret;
         }
 
+        #endregion
+
+        #region Y-Bounds
 
         /// <summary>
         /// Devuelve el valor de Y mas bajo del mapa.
@@ -153,20 +166,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             return 255 * this.scaleY;
         }
 
-        /*
-        private void renderWireframe()
-        {
-            Device device = GuiController.Instance.D3dDevice;
+        /// <summary>
+        /// Devuelve true si la posicion especificada es valida para que se posicione un personaje.
+        /// Se utiliza para saber si una posicion es valida para mover por picking al personaje.
+        /// Nota: en un terreno sin agua este metodo siempre devuelve true.
+        /// </summary>
+        public abstract bool positionAvailableForCharacter(Vector3 coords);
 
-            //Cambiamos a modo WireFrame
-            device.RenderState.FillMode = FillMode.WireFrame;
-
-            //Llamamos al metodo original del padre
-            base.render();
-
-            //Restrablecemos modo solido
-            device.RenderState.FillMode = FillMode.Solid;
-        }
-        */
+        #endregion
     }
 }
