@@ -38,7 +38,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             cono = new Cono(new Vector3(0,0,0));
             
             //Modifiers
-            GuiController.Instance.Modifiers.addFloat("Radius", 0, 10, 5);
+            GuiController.Instance.Modifiers.addFloat("Length", 0, 10, 5);
             GuiController.Instance.Modifiers.addFloat("Angle", 0, 180, 30);
             GuiController.Instance.Modifiers.addInt("Triangles", 4, 100, 6);
 
@@ -47,7 +47,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 
         public override void render(float elapsedTime)
         {
-            cono.Radius = (float)GuiController.Instance.Modifiers.getValue("Radius");
+            cono.Length = (float)GuiController.Instance.Modifiers.getValue("Length");
             cono.Angle = (float)GuiController.Instance.Modifiers.getValue("Angle");
             cono.Triangles = (int)GuiController.Instance.Modifiers.getValue("Triangles");
            
