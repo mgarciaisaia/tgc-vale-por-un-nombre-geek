@@ -15,7 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
     class Cono
     {
         protected const int DEFAULT_TRIANGLES = 24;
-        protected const float DEFAULT_ANGLE = FastMath.PI*30/180;
+        protected const float DEFAULT_ANGLE = 30;
         protected const float DEFAULT_RADIUS = 10;
 
         protected VertexBuffer vertexBuffer;
@@ -86,7 +86,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         public Cono(Vector3 vertex){
 
                          
-            config(vertex, DEFAULT_RADIUS, DEFAULT_ANGLE, DEFAULT_TRIANGLES);
+            config(vertex, DEFAULT_RADIUS, FastMath.ToRad(DEFAULT_ANGLE), DEFAULT_TRIANGLES);
 
         }
 
