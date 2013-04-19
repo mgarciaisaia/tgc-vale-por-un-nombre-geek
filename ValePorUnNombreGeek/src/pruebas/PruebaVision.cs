@@ -67,7 +67,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
            
             GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox());
             GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000), new Vector3(0, 0, -20));
-
+            GuiController.Instance.UserVars.addVar("PuedeVerlo");
                  
 
         }
@@ -88,14 +88,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
            piso.render();
            enemigo.render(elapsedTime);
            pj.Position = (Vector3)GuiController.Instance.Modifiers.getValue("posicionTarget");
-           if (enemigo.canSee(pj)){
-               pj.render(elapsedTime);
-           }else{
-                     
-                    GuiController.Instance.D3dDevice.RenderState.FillMode = FillMode.WireFrame;
-                    pj.render(elapsedTime);
-                    GuiController.Instance.D3dDevice.RenderState.FillMode = FillMode.Solid;
-               }
+
+           if (enemigo.canSee(pj))
+               GuiController.Instance.UserVars.setValue("PuedeVerlo", true);
+           else
+               GuiController.Instance.UserVars.setValue("PuedeVerlo", false);
+
+           pj.render(elapsedTime);
+               
                       
 
         }
