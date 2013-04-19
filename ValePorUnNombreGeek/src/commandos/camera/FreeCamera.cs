@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
     {
         
        public static float DEFAULT_ZOOM_FACTOR = 0.15f;
-        public static float DEFAULT_CAMERA_DISTANCE = 300f;
+        public static float DEFAULT_CAMERA_DISTANCE = 600f;
         public static float DEFAULT_ROTATION_SPEED = 100f;
         public static int ANCHO_DESPLAZAMIENTO = 50;
 
