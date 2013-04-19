@@ -41,7 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override string getName()
         {
-            return "Grupo 99";
+            return "VALE_POR_UN_NOMBRE_GEEK";
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override string getDescription()
         {
-            return "MiIdea - Descripcion de la idea";
+            return "Implementación del Commandos";
         }
 
         /// <summary>
