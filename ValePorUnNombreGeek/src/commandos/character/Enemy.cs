@@ -67,7 +67,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
        
 
-        public bool canSee(TgcBox target)
+        public bool canSee(Character target)
         {
             
             return vision.isInsideVisionRange(target);

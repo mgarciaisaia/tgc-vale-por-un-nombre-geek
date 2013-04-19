@@ -37,10 +37,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         }
 
 
-        public bool isInsideVisionRange(TgcBox target)
-        {
-            return false;
-        }
 
         public bool isInsideVisionRange(Character target)
         {
