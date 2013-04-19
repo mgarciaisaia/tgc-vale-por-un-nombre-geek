@@ -38,14 +38,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             return this.selectedCharacters;
         }
 
-        /*public void setState(SelectionState _state)
+        private void deselectAllCharacters()
         {
-            this.state = _state;
-        }*/
+            foreach (Character ch in this.selectedCharacters)
+            {
+                ch.Selected = false;
+            }
+            this.selectedCharacters.Clear();
+        }
 
         public void selectCharactersByRay(TgcRay _ray)
         {
-            this.selectedCharacters.Clear();
+            this.deselectAllCharacters();
             foreach (Character ch in this.selectableCharacters)
             {
                 Vector3 collisionPoint; //useless
@@ -53,17 +57,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
                 {
                     this.selectedCharacters.Add(ch);
                     ch.Selected = true;
-                }
-                else
-                {
-                    ch.Selected = false;
+                    break;
                 }
             }
         }
 
         public void selectCharactersInBox(TgcBox _selectionBox)
         {
-            this.selectedCharacters.Clear();
+            this.deselectAllCharacters();
             foreach (Character ch in this.selectableCharacters)
             {
                 //Colisión de AABB entre área de selección y el modelo
@@ -71,10 +72,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
                 {
                     this.selectedCharacters.Add(ch);
                     ch.Selected = true;
-                }
-                else
-                {
-                    ch.Selected = false;
                 }
             }
         }
