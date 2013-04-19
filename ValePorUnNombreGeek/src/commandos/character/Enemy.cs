@@ -14,8 +14,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
      
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 60;
+
+        /// <summary>
+        /// Angulo en radianes.
+        /// </summary>
         public float VisionAngle { get { return vision.Angle; } set { vision.Angle = value; } }
+
+        /// <summary>
+        /// Maxima distancia de vision.
+        /// </summary>
         public float VisionRadius { get { return vision.Length; } set { vision.Length = value; } }
+
+        /// <summary>
+        /// Renderizado de cono
+        /// </summary>
         public bool ConeEnabled { get { return vision.Enabled; } set { vision.Enabled = value; } }
 
         public Enemy(Vector3 _position, Terrain _terrain)
@@ -39,7 +51,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private void inicializar()
         {
 
-            crearConoDeVision(DEFAULT_VISION_RADIUS, DEFAULT_VISION_ANGLE);
+            crearConoDeVision(DEFAULT_VISION_RADIUS, FastMath.ToRad(DEFAULT_VISION_ANGLE));
         }
 
         protected override void loadCharacterRepresentation(Vector3 position)
