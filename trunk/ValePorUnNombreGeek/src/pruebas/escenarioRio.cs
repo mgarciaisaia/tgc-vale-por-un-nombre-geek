@@ -9,8 +9,8 @@ using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek;
 using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.EscenarioRio
 {

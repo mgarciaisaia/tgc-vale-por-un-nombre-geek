@@ -9,6 +9,7 @@ using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using System;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
