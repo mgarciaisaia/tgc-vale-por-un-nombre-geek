@@ -41,13 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             set { enabled = value; }
         }
 
-        public bool AutoUpdateEnabled
-        {
-            get { return autoUpdateEnabled; }
-            set { autoUpdateEnabled = value; }
-        }
-        private bool dirtyValues=true;
-        private bool autoUpdateEnabled;
+        private bool mustUpdate=false;
 
         public bool AutoTransformEnable
         {
@@ -76,11 +70,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
 
 
-        public float Length { get { return length; } set { length = value; } }
+        public float Length { get { return length; } set { length = value; mustUpdate = true; } }
 
-        public float Angle { get { return angle; } set { angle = value; } }
+        public float Angle { get { return angle; } set { angle = value; mustUpdate = true; } }
 
-        public int Triangles { get { return triangles; } set { triangles = value; } }
+        public int Triangles { get { return triangles; } set { triangles = value; mustUpdate = true; } }
       
 
         public Cono(Vector3 vertex){
@@ -105,7 +99,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             this.rotation = new Vector3(0, 0, 0);
             this.enabled = true;
             this.transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
-            this.autoUpdateEnabled = true;
+            
             
             
         }
@@ -127,7 +121,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         /// <summary>
         /// Actualiza cantidad de triangulos, radio y angulo
         /// </summary>
-        public void updateValues()
+        public virtual void updateValues()
 
 
         {
@@ -140,7 +134,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
             crearTriangulos();
 
-            dirtyValues = false;
+            mustUpdate = false;
         }
 
         private void crearTriangulos()
@@ -223,7 +217,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             Device d3dDevice = GuiController.Instance.D3dDevice;
 
             if(!enabled) return;
-            if (dirtyValues || autoUpdateEnabled) updateValues();
+            if (mustUpdate) updateValues();
 
          
 
