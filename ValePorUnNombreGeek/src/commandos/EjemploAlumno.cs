@@ -63,7 +63,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             sky = new Sky();
 
             //Cargar HeightMap
-            //terrain = new Terrain();
             terrain = new Terrain();
 
 
