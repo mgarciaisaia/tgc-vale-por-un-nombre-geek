@@ -81,8 +81,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 
         
           
-           enemigo.VisionAngle = (float)GuiController.Instance.Modifiers.getValue("AnguloVision");
-           enemigo.VisionRadius = FastMath.ToRad((float)GuiController.Instance.Modifiers.getValue("RadioVision"));
+           enemigo.VisionAngle = FastMath.ToRad((float)GuiController.Instance.Modifiers.getValue("AnguloVision"));
+           enemigo.VisionRadius = (float)GuiController.Instance.Modifiers.getValue("RadioVision");
          
            piso.render();
            enemigo.render(elapsedTime);
