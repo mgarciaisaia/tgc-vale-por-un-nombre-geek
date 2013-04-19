@@ -41,7 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             set { enabled = value; }
         }
 
-        private bool mustUpdate=false;
+        private bool mustUpdate;
 
         public bool AutoTransformEnable
         {
@@ -99,7 +99,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             this.rotation = new Vector3(0, 0, 0);
             this.enabled = true;
             this.transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
-            
+            this.mustUpdate = true;
             
             
         }
