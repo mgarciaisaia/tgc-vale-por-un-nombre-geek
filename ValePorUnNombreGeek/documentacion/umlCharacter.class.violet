@@ -139,8 +139,7 @@ direction</string>
     </void>
     <void property="methods">
      <void property="text">
-      <string>+isInsideVisionRange(Character)
-+isInsideVisionRange(Character, Terrain)
+      <string>+isInsideVisionRange(Character, Terrain)
 </string>
      </void>
     </void>
