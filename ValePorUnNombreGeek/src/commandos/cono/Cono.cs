@@ -22,7 +22,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         protected Vector3[] circunferencia;
        
         CustomVertex.PositionColored[] vertices;
-        protected float angle, radius;
+        protected float angle, length;
         protected int triangles;
         private bool autoTransformEnable;
       
@@ -76,7 +76,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
 
 
-        public float Radius { get { return radius; } set { radius = value; } }
+        public float Length { get { return length; } set { length = value; } }
 
         public float Angle { get { return angle; } set { angle = value; } }
 
@@ -95,7 +95,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         {
            
          
-            this.radius = radius;
+            this.length = radius;
             this.angle = angle;
             this.triangles = triangles;
 
@@ -110,15 +110,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             
         }
 
-        public Cono(Vector3 vertex, float radius, float angle)
+        public Cono(Vector3 vertex, float length, float angle)
         {
-            config(vertex, radius, angle, DEFAULT_TRIANGLES);
+            config(vertex, length, angle, DEFAULT_TRIANGLES);
 
 
         }
 
-        public Cono(Vector3 vertex, float radius, float angle, int triangles) {
-            config(vertex, radius, angle,triangles);
+        public Cono(Vector3 vertex, float length, float angle, int triangles) {
+            config(vertex, length, angle,triangles);
            
         }
 
@@ -136,7 +136,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
                    
             //La circunferencia tiene un punto menos porque no contiene al vertice
 
-            crearCircunferencia(radius*FastMath.Atan(FastMath.ToRad(angle)),cantPuntos-1);
+            crearCircunferencia(length*FastMath.Atan(FastMath.ToRad(angle)),cantPuntos-1);
 
             crearTriangulos();
 
@@ -199,7 +199,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
               circunferencia[i] = new Vector3(
                         cradius*FastMath.Cos(theta),
                         cradius*FastMath.Sin(theta),
-                        -radius
+                        -length
                    );
            }
 

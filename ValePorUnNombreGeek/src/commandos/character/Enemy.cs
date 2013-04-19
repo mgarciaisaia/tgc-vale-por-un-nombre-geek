@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TgcViewer.Utils.TgcSkeletalAnimation;
-using Microsoft.DirectX.Direct3D;
-using TgcViewer;
-using TgcViewer.Utils.TgcSceneLoader;
-using TgcViewer.Utils.TgcGeometry;
+﻿using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
@@ -21,11 +12,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private ConoDeVision vision;
 
      
-        private float alturaCabeza;
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 60;
         public float VisionAngle { get { return vision.Angle; } set { vision.Angle = value; } }
-        public float VisionRadius { get { return vision.Radius; } set { vision.Radius = value; } }
+        public float VisionRadius { get { return vision.Length; } set { vision.Length = value; } }
         public bool ConeEnabled { get { return vision.Enabled; } set { vision.Enabled = value; } }
 
         public Enemy(Vector3 _position, Terrain _terrain)
