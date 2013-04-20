@@ -20,8 +20,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
     public class EjemploAlumno : TgcExample
     {
         Sky sky;
-        List<Character> characters;
         Terrain terrain;
+
+        List<Character> characters;
+        List<Enemy> enemies;
 
         MovementPicking picking;
         MultipleSelection selection;
@@ -82,17 +84,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             selection = new MultipleSelection(this.terrain, selectableCharacters);
 
             //Crear el resto de los personajes
-            this.characters = new List<Character>();
-            this.characters.AddRange(selectableCharacters);
-
+            this.enemies = new List<Enemy>();
             Vector3[] waitpoints = new Vector3[3];
-            /*waitpoints[0] = new Vector3(560, 0, 560);
-            waitpoints[1] = new Vector3(-560, 0, 560);
-            waitpoints[2] = new Vector3(-560, 0, -560);*/
             terrain.heightmapCoordsToXYZ(new Vector2(73, 81), out waitpoints[0]);
             terrain.heightmapCoordsToXYZ(new Vector2(22, 80), out waitpoints[1]);
             terrain.heightmapCoordsToXYZ(new Vector2(10, 37), out waitpoints[2]);
-            this.characters.Add(new Soldier(waitpoints, terrain));
+            this.enemies.Add(new Soldier(waitpoints, terrain));
+
+            this.characters = new List<Character>();
+            this.characters.AddRange(selectableCharacters);
+            this.characters.AddRange(this.enemies);
 
             //Movimiento por picking
             picking = new MovementPicking(this.terrain);
@@ -124,11 +125,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             camera.updateCamera();
             sky.render();
             terrain.render();
+
             foreach (Character ch in this.characters)
             {
                 ch.render(elapsedTime);
             }
+
             selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
+
+            foreach (Enemy enemy in this.enemies)
+            {
+                enemy.renderVision();
+                //IMPORTANTE: enemy.renderVision SE LLAMA DESPUES de renderizar la caja de seleccion
+                //Para mas informacion leer el comentario en Enemy.renderVision
+            }
+
+
+
+
 
             if (GuiController.Instance.D3dInput.keyPressed(Key.X))
             {

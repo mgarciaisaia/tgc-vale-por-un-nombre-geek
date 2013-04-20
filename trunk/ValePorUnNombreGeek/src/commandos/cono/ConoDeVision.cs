@@ -49,6 +49,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             base.renderWireframe();
         }
 
+        public override void renderTransparent()
+        {
+            this.Transform = rep.Transform * Matrix.Translation(rep.getEyeLevel());
+            base.renderTransparent();
+        }
+
 
 
         public bool isInsideVisionRange(Character target) 

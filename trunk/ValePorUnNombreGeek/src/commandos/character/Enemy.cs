@@ -84,10 +84,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public override void render(float elapsedTime) 
         {
             base.render(elapsedTime);
-            vision.renderWireframe();
         }
 
-       
+        public void renderVision()
+        {
+            /* ATENCION! ATENCION! este metodo esta separado de render por que
+             * se necesita mantener este orden de renderizado SI O SI:
+             * 1)personajes
+             * 2)cajas de seleccion
+             * 3)conos de vision
+             * 
+             * !!!ESTO SE DEBE A LAS TRANSPARENCIAS!!!
+             * si se descarta usar transparencia en el cono de vision,
+             * todo lo que esta en este metodo se puede pasar a render()
+             */
+
+            vision.renderTransparent();
+        }
 
         }
 
