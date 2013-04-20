@@ -90,27 +90,34 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             return false;
         }
 
-        //ToDo: ver si se puede reducir la cantidad de puntos. ¿Que tan exacto deberia ser?
+
         protected static Vector3[] getBoundingBoxPoints(Character target)
         {
-            Vector3[] points = new Vector3[11];
+            Vector3[] points = new Vector3[3];
             Vector3 pMin = target.BoundingBox().PMin;
             Vector3 pMax = target.BoundingBox().PMax;
 
-            //Eje central
+            //3 puntos del eje central
             points[0] = target.BoundingBox().calculateBoxCenter();
-            points[1] = new Vector3(points[0].X, points[0].Y + pMin.Y, points[0].Z);
-            points[2] = new Vector3(points[0].X, points[0].Y + pMax.Y, points[0].Z);
+            points[1] = new Vector3(points[0].X, pMin.Y, points[0].Z);
+            points[2] = new Vector3(points[0].X, pMax.Y, points[0].Z);
 
-           //Extremos del bounding box
+            /*
+            //Base bounding box
             points[3] = new Vector3(pMin.X, pMin.Y, pMin.Z);
             points[4] = new Vector3(pMin.X, pMin.Y, pMax.Z);
-            points[5] = new Vector3(pMin.X, pMax.Y, pMin.Z);
-            points[6] = new Vector3(pMin.X, pMax.Y, pMax.Z);
-            points[7] = new Vector3(pMax.X, pMin.Y, pMin.Z);
-            points[8] = new Vector3(pMax.X, pMin.Y, pMax.Z);
-            points[9] = new Vector3(pMax.X, pMax.Y, pMin.Z);
-            points[10] = new Vector3(pMax.X, pMax.Y, pMax.Z);
+            points[5] = new Vector3(pMax.X, pMin.Y, pMin.Z);
+            points[6] = new Vector3(pMax.X, pMin.Y, pMax.Z);
+            points[7] = new Vector3(pMin.X, pMin.Y, pMin.Z);
+            points[8] = new Vector3(pMin.X, pMin.Y, pMax.Z);
+            
+           //Tapa bounding box
+            points[9] = new Vector3(pMin.X, pMax.Y, pMin.Z);
+            points[10] = new Vector3(pMin.X, pMax.Y, pMax.Z);
+            points[11] = new Vector3(pMax.X, pMax.Y, pMin.Z);
+            points[12] = new Vector3(pMax.X, pMax.Y, pMax.Z);
+
+             **/
            
             return points;
         }
