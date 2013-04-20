@@ -9,7 +9,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
     class Waiting : SoldierState
     {
         private float waitingTime;
-        private float maxWaitingTime;
+        private const float MAX_WAITING_TIME=30;
 
         private float boringSeenAngle;
         private float boringSeenAngleLimit;
@@ -22,9 +22,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             : base(_soldier)
         {
             this.waitingTime = 0;
-            this.maxWaitingTime = 5;
-
-
+            
             Vector3 facing = this.soldier.Representation.Facing;
             this.boringSeenAngle = (float)Math.Acos(facing.X);
 
@@ -37,7 +35,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             //Si espero suficiente tiempo, fijar el proximo waitpoint como objetivo
             this.waitingTime += elapsedTime;
 
-            if (this.waitingTime > this.maxWaitingTime)
+            if (this.waitingTime > MAX_WAITING_TIME)
             {
                 this.soldier.setNextPositionTarget();
                 this.soldier.setState(new Walking(this.soldier));

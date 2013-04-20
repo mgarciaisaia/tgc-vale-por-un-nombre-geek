@@ -147,6 +147,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         internal bool isOnTarget()
         {
+            if (this.target == null) return true;
+
             return GeneralMethods.isCloseTo(this.representation.Position, this.target.Position);
         }
 
