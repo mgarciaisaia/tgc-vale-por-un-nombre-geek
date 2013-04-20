@@ -38,7 +38,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 }
                 else
                 {
-                    if (GeneralMethods.isCloseTo(this.haciaDondeEstoyViendo, this.haciaDondeQuieroVer, 0.05f))
+                    if (GeneralMethods.isCloseTo(this.haciaDondeEstoyViendo, this.haciaDondeQuieroVer, 2 * elapsedTime))
                     {
                         this.soldier.setNextPositionTarget();
                         this.soldier.setState(new Walking(this.soldier));
@@ -103,7 +103,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 return (float)Math.Acos(direction.X);
             }
         }
-
 
         /*
         private float cos(float value)
