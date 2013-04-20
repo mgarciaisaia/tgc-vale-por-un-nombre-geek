@@ -1,6 +1,6 @@
 ﻿using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using System.Collections;
@@ -10,7 +10,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
    
     abstract class Enemy : Character
     {
-        private VisionCone vision;
+        private WideVisionCone vision;
 
      
         private const float DEFAULT_VISION_RADIUS = 400;
@@ -28,6 +28,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         /// Maxima distancia de vision.
         /// </summary>
         public float VisionRadius { get { return vision.Length; } set { vision.Length = value; } }
+
+
+        /// <summary>
+        /// Maxima altura de vision.
+        /// </summary>
+        public float VisionMaxHeight { get { return vision.MaxHeight; } set { vision.MaxHeight = value; } }
+
 
         /// <summary>
         /// Renderizado de cono
@@ -66,7 +73,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         private void crearConoDeVision(float radius, float angle )
         {
-            vision = new VisionCone(this.representation, radius, angle);
+            vision = new WideVisionCone(this.representation, radius, angle, 50);
         }
 
        
