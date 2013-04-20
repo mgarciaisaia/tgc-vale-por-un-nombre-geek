@@ -10,6 +10,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using System;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -77,8 +78,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Crear personajes seleccionables
             List<Character> selectableCharacters = new List<Character>();
-            selectableCharacters.Add(new Character(terrain.getPosition(-200, 200), terrain));
-            selectableCharacters.Add(new Character(terrain.getPosition(200, 200), terrain));
+            selectableCharacters.Add(new Commando(terrain.getPosition(-200, 200), terrain));
+            selectableCharacters.Add(new Commando(terrain.getPosition(200, 200), terrain));
 
             //Seleccion multiple
             selection = new MultipleSelection(this.terrain, selectableCharacters);
