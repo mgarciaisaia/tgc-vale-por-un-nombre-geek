@@ -14,6 +14,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
     
     class Cono
     {
+        private const int TRANSLUCENCY = 50; //transparencia del cono (solo si se llama a renderTransparent)
+
         protected const int DEFAULT_TRIANGLES = 24;
         protected const float DEFAULT_ANGLE = 30;
         protected const float DEFAULT_RADIUS = 10;
@@ -211,6 +213,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             d3dDevice.RenderState.FillMode = FillMode.Solid;
         }
 
+        public virtual void renderTransparent()
+        {
+            Device d3dDevice = GuiController.Instance.D3dDevice;
+            d3dDevice.RenderState.AlphaBlendEnable = true;
+            this.render();
+            d3dDevice.RenderState.AlphaBlendEnable = false;
+        }
+
 
         public virtual void render()
         {
@@ -231,11 +241,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
             //Transformo todos los vertices
             CustomVertex.PositionColored[] vTrans = new CustomVertex.PositionColored[cantVertices];
+            
 
             for (int i = 0; i < cantVertices; i++)
             {
                vTrans[i].Position = Vector3.TransformCoordinate(vertices[i].Position, this.transform);
-               vTrans[i].Color = vertices[i].Color;
+               vTrans[i].Color = Color.FromArgb(TRANSLUCENCY, 0, 0, 0).ToArgb() + vertices[i].Color;
 
             }
 
