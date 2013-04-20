@@ -28,8 +28,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                      
         }
 
-        public WideVisionCone(ICharacterRepresentation rep, float length, float horizontalAngle)
-            : base(rep, length, horizontalAngle)
+        public WideVisionCone(ICharacterRepresentation rep, float length, float angle)
+            : base(rep, length, angle)
         {
 
             this.maxHeight = this.length * FastMath.Tan(angle);
