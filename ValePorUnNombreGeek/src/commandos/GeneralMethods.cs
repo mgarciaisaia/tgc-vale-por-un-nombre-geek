@@ -8,19 +8,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class GeneralMethods //TODO darle un mejor nombre
     {
-        private const float TOLERANCIA = 1;
-
-        public static bool isCloseTo(float a, float b)
+        public static bool isCloseTo(float a, float b, float delta)
         {
-            return Math.Abs(a - b) < TOLERANCIA;
+            return Math.Abs(a - b) < delta;
         }
 
-        public static bool isCloseTo(Vector3 a, Vector3 b)
+        public static bool isCloseTo(Vector3 a, Vector3 b, float delta)
         {
 
-           return Math.Abs(a.X - b.X) < TOLERANCIA && 
-                  Math.Abs(a.Y-b.Y)  < TOLERANCIA && 
-                  Math.Abs (a.Z - b.Z) < TOLERANCIA; 
+            return Math.Abs(a.X - b.X) < delta &&
+                  Math.Abs(a.Y - b.Y) < delta &&
+                  Math.Abs(a.Z - b.Z) < delta; 
         }
 
       

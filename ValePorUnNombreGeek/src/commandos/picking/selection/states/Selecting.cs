@@ -38,7 +38,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
         private void calculateSelectionBox()
         {
             Vector3 actualGroundPoint = PickingRaySingleton.Instance.getRayGroundIntersection(this.terrain);
-            if (GeneralMethods.isCloseTo(actualGroundPoint, this.lastGroundPoint)) return; else this.lastGroundPoint = actualGroundPoint;
+            if (GeneralMethods.isCloseTo(actualGroundPoint, this.lastGroundPoint, 1)) return; else this.lastGroundPoint = actualGroundPoint;
 
             Vector3 terrainPointB;
             if(!PickingRaySingleton.Instance.terrainIntersection(this.terrain, out terrainPointB)) return;
@@ -65,7 +65,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
 
             if (GuiController.Instance.D3dInput.buttonUp(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
-                if(GeneralMethods.isCloseTo(this.initGroundPoint, this.lastGroundPoint))
+                if(GeneralMethods.isCloseTo(this.initGroundPoint, this.lastGroundPoint, 1))
                     this.selection.selectCharactersByRay(PickingRaySingleton.Instance.Ray);
                 else
                     this.selection.selectCharactersInBox(this.selectionBox);

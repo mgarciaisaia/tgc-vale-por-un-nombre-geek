@@ -50,7 +50,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 
                 if (terrain.getPosition(aPoint.X, aPoint.Z, out foundedPoint))
                 {
-                    if (GeneralMethods.isCloseTo(aPoint.Y, foundedPoint.Y))
+                    if (GeneralMethods.isCloseTo(aPoint.Y, foundedPoint.Y, 1))
                     {
                         //encontramos el punto de interseccion
                         position = aPoint;
