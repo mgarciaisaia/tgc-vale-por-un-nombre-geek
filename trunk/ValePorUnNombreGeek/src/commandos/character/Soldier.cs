@@ -39,23 +39,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
           
         }
-        protected override void update()
+        protected override void update(float elapsedTime)
         {
 
             if (this.watch())
             {
                 waiting = false;
-                chase();
+                chase(elapsedTime);
 
             }
             else
             {
-                recorrerWaitpoints();
+                recorrerWaitpoints(elapsedTime);
             }
            
         }
 
-          private void recorrerWaitpoints()
+          private void recorrerWaitpoints(float elapsedTime)
         {
             if (waitpoints != null) 
             {
@@ -74,7 +74,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                 else
                 {
                     this.setPositionTarget(waitpoints[currentWaitpoint]);
-                    goToTarget();
+                    goToTarget(elapsedTime);
                     if (!this.hasTarget())
                     { //Si llego a un waitpoint, esperar.
                         waiting = true;
@@ -93,9 +93,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             */
         }
 
-          protected void chase()
+          protected void chase(float elapsedTime)
           {
-              goToTarget();
+              goToTarget(elapsedTime);
               //Intentar matarlo(?)
           }
     

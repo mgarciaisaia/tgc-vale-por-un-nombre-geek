@@ -26,6 +26,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
         private ITargeteable target;
         protected Terrain terrain;
+        protected float speed = 150;
 
 
         public Vector3 Position
@@ -99,15 +100,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
          * UPDATE & RENDER
          * ***************************************/
 
-        protected virtual void update()
+        protected virtual void update(float elapsedTime)
         {
-            goToTarget();
+            goToTarget(elapsedTime);
         }
 
 
         public virtual void render(float elapsedTime)
         {
-            update();
+            update(elapsedTime);
 
             if (this.Selected && this.hasTarget())
             {
@@ -130,15 +131,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             return this.target != null;
         }
 
-        protected void goToTarget()
+        protected void goToTarget(float elapsedTime)
         {
 
             if (!this.hasTarget()) return;
 
             Vector3 direccion = this.target.Position - this.representation.Position;
+            float currentVelocity = speed * elapsedTime;
             direccion.Y = 0;
             direccion.Normalize();
             
+            
+            direccion.Multiply(currentVelocity);
             this.representation.walk();
             this.representation.move(direccion);
             //if (this.terrain != null) this.representation.Position = this.terrain.getPosition(this.representation.Position.X, this.representation.Position.Z);
