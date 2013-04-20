@@ -17,7 +17,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         {
             get {
                 //Centro de la circunferencia del final del cono
-                Vector3 centroCircunferencia = new Vector3(0, 0, length);
+                Vector3 centroCircunferencia = new Vector3(0, 0, -length);
                 
                 //Aplico las transformaciones que sufrio el cono
                 Vector3.TransformCoordinate(centroCircunferencia, this.Transform * Matrix.Translation(rep.getEyeLevel())); 
@@ -41,7 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
             this.sqLength = FastMath.Pow2(length);
             this.cosAngle = FastMath.Cos(angle);
-            GuiController.Instance.UserVars.addVar("Angulo");
+          
            
            
         }
@@ -85,13 +85,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             points[1] = target.BoundingBox().PMin;
             points[2] = target.BoundingBox().PMax;
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 3; i++)
             {
 
-                Vector3 positionToTarget = points[i] - this.Position;
+                Vector3 positionToTarget = points[i] - this.Position; 
                 float dot = Vector3.Dot(Vector3.Normalize(positionToTarget), this.Direction);
                 float angle = FastMath.Acos(dot);
-                GuiController.Instance.UserVars.setValue("Angulo",FastMath.ToDeg(angle));
+
+                if (angle <= this.angle) return true;
             }
 
             return false;
