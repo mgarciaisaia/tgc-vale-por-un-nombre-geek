@@ -3,17 +3,21 @@ using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
+using System.Collections;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
    
     class Enemy : Character
     {
-        private ConoDeVision vision;
+        private VisionCone vision;
 
      
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 30;
+ 
+
+
 
         /// <summary>
         /// Angulo en radianes.
@@ -62,7 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         private void crearConoDeVision(float radius, float angle )
         {
-            vision = new ConoDeVision(this.representation, radius, angle);
+            vision = new VisionCone(this.representation, radius, angle);
         }
 
        
@@ -100,6 +104,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
              */
 
             vision.renderTransparent();
+        }
+
+        public override void dispose()
+        {
+            base.dispose();
+            this.vision.dispose();
         }
 
         }

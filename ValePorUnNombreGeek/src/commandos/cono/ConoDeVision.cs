@@ -7,7 +7,7 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 {
-    class ConoDeVision : Cono
+    class VisionCone : Cone
     {
         protected ICharacterRepresentation rep;
         private float sqLength;
@@ -33,7 +33,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         }
 
      
-        public ConoDeVision(ICharacterRepresentation rep, float length, float angle)
+        public VisionCone(ICharacterRepresentation rep, float length, float angle)
             : base(rep.getEyeLevel(), length, angle)
         {
             this.rep = rep;
