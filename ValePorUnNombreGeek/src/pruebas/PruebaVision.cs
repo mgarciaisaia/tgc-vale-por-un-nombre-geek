@@ -9,6 +9,7 @@ using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using Microsoft.DirectX.Direct3D;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
@@ -53,11 +54,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             
             piso = TgcBox.fromSize(new Vector3(0, 0, 0), new Vector3(1000, 5, 1000), pisoTexture);
 
-            pj = new Character(new Vector3(0, 0, -10));
+            pj = new Commando(new Vector3(0, 0, -10));
             pj.Representation.AutoTransformEnable = true;
 
 
-            enemigo = new Enemy(new Vector3(0, 0, 0), null); //TODO arreglar
+            enemigo = new Soldier(new Vector3(0, 0, 0), null); //TODO arreglar
 
 
 

@@ -14,7 +14,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
-    class Character : ITargeteable
+    abstract class Character : ITargeteable
     {
        
         
@@ -63,9 +63,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.terrain = _terrain;
         }
 
-        public Character(Vector3 position)
+        public Character(Vector3 _position)
         {
-            this.loadCharacterRepresentation(position);
+            this.loadCharacterRepresentation(_position);
             this.Selected = false;
             this.dead = false;
         }
@@ -100,12 +100,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
          * UPDATE & RENDER
          * ***************************************/
 
-        protected virtual void update(float elapsedTime)
-        {
-            goToTarget(elapsedTime);
-        }
-
-
+        protected abstract void update(float elapsedTime);
+        
         public virtual void render(float elapsedTime)
         {
             update(elapsedTime);
@@ -131,7 +127,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             return this.target != null;
         }
 
-        protected void goToTarget(float elapsedTime)
+        internal void goToTarget(float elapsedTime)
         {
 
             if (!this.hasTarget()) return;
@@ -147,18 +143,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.representation.move(direccion);
             //if (this.terrain != null) this.representation.Position = this.terrain.getPosition(this.representation.Position.X, this.representation.Position.Z);
             this.representation.Position = this.terrain.getPosition(this.representation.Position.X, this.representation.Position.Z);
+        }
 
-            //nos fijamos si ya estamos en la posicion (o lo suficientemente cerca)
-            if (GeneralMethods.isCloseTo(this.representation.Position, this.target.Position))
-            {
-                this.representation.standBy();
-                this.target = null;
-            }
+        internal bool isOnTarget()
+        {
+            return GeneralMethods.isCloseTo(this.representation.Position, this.target.Position);
         }
 
         private void setTarget(ITargeteable _target)
         {
             this.target = _target;
+        }
+
+        public void setNoTarget()
+        {
+            this.representation.standBy();
+            this.target = null;
         }
 
         public void setPositionTarget(Vector3 pos)

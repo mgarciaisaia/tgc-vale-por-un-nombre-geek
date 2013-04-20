@@ -8,7 +8,7 @@ using System.Collections;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
    
-    class Enemy : Character
+    abstract class Enemy : Character
     {
         private VisionCone vision;
 
