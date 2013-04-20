@@ -149,7 +149,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             if (this.target == null) return true;
 
-            return GeneralMethods.isCloseTo(this.representation.Position, this.target.Position);
+            return GeneralMethods.isCloseTo(this.representation.Position, this.target.Position, 1);
         }
 
         private void setTarget(ITargeteable _target)

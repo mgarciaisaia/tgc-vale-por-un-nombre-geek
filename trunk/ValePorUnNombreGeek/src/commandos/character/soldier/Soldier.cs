@@ -108,6 +108,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
             this.setPositionTarget(waitpoints[currentWaitpoint]);
         }
 
+        internal Vector3 getNextPositionTarget()
+        {
+            return waitpoints[(currentWaitpoint + 1) % waitpoints.Length];
+        }
+
         internal void setState(SoldierState _state)
         {
             this.state = _state;
