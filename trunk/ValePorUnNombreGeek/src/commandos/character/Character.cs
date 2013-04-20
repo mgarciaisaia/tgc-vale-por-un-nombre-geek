@@ -131,20 +131,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             if (!this.hasTarget()) return;
 
-            //primero nos movemos
             Vector3 direccion = this.target.Position - this.representation.Position;
-            direccion = direccion * (1 / direccion.Length());
+            direccion.Y = 0;
+            direccion.Normalize();
             
-            //Vector3 futurePosition = this.Position + direccion;
-            //if (this.terrain.getPosition(futurePosition.X, futurePosition.Z).Y > this.Position.Y + 10) return;
-            //else{
             this.representation.walk();
             this.representation.move(direccion);
-            if (this.terrain != null) this.representation.Position = this.terrain.getPosition(this.representation.Position.X, this.representation.Position.Z);
-            //}
+            //if (this.terrain != null) this.representation.Position = this.terrain.getPosition(this.representation.Position.X, this.representation.Position.Z);
+            this.representation.Position = this.terrain.getPosition(this.representation.Position.X, this.representation.Position.Z);
 
             //nos fijamos si ya estamos en la posicion (o lo suficientemente cerca)
-            if (GeneralMethods.isCloseTo(representation.Position, this.target.Position))
+            if (GeneralMethods.isCloseTo(this.representation.Position, this.target.Position))
             {
                 this.representation.standBy();
                 this.target = null;
