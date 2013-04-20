@@ -7,7 +7,7 @@ using Microsoft.DirectX.Direct3D;
 using System.Drawing;
 using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone;
 using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas

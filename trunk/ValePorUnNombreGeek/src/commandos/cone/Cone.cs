@@ -9,7 +9,7 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
 using TgcViewer.Utils.TgcGeometry;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 {
     
     class Cone
@@ -43,7 +43,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             set { enabled = value; }
         }
 
-        private bool mustUpdate;
+        protected bool mustUpdate;
 
         public bool AutoTransformEnable
         {
