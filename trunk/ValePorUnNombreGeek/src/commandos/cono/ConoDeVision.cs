@@ -66,7 +66,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
         public bool isInsideVisionRange(Character target) 
         {
-          return false;
+            
+
+            return false;
         }
 
          public bool isInsideVisionRange(Character target, Terrain terrain)
