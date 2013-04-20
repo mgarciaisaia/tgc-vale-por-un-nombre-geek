@@ -15,6 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         private bool selected;
         private Vector3 meshRotationAxis; //rotacion manual
         private Matrix meshRotationMatrix; //rotacion manual
+        private Vector3 facing; //hacia donde mira
 
         public bool Selected
         {
@@ -39,6 +40,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.meshRotationAxis = new Vector3(0, 0, -1);
             this.meshRotationMatrix = Matrix.Identity;
             this.AutoTransformEnable = false;
+            this.facing = new Vector3(0, 0, 1);
 
             //por algun motivo hay que volver a actualizar la posicion del personaje
             this.Transform = Matrix.Translation(this.Position); //en este caso transladandolo desde el (0,0,0)
@@ -81,6 +83,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.mesh.playAnimation("StandBy", true);
         }
 
+        public void Talk()
+        {
+            this.mesh.playAnimation("Talk", true);
+        }
 
         public void die()
         {
@@ -145,19 +151,28 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             set { this.mesh.AutoTransformEnable = value; }
         }
 
+        public Vector3 Facing
+        {
+            get { return this.facing; }
+            set { this.facing = value; }
+        }
+
         public void move(Vector3 direction)
         {
             this.mesh.move(direction);
             this.faceTo(direction);
         }
 
-        private void faceTo(Vector3 direction) //rotacion manual
+        public void faceTo(Vector3 direction)
         {
             direction.Normalize();
             float angle = FastMath.Acos(Vector3.Dot(this.meshRotationAxis, direction));
             Vector3 axisRotation = Vector3.Cross(this.meshRotationAxis, direction);
             this.meshRotationMatrix = Matrix.RotationAxis(axisRotation, angle);
             this.Transform = this.meshRotationMatrix * Matrix.Translation(this.Position);
+
+            //guardamos la direccion en la que miramos ahora
+            this.Facing = direction;
         }
 
         public  void moveOrientedY(float movement){
