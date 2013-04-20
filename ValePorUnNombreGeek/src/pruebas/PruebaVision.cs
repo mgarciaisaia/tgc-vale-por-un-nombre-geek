@@ -66,7 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 90, 45);
            
             GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox());
-            GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-50, -50, -50), new Vector3(50, 50, 50), new Vector3(0, 0, -20));
+            GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-100, -100, -100), new Vector3(100, 100, 100), new Vector3(0, 0, -20));
             GuiController.Instance.UserVars.addVar("PuedeVerlo");
                  
 
