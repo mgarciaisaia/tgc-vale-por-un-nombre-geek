@@ -11,13 +11,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         protected ICharacterRepresentation rep;
         private float sqLength;
         private float cosAngle;
+        
         public Vector3 Direction
         {
-            get{ return Vector3.Normalize( Vector3.TransformCoordinate( new Vector3(0, 0, 1), this.Transform));}
+            get { return Vector3.Normalize(Vector3.TransformCoordinate(new Vector3(0, 0, 1), this.Transform * Matrix.Translation(rep.getEyeLevel()))); }
            
         }
-       
 
+     
         public ConoDeVision(ICharacterRepresentation rep, float length, float angle)
             : base(rep.Position+rep.getEyeLevel(), length, angle)
         {
@@ -25,13 +26,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             this.AutoTransformEnable = false;
 
             this.sqLength = FastMath.Pow2(length);
-            this.cosAngle = FastMath.Cos(angle);             
+            this.cosAngle = FastMath.Cos(angle);
+
+           
+           
         }
 
         public override void render()
         {
             this.Transform = rep.Transform * Matrix.Translation(rep.getEyeLevel());
             base.render();
+           
         }
 
         
@@ -47,6 +52,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         {
             this.Transform = rep.Transform * Matrix.Translation(rep.getEyeLevel());
             base.renderWireframe();
+                     
+           
         }
 
         public override void renderTransparent()
@@ -59,7 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
         public bool isInsideVisionRange(Character target) 
         {
-             return false;
+          return false;
         }
 
          public bool isInsideVisionRange(Character target, Terrain terrain)
