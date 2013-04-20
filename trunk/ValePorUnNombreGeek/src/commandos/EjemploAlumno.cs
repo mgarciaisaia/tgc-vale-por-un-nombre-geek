@@ -74,27 +74,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             //Cargar HeightMap
             terrain = new Terrain();
 
-
-
-            //Crear personajes seleccionables
-            List<Character> selectableCharacters = new List<Character>();
-            selectableCharacters.Add(new Commando(terrain.getPosition(-200, 200), terrain));
-            selectableCharacters.Add(new Commando(terrain.getPosition(200, 200), terrain));
-
-            //Seleccion multiple
-            selection = new MultipleSelection(this.terrain, selectableCharacters);
-
-            //Crear el resto de los personajes
-            this.enemies = new List<Enemy>();
+            //Crear personajes
             Vector3[] waitpoints = new Vector3[3];
             terrain.heightmapCoordsToXYZ(new Vector2(73, 81), out waitpoints[0]);
             terrain.heightmapCoordsToXYZ(new Vector2(22, 80), out waitpoints[1]);
             terrain.heightmapCoordsToXYZ(new Vector2(10, 37), out waitpoints[2]);
+
+            this.enemies = new List<Enemy>();
             this.enemies.Add(new Soldier(waitpoints, terrain));
 
             this.characters = new List<Character>();
-            this.characters.AddRange(selectableCharacters);
+            this.characters.Add(new Commando(terrain.getPosition(-200, 200), terrain));
+            this.characters.Add(new Commando(terrain.getPosition(200, 200), terrain));
             this.characters.AddRange(this.enemies);
+
+            //Seleccion multiple
+            selection = new MultipleSelection(this.terrain, this.characters);
 
             //Movimiento por picking
             picking = new MovementPicking(this.terrain);
@@ -119,7 +114,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             {
                 foreach (Character ch in selection.getSelectedCharacters())
                 {
-                    ch.setPositionTarget(pickingPosition);
+                    if(ch.userCanMove()) ch.setPositionTarget(pickingPosition);
                 }
             }
 

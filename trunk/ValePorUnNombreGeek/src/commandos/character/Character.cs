@@ -170,6 +170,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             this.setTarget(ch);
         }
-        
+
+        public abstract bool userCanMove();
     }
 }
