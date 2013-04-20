@@ -147,20 +147,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         public void move(Vector3 direction)
         {
-            this.faceTo(direction);
             this.mesh.move(direction);
+            this.faceTo(direction);
         }
 
         private void faceTo(Vector3 direction) //rotacion manual
         {
+            direction.Normalize();
             float angle = FastMath.Acos(Vector3.Dot(this.meshRotationAxis, direction));
             Vector3 axisRotation = Vector3.Cross(this.meshRotationAxis, direction);
             this.meshRotationMatrix = Matrix.RotationAxis(axisRotation, angle);
             this.Transform = this.meshRotationMatrix * Matrix.Translation(this.Position);
-            
         }
 
-        public  void moveOrientedY(float movement ){
+        public  void moveOrientedY(float movement){
             
             mesh.moveOrientedY(movement);
 
