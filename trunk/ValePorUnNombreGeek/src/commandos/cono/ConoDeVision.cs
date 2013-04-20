@@ -3,6 +3,7 @@ using TgcViewer.Utils.TgcGeometry;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
+using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 {
@@ -14,7 +15,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         
         public Vector3 Direction
         {
-            get { return Vector3.Normalize(Vector3.TransformCoordinate(new Vector3(0, 0, 1), this.Transform * Matrix.Translation(rep.getEyeLevel()))); }
+            get {
+                //Centro de la circunferencia del final del cono
+                Vector3 centroCircunferencia = new Vector3(0, 0, length);
+                
+                //Aplico las transformaciones que sufrio el cono
+                Vector3.TransformCoordinate(centroCircunferencia, this.Transform * Matrix.Translation(rep.getEyeLevel())); 
+                
+                //Obtengo el vector que va desde el vertice del cono al centro de su circunferencia
+                Vector3 vectorDireccion = centroCircunferencia - this.Position;
+
+                //Retorno el vector normalizado
+                return Vector3.Normalize(vectorDireccion);
+            }
+           
            
         }
 
@@ -27,7 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
             this.sqLength = FastMath.Pow2(length);
             this.cosAngle = FastMath.Cos(angle);
-
+            GuiController.Instance.UserVars.addVar("Angulo");
            
            
         }
@@ -66,7 +80,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
         public bool isInsideVisionRange(Character target) 
         {
-            
+            Vector3[] points = new Vector3[3];
+            points[0] = target.BoundingBox().calculateBoxCenter();
+            points[1] = target.BoundingBox().PMin;
+            points[2] = target.BoundingBox().PMax;
+
+            for (int i = 0; i < 1; i++)
+            {
+
+                Vector3 positionToTarget = points[i] - this.Position;
+                float dot = Vector3.Dot(Vector3.Normalize(positionToTarget), this.Direction);
+                float angle = FastMath.Acos(dot);
+                GuiController.Instance.UserVars.setValue("Angulo",FastMath.ToDeg(angle));
+            }
 
             return false;
         }
@@ -75,6 +101,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         {
             return false;
         }
+
+
         /* Para crear elipse en vez de circunferencia. Se ve mejor pero es mas dificil calcular colision.
         protected override void crearCircunferencia(float radiusA, int cantPuntos)
         {
