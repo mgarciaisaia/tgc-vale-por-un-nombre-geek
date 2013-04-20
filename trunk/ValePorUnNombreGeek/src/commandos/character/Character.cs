@@ -88,7 +88,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.representation.die();
         }
 
-        public void dispose()
+        public virtual void dispose()
         {
             representation.dispose();
         }

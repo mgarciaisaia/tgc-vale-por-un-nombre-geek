@@ -12,7 +12,7 @@ using TgcViewer.Utils.TgcGeometry;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 {
     
-    class Cono
+    class Cone
     {
         private const int TRANSLUCENCY = 50; //transparencia del cono (solo si se llama a renderTransparent)
 
@@ -79,7 +79,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
         public int Triangles { get { return triangles; } set { triangles = value; mustUpdate = true; } }
       
 
-        public Cono(Vector3 vertex){
+        public Cone(Vector3 vertex){
 
                          
             config(vertex, DEFAULT_RADIUS, FastMath.ToRad(DEFAULT_ANGLE), DEFAULT_TRIANGLES);
@@ -106,14 +106,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             
         }
 
-        public Cono(Vector3 vertex, float length, float angle)
+        public Cone(Vector3 vertex, float length, float angle)
         {
             config(vertex, length, angle, DEFAULT_TRIANGLES);
 
 
         }
 
-        public Cono(Vector3 vertex, float length, float angle, int triangles) {
+        public Cone(Vector3 vertex, float length, float angle, int triangles) {
             config(vertex, length, angle,triangles);
            
         }

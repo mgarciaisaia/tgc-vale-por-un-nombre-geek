@@ -89,11 +89,10 @@
     </void>
     <void property="methods">
      <void property="text">
-      <string>#update()
-
+      <string>#update(elapsedTime)
 +setWaitpoints(Point[])
--recorrerWaitpoints()
--chase()
+-recorrerWaitpoints(elapsedTime)
+-chase(elapsedTime)
 
 
 
@@ -111,19 +110,19 @@
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double2"/>
-      <double>559.9838259166298</double>
+      <double>527.9838259166298</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double2"/>
-      <double>607.7291023500354</double>
+      <double>619.7291023500354</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>559.9838259166298</double>
-     <double>607.7291023500354</double>
+     <double>527.9838259166298</double>
+     <double>619.7291023500354</double>
     </void>
    </object>
   </void>

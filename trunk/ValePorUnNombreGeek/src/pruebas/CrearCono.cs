@@ -33,10 +33,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             return "Prueba de graficado de cono";
         }
 
-        Cono cono;
+        Cone cono;
         public override void init()
         {
-            cono = new Cono(new Vector3(0,0,0));
+            cono = new Cone(new Vector3(0,0,0));
             
             //Modifiers
             GuiController.Instance.Modifiers.addFloat("Length", 0, 10, 5);
