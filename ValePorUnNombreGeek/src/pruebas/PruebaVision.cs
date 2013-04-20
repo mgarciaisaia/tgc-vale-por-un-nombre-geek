@@ -62,11 +62,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 
 
 
-            GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 1000, 500);
+            GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 500,100);
             GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 90, 45);
            
             GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox());
-            GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000), new Vector3(0, 0, -20));
+            GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-50, -50, -50), new Vector3(50, 50, 50), new Vector3(0, 0, -20));
             GuiController.Instance.UserVars.addVar("PuedeVerlo");
                  
 
@@ -87,6 +87,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
          
            piso.render();
            enemigo.render(elapsedTime);
+           enemigo.BoundingBox().render();
+          
            pj.Position = (Vector3)GuiController.Instance.Modifiers.getValue("posicionTarget");
 
            if (enemigo.canSee(pj))
@@ -95,7 +97,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
                GuiController.Instance.UserVars.setValue("PuedeVerlo", false);
 
            pj.render(elapsedTime);
-               
+
+           pj.BoundingBox().render();
+           enemigo.renderVision();
                       
 
         }

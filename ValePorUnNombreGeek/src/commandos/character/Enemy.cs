@@ -13,7 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
      
         private const float DEFAULT_VISION_RADIUS = 400;
-        private const float DEFAULT_VISION_ANGLE = 60;
+        private const float DEFAULT_VISION_ANGLE = 30;
 
         /// <summary>
         /// Angulo en radianes.
