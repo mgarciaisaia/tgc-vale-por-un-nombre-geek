@@ -34,16 +34,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
      
         public ConoDeVision(ICharacterRepresentation rep, float length, float angle)
-            : base(rep.Position+rep.getEyeLevel(), length, angle)
+            : base(rep.getEyeLevel(), length, angle)
         {
             this.rep = rep;
             this.AutoTransformEnable = false;
 
             this.sqLength = FastMath.Pow2(length);
             this.cosAngle = FastMath.Cos(angle);
-          
-           
-           
+                     
         }
 
         public override void render()
@@ -78,24 +76,58 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
 
 
-        public bool isInsideVisionRange(Character target) 
+        public bool isInsideVisionRange(Character target)
         {
-            Vector3[] points = new Vector3[3];
-            points[0] = target.BoundingBox().calculateBoxCenter();
-            points[1] = target.BoundingBox().PMin;
-            points[2] = target.BoundingBox().PMax;
+            Vector3[] points = getBoundingBoxPoints(target);
 
-            for (int i = 0; i < 3; i++)
+            foreach (Vector3 point in points)
             {
 
-                Vector3 positionToTarget = points[i] - this.Position;
-                if (positionToTarget.LengthSq() <= this.sqLength)
-                {
-                    float dot = Vector3.Dot(Vector3.Normalize(positionToTarget), this.Direction);
-                    float angle = FastMath.Acos(dot);
+                if (isPointInsideCone(point))
+                    return true;
+            }
 
-                    if (angle <= this.angle) return true;
-                }
+            return false;
+        }
+
+        private static Vector3[] getBoundingBoxPoints(Character target)
+        {
+            Vector3[] points = new Vector3[3];
+            Vector3 pMin = target.BoundingBox().PMin;
+            Vector3 pMax = target.BoundingBox().PMax;
+
+            points[0] = target.BoundingBox().calculateBoxCenter();
+            points[1] = new Vector3(points[0].X, points[0].Y + pMin.Y, points[0].Z);
+            points[2] = new Vector3(points[0].X, points[0].Y + pMax.Y, points[0].Z);
+
+           /*Extremos del bounding box
+            points[3] = new Vector3(pMin.X, pMin.Y, pMin.Z);
+            points[4] = new Vector3(pMin.X, pMin.Y, pMax.Z);
+            points[5] = new Vector3(pMin.X, pMax.Y, pMin.Z);
+            points[6] = new Vector3(pMin.X, pMax.Y, pMax.Z);
+            points[7] = new Vector3(pMax.X, pMin.Y, pMin.Z);
+            points[8] = new Vector3(pMax.X, pMin.Y, pMax.Z);
+            points[9] = new Vector3(pMax.X, pMax.Y, pMin.Z);
+            points[10] = new Vector3(pMax.X, pMax.Y, pMax.Z);
+            * */
+
+            return points;
+        }
+       
+
+        private bool isPointInsideCone(Vector3 point)
+        {
+            //Vector que va desde el vertice del cono hasta el punto
+            Vector3 positionToTarget = point - this.Position;
+
+            //Comparo los cuadrados de las distancias porque hacer raiz cuadrada es costoso.
+            if (positionToTarget.LengthSq() <= this.sqLength) {
+               
+                // A . B = |A||B| cos o  ^  |A|=|B| =1  = > A . B = cos o
+                float cos = Vector3.Dot(Vector3.Normalize(positionToTarget), this.Direction); 
+                
+                //Comparo cosenos para no tener que hacer Acos. Es equivalente a hacer anguloVerticePunto < anguloCono
+                if (cos > this.cosAngle) return true; 
             }
 
             return false;
@@ -103,7 +135,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
 
          public bool isInsideVisionRange(Character target, Terrain terrain)
         {
-            return false;
+            if (isInsideVisionRange(target))
+            {
+                //if(no hay nada tapandome la vista)
+                return true;
+            }
+            else return false;
         }
 
 
