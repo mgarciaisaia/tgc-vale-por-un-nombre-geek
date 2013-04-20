@@ -88,11 +88,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cono
             for (int i = 0; i < 3; i++)
             {
 
-                Vector3 positionToTarget = points[i] - this.Position; 
-                float dot = Vector3.Dot(Vector3.Normalize(positionToTarget), this.Direction);
-                float angle = FastMath.Acos(dot);
+                Vector3 positionToTarget = points[i] - this.Position;
+                if (positionToTarget.LengthSq() <= this.sqLength)
+                {
+                    float dot = Vector3.Dot(Vector3.Normalize(positionToTarget), this.Direction);
+                    float angle = FastMath.Acos(dot);
 
-                if (angle <= this.angle) return true;
+                    if (angle <= this.angle) return true;
+                }
             }
 
             return false;
