@@ -157,6 +157,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             Vector3 axisRotation = Vector3.Cross(this.meshRotationAxis, direction);
             this.meshRotationMatrix = Matrix.RotationAxis(axisRotation, angle);
             this.Transform = this.meshRotationMatrix * Matrix.Translation(this.Position);
+            
         }
 
         public  void moveOrientedY(float movement ){

@@ -20,6 +20,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         
         private bool dead;
         protected ICharacterRepresentation representation;
+        public ICharacterRepresentation Representation
+        {
+            get { return this.representation; }
+        }
         private ITargeteable target;
         protected Terrain terrain;
 
