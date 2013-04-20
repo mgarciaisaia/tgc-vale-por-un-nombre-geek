@@ -5,7 +5,7 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
 {
-    abstract class Terrain : TgcSimpleTerrain
+    class Terrain : TgcSimpleTerrain
     {
         float scaleXZ;
         float scaleY;
@@ -108,7 +108,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         /// <summary>
         /// Obtiene la altura de un punto, si el punto pertenece al heightmap.
         /// </summary>
-        public bool getY(float x, float z, out float y)
+        private bool getY(float x, float z, out float y)
         {
             y = 0;
             Vector2 coords;
@@ -153,25 +153,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         /// <summary>
         /// Devuelve el valor de Y mas bajo del mapa.
         /// </summary>
-        public float minY()
-        {
-            return this.Position.Y;
-        }
+        public float minY { get { return this.Position.Y; } }
 
         /// <summary>
         /// Devuelve el valor de Y mas alto del mapa.
         /// </summary>
-        public float maxY()
-        {
-            return 255 * this.scaleY;
-        }
+        public float maxY { get { return 255 * this.scaleY; } }
 
         /// <summary>
         /// Devuelve true si la posicion especificada es valida para que se posicione un personaje.
         /// Se utiliza para saber si una posicion es valida para mover por picking al personaje.
         /// Nota: en un terreno sin agua este metodo siempre devuelve true.
         /// </summary>
-        public abstract bool positionAvailableForCharacter(Vector3 coords);
+        public virtual bool positionAvailableForCharacter(Vector3 coords)
+        {
+            return true;
+        }
 
         #endregion
     }

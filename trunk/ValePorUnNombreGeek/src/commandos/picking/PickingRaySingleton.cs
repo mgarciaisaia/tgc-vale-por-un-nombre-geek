@@ -40,20 +40,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
         {
             this.updateRay();
 
-            Vector3 myPoint;
-            float terrainY;
-            float i0 = (terrain.Position.Y - this.Ray.Origin.Y) / this.Ray.Direction.Y;
-            float i = i0;
+            Vector3 aPoint;
+            Vector3 foundedPoint;
+            float t0 = (terrain.Position.Y - this.Ray.Origin.Y) / this.Ray.Direction.Y;
+            float t = t0;
             while (true)
             {
-                myPoint = this.Ray.Origin + i * this.Ray.Direction;
+                aPoint = this.Ray.Origin + t * this.Ray.Direction;
 
-                if (terrain.getY(myPoint.X, myPoint.Z, out terrainY))
+                if (terrain.getPosition(aPoint.X, aPoint.Z, out foundedPoint))
                 {
-                    if (GeneralMethods.isCloseTo(myPoint.Y, terrainY))
+                    if (GeneralMethods.isCloseTo(aPoint.Y, foundedPoint.Y))
                     {
                         //encontramos el punto de interseccion
-                        position = myPoint;
+                        position = aPoint;
 
                         //muestra el punto encontrado
                         GuiController.Instance.UserVars.setValue("WorldX", position.X);
@@ -61,21 +61,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                         GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
 
                         Vector2 hmCoords;
-                        terrain.xzToHeightmapCoords(myPoint.X, myPoint.Z, out hmCoords);
+                        terrain.xzToHeightmapCoords(aPoint.X, aPoint.Z, out hmCoords);
                         GuiController.Instance.UserVars.setValue("hmX", hmCoords.X);
                         GuiController.Instance.UserVars.setValue("hmY", hmCoords.Y);
 
                         return true;
                     }
                 }
-                else if (myPoint.Y >= terrain.maxY() || myPoint.Y < terrain.minY())
+                else if (aPoint.Y >= terrain.maxY || aPoint.Y < terrain.minY)
                 {
                     //ya nos fuimos o muy arriba o muy abajo
                     position = Vector3.Empty;
                     return false;
                 }
 
-                i--;
+                t--;
             }
         }
 
@@ -88,7 +88,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
             //(pablo) lo uso para ver si el rayo vario su posicion. es mucho mas rapido que getRayIntersection; salva fps.
             this.updateRay();
 
-            float t0 = (terrain.minY() - this.Ray.Origin.Y) / this.Ray.Direction.Y;
+            float t0 = (terrain.minY - this.Ray.Origin.Y) / this.Ray.Direction.Y;
             return this.Ray.Origin + t0 * this.Ray.Direction;
         }
     }

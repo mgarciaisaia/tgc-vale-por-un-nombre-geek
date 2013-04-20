@@ -60,7 +60,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.EscenarioRio
 
             
             //Cargar heightmap          
-            terrain = new Land();
+            terrain = new Terrain();
             terrain.loadHeightmap(pathHeightmap, 5f, 2f, new Vector3(0, 0, 0));
             terrain.loadTexture(pathTextura);
 

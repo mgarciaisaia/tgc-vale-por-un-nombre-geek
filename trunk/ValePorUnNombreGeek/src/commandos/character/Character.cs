@@ -137,12 +137,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             if (!this.hasTarget()) return;
 
             Vector3 direccion = this.target.Position - this.representation.Position;
-            float currentVelocity = speed * elapsedTime;
             direccion.Y = 0;
             direccion.Normalize();
-            
-            
+
+            float currentVelocity = speed * elapsedTime;
             direccion.Multiply(currentVelocity);
+
             this.representation.walk();
             this.representation.move(direccion);
             //if (this.terrain != null) this.representation.Position = this.terrain.getPosition(this.representation.Position.X, this.representation.Position.Z);
