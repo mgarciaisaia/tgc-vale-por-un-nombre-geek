@@ -72,11 +72,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             
             enemigo = new Soldier(waitpoints, terrain);
 
-            enemigo.ShowConeDirection = true;
+           
 
             GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 500, 100);
             GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 90, 45);
-
+            GuiController.Instance.Modifiers.addBoolean("Direccion", "Mostrar", false);
             GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox());
             GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-600, -600, -600), new Vector3(600, 600, 600), new Vector3(200, 0, 200));
             GuiController.Instance.UserVars.addVar("PuedeVerlo");
@@ -96,8 +96,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 
             enemigo.VisionAngle = FastMath.ToRad((float)GuiController.Instance.Modifiers.getValue("AnguloVision"));
             enemigo.VisionRadius = (float)GuiController.Instance.Modifiers.getValue("RadioVision");
+            enemigo.ShowConeDirection = (bool)GuiController.Instance.Modifiers.getValue("Direccion");
 
             terrain.render();
+
             enemigo.render(elapsedTime);
             enemigo.BoundingBox().render();
 
