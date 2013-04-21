@@ -119,6 +119,7 @@
     <Compile Include="ValePorUnNombreGeek\src\pruebas\escenarioRio.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaVision.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaMoverPersonaje.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaVision2.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
