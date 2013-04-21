@@ -66,6 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                 {
                     this.Color1 = System.Drawing.Color.Red;
                     this.Color2 = System.Drawing.Color.Red;
+                    GuiController.Instance.Logger.log("Vi algo.");
                     return true;
                 }
             }
