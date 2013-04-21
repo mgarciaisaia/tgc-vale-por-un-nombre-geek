@@ -72,7 +72,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             
             enemigo = new Soldier(waitpoints, terrain);
 
-
+            enemigo.ShowConeDirection = true;
 
             GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 500, 100);
             GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 90, 45);

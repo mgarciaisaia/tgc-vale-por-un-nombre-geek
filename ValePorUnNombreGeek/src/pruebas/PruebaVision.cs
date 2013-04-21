@@ -59,7 +59,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 
 
             enemigo = new Soldier(new Vector3(0, 0, 0), null); //TODO arreglar
-
+            enemigo.ShowConeDirection = true;
 
 
 

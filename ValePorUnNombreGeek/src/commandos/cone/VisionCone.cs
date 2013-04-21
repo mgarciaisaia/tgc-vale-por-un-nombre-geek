@@ -12,25 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         protected ICharacterRepresentation rep;
         protected float sqLength;
         protected float cosAngle;
-        protected bool showDirection;
-
-        public bool ShowDirection { get { return this.showDirection; } set { this.showDirection = value; } }
-
-        public Vector3 Direccion
-        {
-            get {
-                //Centro de la circunferencia del final del cono
-                Vector3 centroCircunferencia = new Vector3(0, 0, -length) + rep.getEyeLevel();
-                
-                //Aplico las transformaciones que sufrio el cono
-                Vector3 vectorDireccion = Vector3.TransformCoordinate(centroCircunferencia, this.Transform); 
-                
-               
-                return vectorDireccion-this.Position;
-            }
-           
-           
-        }
+       
 
      
         public VisionCone(ICharacterRepresentation rep, float length, float angle)
@@ -39,9 +21,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             this.rep = rep;
             this.AutoTransformEnable = false;
             this.AlphaBlendEnabled = true;
-            this.showDirection = false;
+            
             this.sqLength = FastMath.Pow2(length);
             this.cosAngle = FastMath.Cos(angle);
+            this.Color1 = System.Drawing.Color.Aquamarine;
+            this.Color2 = System.Drawing.Color.Aquamarine;
+            
                      
         }
 
@@ -62,24 +47,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         public override void render()
         {
-            updatePosition();
-
-            renderDirection();
-
+           updatePosition();
            base.render();
         }
 
-        protected void renderDirection()
-        {
-            if (!this.showDirection) return;
-            TgcArrow arrow = new TgcArrow();
-            arrow.PStart = this.Position;
-            arrow.PEnd = this.Position + this.Direccion;
-            arrow.Thickness = 2f;
-            arrow.HeadSize = new Vector2(0.5f, 0.5f);
-            arrow.updateValues();
-            arrow.render();
-        }
+        
 
 
 
@@ -92,11 +64,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
                 if (isPointInsideCone(point))
                 {
-                    this.Color = System.Drawing.Color.Red;
+                    this.Color1 = System.Drawing.Color.Red;
+                    this.Color2 = System.Drawing.Color.Red;
                     return true;
                 }
             }
-            this.Color = System.Drawing.Color.Aquamarine;
+            this.Color1 = System.Drawing.Color.Aquamarine;
+            this.Color2 = System.Drawing.Color.Aquamarine;
+            
             return false;
         }
 
