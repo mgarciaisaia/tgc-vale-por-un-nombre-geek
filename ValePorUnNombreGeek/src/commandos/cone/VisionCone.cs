@@ -84,9 +84,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             {
 
                 if (isPointInsideCone(point))
+                {
+                    this.Color = System.Drawing.Color.Red;
                     return true;
+                }
             }
-
+            this.Color = System.Drawing.Color.Aquamarine;
             return false;
         }
 
