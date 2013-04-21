@@ -71,7 +71,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         }
 
 
+        protected Color color;
 
+        public Color Color { get { return color; } set { color = value;} }
         public float Length { get { return length; } set { length = value; mustUpdate = true; } }
 
         public float Angle { get { return angle; } set { angle = value; mustUpdate = true; } }
@@ -101,6 +103,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             this.rotation = new Vector3(0, 0, 0);
             this.enabled = true;
             this.transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
+            this.color = Color.Aqua;
             this.mustUpdate = true;
             
             
@@ -168,15 +171,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                                *     circunferencia[j]------------ circunferencia[j+1]  
                                */
 
-                vertices[i] = new CustomVertex.PositionColored(0, 0, 0, Color.LimeGreen.ToArgb());
-                vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X,  circunferencia[j].Y , circunferencia[j].Z , Color.Aqua.ToArgb());
-                vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[j + 1].X , circunferencia[j + 1].Y , circunferencia[j + 1].Z, Color.Aqua.ToArgb());
+                vertices[i] = new CustomVertex.PositionColored(0, 0, 0, color.ToArgb());
+                vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X,  circunferencia[j].Y , circunferencia[j].Z , color.ToArgb());
+                vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[j + 1].X , circunferencia[j + 1].Y , circunferencia[j + 1].Z, color.ToArgb());
 
             }
 
-            vertices[i] = new CustomVertex.PositionColored(0, 0, 0, Color.LimeGreen.ToArgb());
-            vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X , circunferencia[j].Y , circunferencia[j].Z, Color.Aqua.ToArgb());
-            vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[0].X , circunferencia[0].Y , circunferencia[0].Z , Color.Aqua.ToArgb());
+            vertices[i] = new CustomVertex.PositionColored(0, 0, 0, color.ToArgb());
+            vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X , circunferencia[j].Y , circunferencia[j].Z, color.ToArgb());
+            vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[0].X , circunferencia[0].Y , circunferencia[0].Z , color.ToArgb());
 
 
         }
@@ -246,7 +249,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             for (int i = 0; i < cantVertices; i++)
             {
                vTrans[i].Position = Vector3.TransformCoordinate(vertices[i].Position, this.transform);
-               vTrans[i].Color = Color.FromArgb(TRANSLUCENCY, 0, 0, 0).ToArgb() + vertices[i].Color;
+               vTrans[i].Color = Color.FromArgb(TRANSLUCENCY, 0, 0, 0).ToArgb() + this.Color.ToArgb();
 
             }
 
