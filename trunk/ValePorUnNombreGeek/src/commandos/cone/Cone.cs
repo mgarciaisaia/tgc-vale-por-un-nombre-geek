@@ -69,11 +69,37 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
             set { this.translation = value; }
         }
+        protected bool showDirection;
+
+        public bool ShowDirection { get { return this.showDirection; } set { this.showDirection = value; } }
+
+        /// <summary>
+        /// Calcuula y retorna el vector direccion del cono.
+        /// </summary>
+        public Vector3 Direccion
+        {
+            get
+            {
+                //Centro de la circunferencia del final del cono
+                Vector3 centroCircunferencia = new Vector3(0, 0, -length);
+
+                //Aplico las transformaciones que sufrio el cono
+                Vector3 vectorDireccion = Vector3.TransformCoordinate(centroCircunferencia, this.Transform);
+
+                
+                return vectorDireccion - this.Position;
+            }
 
 
-        protected Color color;
+        }
 
-        public Color Color { get { return color; } set { color = value;} }
+        protected Color color1;
+
+        public Color Color1 { get { return color1; } set { color1 = value;} }
+
+        protected Color color2;
+
+        public Color Color2 { get { return color2; } set { color2 = value; } }
         public float Length { get { return length; } set { length = value; mustUpdate = true; } }
 
         public float Angle { get { return angle; } set { angle = value; mustUpdate = true; } }
@@ -103,11 +129,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             this.rotation = new Vector3(0, 0, 0);
             this.enabled = true;
             this.transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
-            this.color = Color.Aqua;
+
+            this.showDirection = false;
+            this.color1 = Color.BlueViolet;
+            this.color2 = Color.Aqua;
             this.mustUpdate = true;
             
             
         }
+
 
         public Cone(Vector3 vertex, float length, float angle)
         {
@@ -117,7 +147,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         }
 
         public Cone(Vector3 vertex, float length, float angle, int triangles) {
-            config(vertex, length, angle,triangles);
+            config(vertex, length, angle, triangles);
            
         }
 
@@ -127,8 +157,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         /// Actualiza cantidad de triangulos, radio y angulo
         /// </summary>
         public virtual void updateValues()
-
-
         {
             int cantPuntos = triangles + 1; //Cant de puntos dibujados
            
@@ -142,6 +170,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             mustUpdate = false;
         }
 
+
+        /// <summary>
+        /// Une los puntos de la circunferencia con el vertice del cono para formar los triangulos.
+        /// </summary>
         private void crearTriangulos()
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
@@ -171,19 +203,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                                *     circunferencia[j]------------ circunferencia[j+1]  
                                */
 
-                vertices[i] = new CustomVertex.PositionColored(0, 0, 0, color.ToArgb());
-                vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X,  circunferencia[j].Y , circunferencia[j].Z , color.ToArgb());
-                vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[j + 1].X , circunferencia[j + 1].Y , circunferencia[j + 1].Z, color.ToArgb());
+                vertices[i] = new CustomVertex.PositionColored(0, 0, 0, color1.ToArgb());
+                vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X,  circunferencia[j].Y , circunferencia[j].Z , color2.ToArgb());
+                vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[j + 1].X , circunferencia[j + 1].Y , circunferencia[j + 1].Z, color2.ToArgb());
 
             }
 
-            vertices[i] = new CustomVertex.PositionColored(0, 0, 0, color.ToArgb());
-            vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X , circunferencia[j].Y , circunferencia[j].Z, color.ToArgb());
-            vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[0].X , circunferencia[0].Y , circunferencia[0].Z , color.ToArgb());
+            vertices[i] = new CustomVertex.PositionColored(0, 0, 0, color1.ToArgb());
+            vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X , circunferencia[j].Y , circunferencia[j].Z, color2.ToArgb());
+            vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[0].X , circunferencia[0].Y , circunferencia[0].Z , color2.ToArgb());
 
 
         }
 
+        /// <summary>
+        /// Crea la circunferencia que esta al final del cono.
+        /// </summary>
         protected virtual void crearCircunferencia(float cradius,int cantPuntos)
         {
  	       float theta;
@@ -201,10 +236,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                         -length
                    );
            }
-
-           
-
-
+            
         }
 
 
@@ -225,8 +257,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
             if(!enabled) return;
             if (mustUpdate) updateValues();
-
-         
+            if (this.showDirection) renderDirection();
 
             
             if (autoTransformEnable)
@@ -238,12 +269,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
             //Transformo todos los vertices
             CustomVertex.PositionColored[] vTrans = new CustomVertex.PositionColored[cantVertices];
-            
 
+            Color color;
             for (int i = 0; i < cantVertices; i++)
             {
+               
+               if (i % 3 == 0) color = this.Color1; else color = this.Color2;
                vTrans[i].Position = Vector3.TransformCoordinate(vertices[i].Position, this.transform);
-               vTrans[i].Color = Color.FromArgb(TRANSLUCENCY, 0, 0, 0).ToArgb() + this.Color.ToArgb();
+               vTrans[i].Color = Color.FromArgb(TRANSLUCENCY, 0, 0, 0).ToArgb() + color.ToArgb();
 
             }
             
@@ -259,12 +292,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             //Dibujar triangulos
             d3dDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, triangles);
 
-            d3dDevice.RenderState.AlphaBlendEnable = alphaBlendEnabled;
-
-            
+            d3dDevice.RenderState.AlphaBlendEnable = alphaBlendEnabled;            
 
         }
 
+        /// <summary>
+        /// Renderiza el vector direccion del cono.
+        /// </summary>
+        public void renderDirection()
+        {
+            TgcArrow arrow = new TgcArrow();
+            arrow.PStart = this.Position;
+            arrow.PEnd = this.Position + this.Direccion;
+            arrow.Thickness = 2f;
+            arrow.HeadSize = new Vector2(0.5f, 0.5f);
+            arrow.updateValues();
+            arrow.render();
+        }
 
         /// <summary>
         /// Desplaza la malla la distancia especificada, respecto de su posicion actual

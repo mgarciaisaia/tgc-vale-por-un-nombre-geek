@@ -10,9 +10,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
    
     abstract class Enemy : Character
     {
-        private WideVisionCone vision;
-
-     
+        protected WideVisionCone vision;
+           
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 30;
  
@@ -40,6 +39,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         /// Renderizado de cono
         /// </summary>
         public bool ConeEnabled { get { return vision.Enabled; } set { vision.Enabled = value; } }
+
+
+        /// <summary>
+        /// Renderizado de direccion del cono
+        /// </summary>
+        public bool ShowConeDirection { get { return vision.ShowDirection; } set { vision.ShowDirection = value; } }
+
 
         public Enemy(Vector3 _position, Terrain _terrain)
             : base(_position, _terrain)
