@@ -25,8 +25,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                 //Obtengo el vector que va desde el vertice del cono al centro de su circunferencia
                 Vector3 vectorDireccion = centroCircunferencia - this.Position;
 
-                //Retorno el vector normalizado
-                return Vector3.Normalize(vectorDireccion);
+                return vectorDireccion;
             }
            
            
@@ -145,7 +144,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
 
                 // A . B = |A||B| cos o  ^  |A|=|B| =1  = > A . B = cos o
-                float cos = Vector3.Dot(Vector3.Normalize(positionToTarget), this.Direction); 
+                float cos = Vector3.Dot(Vector3.Normalize(positionToTarget), Vector3.Normalize(this.Direction)); 
                 
                 //Comparo cosenos para no tener que hacer Acos. Es equivalente a hacer anguloVerticePunto < anguloCono
                 if (cos > this.cosAngle) return true; 
