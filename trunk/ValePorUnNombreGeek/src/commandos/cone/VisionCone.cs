@@ -17,7 +17,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         {
             get {
                 //Centro de la circunferencia del final del cono
-                Vector3 centroCircunferencia = new Vector3(0, 0, -length);
+                Vector3 centroCircunferencia = new Vector3(0, 0, -length)+rep.getEyeLevel();
                 
                 //Aplico las transformaciones que sufrio el cono
                 Vector3.TransformCoordinate(centroCircunferencia, this.Transform ); 
@@ -76,7 +76,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         public override void renderTransparent()
         {
             updatePosition();
-            base.renderTransparent();
+          
+           TgcArrow arrow = new TgcArrow();
+           arrow.PStart = this.Position;
+           arrow.PEnd = this.Position + this.Direction * 20;
+           arrow.Thickness = 2f;
+           arrow.HeadSize = new Vector2(0.5f, 0.5f);
+           arrow.updateValues();
+           arrow.render();
+           base.renderTransparent();
         }
 
 
