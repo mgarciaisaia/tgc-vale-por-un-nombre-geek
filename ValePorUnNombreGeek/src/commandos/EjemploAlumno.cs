@@ -142,7 +142,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             if (GuiController.Instance.D3dInput.keyPressed(Key.X))
             {
-                foreach (Character ch in this.characters)
+                foreach (Character ch in selection.getSelectedCharacters())
                 {
                     ch.die();
 
