@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
+    <None Include="ValePorUnNombreGeek\documentacion\diagrama_de_clases.class.violet" />
     <None Include="ValePorUnNombreGeek\documentacion\umlCharacter.class.violet" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
