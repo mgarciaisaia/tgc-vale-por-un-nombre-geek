@@ -62,8 +62,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             pj.Representation.AutoTransformEnable = true;
 
 
-            enemigo = new Soldier(terrain.getPosition(200, 180), terrain);
+            
 
+            Vector3[] waitpoints = new Vector3[1];
+            terrain.heightmapCoordsToXYZ(new Vector2(60, 60), out waitpoints[0]);
+            //terrain.heightmapCoordsToXYZ(new Vector2(22, 80), out waitpoints[1]);
+            //terrain.heightmapCoordsToXYZ(new Vector2(10, 37), out waitpoints[2]);
+
+            
+            enemigo = new Soldier(waitpoints, terrain);
 
 
 
@@ -71,7 +78,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 90, 45);
 
             GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox());
-            GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-300, -300, -300), new Vector3(300, 300, 300), new Vector3(200, 0, 200));
+            GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-600, -600, -600), new Vector3(600, 600, 600), new Vector3(200, 0, 200));
             GuiController.Instance.UserVars.addVar("PuedeVerlo");
 
 
