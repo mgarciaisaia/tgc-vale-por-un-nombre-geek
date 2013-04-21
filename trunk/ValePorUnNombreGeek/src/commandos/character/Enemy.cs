@@ -110,7 +110,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
              * todo lo que esta en este metodo se puede pasar a render()
              */
 
-            vision.renderTransparent();
+            vision.render();
         }
 
         public override void dispose()
