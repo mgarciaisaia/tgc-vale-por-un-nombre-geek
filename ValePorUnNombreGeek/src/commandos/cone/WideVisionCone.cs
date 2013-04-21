@@ -70,7 +70,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         {
             if (!base.isPointInsideCone(point)) return false;
 
-            return FastMath.Abs(point.Y) < this.maxHeight;
+            return FastMath.Abs(point.Y-this.Position.Y) < this.maxHeight;
             
 
         }
