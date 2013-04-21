@@ -46,7 +46,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         public override void render()
         {
-            this.Transform = rep.Transform * Matrix.Translation(rep.getEyeLevel());
+            updatePosition();
             base.render();
            
         }
@@ -62,15 +62,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
      
         public override void renderWireframe()
         {
-            this.Transform = rep.Transform * Matrix.Translation(rep.getEyeLevel());
+            updatePosition();
             base.renderWireframe();
                      
            
         }
 
-        public override void renderTransparent()
+        private void updatePosition()
         {
             this.Transform = rep.Transform * Matrix.Translation(rep.getEyeLevel());
+            this.Position = rep.Position + rep.getEyeLevel();
+        }
+
+        public override void renderTransparent()
+        {
+            updatePosition();
             base.renderTransparent();
         }
 
