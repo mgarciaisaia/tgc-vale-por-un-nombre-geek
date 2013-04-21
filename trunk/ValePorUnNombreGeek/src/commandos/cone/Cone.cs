@@ -84,10 +84,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                 Vector3 centroCircunferencia = new Vector3(0, 0, -length);
 
                 //Aplico las transformaciones que sufrio el cono
-                Vector3 vectorDireccion = Vector3.TransformCoordinate(centroCircunferencia, this.Transform);
+                Vector3 transCentroCircunferencia = Vector3.TransformCoordinate(centroCircunferencia, this.Transform);
 
-                
-                return vectorDireccion - this.Position;
+                //Creo el vector que va desde el vertice del cono al centro de la circunferencia
+                return transCentroCircunferencia - this.Position;
             }
 
 
