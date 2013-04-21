@@ -12,6 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
     class PickingRaySingleton : TgcPickingRay
     {
         private static PickingRaySingleton instance;
+        private static bool varsInitizalized = false;
 
 
         public static PickingRaySingleton Instance
@@ -22,11 +23,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 {
                     instance = new PickingRaySingleton();
                     
-                    GuiController.Instance.UserVars.addVar("WorldX");
-                    GuiController.Instance.UserVars.addVar("WorldY");
-                    GuiController.Instance.UserVars.addVar("WorldZ");
-                    GuiController.Instance.UserVars.addVar("hmX");
-                    GuiController.Instance.UserVars.addVar("hmY");
+                  
                 }
                 return instance;
             }
@@ -54,7 +51,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                     {
                         //encontramos el punto de interseccion
                         position = aPoint;
-
+                        if (!varsInitizalized) initVars();
                         //muestra el punto encontrado
                         GuiController.Instance.UserVars.setValue("WorldX", position.X);
                         GuiController.Instance.UserVars.setValue("WorldY", position.Y);
@@ -77,6 +74,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 
                 t--;
             }
+        }
+
+        private void initVars()
+        {
+            GuiController.Instance.UserVars.addVar("WorldX");
+            GuiController.Instance.UserVars.addVar("WorldY");
+            GuiController.Instance.UserVars.addVar("WorldZ");
+            GuiController.Instance.UserVars.addVar("hmX");
+            GuiController.Instance.UserVars.addVar("hmY");
+            varsInitizalized = true;
         }
 
         /// <summary>
