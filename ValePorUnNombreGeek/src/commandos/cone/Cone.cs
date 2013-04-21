@@ -27,7 +27,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         protected float angle, length;
         protected int triangles;
         private bool autoTransformEnable;
-      
+        private bool alphaBlendEnabled;
+        public bool AlphaBlendEnabled
+        {
+            get { return alphaBlendEnabled; }
+            set { alphaBlendEnabled = value; }
+        }
         private Matrix transform;
         private Vector3 translation;
         private Vector3 rotation;
@@ -60,12 +65,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         public Vector3 Position
         {
-            get
-            {
-                return this.translation;
-                
-
-            }
+            get{ return this.translation;  }
 
             set { this.translation = value; }
         }
@@ -98,7 +98,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             this.triangles = triangles;
 
             this.autoTransformEnable = true;
-           
+            this.alphaBlendEnabled = false;
             this.translation = vertex;
             this.rotation = new Vector3(0, 0, 0);
             this.enabled = true;
@@ -216,13 +216,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             d3dDevice.RenderState.FillMode = FillMode.Solid;
         }
 
-        public virtual void renderTransparent()
-        {
-            Device d3dDevice = GuiController.Instance.D3dDevice;
-            d3dDevice.RenderState.AlphaBlendEnable = true;
-            this.render();
-            d3dDevice.RenderState.AlphaBlendEnable = false;
-        }
+ 
 
 
         public virtual void render()
@@ -252,8 +246,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                vTrans[i].Color = Color.FromArgb(TRANSLUCENCY, 0, 0, 0).ToArgb() + this.Color.ToArgb();
 
             }
-
-
+            
+            bool alphaBlendEnabled = d3dDevice.RenderState.AlphaBlendEnable;
+            d3dDevice.RenderState.AlphaBlendEnable = this.alphaBlendEnabled;
 
             vertexBuffer.SetData(vTrans, 0, LockFlags.None);
             
@@ -263,6 +258,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             d3dDevice.SetStreamSource(0, vertexBuffer, 0);
             //Dibujar triangulos
             d3dDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, triangles);
+
+            d3dDevice.RenderState.AlphaBlendEnable = alphaBlendEnabled;
+
+            
 
         }
 

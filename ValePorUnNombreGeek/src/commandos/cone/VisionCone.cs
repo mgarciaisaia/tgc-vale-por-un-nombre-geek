@@ -12,20 +12,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         protected ICharacterRepresentation rep;
         protected float sqLength;
         protected float cosAngle;
-        
-        public Vector3 Direction
+        protected bool showDirection;
+
+        public bool ShowDirection { get { return this.showDirection; } set { this.showDirection = value; } }
+
+        public Vector3 Direccion
         {
             get {
                 //Centro de la circunferencia del final del cono
-                Vector3 centroCircunferencia = new Vector3(0, 0, -length)+rep.getEyeLevel();
+                Vector3 centroCircunferencia = new Vector3(0, 0, -length) + rep.getEyeLevel();
                 
                 //Aplico las transformaciones que sufrio el cono
-                Vector3.TransformCoordinate(centroCircunferencia, this.Transform ); 
+                Vector3 vectorDireccion = Vector3.TransformCoordinate(centroCircunferencia, this.Transform); 
                 
-                //Obtengo el vector que va desde el vertice del cono al centro de su circunferencia
-                Vector3 vectorDireccion = centroCircunferencia - this.Position;
-
-                return vectorDireccion;
+               
+                return vectorDireccion-this.Position;
             }
            
            
@@ -37,20 +38,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         {
             this.rep = rep;
             this.AutoTransformEnable = false;
-
+            this.AlphaBlendEnabled = true;
+            this.showDirection = false;
             this.sqLength = FastMath.Pow2(length);
             this.cosAngle = FastMath.Cos(angle);
                      
         }
 
-        public override void render()
-        {
-            updatePosition();
-            base.render();
            
-        }
-
-        
         public override void updateValues(){
             base.updateValues();
             this.sqLength = FastMath.Pow2(length);
@@ -59,32 +54,31 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
 
      
-        public override void renderWireframe()
-        {
-            updatePosition();
-            base.renderWireframe();
-                     
-           
-        }
-
         private void updatePosition()
         {
             this.Transform = rep.Transform * Matrix.Translation(rep.getEyeLevel());
             this.Position = rep.Position + rep.getEyeLevel();
         }
 
-        public override void renderTransparent()
+        public override void render()
         {
             updatePosition();
-          
-           TgcArrow arrow = new TgcArrow();
-           arrow.PStart = this.Position;
-           arrow.PEnd = this.Position + this.Direction * 20;
-           arrow.Thickness = 2f;
-           arrow.HeadSize = new Vector2(0.5f, 0.5f);
-           arrow.updateValues();
-           arrow.render();
-           base.renderTransparent();
+
+            renderDirection();
+
+           base.render();
+        }
+
+        protected void renderDirection()
+        {
+            if (!this.showDirection) return;
+            TgcArrow arrow = new TgcArrow();
+            arrow.PStart = this.Position;
+            arrow.PEnd = this.Position + this.Direccion;
+            arrow.Thickness = 2f;
+            arrow.HeadSize = new Vector2(0.5f, 0.5f);
+            arrow.updateValues();
+            arrow.render();
         }
 
 
@@ -152,7 +146,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
 
                 // A . B = |A||B| cos o  ^  |A|=|B| =1  = > A . B = cos o
-                float cos = Vector3.Dot(Vector3.Normalize(positionToTarget), Vector3.Normalize(this.Direction)); 
+                float cos = Vector3.Dot(Vector3.Normalize(positionToTarget), Vector3.Normalize(this.Direccion)); 
                 
                 //Comparo cosenos para no tener que hacer Acos. Es equivalente a hacer anguloVerticePunto < anguloCono
                 if (cos > this.cosAngle) return true; 
@@ -173,8 +167,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         }
 
 
-        
-       
+
+
+
     }
 
 }
