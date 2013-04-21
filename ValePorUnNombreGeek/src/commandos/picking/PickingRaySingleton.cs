@@ -42,11 +42,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 
             Vector3 aPoint;
             Vector3 foundedPoint;
-            float t0 = (terrain.Position.Y - this.Ray.Origin.Y) / this.Ray.Direction.Y;
+            float t0 = (terrain.Position.Y - Instance.Ray.Origin.Y) / Instance.Ray.Direction.Y;
             float t = t0;
             while (true)
             {
-                aPoint = this.Ray.Origin + t * this.Ray.Direction;
+                aPoint = Instance.Ray.Origin + t * Instance.Ray.Direction;
 
                 if (terrain.getPosition(aPoint.X, aPoint.Z, out foundedPoint))
                 {
