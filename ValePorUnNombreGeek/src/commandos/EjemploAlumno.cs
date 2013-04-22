@@ -109,14 +109,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            Vector3 pickingPosition;
-            if (picking.thereIsPicking(out pickingPosition))
-            {
-                foreach (Character ch in selection.getSelectedCharacters())
-                {
-                    if(ch.userCanMove()) ch.setPositionTarget(pickingPosition);
-                }
-            }
+            picking.update(selection.getSelectedCharacters());
 
             camera.updateCamera();
             sky.render();
