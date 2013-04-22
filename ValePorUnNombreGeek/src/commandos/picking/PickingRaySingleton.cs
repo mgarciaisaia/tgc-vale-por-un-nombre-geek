@@ -12,7 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
     class PickingRaySingleton : TgcPickingRay
     {
         private static PickingRaySingleton instance;
-        private static bool varsInitizalized = false;
+     
 
 
         public static PickingRaySingleton Instance
@@ -22,11 +22,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 if (instance == null)
                 {
                     instance = new PickingRaySingleton();
+                    createVars();     
                     
-                  
                 }
                 return instance;
             }
+        }
+      
+
+        private static void createVars()
+        {
+            GuiController.Instance.UserVars.addVar("WorldX");
+            GuiController.Instance.UserVars.addVar("WorldY");
+            GuiController.Instance.UserVars.addVar("WorldZ");
+            GuiController.Instance.UserVars.addVar("hmX");
+            GuiController.Instance.UserVars.addVar("hmY");
         }
 
 
@@ -39,11 +49,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 
             Vector3 aPoint;
             Vector3 foundedPoint;
-            float t0 = (terrain.Position.Y - Instance.Ray.Origin.Y) / Instance.Ray.Direction.Y;
+            float t0 = (terrain.Position.Y - this.Ray.Origin.Y) /this.Ray.Direction.Y;
             float t = t0;
             while (true)
             {
-                aPoint = Instance.Ray.Origin + t * Instance.Ray.Direction;
+                aPoint = this.Ray.Origin + t * this.Ray.Direction;
 
                 if (terrain.getPosition(aPoint.X, aPoint.Z, out foundedPoint))
                 {
@@ -51,9 +61,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                     {
                         //encontramos el punto de interseccion
                         position = aPoint;
-                        if (!varsInitizalized) initVars();
-                        //muestra el punto encontrado
-                        GuiController.Instance.UserVars.setValue("WorldX", position.X);
+                        
+                        //Si las variables no se crearon, crearlas.
+                        try
+                        {
+                            GuiController.Instance.UserVars.setValue("WorldX", position.X);
+
+                        }
+                        catch (Exception e)
+                        {
+                            createVars();
+                            GuiController.Instance.UserVars.setValue("WorldX", position.X);
+                        }
                         GuiController.Instance.UserVars.setValue("WorldY", position.Y);
                         GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
 
@@ -76,15 +95,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
             }
         }
 
-        private void initVars()
-        {
-            GuiController.Instance.UserVars.addVar("WorldX");
-            GuiController.Instance.UserVars.addVar("WorldY");
-            GuiController.Instance.UserVars.addVar("WorldZ");
-            GuiController.Instance.UserVars.addVar("hmX");
-            GuiController.Instance.UserVars.addVar("hmY");
-            varsInitizalized = true;
-        }
+    
 
         /// <summary>
         /// Busca la interseccion rayo-plano y=0.
