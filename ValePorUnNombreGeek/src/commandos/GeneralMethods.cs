@@ -8,6 +8,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class GeneralMethods //TODO darle un mejor nombre
     {
+
         public static bool isCloseTo(float a, float b, float delta)
         {
             return Math.Abs(a - b) < delta;
@@ -42,5 +43,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
                 i++;
             }
         }*/
+
+        public static float SignedAcos(float p)
+        {
+            float angle = (float)Math.Acos(p)*Math.Sign(p);
+           // if (p < 0) angle = (float)Math.PI - angle;
+            return angle;
+        }
     }
 }
