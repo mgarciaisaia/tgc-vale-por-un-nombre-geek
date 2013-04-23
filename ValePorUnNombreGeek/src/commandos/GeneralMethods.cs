@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.DirectX;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
@@ -22,33 +23,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
                   Math.Abs(a.Z - b.Z) < delta; 
         }
 
-      
-        /*public static Vector3 intersectionPoint(Vector3 origin, Vector3 direction, Terrain terrain)
+        public static float checkAngle(float angle)
         {
-            Vector3 aPoint;
-            float i = 0;
+            float ret = angle;
+            float limit = 2 * FastMath.PI;
+            while (ret >= limit) ret -= limit;
+            while (ret < 0) ret += limit;
+            return ret;
+        }
 
-            while (true)
-            {
-                aPoint = origin + i * direction;
-                if (GeneralMethods.isCloseTo(aPoint.Y, terrain.getHeight(aPoint.X, aPoint.Z)))
-                {
-                    //encontramos el punto de interseccion
-                    return aPoint;
-                }
-                if (aPoint.Y <= terrain.Position.Y){
-                    //ya nos estamos llendo al subsuelo...
-                    return aPoint;
-                }
-                i++;
-            }
-        }*/
-
-        public static float SignedAcos(float p)
+        /*public static float SignedAcos(float p)
         {
             float angle = (float)Math.Acos(p)*Math.Sign(p);
-           // if (p < 0) angle = (float)Math.PI - angle;
             return angle;
-        }
+        }*/
     }
 }

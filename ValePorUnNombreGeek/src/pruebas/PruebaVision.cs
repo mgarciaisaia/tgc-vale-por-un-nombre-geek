@@ -101,7 +101,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
            pj.render(elapsedTime);
 
            pj.BoundingBox().render();
-           enemigo.renderVision();
                       
 
         }

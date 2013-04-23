@@ -19,7 +19,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             if (this.soldier.isOnTarget())
             {
                 this.soldier.setNoTarget();
-                this.soldier.setState(new Waiting(this.soldier));
+                this.soldier.setState(new Waiting(this.soldier, 0));
             }
         }
     }
