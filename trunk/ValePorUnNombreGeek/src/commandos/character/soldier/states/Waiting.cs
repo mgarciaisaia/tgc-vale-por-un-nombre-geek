@@ -28,13 +28,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             if (this.waitingTime > this.maxWaitingTime)
             {
                 float actualAngle = this.soldier.Representation.FacingAngle;
-                float delta = (float)0.5 * FastMath.PI;
+                float delta = (float)2 * FastMath.PI;
                 float desiredAngle = this.random(actualAngle - delta, actualAngle + delta);
                 desiredAngle = GeneralMethods.checkAngle(desiredAngle);
                 
-                bool clockwise = false;
-                if (desiredAngle > actualAngle &&
-                    desiredAngle - actualAngle < FastMath.PI) clockwise = true; //TODO revisar. a veces gira para el otro lado
+                bool clockwise;
+
+                float a = actualAngle;
+                float b = desiredAngle;
+
+                if (a < b)
+                    if (b - a < 2 * FastMath.PI - b + a)
+                        clockwise = true;
+                    else
+                        clockwise = false;
+                else
+                    if (a - b < 2 * FastMath.PI - a + b)
+                        clockwise = false;
+                    else
+                        clockwise = true;
 
                 this.soldier.setState(new Rotating(this.soldier, desiredAngle, clockwise, this.timeOnWaitpoint));
                 return;
