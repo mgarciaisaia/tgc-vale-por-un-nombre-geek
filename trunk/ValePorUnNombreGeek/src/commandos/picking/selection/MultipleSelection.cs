@@ -16,9 +16,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
 {
     class MultipleSelection
     {
-        SelectionState state;
-        List<Character> selectedCharacters;
-        List<Character> selectableCharacters;
+        private SelectionState state;
+        private List<Character> selectedCharacters;
+        private List<Character> selectableCharacters;
 
         public MultipleSelection(Terrain _terrain, List<Character> _selectableCharacters)
         {
@@ -30,7 +30,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
 
         public void update()
         {
-            this.state = this.state.update();
+            this.state.update();
+        }
+
+        internal void setState(SelectionState _state)
+        {
+            this.state = _state;
         }
 
         public List<Character> getSelectedCharacters()
@@ -38,7 +43,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             return this.selectedCharacters;
         }
 
-        private void deselectAllCharacters()
+        private void addSelectedCharacter(Character ch)
+        {
+            this.selectedCharacters.Add(ch);
+        }
+
+        public void deselectAllCharacters()
         {
             foreach (Character ch in this.selectedCharacters)
             {
@@ -49,13 +59,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
 
         public void selectCharactersByRay(TgcRay _ray)
         {
-            this.deselectAllCharacters();
+            //this.deselectAllCharacters();
             foreach (Character ch in this.selectableCharacters)
             {
                 Vector3 collisionPoint; //useless
                 if (TgcCollisionUtils.intersectRayAABB(_ray, ch.BoundingBox(), out collisionPoint))
                 {
-                    this.selectedCharacters.Add(ch);
+                    this.addSelectedCharacter(ch);
                     ch.Selected = true;
                     break;
                 }
@@ -64,13 +74,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
 
         public void selectCharactersInBox(TgcBox _selectionBox)
         {
-            this.deselectAllCharacters();
+            //this.deselectAllCharacters();
             foreach (Character ch in this.selectableCharacters)
             {
                 //Colisión de AABB entre área de selección y el modelo
                 if (TgcCollisionUtils.testAABBAABB(_selectionBox.BoundingBox, ch.BoundingBox()))
                 {
-                    this.selectedCharacters.Add(ch);
+                    this.addSelectedCharacter(ch);
                     ch.Selected = true;
                 }
             }

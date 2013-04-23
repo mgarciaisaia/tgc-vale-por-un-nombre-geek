@@ -15,7 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
         {
         }
 
-        public override SelectionState update()
+        public override void update()
         {
             if (GuiController.Instance.D3dInput.buttonDown(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
@@ -23,10 +23,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
                 if (PickingRaySingleton.Instance.terrainIntersection(this.terrain, out initTerrainPoint))
                 {
                     Vector3 initGroundPoint = PickingRaySingleton.Instance.getRayGroundIntersection(this.terrain);
-                    return new Selecting(this.selection, this.terrain, initTerrainPoint, initGroundPoint);
+                    this.selection.setState(new Selecting(this.selection, this.terrain, initTerrainPoint, initGroundPoint));
                 }
             }
-            return this;
         }
     }
 }
