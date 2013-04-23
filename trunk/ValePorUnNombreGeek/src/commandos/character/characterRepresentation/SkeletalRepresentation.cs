@@ -13,9 +13,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
     {
         protected TgcSkeletalMesh mesh;
         private bool selected;
-        private Vector3 meshRotationAxis; //rotacion manual
+        private Vector3 angleZeroVector; //rotacion manual
         private Matrix meshRotationMatrix; //rotacion manual
-        private Vector3 facing; //hacia donde mira
+        private float meshFacingAngle; //hacia donde mira
 
         public bool Selected
         {
@@ -37,10 +37,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.Position = position;
 
             //rotacion manual
-            this.meshRotationAxis = new Vector3(0, 0, -1);
+            this.angleZeroVector = new Vector3(0, 0, -1);
             this.meshRotationMatrix = Matrix.Identity;
             this.AutoTransformEnable = false;
-            this.facing = new Vector3(0, 0, 1);
+            this.meshFacingAngle = 0;
 
             //por algun motivo hay que volver a actualizar la posicion del personaje
             this.Transform = Matrix.Translation(this.Position); //en este caso transladandolo desde el (0,0,0)
@@ -138,11 +138,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             set { this.mesh.Scale = value; }
         }
 
-        public Vector3 Rotation
+        public float FacingAngle
+        {
+            get { return this.meshFacingAngle; }
+        }
+
+        /*public Vector3 Rotation
         {
             get { return this.mesh.Rotation; }
             set { this.mesh.Rotation = value; }
-        }
+        }*/
 
 
         public bool AutoTransformEnable
@@ -151,28 +156,52 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             set { this.mesh.AutoTransformEnable = value; }
         }
 
-        public Vector3 Facing
-        {
-            get { return this.facing; }
-            set { this.facing = value; }
-        }
-
         public void move(Vector3 direction)
         {
             this.mesh.move(direction);
-            this.faceTo(direction);
+            this.setRotation(direction);
         }
 
-        public void faceTo(Vector3 direction)
+        public void setRotation(Vector3 direction)
         {
             direction.Normalize();
-            float angle = FastMath.Acos(Vector3.Dot(this.meshRotationAxis, direction));
-            Vector3 axisRotation = Vector3.Cross(this.meshRotationAxis, direction);
-            this.meshRotationMatrix = Matrix.RotationAxis(axisRotation, angle);
-            this.Transform = this.meshRotationMatrix * Matrix.Translation(this.Position);
+            float angle = FastMath.Acos(Vector3.Dot(this.angleZeroVector, direction));
+            Vector3 rotationAxis = Vector3.Cross(this.angleZeroVector, direction);
+            this.meshRotationMatrix = Matrix.RotationAxis(rotationAxis, angle);
 
             //guardamos la direccion en la que miramos ahora
-            this.Facing = direction;
+            this.meshFacingAngle = angle;
+
+            this.applyTransformations();
+        }
+
+        public void setRotation(float angle, bool clockwise)
+        {
+            float rotationAxisY = Convert.ToSingle(clockwise) * 2 - 1; //convierte el bool en true = 1; false = -1
+            Vector3 rotationAxis = new Vector3(0, rotationAxisY, 0);
+
+            this.meshRotationMatrix = Matrix.RotationAxis(rotationAxis, angle);
+            this.meshFacingAngle = angle;
+
+            this.applyTransformations();
+        }
+
+        public void rotate(float angle, bool clockwise)
+        {
+            float modifier = Convert.ToSingle(clockwise) * 2 - 1; //convierte el bool en true = 1; false = -1
+            if (clockwise == true) modifier = 1; else modifier = -1;
+            this.meshFacingAngle += modifier * angle;
+
+            float limit = 2 * FastMath.PI;
+            if (this.meshFacingAngle < 0) this.meshFacingAngle += limit;
+            if (this.meshFacingAngle > limit) this.meshFacingAngle -= limit;
+
+            this.setRotation(this.meshFacingAngle, true);
+        }
+
+        private void applyTransformations()
+        {
+            this.Transform = this.meshRotationMatrix * Matrix.Translation(this.Position);
         }
 
         public  void moveOrientedY(float movement){

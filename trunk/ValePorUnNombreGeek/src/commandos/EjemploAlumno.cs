@@ -120,20 +120,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
                 ch.render(elapsedTime);
             }
 
-            selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
-
             foreach (Enemy enemy in this.enemies)
             {
                 foreach (Character ch in this.characters)
                 {
                     if(enemy.canSee(ch)) break;
                 }
-                
-                enemy.renderVision();
-                //IMPORTANTE: enemy.renderVision SE LLAMA DESPUES de renderizar la caja de seleccion
-                //Para mas informacion leer el comentario en Enemy.renderVision
             }
 
+
+            selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
 
 
 
