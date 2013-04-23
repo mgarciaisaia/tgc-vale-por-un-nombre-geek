@@ -7,6 +7,8 @@ using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using TgcViewer;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
+using TgcViewer.Utils.Input;
+using Microsoft.DirectX.DirectInput;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.states
 {
@@ -58,23 +60,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.sta
             this.selectionBox.updateValues();
         }
 
-        public override SelectionState update()
+        public override void update()
         {
             this.calculateSelectionBox();
             this.selectionBox.render();
 
-            if (GuiController.Instance.D3dInput.buttonUp(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
+            TgcD3dInput d3dInput = GuiController.Instance.D3dInput;
+
+            if (d3dInput.buttonUp(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
+                if(!d3dInput.keyDown(Key.LeftShift)) this.selection.deselectAllCharacters();
                 if(GeneralMethods.isCloseTo(this.initGroundPoint, this.lastGroundPoint, 1))
                     this.selection.selectCharactersByRay(PickingRaySingleton.Instance.Ray);
                 else
                     this.selection.selectCharactersInBox(this.selectionBox);
 
                 this.selectionBox.dispose();
-                return new Waiting(this.selection, this.terrain);
+                this.selection.setState(new Waiting(this.selection, this.terrain));
             }
-
-            return this;
         }
     }
 }
