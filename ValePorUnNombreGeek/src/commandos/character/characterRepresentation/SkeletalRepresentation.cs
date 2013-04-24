@@ -143,6 +143,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             get { return this.meshFacingAngle; }
         }
 
+        public Vector3 getAngleZeroVector()
+        {
+            return this.angleZeroVector;
+        }
+
         /*public Vector3 Rotation
         {
             get { return this.mesh.Rotation; }
@@ -189,12 +194,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         public void rotate(float angle, bool clockwise)
         {
             float modifier = Convert.ToSingle(clockwise) * 2 - 1; //convierte el bool en true = 1; false = -1
-            if (clockwise == true) modifier = 1; else modifier = -1;
             this.meshFacingAngle += modifier * angle;
 
-            float limit = 2 * FastMath.PI;
-            if (this.meshFacingAngle < 0) this.meshFacingAngle += limit;
-            if (this.meshFacingAngle > limit) this.meshFacingAngle -= limit;
+            this.meshFacingAngle = GeneralMethods.checkAngle(this.meshFacingAngle);
 
             this.setRotation(this.meshFacingAngle, true);
         }

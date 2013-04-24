@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TgcViewer.Utils.TgcGeometry;
-using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.states
 {
@@ -22,24 +21,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
 
         public override void onWaitpointUpdate(float elapsedTime)
         {
-            /*try
-            {
-                GuiController.Instance.UserVars.setValue("actualAngle", this.soldier.Representation.FacingAngle);
-                GuiController.Instance.UserVars.setValue("desiredAngle", this.desiredAngle);
-            }
-            catch (Exception e)
-            {
-                GuiController.Instance.UserVars.addVar("actualAngle");
-                GuiController.Instance.UserVars.addVar("desiredAngle");
-            }*/
-
             float deltaAngle = elapsedTime * ROTATION_ANGLE;
             this.soldier.Representation.rotate(deltaAngle, this.clockwise);
 
             if (GeneralMethods.isCloseTo(this.soldier.Representation.FacingAngle, this.desiredAngle, deltaAngle))
-            {
-                this.soldier.setState(new Waiting(this.soldier, this.timeOnWaitpoint));
-            }
+                this.onDesiredAngle();
+        }
+
+        protected virtual void onDesiredAngle()
+        {
+            this.soldier.setState(new Waiting(this.soldier, this.timeOnWaitpoint));
         }
     }
 }

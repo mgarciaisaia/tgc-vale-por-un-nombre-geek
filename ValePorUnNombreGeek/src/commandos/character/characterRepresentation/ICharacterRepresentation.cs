@@ -30,6 +30,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         void setRotation(Vector3 direction);
         void setRotation(float angle, bool clockwise);
         void rotate(float angle, bool clockwise);
+        Vector3 getAngleZeroVector();
 
         Vector3 getEyeLevel();
     }

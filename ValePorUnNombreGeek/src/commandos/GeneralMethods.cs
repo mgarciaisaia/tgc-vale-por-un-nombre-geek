@@ -32,6 +32,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             return ret;
         }
 
+        public static float random(float min, float max)
+        {
+            Random rnd = new Random();
+            float delta = max - min;
+            return min + delta * (float)rnd.NextDouble();
+        }
+
         /*public static float SignedAcos(float p)
         {
             float angle = (float)Math.Acos(p)*Math.Sign(p);
