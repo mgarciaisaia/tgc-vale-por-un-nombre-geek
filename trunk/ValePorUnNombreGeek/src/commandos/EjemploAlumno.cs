@@ -91,8 +91,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             this.characters.AddRange(this.enemies);
 
             //Seleccion multiple
-            selection = new MultipleSelection(this.terrain, this.characters);
-            //selection = new RectangleSelection();
+            //selection = new MultipleSelection(this.terrain, this.characters);
+            selection = new RectangleSelection(this.characters);
 
             //Movimiento por picking
             picking = new MovementPicking(this.terrain);

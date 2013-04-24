@@ -28,6 +28,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
             this.selectableCharacters = _selectableCharacters;
         }
 
+        #region State
+
         public void update()
         {
             this.state.update();
@@ -38,6 +40,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
             this.state = _state;
         }
 
+        #endregion
+
+        #region SelectedCharactersList
+
         public List<Character> getSelectedCharacters()
         {
             return this.selectedCharacters;
@@ -46,16 +52,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
         private void addSelectedCharacter(Character ch)
         {
             this.selectedCharacters.Add(ch);
+            ch.Selected = true;
         }
 
         public void deselectAllCharacters()
         {
             foreach (Character ch in this.selectedCharacters)
-            {
                 ch.Selected = false;
-            }
             this.selectedCharacters.Clear();
         }
+
+        #endregion
 
         public void selectCharactersByRay(TgcRay _ray)
         {
@@ -65,7 +72,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
                 if (TgcCollisionUtils.intersectRayAABB(_ray, ch.BoundingBox(), out collisionPoint))
                 {
                     this.addSelectedCharacter(ch);
-                    ch.Selected = true;
                     break;
                 }
             }
@@ -74,14 +80,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
         public void selectCharactersInBox(TgcBox _selectionBox)
         {
             foreach (Character ch in this.selectableCharacters)
-            {
-                //Colisión de AABB entre área de selección y el modelo
                 if (TgcCollisionUtils.testAABBAABB(_selectionBox.BoundingBox, ch.BoundingBox()))
-                {
                     this.addSelectedCharacter(ch);
-                    ch.Selected = true;
-                }
-            }
         }
     }
 }

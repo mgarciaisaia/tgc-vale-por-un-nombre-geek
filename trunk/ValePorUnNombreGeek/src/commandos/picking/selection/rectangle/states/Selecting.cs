@@ -83,18 +83,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         private void renderRectangle()
         {
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-            //TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
-
-            //texturesManager.clear(0);
-            //texturesManager.clear(1);
-            //d3dDevice.Material = TgcD3dDevice.DEFAULT_MATERIAL;
-            //d3dDevice.Transform.World = Matrix.Identity;
 
             bool alphaBlendEnabled = d3dDevice.RenderState.AlphaBlendEnable;
             d3dDevice.RenderState.AlphaBlendEnable = true;
 
             d3dDevice.VertexFormat = CustomVertex.TransformedColored.Format;
-            //d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, 4, vertices);
             d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
 
             d3dDevice.RenderState.AlphaBlendEnable = alphaBlendEnabled;
