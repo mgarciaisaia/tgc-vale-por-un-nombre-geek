@@ -11,7 +11,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
     abstract class OnWaitpoint : SoldierState
     {
         protected float timeOnWaitpoint;
-        private const float MAX_TIME_ON_WAITPOINT = 3;
+        private const float MAX_TIME_ON_WAITPOINT = 10;
 
         public OnWaitpoint(Soldier _soldier, float _timeOnWaitpoint)
             : base(_soldier)

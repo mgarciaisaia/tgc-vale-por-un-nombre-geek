@@ -109,7 +109,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\multiple\states\SelectionState.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\rectangle\RectangleSelection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Sky.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\camera\StaticCamera.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\pruebas\StaticCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\EjemploAlumno.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\GeneralMethods.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Character.cs" />
