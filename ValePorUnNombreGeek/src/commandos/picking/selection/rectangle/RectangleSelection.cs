@@ -12,12 +12,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
     {
         private SelectionState state;
         private List<Character> selectedCharacters;
-        //private List<Character> selectableCharacters;
+        private List<Character> selectableCharacters;
 
-        public RectangleSelection()
+        public RectangleSelection(List<Character> _selectableCharacters)
         {
             this.state = new Waiting(this);
             this.selectedCharacters = new List<Character>();
+            this.selectableCharacters = _selectableCharacters;
+        }
+
+        #region State
+
+        public void update()
+        {
+            this.state.update();
         }
 
         public void setState(SelectionState _state)
@@ -25,10 +33,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
             this.state = _state;
         }
 
-        public void update()
-        {
-            this.state.update();
-        }
+        #endregion
+
+        #region SelectedCharacterList
 
         public List<Character> getSelectedCharacters()
         {
@@ -37,12 +44,27 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 
         public void deselectAllCharacters()
         {
+            foreach (Character ch in this.selectedCharacters)
+                ch.Selected = false;
             this.selectedCharacters.Clear();
         }
 
+        private void addSelectedCharacter(Character ch)
+        {
+            this.selectedCharacters.Add(ch);
+            ch.Selected = true;
+        }
+
+        #endregion
+
         internal void selectCharactersInRectangle(Rectangle rectangle)
         {
-            //TODO
+            foreach (Character ch in this.selectableCharacters)
+            {
+                Rectangle characterRectangle = ch.BoundingBox().projectToScreen();
+                if (rectangle.IntersectsWith(characterRectangle))
+                    this.addSelectedCharacter(ch);
+            }
         }
     }
 }
