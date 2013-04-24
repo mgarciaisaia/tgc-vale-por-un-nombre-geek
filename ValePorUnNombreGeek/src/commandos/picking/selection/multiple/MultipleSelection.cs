@@ -14,7 +14,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.multiple
 {
-    class MultipleSelection
+    class MultipleSelection : Selection
     {
         private SelectionState state;
         private List<Character> selectedCharacters;
@@ -59,7 +59,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
 
         public void selectCharactersByRay(TgcRay _ray)
         {
-            //this.deselectAllCharacters();
             foreach (Character ch in this.selectableCharacters)
             {
                 Vector3 collisionPoint; //useless
@@ -74,7 +73,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
 
         public void selectCharactersInBox(TgcBox _selectionBox)
         {
-            //this.deselectAllCharacters();
             foreach (Character ch in this.selectableCharacters)
             {
                 //Colisión de AABB entre área de selección y el modelo
