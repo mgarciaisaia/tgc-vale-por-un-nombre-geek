@@ -16,7 +16,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 {
     class Selecting : SelectionState
     {
-        static readonly int RECT_COLOR = Color.White.ToArgb();
+        static readonly int RECT_COLOR = Color.FromArgb(70, Color.LightBlue).ToArgb();
 
         private Vector2 initMousePos;
         CustomVertex.TransformedColored[] vertices;
@@ -43,15 +43,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
             //Solto el mouse
             if(input.buttonUp(TgcD3dInput.MouseButtons.BUTTON_LEFT))
             {
-                //Definir recuadro
-                //Vector2 min = Vector2.Minimize(initMousePos, lastMousePos);
-                //Vector2 max = Vector2.Maximize(initMousePos, lastMousePos);
                 Rectangle rectangle = new Rectangle((int)min.X, (int)min.Y, (int)(max.X - min.X), (int)(max.Y - min.Y));
 
                 //Seleccionar solo si el recuadro tiene un tamaño minimo
                 if (rectangle.Width > 1 && rectangle.Height > 1)
                 {
-                    //Buscar que objetos del escenario caen dentro de la seleccion y elegirlos
                     if (!input.keyDown(Key.LeftShift)) this.selection.deselectAllCharacters();
                     this.selection.selectCharactersInRectangle(rectangle);
                 }
@@ -87,15 +83,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         private void renderRectangle()
         {
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-            TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
+            //TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
 
-            texturesManager.clear(0);
-            texturesManager.clear(1);
-            d3dDevice.Material = TgcD3dDevice.DEFAULT_MATERIAL;
-            d3dDevice.Transform.World = Matrix.Identity;
+            //texturesManager.clear(0);
+            //texturesManager.clear(1);
+            //d3dDevice.Material = TgcD3dDevice.DEFAULT_MATERIAL;
+            //d3dDevice.Transform.World = Matrix.Identity;
+
+            bool alphaBlendEnabled = d3dDevice.RenderState.AlphaBlendEnable;
+            d3dDevice.RenderState.AlphaBlendEnable = true;
 
             d3dDevice.VertexFormat = CustomVertex.TransformedColored.Format;
-            d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, 4, vertices);
+            //d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, 4, vertices);
+            d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
+
+            d3dDevice.RenderState.AlphaBlendEnable = alphaBlendEnabled;
         }
     }
 }
