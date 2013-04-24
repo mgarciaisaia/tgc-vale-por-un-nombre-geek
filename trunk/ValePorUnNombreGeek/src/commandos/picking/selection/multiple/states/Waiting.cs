@@ -6,7 +6,7 @@ using TgcViewer;
 using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.states
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.multiple.states
 {
     class Waiting : SelectionState
     {

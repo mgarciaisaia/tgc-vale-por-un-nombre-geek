@@ -10,7 +10,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.states
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.multiple.states
 {
     class Selecting : SelectionState
     {

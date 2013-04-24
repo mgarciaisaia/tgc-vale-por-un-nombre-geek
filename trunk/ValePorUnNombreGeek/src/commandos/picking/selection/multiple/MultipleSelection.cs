@@ -8,11 +8,11 @@ using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
 using System.Drawing;
 using System.Collections;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.states;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.multiple.states;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.multiple
 {
     class MultipleSelection
     {
