@@ -45,10 +45,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
             {
                 Rectangle rectangle = new Rectangle((int)min.X, (int)min.Y, (int)(max.X - min.X), (int)(max.Y - min.Y));
 
+                if (!input.keyDown(Key.LeftShift)) this.selection.deselectAllCharacters();
+
                 //Seleccionar solo si el recuadro tiene un tamaño minimo
                 if (rectangle.Width > 1 && rectangle.Height > 1)
                 {
-                    if (!input.keyDown(Key.LeftShift)) this.selection.deselectAllCharacters();
                     this.selection.selectCharactersInRectangle(rectangle);
                 }
                 else
