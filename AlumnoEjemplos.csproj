@@ -101,11 +101,12 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\VisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\WideVisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\MovementPicking.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\MultipleSelection.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\multiple\MultipleSelection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\PickingRaySingleton.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\states\Waiting.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\states\Selecting.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\states\SelectionState.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\multiple\states\Waiting.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\multiple\states\Selecting.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\multiple\states\SelectionState.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\rectangle\RectangleSelection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Sky.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\StaticCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\EjemploAlumno.cs" />
@@ -177,6 +178,7 @@
     <None Include="ValePorUnNombreGeek\documentacion\diagrama_de_clases.class.violet" />
     <None Include="ValePorUnNombreGeek\documentacion\umlCharacter.class.violet" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

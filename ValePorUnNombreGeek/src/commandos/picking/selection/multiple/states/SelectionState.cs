@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.states
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.multiple.states
 {
     abstract class SelectionState
     {
