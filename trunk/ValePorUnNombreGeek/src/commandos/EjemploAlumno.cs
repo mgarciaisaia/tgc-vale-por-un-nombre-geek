@@ -11,6 +11,8 @@ using System;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rectangle;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -27,7 +29,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         List<Enemy> enemies;
 
         MovementPicking picking;
-        MultipleSelection selection;
+        Selection selection;
 
         FreeCamera camera;
 
@@ -90,6 +92,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Seleccion multiple
             selection = new MultipleSelection(this.terrain, this.characters);
+            //selection = new RectangleSelection();
 
             //Movimiento por picking
             picking = new MovementPicking(this.terrain);

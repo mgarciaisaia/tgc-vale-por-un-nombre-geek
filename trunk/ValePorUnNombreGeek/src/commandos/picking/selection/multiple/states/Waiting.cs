@@ -13,6 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
         public Waiting(MultipleSelection _selection, Terrain _terrain)
             : base(_selection, _terrain)
         {
+            //nothing to do
         }
 
         public override void update()
