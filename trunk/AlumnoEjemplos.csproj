@@ -95,6 +95,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\Soldier.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\OnWaitpoint.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\Rotating.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\RotatingToNextWaitpoint.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\SoldierState.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\Waiting.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\Walking.cs" />

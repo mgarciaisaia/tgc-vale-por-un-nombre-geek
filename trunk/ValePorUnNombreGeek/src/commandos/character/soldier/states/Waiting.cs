@@ -18,7 +18,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             : base(_soldier, _timeOnWaitpoint)
         {
             this.waitingTime = 0;
-            this.maxWaitingTime = this.random(1, 3);
+            this.maxWaitingTime = GeneralMethods.random(1, 3);
         }
 
         public override void onWaitpointUpdate(float elapsedTime)
@@ -29,7 +29,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             {
                 float actualAngle = this.soldier.Representation.FacingAngle;
                 float delta = (float)2 * FastMath.PI;
-                float desiredAngle = this.random(actualAngle - delta, actualAngle + delta);
+                float desiredAngle = GeneralMethods.random(actualAngle - delta, actualAngle + delta);
                 desiredAngle = GeneralMethods.checkAngle(desiredAngle);
                 
                 bool clockwise;
@@ -37,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 float a = actualAngle;
                 float b = desiredAngle;
 
-                if (a < b)
+                if (a < b) //TODO hacer estos if mas expresivos y claros
                     if (b - a < 2 * FastMath.PI - b + a)
                         clockwise = true;
                     else
@@ -51,12 +51,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 this.soldier.setState(new Rotating(this.soldier, desiredAngle, clockwise, this.timeOnWaitpoint));
                 return;
             }
-        }
-
-        private float random(float min, float max)
-        {
-            float delta = max - min;
-            return min + delta * (float)rnd.NextDouble();
         }
     }
 }
