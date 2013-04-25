@@ -21,8 +21,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
             this.vertices = new CustomVertex.TransformedColored[4];
         }
 
-
-
         private List<Character> getCharactersInRectangle(Rectangle rectangle)
         {
             List<Character> ret = new List<Character>();
@@ -36,8 +34,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 
             return ret;
         }
-
-
 
         #region RectangleRendering
 
@@ -71,7 +67,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 
         #endregion
 
-
+        #region Update
 
         private Vector2 initMousePos;
         public bool canBeginSelection()
@@ -85,7 +81,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 
 
         private Vector2 min, max;
-        public void renderSelection()
+        public void updateSelection()
         {
             TgcD3dInput input = GuiController.Instance.D3dInput;
 
@@ -94,6 +90,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
             min = Vector2.Minimize(this.initMousePos, lastMousePos);
             max = Vector2.Maximize(this.initMousePos, lastMousePos);
             this.updateRectangle(min, max);
+        }
+
+        public void renderSelection()
+        {
             this.renderRectangle();
         }
 
@@ -103,5 +103,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
             Rectangle rectangle = new Rectangle((int)min.X, (int)min.Y, (int)(max.X - min.X), (int)(max.Y - min.Y));
             return this.getCharactersInRectangle(rectangle);
         }
+
+        #endregion
     }
 }
