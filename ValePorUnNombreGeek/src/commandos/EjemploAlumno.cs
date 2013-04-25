@@ -92,7 +92,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Seleccion multiple
             //selection = new MultipleSelection(this.terrain, this.characters);
-            selection = new RectangleSelection(this.characters);
+            selection = new Selection(this.characters, this.terrain);
 
             //Movimiento por picking
             picking = new MovementPicking(this.terrain);
