@@ -18,7 +18,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
         private List<Character> selectableCharacters;
         private Terrain terrain;
         private TgcBox selectionBox;
-        private Vector3 initTerrainPoint;
 
         private const float SELECTION_BOX_HEIGHT = 75;
 
@@ -33,19 +32,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
             this.selectionBox.Color = Color.FromArgb(110, Color.CadetBlue);
         }
 
-        /*private void selectCharactersByRay(TgcRay _ray)
-        {
-            foreach (Character ch in this.selectableCharacters)
-            {
-                Vector3 collisionPoint; //useless
-                if (TgcCollisionUtils.intersectRayAABB(_ray, ch.BoundingBox(), out collisionPoint))
-                {
-                    this.addSelectedCharacter(ch);
-                    break;
-                }
-            }
-        }*/
-
         private List<Character> getCharactersInBox(TgcBox _selectionBox)
         {
             List<Character> ret = new List<Character>();
@@ -57,12 +43,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
             return ret;
         }
 
+        #region Update
+
+        private Vector3 initTerrainPoint;
         public bool canBeginSelection()
         {
             return PickingRaySingleton.Instance.terrainIntersection(this.terrain, out this.initTerrainPoint);
         }
 
-        public void renderSelection()
+        public void updateSelection()
         {
             Vector3 terrainPointB;
             if (!PickingRaySingleton.Instance.terrainIntersection(this.terrain, out terrainPointB)) return;
@@ -80,6 +69,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
 
             this.selectionBox.setExtremes(min, max);
             this.selectionBox.updateValues();
+        }
+
+        public void renderSelection()
+        {
             this.selectionBox.render();
         }
 
@@ -87,5 +80,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
         {
             return this.getCharactersInBox(this.selectionBox);
         }
+
+        #endregion
     }
 }

@@ -15,9 +15,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             return Math.Abs(a - b) < delta;
         }
 
+        public static bool isCloseTo(Vector2 a, Vector2 b, float delta)
+        {
+            return Math.Abs(a.X - b.X) < delta &&
+                  Math.Abs(a.Y - b.Y) < delta;
+        }
+
         public static bool isCloseTo(Vector3 a, Vector3 b, float delta)
         {
-
             return Math.Abs(a.X - b.X) < delta &&
                   Math.Abs(a.Y - b.Y) < delta &&
                   Math.Abs(a.Z - b.Z) < delta; 
