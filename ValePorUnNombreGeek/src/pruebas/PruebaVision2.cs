@@ -11,6 +11,10 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using Microsoft.DirectX.Direct3D;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking;
+using System.Collections.Generic;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
@@ -45,42 +49,55 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
         Terrain terrain;
         Character pj;
         Enemy enemigo;
+        Selection selection;
+        MovementPicking picking;
+        List<Character> characters;
+        FreeCamera camera;
+        float previousAngle;
 
         public override void init()
         {
 
 
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-            String mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir;
-            TgcTexture pisoTexture = TgcTexture.createTexture(d3dDevice, GuiController.Instance.ExamplesMediaDir + "Texturas\\tierra.jpg");
-
-            terrain = new Terrain();
+            String mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir+"ValePorUnNombreGeek\\";
+            terrain = new Terrain(
+                mediaDir+"Heightmaps\\"+"HeightmapParedes.jpg",
+                mediaDir + "Heightmaps\\"+"TexturaParedes.jpg",
+                10f,
+                0.4f);
+    
 
             pj = new Commando(terrain.getPosition(200, 200), terrain);
 
 
-            pj.Representation.AutoTransformEnable = true;
 
-
-            
-
+            this.characters = new List<Character>();
             Vector3[] waitpoints = new Vector3[1];
             terrain.heightmapCoordsToXYZ(new Vector2(60, 60), out waitpoints[0]);
             //terrain.heightmapCoordsToXYZ(new Vector2(22, 80), out waitpoints[1]);
             //terrain.heightmapCoordsToXYZ(new Vector2(10, 37), out waitpoints[2]);
 
             
-            enemigo = new Soldier(waitpoints, terrain);
+            enemigo = new Soldier(new Vector3(0,0,0), terrain);
+            characters.Add(enemigo);
+            characters.Add(pj);
 
-           
+            //Seleccion multiple
+            selection = new Selection(this.characters, this.terrain);
+
+            //Movimiento por picking
+            picking = new MovementPicking(this.terrain);
 
             GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 500, 100);
             GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 90, 45);
             GuiController.Instance.Modifiers.addBoolean("Direccion", "Mostrar", false);
-            GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox());
-            GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-600, -600, -600), new Vector3(600, 600, 600), new Vector3(200, 0, 200));
-            GuiController.Instance.UserVars.addVar("PuedeVerlo");
-
+            GuiController.Instance.Modifiers.addVertex3f("posicionEnemigo", new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000), new Vector3(0, 0, -20));
+            GuiController.Instance.Modifiers.addFloat("RotacionEnemigo", 0, 360, 0);
+            previousAngle = 0;
+           
+            camera = new FreeCamera();
+            camera.Enable = true;
 
         }
 
@@ -93,26 +110,29 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
         {
 
 
+            picking.update(selection.getSelectedCharacters());
 
+            Vector3 pos =  (Vector3)GuiController.Instance.Modifiers.getValue("posicionEnemigo");
+            
             enemigo.VisionAngle = FastMath.ToRad((float)GuiController.Instance.Modifiers.getValue("AnguloVision"));
             enemigo.VisionRadius = (float)GuiController.Instance.Modifiers.getValue("RadioVision");
             enemigo.ShowConeDirection = (bool)GuiController.Instance.Modifiers.getValue("Direccion");
-
+            float angle = (float)GuiController.Instance.Modifiers.getValue("RotacionEnemigo");
+            enemigo.Representation.rotate(angle-previousAngle, true);
+            enemigo.Position = pos;
+            previousAngle = angle;
             terrain.render();
-
-            enemigo.render(elapsedTime);
-            enemigo.BoundingBox().render();
-
-            Vector3 pos = (Vector3)GuiController.Instance.Modifiers.getValue("posicionTarget");
-            pj.Position = terrain.getPosition(pos.X, pos.Z);
-            if (enemigo.canSee(pj))
-                GuiController.Instance.UserVars.setValue("PuedeVerlo", true);
-            else
-                GuiController.Instance.UserVars.setValue("PuedeVerlo", false);
-
             pj.render(elapsedTime);
+            enemigo.canSee(pj);
+            enemigo.render(elapsedTime);
+           
 
-            pj.BoundingBox().render();
+        
+           
+
+
+
+            selection.update();
 
 
         }
