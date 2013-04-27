@@ -8,6 +8,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
+using TgcViewer;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -65,9 +66,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             //Crear SkyBox
             sky = new Sky();
 
-            //Crear nivel
-            level = new Level(new Terrain());
-
+            XMLLevelParser levelParser= new XMLLevelParser(
+              GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\niveles\\" + "nivel1.xml",
+              GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\"
+              );
+          
+            //Cargar nivel
+            level = levelParser.getLevel();
+           
             //Crear personajes
             Vector3[] waitpoints = new Vector3[3];
             level.Terrain.heightmapCoordsToXYZ(new Vector2(73, 81), out waitpoints[0]);

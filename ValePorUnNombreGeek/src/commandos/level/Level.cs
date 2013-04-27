@@ -33,6 +33,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             obstacles = new List<ITransformObject>();
             this.terrain = terrain;    
             
+            
         }
 
        
