@@ -66,23 +66,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             //Crear SkyBox
             sky = new Sky();
 
+            //Cargar nivel
             XMLLevelParser levelParser= new XMLLevelParser(
               GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\niveles\\" + "nivel1.xml",
               GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\"
               );
           
-            //Cargar nivel
+           
             level = levelParser.getLevel();
            
-            //Crear personajes
-            Vector3[] waitpoints = new Vector3[3];
-            level.Terrain.heightmapCoordsToXYZ(new Vector2(73, 81), out waitpoints[0]);
-            level.Terrain.heightmapCoordsToXYZ(new Vector2(22, 80), out waitpoints[1]);
-            level.Terrain.heightmapCoordsToXYZ(new Vector2(10, 37), out waitpoints[2]);
-
-
-         
-            level.add(new Soldier(waitpoints));
+          
             level.add(new Commando(level.Terrain.getPosition(-200, 200)));
             level.add(new Commando(level.Terrain.getPosition(200, 200)));
           

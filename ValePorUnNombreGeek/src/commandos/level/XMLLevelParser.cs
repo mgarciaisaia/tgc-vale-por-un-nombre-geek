@@ -8,6 +8,8 @@ using System.IO;
 using System.Xml;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer.Utils.TgcSceneLoader;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
@@ -47,8 +49,38 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
         public Level getLevel()
         {
-            Level level = new Level(getTerrain());
+            Terrain terrain = getTerrain();
+            Level level = new Level(terrain);
+            foreach (Enemy e in getEnemies(terrain)) level.add(e);
+            
             return level;
+        }
+
+
+        private IEnumerable<Enemy> getEnemies(Terrain terrain)
+        {
+           
+            List<Enemy> enemies = new List<Enemy>();
+
+            //Obtengo lista de nodos soldier
+            XmlNodeList soldierNodes = root.GetElementsByTagName("soldier");
+            foreach (XmlNode node in soldierNodes)
+            {
+                
+                int i = 0;
+
+                //Cargo los waitpoints
+                Vector3[] waitpoints = new Vector3[node.ChildNodes.Count];
+                foreach (XmlNode wn in node.ChildNodes)
+                {
+                    float[] pos = TgcParserUtils.parseFloat2Array(wn.InnerText);
+                    waitpoints[i++] = terrain.getPosition(pos[0], pos[1]);
+                }
+
+                enemies.Add(new Soldier(waitpoints));
+            }
+
+            return enemies;
         }
 
       
