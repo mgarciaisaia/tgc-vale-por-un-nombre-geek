@@ -4,9 +4,9 @@ using TgcViewer.Utils.TgcSceneLoader;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using Microsoft.DirectX;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
-    class Nivel
+    class Level
     {
         List<Character> characters;
         List<Enemy> enemies;
@@ -25,13 +25,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             get{return this.terrain;}
         }
 
-         public Nivel(Terrain terrain)
+         public Level(Terrain terrain)
         {
             characters = new List<Character>();
             enemies = new List<Enemy>();
             commandos = new List<Commando>();
             obstacles = new List<ITransformObject>();
             this.terrain = terrain;    
+            
         }
 
        

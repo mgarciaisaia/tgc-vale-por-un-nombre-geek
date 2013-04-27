@@ -15,6 +15,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking;
 using System.Collections.Generic;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
@@ -54,7 +55,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
        
         FreeCamera camera;
         float previousAngle;
-        Nivel nivel;
+        Level nivel;
         public override void init()
         {
 
@@ -67,7 +68,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
                 10f,
                 0.4f);
 
-            nivel = new Nivel(terrain);
+            nivel = new Level(terrain);
             nivel.add(new Commando(terrain.getPosition(200, 200)));
 
 
