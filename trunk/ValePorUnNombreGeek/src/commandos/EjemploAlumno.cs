@@ -23,11 +23,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
     public class EjemploAlumno : TgcExample
     {
         Sky sky;
-        Terrain terrain;
-
-        List<Character> characters;
-        List<Enemy> enemies;
-
+       
+        Nivel nivel;
         MovementPicking picking;
         Selection selection;
 
@@ -73,31 +70,30 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             //Crear SkyBox
             sky = new Sky();
 
-            //Cargar HeightMap
-            terrain = new Terrain();
+            //Crear nivel
+            nivel = new Nivel(new Terrain());
 
             //Crear personajes
             Vector3[] waitpoints = new Vector3[3];
-            terrain.heightmapCoordsToXYZ(new Vector2(73, 81), out waitpoints[0]);
-            terrain.heightmapCoordsToXYZ(new Vector2(22, 80), out waitpoints[1]);
-            terrain.heightmapCoordsToXYZ(new Vector2(10, 37), out waitpoints[2]);
+            nivel.Terrain.heightmapCoordsToXYZ(new Vector2(73, 81), out waitpoints[0]);
+            nivel.Terrain.heightmapCoordsToXYZ(new Vector2(22, 80), out waitpoints[1]);
+            nivel.Terrain.heightmapCoordsToXYZ(new Vector2(10, 37), out waitpoints[2]);
 
-            this.enemies = new List<Enemy>();
-            this.enemies.Add(new Soldier(waitpoints, terrain));
 
-            this.characters = new List<Character>();
-            this.characters.Add(new Commando(terrain.getPosition(-200, 200), terrain));
-            this.characters.Add(new Commando(terrain.getPosition(200, 200), terrain));
-            this.characters.AddRange(this.enemies);
+         
+            nivel.add(new Soldier(waitpoints));
+            nivel.add(new Commando(nivel.Terrain.getPosition(-200, 200)));
+            nivel.add(new Commando(nivel.Terrain.getPosition(200, 200)));
+          
 
             //Seleccion multiple
-            selection = new Selection(this.characters, this.terrain);
+            selection = new Selection(nivel.Characters, nivel.Terrain);
 
             //Movimiento por picking
-            picking = new MovementPicking(this.terrain);
+            picking = new MovementPicking(nivel.Terrain);
        
             //Inicializar camara
-            camera = new FreeCamera(this.terrain.getPosition(0, 150), true);
+            camera = new FreeCamera(nivel.Terrain.getPosition(0, 150), true);
 
 
         }
@@ -115,20 +111,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             camera.updateCamera();
             sky.render();
-            terrain.render();
-
-            foreach (Character ch in this.characters)
-            {
-                ch.render(elapsedTime);
-            }
-
-            foreach (Enemy enemy in this.enemies)
-            {
-                foreach (Character ch in this.characters)
-                {
-                    if(enemy.canSee(ch)) break;
-                }
-            }
+            nivel.render(elapsedTime);
 
 
             selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
@@ -136,15 +119,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
 
 
-            if (GuiController.Instance.D3dInput.keyPressed(Key.X))
-            {
-                foreach (Character ch in selection.getSelectedCharacters())
-                {
-                    ch.die();
-
-                }
-
-            }
+           
         }
 
 
@@ -155,11 +130,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         public override void close()
         {
             sky.dispose();
-            terrain.dispose();
-            foreach (Character ch in this.characters)
-            {
-                ch.dispose();
-            }
+            nivel.dispose();
         }
 
     }

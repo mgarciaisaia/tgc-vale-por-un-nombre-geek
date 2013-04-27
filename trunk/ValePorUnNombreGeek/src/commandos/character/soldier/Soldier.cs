@@ -26,17 +26,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
         private SoldierState state;
 
 
-        public Soldier(Vector3 position, Terrain _terrain)
-            : base(position, _terrain)
+        public Soldier(Vector3 position)
+            : base(position)
         {
             this.setState(new Waiting(this, 0));
         }
 
-        public Soldier(Vector3[] waitpoints, Terrain _terrain)
-            : this(waitpoints[0], _terrain)
+      
+        public Soldier(Vector3[] waitpoints)
+            : this(waitpoints[0])
         {
             this.Waitpoints = waitpoints;
         }
+
+    
 
         protected override void update(float elapsedTime)
         {
