@@ -47,14 +47,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public bool ShowConeDirection { get { return vision.ShowDirection; } set { vision.ShowDirection = value; } }
 
 
-        public Enemy(Vector3 _position, Terrain _terrain)
-            : base(_position, _terrain)
-        {
-            inicializar();
-            
-        }
-
-  
+      
 
         public Enemy(Vector3 _position)
             : base(_position)
@@ -65,6 +58,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         }
 
+      
         private void inicializar()
         {
 
@@ -87,14 +81,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public bool canSee(Character target)
         {
 
-            return vision.isInsideVisionRange(target, this.terrain);
+            return vision.isInsideVisionRange(target, this.nivel.Terrain, this.nivel.Obstacles);
         }
 
 
         protected bool watch()
         {
-            //Si ve a un character lo setea como objetivo y devuelve true
-            return false;
+           foreach(Commando c in this.nivel.Commandos){
+               if (this.canSee(c)) return true;  //y onerlo como target(?)
+           }
+           return false;
         }
 
 
@@ -114,5 +110,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             return false;
         }
+
+        public VisionCone VisionCone { get { return this.vision; } }
     }
 }

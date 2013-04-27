@@ -7,6 +7,7 @@ using TgcViewer;
 using System.Collections;
 using System;
 using TgcViewer.Utils.TgcSceneLoader;
+using System.Collections.Generic;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 {
@@ -73,12 +74,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             return isInsideVisionRange(target, terrain, null);
         }
 
-        public bool isInsideVisionRange(Character target, ITransformObject[] obstacles)
+        public bool isInsideVisionRange(Character target, List<ITransformObject> obstacles)
         {
             return isInsideVisionRange(target, null, obstacles);
         }
 
-        public bool isInsideVisionRange(Character target, Terrain terrain, ITransformObject[] obstacles)
+        public bool isInsideVisionRange(Character target, Terrain terrain, List<ITransformObject> obstacles)
         {
 
             Vector3 targetPoint = getClosestPointToVertex(target);
@@ -86,7 +87,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             {
                 if (terrain == null || canSeeInTerrain(terrain, targetPoint))
                 {
-                    if (obstacles == null || canSeeWithObstacles(targetPoint, obstacles))
+                    if (obstacles.Count == 0 || canSeeWithObstacles(targetPoint, obstacles))
                     {
                         changeColor(true);
                         return true;
@@ -181,7 +182,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
 
          
-         private bool canSeeWithObstacles(Vector3 targetPoint, ITransformObject[] obstacles)
+         private bool canSeeWithObstacles(Vector3 targetPoint, List<ITransformObject> obstacles)
          {
              throw new NotImplementedException();
          }

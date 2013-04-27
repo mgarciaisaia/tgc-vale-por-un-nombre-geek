@@ -9,11 +9,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
     class Commando : Character
     {
-        public Commando(Vector3 _position, Terrain _terrain)
-            : base(_position, _terrain)
-        {
-            //nothing to do
-        }
+      
 
         public Commando(Vector3 _position)
             : base(_position)
@@ -21,6 +17,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             //nothing to do
         }
 
+      
         protected override void update(float elapsedTime)
         {
             if (!this.hasTarget()) return;

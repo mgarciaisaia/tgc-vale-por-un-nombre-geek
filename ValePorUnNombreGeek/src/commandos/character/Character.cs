@@ -25,10 +25,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return this.representation; }
         }
         private ITargeteable target;
-        protected Terrain terrain;
+        protected Nivel nivel;
         protected float speed = 150;
+        private Vector3 _position;
+        
 
-
+        public Nivel Nivel
+        {
+            get { return this.nivel; }
+            set { this.nivel = value; }
+        }
         public Vector3 Position
         {
 
@@ -57,12 +63,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
 
         
-        public Character(Vector3 _position, Terrain _terrain)
-            : this(_position)
-        {
-            this.terrain = _terrain;
-        }
-
+    
         public Character(Vector3 _position)
         {
             this.loadCharacterRepresentation(_position);
@@ -70,8 +71,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.dead = false;
         }
 
-
-
+      
         //Sobreescribible para que los hijos puedan usar otra representacion
         protected virtual void loadCharacterRepresentation(Vector3 position)
         {
@@ -141,8 +141,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             this.representation.walk();
             this.representation.move(direccion);
-            //if (this.terrain != null) this.representation.Position = this.terrain.getPosition(this.representation.Position.X, this.representation.Position.Z);
-            this.representation.Position = this.terrain.getPosition(this.representation.Position.X, this.representation.Position.Z);
+            if (this.nivel == null) return;
+            this.representation.Position = this.nivel.getPosition(this.representation.Position.X, this.representation.Position.Z);
         }
 
         internal bool isOnTarget()
