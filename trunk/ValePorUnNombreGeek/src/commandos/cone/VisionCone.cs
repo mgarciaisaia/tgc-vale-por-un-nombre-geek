@@ -6,6 +6,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer;
 using System.Collections;
 using System;
+using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 {
@@ -63,20 +64,40 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         public bool isInsideVisionRange(Character target)
         {
-            Vector3 point = getClosestPointToVertex(target);
-          
-           if (isPointInsideCone(point))
-           {
-                this.Color1 = System.Drawing.Color.Red;
-                this.Color2 = System.Drawing.Color.Red;
-                 
-                return true;
-         
+            return isInsideVisionRange(target, null, null);
+        }
+
+        public bool isInsideVisionRange(Character target, Terrain terrain)
+        {
+
+            return isInsideVisionRange(target, terrain, null);
+        }
+
+        public bool isInsideVisionRange(Character target, ITransformObject[] obstacles)
+        {
+            return isInsideVisionRange(target, null, obstacles);
+        }
+
+        public bool isInsideVisionRange(Character target, Terrain terrain, ITransformObject[] obstacles)
+        {
+
+            Vector3 targetPoint = getClosestPointToVertex(target);
+            if (isPointInsideCone(targetPoint))
+            {
+                if (terrain == null || canSeeInTerrain(terrain, targetPoint))
+                {
+                    if (obstacles == null || canSeeWithObstacles(targetPoint, obstacles))
+                    {
+                        changeColor(true);
+                        return true;
+                    }
+                }
             }
-            this.Color1 = System.Drawing.Color.Aquamarine;
-            this.Color2 = System.Drawing.Color.Aquamarine;
-            
+
+            changeColor(false);
+
             return false;
+
         }
 
       
@@ -107,7 +128,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             
         }
        
-
+        /// <summary>
+        /// Calcula si el punto cae dentro del cono.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
         protected virtual bool isPointInsideCone(Vector3 point)
         {
             //Vector que va desde el vertice del cono hasta el punto
@@ -130,37 +155,50 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             return false;
         }
 
-         public bool isInsideVisionRange(Character target, Terrain terrain)
-        {
-            
-            if (this.isInsideVisionRange(target))
-            {
-                //if(no hay nada tapandome la vista)
-                float t;
-                Vector3 targetPoint = this.getClosestPointToVertex(target);
-                Vector3 origin = this.Position;
-                Vector3 direction = targetPoint - this.Position;
+       /// <summary>
+       /// Se fija si el terreno tapa la vista a un punto.
+       /// </summary>
+       /// <param name="terrain"></param>
+       /// <param name="targetPoint"></param>
+       /// <returns></returns>
+         private bool canSeeInTerrain(Terrain terrain, Vector3 targetPoint)
+         {
+             Vector3 origin = this.Position;
+             Vector3 direction = targetPoint - this.Position;
+             float t;
+             for (t = 0; t < 1; t += 0.05f)
+             {
+                 Vector3 aPoint = origin + t * direction;
+                 Vector3 terrainPoint = terrain.getPosition(aPoint.X, aPoint.Z);
 
-                for (t = 0; t < 1; t+= 0.05f)
-                {
-                    Vector3 aPoint = origin + t * direction;
-                    Vector3 terrainPoint = terrain.getPosition(aPoint.X, aPoint.Z);
+                 if (aPoint.Y < terrainPoint.Y)
+                             return false;
+                               
+             }
 
-                    if (aPoint.Y < terrainPoint.Y)
-                    {
-                        this.Color1 = System.Drawing.Color.Aquamarine;
-                        this.Color2 = System.Drawing.Color.Aquamarine;
-                        return false;
-            
-                    }
+             return true;
+         }
 
-                }
 
-                return true;
-            }
-            else return false;
-        }
+         
+         private bool canSeeWithObstacles(Vector3 targetPoint, ITransformObject[] obstacles)
+         {
+             throw new NotImplementedException();
+         }
 
+         private void changeColor(bool canSee)
+         {
+             if (canSee)
+             {
+                 this.Color1 = System.Drawing.Color.Red;
+                 this.Color2 = System.Drawing.Color.Red;
+             }
+             else
+             {
+                 this.Color1 = System.Drawing.Color.Aquamarine;
+                 this.Color2 = System.Drawing.Color.Aquamarine;
+             }
+         }
 
 
 
