@@ -88,8 +88,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
          
            piso.render();
            enemigo.ShowConeDirection = (bool) GuiController.Instance.Modifiers.getValue("Direccion");
-           enemigo.render(elapsedTime);
-           enemigo.BoundingBox().render();
+          
           
            pj.Position = (Vector3)GuiController.Instance.Modifiers.getValue("posicionTarget");
            
@@ -101,8 +100,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
            pj.render(elapsedTime);
 
            pj.BoundingBox().render();
-                      
 
+           enemigo.render(elapsedTime);
+           enemigo.BoundingBox().render();
         }
 
 

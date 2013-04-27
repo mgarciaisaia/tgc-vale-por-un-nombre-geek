@@ -4,6 +4,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepres
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer;
+using System.Collections;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 {
@@ -53,22 +54,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         
 
-
+        /// <summary>
+        /// Retorna true si el target esta dentro del cono.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
 
         public bool isInsideVisionRange(Character target)
         {
-            Vector3[] points = getBoundingBoxPoints(target);
-
-            foreach (Vector3 point in points)
-            {
-
-                if (isPointInsideCone(point))
-                {
-                    this.Color1 = System.Drawing.Color.Red;
-                    this.Color2 = System.Drawing.Color.Red;
+            Vector3 point = getClosestPointToVertex(target);
+          
+           if (isPointInsideCone(point))
+           {
+                this.Color1 = System.Drawing.Color.Red;
+                this.Color2 = System.Drawing.Color.Red;
                  
-                    return true;
-                }
+                return true;
+         
             }
             this.Color1 = System.Drawing.Color.Aquamarine;
             this.Color2 = System.Drawing.Color.Aquamarine;
@@ -76,36 +78,32 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             return false;
         }
 
-
-        protected static Vector3[] getBoundingBoxPoints(Character target)
+      
+        /// <summary>
+        /// Calcula punto del eje Y del target que esta mas cerca del vertice del cono
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns>Punto del eje Y del personaje que esta mas cerca del vertice del cono</returns>
+        protected Vector3 getClosestPointToVertex(Character target)
         {
-            Vector3[] points = new Vector3[3];
+           
             Vector3 pMin = target.BoundingBox().PMin;
             Vector3 pMax = target.BoundingBox().PMax;
+            Vector3 center = target.BoundingBox().calculateBoxCenter();
 
-            //3 puntos del eje central
-            points[0] = target.BoundingBox().calculateBoxCenter();
-            points[1] = new Vector3(points[0].X, pMin.Y, points[0].Z);
-            points[2] = new Vector3(points[0].X, pMax.Y, points[0].Z);
 
-            /*
-            //Base bounding box
-            points[3] = new Vector3(pMin.X, pMin.Y, pMin.Z);
-            points[4] = new Vector3(pMin.X, pMin.Y, pMax.Z);
-            points[5] = new Vector3(pMax.X, pMin.Y, pMin.Z);
-            points[6] = new Vector3(pMax.X, pMin.Y, pMax.Z);
-            points[7] = new Vector3(pMin.X, pMin.Y, pMin.Z);
-            points[8] = new Vector3(pMin.X, pMin.Y, pMax.Z);
-            
-           //Tapa bounding box
-            points[9] = new Vector3(pMin.X, pMax.Y, pMin.Z);
-            points[10] = new Vector3(pMin.X, pMax.Y, pMax.Z);
-            points[11] = new Vector3(pMax.X, pMax.Y, pMin.Z);
-            points[12] = new Vector3(pMax.X, pMax.Y, pMax.Z);
-
-             **/
+            if (pMin.Y < this.Position.Y && pMax.Y > this.Position.Y)
+            {
+                return new Vector3(center.X, this.Position.Y, center.Z);
+            }
+            else if (pMin.Y > this.Position.Y)
+            {
+                return new Vector3(center.X, pMin.Y, center.Z);
+            }
+            else return new Vector3(center.X, pMax.Y, center.Z);
            
-            return points;
+           
+            
         }
        
 
