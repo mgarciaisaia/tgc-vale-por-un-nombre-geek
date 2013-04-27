@@ -11,6 +11,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using Microsoft.DirectX.Direct3D;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
@@ -46,14 +47,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
         Commando pj;
         Enemy enemigo;
 
-        Nivel nivel;
+        Level nivel;
 
         public override void init(){
         
 
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
             String mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir;
-            nivel = new Nivel(
+            nivel = new Level(
                 new Terrain(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Heightmaps\\HeightmapPlano.jpg",
                     GuiController.Instance.ExamplesMediaDir + "Texturas\\tierra.jpg",
                     10f,

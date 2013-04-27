@@ -79,13 +79,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public bool canSee(Character target)
         {
 
-            return vision.isInsideVisionRange(target, this.nivel.Terrain, this.nivel.Obstacles);
+            return vision.isInsideVisionRange(target, this.level.Terrain, this.level.Obstacles);
         }
 
 
         protected bool watch()
         {
-           foreach(Commando c in this.nivel.Commandos){
+           foreach(Commando c in this.level.Commandos){
                if (this.canSee(c)) return true;  //y onerlo como target(?)
            }
            return false;

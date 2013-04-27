@@ -3,6 +3,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
 using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -17,15 +18,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return this.representation; }
         }
         private ITargeteable target;
-        protected Nivel nivel;
+        protected Level level;
         protected float speed = 150;
         private Vector3 _position;
         
 
-        public Nivel Nivel
+        public Level Nivel
         {
-            get { return this.nivel; }
-            set { this.nivel = value; }
+            get { return this.level; }
+            set { this.level = value; }
         }
         public Vector3 Position
         {
@@ -133,8 +134,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             this.representation.walk();
             this.representation.move(direccion);
-            if (this.nivel == null) return;
-            this.representation.Position = this.nivel.getPosition(this.representation.Position.X, this.representation.Position.Z);
+            if (this.level == null) return;
+            this.representation.Position = this.level.getPosition(this.representation.Position.X, this.representation.Position.Z);
         }
 
         internal bool isOnTarget()
