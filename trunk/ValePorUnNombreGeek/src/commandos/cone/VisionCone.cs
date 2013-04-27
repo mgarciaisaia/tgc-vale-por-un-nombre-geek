@@ -150,6 +150,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                     {
                         this.Color1 = System.Drawing.Color.Aquamarine;
                         this.Color2 = System.Drawing.Color.Aquamarine;
+                        return false;
             
                     }
 
