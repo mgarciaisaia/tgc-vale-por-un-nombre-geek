@@ -86,8 +86,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public bool canSee(Character target)
         {
-            
-            return vision.isInsideVisionRange(target);
+
+            return vision.isInsideVisionRange(target, this.terrain);
         }
 
 
