@@ -5,6 +5,7 @@ using System.Text;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
+using System.Drawing;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 {
@@ -70,7 +71,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         {
             if (!base.isPointInsideCone(point)) return false;
 
-            return FastMath.Abs(point.Y-this.Position.Y) < this.maxHeight;
+            if (FastMath.Abs(point.Y - this.Position.Y) > this.maxHeight)
+            {
+                this.Color1 = Color.Red;
+                this.Color2 = Color.Red;
+                return false;
+            }
+            return true;
             
 
         }
