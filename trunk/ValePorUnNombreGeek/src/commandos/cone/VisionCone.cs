@@ -3,8 +3,6 @@ using TgcViewer.Utils.TgcGeometry;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
-using TgcViewer;
-using System.Collections;
 using System;
 using TgcViewer.Utils.TgcSceneLoader;
 using System.Collections.Generic;

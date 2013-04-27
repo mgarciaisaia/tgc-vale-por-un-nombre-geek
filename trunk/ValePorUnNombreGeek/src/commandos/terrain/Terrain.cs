@@ -1,6 +1,5 @@
 ﻿using TgcViewer.Utils.Terrain;
 using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
 using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
+﻿using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
 using System.Drawing;

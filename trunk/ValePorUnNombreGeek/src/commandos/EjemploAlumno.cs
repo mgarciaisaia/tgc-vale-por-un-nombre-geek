@@ -2,17 +2,11 @@ using TgcViewer.Example;
 using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.multiple;
-using System.Collections.Generic;
-using TgcViewer;
-using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
-using System;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rectangle;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
