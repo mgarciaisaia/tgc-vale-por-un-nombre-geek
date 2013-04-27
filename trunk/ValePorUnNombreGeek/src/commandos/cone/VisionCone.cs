@@ -5,6 +5,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer;
 using System.Collections;
+using System;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 {
@@ -136,16 +137,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             {
                 //if(no hay nada tapandome la vista)
                 float t;
+                Vector3 targetPoint = this.getClosestPointToVertex(target);
                 Vector3 origin = this.Position;
-                Vector3 direction = target.Position - this.Position;
-                direction.Normalize();
+                Vector3 direction = targetPoint - this.Position;
 
-                float tmax = (target.Position.X - this.Position.X) / direction.X;
-
-                for (t = 0; t < tmax; t++)
+                for (t = 0; t < 1; t+= 0.05f)
                 {
                     Vector3 aPoint = origin + t * direction;
                     Vector3 terrainPoint = terrain.getPosition(aPoint.X, aPoint.Z);
+
                     if (aPoint.Y < terrainPoint.Y) return false;
                 }
 

@@ -92,8 +92,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 500, 100);
             GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 90, 45);
             GuiController.Instance.Modifiers.addBoolean("Direccion", "Mostrar", false);
-            GuiController.Instance.Modifiers.addVertex3f("posicionEnemigo", new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000), new Vector3(0, 0, -20));
+            GuiController.Instance.Modifiers.addVertex3f("posicionEnemigo", new Vector3(-1000, -1000, -1000), new Vector3(1000, 1000, 1000), new Vector3(400, 0, 100));
             GuiController.Instance.Modifiers.addFloat("RotacionEnemigo", 0, 360, 0);
+
+
+            GuiController.Instance.UserVars.addVar("canSee");
+
+
             previousAngle = 0;
            
             camera = new FreeCamera();
@@ -123,11 +128,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             previousAngle = angle;
             terrain.render();
             pj.render(elapsedTime);
-            enemigo.canSee(pj);
             enemigo.render(elapsedTime);
-           
 
-        
+
+            GuiController.Instance.UserVars.setValue("canSee", enemigo.canSee(pj));
            
 
 
