@@ -146,7 +146,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                     Vector3 aPoint = origin + t * direction;
                     Vector3 terrainPoint = terrain.getPosition(aPoint.X, aPoint.Z);
 
-                    if (aPoint.Y < terrainPoint.Y) return false;
+                    if (aPoint.Y < terrainPoint.Y)
+                    {
+                        this.Color1 = System.Drawing.Color.Aquamarine;
+                        this.Color2 = System.Drawing.Color.Aquamarine;
+            
+                    }
+
                 }
 
                 return true;
