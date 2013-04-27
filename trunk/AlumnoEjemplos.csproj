@@ -102,6 +102,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\VisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\WideVisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\Level.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\XMLLevelParser.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\MovementPicking.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\BoxSelection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\PickingRaySingleton.cs" />
