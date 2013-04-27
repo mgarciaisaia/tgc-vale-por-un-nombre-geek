@@ -131,10 +131,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
          public bool isInsideVisionRange(Character target, Terrain terrain)
         {
-             
-            if (isInsideVisionRange(target))
+            
+            if (this.isInsideVisionRange(target))
             {
                 //if(no hay nada tapandome la vista)
+                float t;
+                Vector3 origin = this.Position;
+                Vector3 direction = target.Position - this.Position;
+                direction.Normalize();
+
+                float tmax = (target.Position.X - this.Position.X) / direction.X;
+
+                for (t = 0; t < tmax; t++)
+                {
+                    Vector3 aPoint = origin + t * direction;
+                    Vector3 terrainPoint = terrain.getPosition(aPoint.X, aPoint.Z);
+                    if (aPoint.Y < terrainPoint.Y) return false;
+                }
+
                 return true;
             }
             else return false;

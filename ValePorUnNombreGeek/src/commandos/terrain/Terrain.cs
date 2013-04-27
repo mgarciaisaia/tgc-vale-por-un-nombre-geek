@@ -46,7 +46,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             //pathTextura = mediaDir + "TerrainTexture3.jpg";
 
             //Cargar heightmap
-            this.loadHeightmap(pathHeightmap, 20f, 1f, new Vector3(0, 0, 0));
+            this.loadHeightmap(pathHeightmap, 20f, 2f, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
         }
 
