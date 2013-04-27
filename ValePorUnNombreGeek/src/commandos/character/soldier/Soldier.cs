@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.DirectX;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
-using TgcViewer;
+﻿using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.states;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier

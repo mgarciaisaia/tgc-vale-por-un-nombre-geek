@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TgcViewer.Utils.TgcSkeletalAnimation;
-using TgcViewer;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+﻿using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
 using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
