@@ -25,12 +25,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             get{return this.terrain;}
         }
 
-        public Nivel()
-            : this(null)
-        {
-        }
-
-        public Nivel(Terrain terrain)
+         public Nivel(Terrain terrain)
         {
             characters = new List<Character>();
             enemies = new List<Enemy>();
@@ -106,9 +101,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         public Vector3 getPosition(float x, float z)
         {
-            if (this.terrain == null) return new Vector3(x,0,z);
-                
-            return this.terrain.getPosition(x, z);
+           return this.terrain.getPosition(x, z);
         }
     }
 }
