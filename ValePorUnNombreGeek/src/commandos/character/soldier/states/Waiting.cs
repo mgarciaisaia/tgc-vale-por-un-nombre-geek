@@ -38,12 +38,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 float b = desiredAngle;
 
                 if (a < b) //TODO hacer estos if mas expresivos y claros
-                    if (b - a < 2 * FastMath.PI - b + a)
+                    if (b - a < FastMath.TWO_PI - b + a)
                         clockwise = true;
                     else
                         clockwise = false;
                 else
-                    if (a - b < 2 * FastMath.PI - a + b)
+                    if (a - b < FastMath.TWO_PI - a + b)
                         clockwise = false;
                     else
                         clockwise = true;
