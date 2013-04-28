@@ -3,6 +3,9 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using TgcViewer.Utils.TgcSceneLoader;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using Microsoft.DirectX;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.objetos;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.optimization;
+using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
@@ -11,16 +14,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         List<Character> characters;
         List<Enemy> enemies;
         List<Commando> commandos;
-        List<ITransformObject> obstacles;
+        List<ILevelObject> objects;
         Terrain terrain;
-
+        IQuadTree quadtree;
 
 
         public List<Character> Characters { get { return this.characters; } }
         public List<Enemy> Enemies { get { return this.enemies; } }
         public List<Commando> Commandos { get { return this.commandos; } }
-        public List<ITransformObject> Obstacles { get { return this.obstacles; } }
+        public List<ILevelObject> Objects { get { return this.objects; } }
 
+       
         public Terrain Terrain{
             get{return this.terrain;}
         }
@@ -30,9 +34,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             characters = new List<Character>();
             enemies = new List<Enemy>();
             commandos = new List<Commando>();
-            obstacles = new List<ITransformObject>();
-            this.terrain = terrain;    
-            
+            objects = new List<ILevelObject>();
+            this.terrain = terrain;
+            quadtree = new QuadTreeDummie(terrain);           
             
         }
 
@@ -50,9 +54,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         }
 
      
-        public void add(ITransformObject obstacle)
+        public void add(ILevelObject levelObject)
         {
-            obstacles.Add(obstacle);
+            objects.Add(levelObject);
+            quadtree.add(levelObject);
         }
         private void addCharacter(Character c)
         {
@@ -60,28 +65,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             c.Nivel = this;
         }
 
-        //Despues esta clase se va a modificar para que renderice segun un quadtree
+      
         public void render(float elapsedTime)
         {
-            terrain.render();
-
-            foreach (IRenderObject o in this.obstacles)
+                           
+            foreach (Character character in this.characters)
             {
-                o.render();
+                character.update(elapsedTime);
+                
             }
 
-          
-            foreach (Commando commando in this.commandos)
-            {
-                commando.update(elapsedTime);
-                commando.render(elapsedTime);
-            }
+            quadtree.render(GuiController.Instance.Frustum, commandos, enemies);
 
-            foreach (Enemy enemy in this.enemies)
-            {
-                enemy.update(elapsedTime);
-                enemy.render(elapsedTime);
-            }
         }
 
         public void dispose()
@@ -91,7 +86,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 ch.dispose();
             }
 
-            foreach (IRenderObject o in this.obstacles)
+            foreach (IRenderObject o in this.objects)
             {
                 o.dispose();
             }

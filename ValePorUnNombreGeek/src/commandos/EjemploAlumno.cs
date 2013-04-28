@@ -109,10 +109,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
 
             selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
-
-
-
-
            
         }
 

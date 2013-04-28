@@ -79,7 +79,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public bool canSee(Character target)
         {
 
-            return vision.isInsideVisionRange(target, this.level.Terrain, this.level.Obstacles);
+            return vision.isInsideVisionRange(target, this.level.Terrain, this.level.Objects);
         }
 
 
@@ -92,9 +92,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
 
-        public override void render(float elapsedTime) 
+        public override void render() 
         {
-            base.render(elapsedTime);
+            base.render();
             vision.render();
         }
 

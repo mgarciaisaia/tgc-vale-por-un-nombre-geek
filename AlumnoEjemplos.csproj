@@ -92,6 +92,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\characterRepresentation\ICharacterRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\characterRepresentation\SkeletalRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Commando.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\character\objects\ILevelObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\Soldier.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\OnWaitpoint.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\Rotating.cs" />
@@ -110,6 +111,8 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\SelectionMethod.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\RectangleSelection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Sky.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\optimization\IQuadTree.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTreeDummie.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\StaticCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\EjemploAlumno.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\GeneralMethods.cs" />
