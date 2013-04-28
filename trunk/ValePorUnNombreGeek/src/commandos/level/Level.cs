@@ -73,14 +73,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
           
             foreach (Commando commando in this.commandos)
             {
+                commando.update(elapsedTime);
                 commando.render(elapsedTime);
             }
 
             foreach (Enemy enemy in this.enemies)
             {
-                
+                enemy.update(elapsedTime);
                 enemy.render(elapsedTime);
-                           
             }
         }
 

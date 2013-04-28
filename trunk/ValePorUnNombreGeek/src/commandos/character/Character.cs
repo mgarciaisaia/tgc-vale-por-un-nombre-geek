@@ -93,12 +93,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
          * UPDATE & RENDER
          * ***************************************/
 
-        protected abstract void update(float elapsedTime);
+        public abstract void update(float elapsedTime);
         
         public virtual void render(float elapsedTime)
         {
-            update(elapsedTime);
-
             if (this.Selected && this.hasTarget())
             {
                 //marcamos hacia donde vamos
