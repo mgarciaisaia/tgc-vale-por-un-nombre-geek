@@ -13,31 +13,30 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         
         private bool dead;
         protected ICharacterRepresentation representation;
+       
         public ICharacterRepresentation Representation
         {
             get { return this.representation; }
         }
+
         private ITargeteable target;
         protected Level level;
         protected float speed = 150;
-        private Vector3 _position;
         
-
         public Level Nivel
         {
             get { return this.level; }
             set { this.level = value; }
         }
+
         public Vector3 Position
         {
-
             get { return this.representation.Position; }
             set { this.representation.Position = value; }
         }
         
         public bool Enabled //Solo se renderiza si esta en true. Sirve para las optimizaciones
         {
-
             get { return this.representation.Enabled; }
             set { this.representation.Enabled = value; }
         }
@@ -54,9 +53,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { if(!dead) this.representation.Selected = value; }
         }
 
-
-        
-    
+           
         public Character(Vector3 _position)
         {
             this.loadCharacterRepresentation(_position);
@@ -71,8 +68,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.representation = new SkeletalRepresentation(position);
         }
 
-
-
+        
       
         public void die()
         {
@@ -80,6 +76,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Selected = false;
             this.representation.die();
         }
+
 
         public virtual void dispose()
         {

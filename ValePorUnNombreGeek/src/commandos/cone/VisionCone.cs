@@ -115,16 +115,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
 
             if (pMin.Y < this.Position.Y && pMax.Y > this.Position.Y)
-            {
+            
                 return new Vector3(center.X, this.Position.Y, center.Z);
-            }
+            
             else if (pMin.Y > this.Position.Y)
-            {
+            
                 return new Vector3(center.X, pMin.Y, center.Z);
-            }
-            else return new Vector3(center.X, pMax.Y, center.Z);
-           
-           
+            
+            else return new Vector3(center.X, pMax.Y, center.Z);         
             
         }
        
@@ -143,8 +141,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             if (positionToTarget.LengthSq() <= this.sqLength) {
                
                 //Despues comparo angulos para ver si cae dentro del cono
-
-
+                
                 // A . B = |A||B| cos o  ^  |A|=|B| =1  = > A . B = cos o
                 float cos = Vector3.Dot(Vector3.Normalize(positionToTarget), Vector3.Normalize(this.Direccion)); 
                 

@@ -70,27 +70,28 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         public void render(float elapsedTime)
         {
                            
-            foreach (Character character in this.characters)
-            {
+            foreach (Character character in this.characters) 
+                
                 character.update(elapsedTime);
                 
-            }
-
+         
             quadtree.render(GuiController.Instance.Frustum, commandos, enemies);
 
         }
 
+
         public void dispose()
         {
+            
             foreach (Character ch in this.characters)
-            {
+            
                 ch.dispose();
-            }
+            
 
             foreach (ILevelObject o in this.objects)
-            {
+            
                 o.dispose();
-            }
+            
 
             terrain.dispose();
         }
