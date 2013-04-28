@@ -28,7 +28,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         public static float checkAngle(float angle)
         {
             float ret = angle;
-            float limit = 2 * FastMath.PI;
+            float limit = FastMath.TWO_PI;
             while (ret >= limit) ret -= limit;
             while (ret < 0) ret += limit;
             return ret;
