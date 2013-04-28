@@ -213,10 +213,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         }
 
-        public Vector3 Front
-        {
-            get { return Vector3.TransformCoordinate(this.angleZeroVector, this.meshRotationMatrix); }
-
-        }
+       
     }
 }
