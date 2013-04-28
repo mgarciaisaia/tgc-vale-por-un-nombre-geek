@@ -12,7 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
     {
        
         
-        private bool dead;
+        protected bool dead;
         protected ICharacterRepresentation representation;
        
         public ICharacterRepresentation Representation
@@ -123,7 +123,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         internal void goToTarget(float elapsedTime)
         {
 
-            if (!this.hasTarget()) return;
+            if (!this.hasTarget() || dead) return;
 
             /*foreach (Character obstaculo in this.level.getCharactersExcept(this))
             {
