@@ -10,7 +10,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.objetos
     interface ILevelObject
     {
         Vector3 Position { get; set; }
+        
         TgcBoundingBox BoundingBox { get; set; }
+        
         void render();
+
+        void dispose();
     }
 }
