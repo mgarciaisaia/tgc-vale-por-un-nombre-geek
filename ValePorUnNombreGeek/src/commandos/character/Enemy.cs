@@ -90,17 +90,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         protected bool watch()
         {
+           vision.updatePosition(); 
            foreach(Commando c in this.level.Commandos){
                if (this.canSee(c)) return true;  //y onerlo como target(?)
            }
            return false;
         }
 
-
         public override void render() 
         {
             base.render();
-            vision.render();
+            if(this.Selected) vision.render();
         }
 
         public override void dispose()
