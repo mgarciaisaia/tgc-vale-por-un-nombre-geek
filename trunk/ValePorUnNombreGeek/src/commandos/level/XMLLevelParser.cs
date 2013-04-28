@@ -68,16 +68,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             {
                 
                 int i = 0;
-
+               
                 //Cargo los waitpoints
-                Vector3[] waitpoints = new Vector3[node.ChildNodes.Count];
+                List<Vector3> waitpoints = new List<Vector3>();
                 foreach (XmlNode wn in node.ChildNodes)
                 {
-                    float[] pos = TgcParserUtils.parseFloat2Array(wn.InnerText);
-                    waitpoints[i++] = terrain.getPosition(pos[0], pos[1]);
+                    if(wn.NodeType == XmlNodeType.Element){ 
+                        float[] pos = TgcParserUtils.parseFloat2Array(wn.InnerText);
+                        waitpoints.Add(terrain.getPosition(pos[0], pos[1]));
+                    }
                 }
 
-                enemies.Add(new Soldier(waitpoints));
+                enemies.Add(new Soldier(waitpoints.ToArray<Vector3>()));
             }
 
             return enemies;
