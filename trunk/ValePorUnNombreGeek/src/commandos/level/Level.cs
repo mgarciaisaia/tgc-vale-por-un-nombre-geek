@@ -66,7 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             c.Nivel = this;
         }
 
-      
+
         public void render(float elapsedTime)
         {
                            
@@ -102,5 +102,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         {
            return this.terrain.getPosition(x, z);
         }
+
+
+        /*
+        public List<Character> getCharactersExcept(Character me)
+        {
+            List<Character> ret = new List<Character>(this.Characters);
+            ret.Remove(me);
+            return ret;
+        }
+         */
     }
 }
