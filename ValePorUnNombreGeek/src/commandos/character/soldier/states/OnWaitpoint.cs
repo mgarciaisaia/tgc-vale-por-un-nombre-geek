@@ -33,10 +33,30 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 float desiredAngle = FastMath.Acos(dot);
                 if(dot < 0) desiredAngle = (float) FastMath.TWO_PI - desiredAngle;
 
-                Vector3 rotationAxis = Vector3.Cross(angleZeroVector, nextWaitpointDirection)*Math.Sign(dot);
-                bool clockwise;
-                if (rotationAxis.Y > 0) clockwise = false; else clockwise = true;
 
+                float actualAngle = this.soldier.Representation.FacingAngle;
+                bool clockwise;
+                float a = actualAngle;
+                float b = desiredAngle;
+                if (a < b) //TODO hacer estos if mas expresivos y claros
+                    if (b - a < 2 * FastMath.PI - b + a)
+                        clockwise = true;
+                    else
+                        clockwise = false;
+                else
+                    if (a - b < 2 * FastMath.PI - a + b)
+                        clockwise = false;
+                    else
+                        clockwise = true;
+
+
+                //Vector3 rotationAxis = Vector3.Cross(angleZeroVector, nextWaitpointDirection)*Math.Sign(dot);
+                //bool clockwise;
+                //if (rotationAxis.Y > 0) clockwise = false; else clockwise = true;
+
+                //---------------------------------------------------------------------------
+                //---------------------------------------------------------------------------
+                //---------------------------------------------------------------------------
 
                 /*try
                 {
