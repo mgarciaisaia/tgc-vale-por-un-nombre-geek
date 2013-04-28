@@ -37,16 +37,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 float a = actualAngle;
                 float b = desiredAngle;
 
-                if (a < b) //TODO hacer estos if mas expresivos y claros
-                    if (b - a < FastMath.TWO_PI - b + a)
-                        clockwise = true;
-                    else
-                        clockwise = false;
+                if (a < b)
+
+                    clockwise = (b - a < FastMath.PI);
+
                 else
-                    if (a - b < FastMath.TWO_PI - a + b)
-                        clockwise = false;
-                    else
-                        clockwise = true;
+                    clockwise = (a - b > FastMath.PI);
+                   
 
                 this.soldier.setState(new Rotating(this.soldier, desiredAngle, clockwise, this.timeOnWaitpoint));
                 return;
