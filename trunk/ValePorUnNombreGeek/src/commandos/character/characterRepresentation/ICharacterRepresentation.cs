@@ -33,5 +33,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         Vector3 getAngleZeroVector();
 
         Vector3 getEyeLevel();
+
+        Vector3 Front { get; }
     }
 }
