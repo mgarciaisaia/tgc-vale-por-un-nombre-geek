@@ -59,6 +59,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             objects.Add(levelObject);
             quadtree.add(levelObject);
         }
+
         private void addCharacter(Character c)
         {
             characters.Add(c);
@@ -86,7 +87,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 ch.dispose();
             }
 
-            foreach (IRenderObject o in this.objects)
+            foreach (ILevelObject o in this.objects)
             {
                 o.dispose();
             }
