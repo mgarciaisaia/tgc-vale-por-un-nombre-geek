@@ -95,7 +95,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public abstract void update(float elapsedTime);
         
-        public virtual void render(float elapsedTime)
+        public virtual void render()
         {
             if (this.Selected && this.hasTarget())
             {

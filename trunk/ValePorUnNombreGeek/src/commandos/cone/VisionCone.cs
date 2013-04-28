@@ -6,6 +6,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using System;
 using TgcViewer.Utils.TgcSceneLoader;
 using System.Collections.Generic;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.objetos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 {
@@ -72,12 +73,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             return isInsideVisionRange(target, terrain, null);
         }
 
-        public bool isInsideVisionRange(Character target, List<ITransformObject> obstacles)
+        public bool isInsideVisionRange(Character target, List<ILevelObject> obstacles)
         {
             return isInsideVisionRange(target, null, obstacles);
         }
 
-        public bool isInsideVisionRange(Character target, Terrain terrain, List<ITransformObject> obstacles)
+        public bool isInsideVisionRange(Character target, Terrain terrain, List<ILevelObject> obstacles)
         {
 
             Vector3 targetPoint = getClosestPointToVertex(target);
@@ -180,7 +181,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
 
          
-         private bool canSeeWithObstacles(Vector3 targetPoint, List<ITransformObject> obstacles)
+         private bool canSeeWithObstacles(Vector3 targetPoint, List<ILevelObject> obstacles)
          {
              throw new NotImplementedException();
          }
