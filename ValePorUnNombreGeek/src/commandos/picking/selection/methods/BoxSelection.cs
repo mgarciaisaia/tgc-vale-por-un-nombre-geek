@@ -37,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
             List<Character> ret = new List<Character>();
 
             foreach (Character ch in this.selectableCharacters)
-                if (TgcCollisionUtils.testAABBAABB(_selectionBox.BoundingBox, ch.BoundingBox()))
+                if (TgcCollisionUtils.testAABBAABB(_selectionBox.BoundingBox, ch.BoundingBox))
                     ret.Add(ch);
 
             return ret;

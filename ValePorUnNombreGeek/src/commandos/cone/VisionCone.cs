@@ -109,9 +109,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         protected Vector3 getClosestPointToVertex(Character target)
         {
            
-            Vector3 pMin = target.BoundingBox().PMin;
-            Vector3 pMax = target.BoundingBox().PMax;
-            Vector3 center = target.BoundingBox().calculateBoxCenter();
+            Vector3 pMin = target.BoundingBox.PMin;
+            Vector3 pMax = target.BoundingBox.PMax;
+            Vector3 center = target.BoundingBox.calculateBoxCenter();
 
 
             if (pMin.Y < this.Position.Y && pMax.Y > this.Position.Y)

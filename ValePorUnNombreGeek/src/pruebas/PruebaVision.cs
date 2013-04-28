@@ -75,7 +75,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 500,100);
             GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 90, 45);
             GuiController.Instance.Modifiers.addBoolean("Direccion","Mostrar",false);
-            GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox());
+            GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox);
             GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-100, -100, -100), new Vector3(100, 100, 100), new Vector3(0, 0, -20));
           
         }

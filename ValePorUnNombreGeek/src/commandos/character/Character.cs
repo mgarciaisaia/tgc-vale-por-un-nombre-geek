@@ -4,6 +4,7 @@ using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.objetos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -45,9 +46,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { this.representation.Enabled = value; }
         }
 
-        public TgcBoundingBox BoundingBox()
+        public TgcBoundingBox BoundingBox
         {
-            return this.representation.BoundingBox;
+            get { return this.representation.BoundingBox; }
         }
 
         public bool Selected
@@ -123,6 +124,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
 
             if (!this.hasTarget()) return;
+
+            /*foreach (Character obstaculo in this.level.getCharactersExcept(this))
+            {
+                TgcCollisionUtils.BoxBoxResult result = TgcCollisionUtils.classifyBoxBox(this.BoundingBox, obstaculo.BoundingBox);
+                if (result == TgcCollisionUtils.BoxBoxResult.Adentro || result == TgcCollisionUtils.BoxBoxResult.Atravesando)
+                {
+                    return;
+                }
+            }*/
 
             Vector3 direccion = this.target.Position - this.representation.Position;
             direccion.Y = 0;

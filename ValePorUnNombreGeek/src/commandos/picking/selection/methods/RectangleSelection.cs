@@ -27,7 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 
             foreach (Character ch in this.selectableCharacters)
             {
-                Rectangle characterRectangle = ch.BoundingBox().projectToScreen();
+                Rectangle characterRectangle = ch.BoundingBox.projectToScreen();
                 if (rectangle.IntersectsWith(characterRectangle))
                     ret.Add(ch);
             }
