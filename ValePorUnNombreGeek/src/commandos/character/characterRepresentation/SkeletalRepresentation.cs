@@ -23,8 +23,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             get { return selected; }
             set { this.selected = value; }
         }
-             
-              
+
+
         public SkeletalRepresentation(Vector3 position)
         {
 
@@ -63,7 +63,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
                 };
         }
 
-  
+
         public void render()
         {
             this.mesh.animateAndRender();
@@ -93,14 +93,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.mesh.playAnimation("Die", false);
         }
 
-     
+
         public void walk()
         {
             this.mesh.playAnimation("Walk", true);
         }
 
 
-        public Vector3 getEyeLevel() 
+        public Vector3 getEyeLevel()
         {
             return new Vector3(0, (this.mesh.BoundingBox.PMax.Y - this.mesh.BoundingBox.PMin.Y) * 9 / 10, 0);
         }
@@ -206,15 +206,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.Transform = this.meshRotationMatrix * Matrix.Translation(this.Position);
         }
 
-        public  void moveOrientedY(float movement){
-            
+        public void moveOrientedY(float movement)
+        {
+
             mesh.moveOrientedY(movement);
 
         }
 
+        public Vector3 Front
+        {
+            get { return Vector3.TransformCoordinate(this.angleZeroVector, this.meshRotationMatrix); }
 
-      
-
-
+        }
     }
 }

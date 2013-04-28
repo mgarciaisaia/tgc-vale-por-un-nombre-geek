@@ -41,10 +41,64 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             return min + delta * (float)rnd.NextDouble();
         }
 
-        /*public static float SignedAcos(float p)
+       
+
+
+        public static float angleBetweenVersors( Vector3 versor1, Vector3 versor2)
         {
-            float angle = (float)Math.Acos(p)*Math.Sign(p);
+            float dot = Vector3.Dot(versor1, versor2);
+            Vector3 cross = Vector3.Cross(versor1, versor2);
+            float angle = FastMath.Acos(dot);
+
+            if (dot < 0) //Esta atras
+            {
+                if (cross.Y > 0)
+                //Atras y a izquierda   
+                {
+                    /*     ^   |
+                     *      \  |
+                     *       \ |  
+                     *    -----|------>
+                     *    
+                     */
+
+                    angle = FastMath.PI - angle;
+                }
+                else
+                //Atras y la derecha
+                {
+                    /*     
+                    *         |
+                    *         |  
+                    *    -----|------>
+                    *        /|
+                     *      / | 
+                     *     v 
+                    */
+
+                   angle = FastMath.PI + angle;
+                   
+                }
+
+
+            } else if (cross.Y < 0)
+            {
+                        /*           
+                           *         | 
+                           *         |   
+                           *    -----|------>
+                           *         | \
+                            *        |  \
+                            *            v
+                            *      
+                           */
+                        
+                        angle = FastMath.TWO_PI - angle;
+            }
+            
+
             return angle;
-        }*/
+        }
+        
     }
 }
