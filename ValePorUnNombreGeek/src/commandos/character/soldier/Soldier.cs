@@ -37,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
 
         public override void update(float elapsedTime)
         {
-          
+            if (this.dead) return;
 
             if (this.watch())
             {
