@@ -12,7 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
            
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 30;
- 
+        
 
 
 
@@ -56,7 +56,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         }
 
-      
+
+        public override float Speed
+        {
+            get { return 100; }
+        }
+
         private void inicializar()
         {
 

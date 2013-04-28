@@ -83,7 +83,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.mesh.playAnimation("StandBy", true);
         }
 
-        public void Talk()
+        public void talk()
         {
             this.mesh.playAnimation("Talk", true);
         }
