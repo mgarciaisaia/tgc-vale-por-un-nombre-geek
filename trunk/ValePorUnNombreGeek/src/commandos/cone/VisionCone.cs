@@ -42,7 +42,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
 
      
-        private void updatePosition()
+        public void updatePosition()
         {
             this.Transform = rep.Transform * Matrix.Translation(rep.getEyeLevel());
             this.Position = rep.Position + rep.getEyeLevel();
@@ -50,7 +50,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         public override void render()
         {
-           updatePosition();
+          
            base.render();
         }
 
