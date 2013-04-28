@@ -32,9 +32,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 Vector3 nextWaitpointDirection = this.soldier.getNextPositionTarget() - this.soldier.Position;
                 nextWaitpointDirection.Y = 0;
                 nextWaitpointDirection.Normalize();
-                float dot = Vector3.Dot(angleZeroVector, nextWaitpointDirection);
-                float desiredAngle = FastMath.Acos(dot);
-                if(dot < 0) desiredAngle = (float) FastMath.TWO_PI - desiredAngle;
+                float desiredAngle = GeneralMethods.angleBetweenVersors(angleZeroVector, nextWaitpointDirection);
 
                 bool clockwise = this.shallRotateClockwise(desiredAngle);
 
