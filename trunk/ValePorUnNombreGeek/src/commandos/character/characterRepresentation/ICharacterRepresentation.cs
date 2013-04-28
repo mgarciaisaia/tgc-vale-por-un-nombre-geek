@@ -5,7 +5,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 {
     interface ICharacterRepresentation
     {
-                    
+        void talk();
         void die();
         void standBy();
         void walk();

@@ -21,8 +21,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         private ITargeteable target;
         protected Level level;
-        protected float speed = 150;
-        
+
+        public abstract float Speed
+        {
+            get;
+        }
+
         public Level Nivel
         {
             get { return this.level; }
@@ -124,7 +128,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             direccion.Y = 0;
             direccion.Normalize();
 
-            float currentVelocity = speed * elapsedTime;
+            float currentVelocity = this.Speed * elapsedTime;
             direccion.Multiply(currentVelocity);
 
             this.representation.walk();
