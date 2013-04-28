@@ -13,7 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
       
-        protected override void update(float elapsedTime)
+        public override void update(float elapsedTime)
         {
             if (!this.hasTarget()) return;
 
