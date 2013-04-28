@@ -38,7 +38,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 if (rotationAxis.Y > 0) clockwise = false; else clockwise = true;
 
 
-                try
+                /*try
                 {
                     GuiController.Instance.UserVars.setValue("initialAngle", this.soldier.Representation.FacingAngle / FastMath.PI);
                     GuiController.Instance.UserVars.setValue("desiredAngle", desiredAngle / FastMath.PI);
@@ -52,7 +52,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                     GuiController.Instance.UserVars.setValue("initialAngle", this.soldier.Representation.FacingAngle / FastMath.PI);
                     GuiController.Instance.UserVars.setValue("desiredAngle", desiredAngle / FastMath.PI);
                     GuiController.Instance.UserVars.setValue("clockwise", clockwise);
-                }
+                }*/
 
 
                 this.soldier.setState(new RotatingToNextWaitpoint(this.soldier, desiredAngle, clockwise, 0));

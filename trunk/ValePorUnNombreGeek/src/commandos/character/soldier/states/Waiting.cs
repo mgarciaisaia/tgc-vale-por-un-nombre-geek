@@ -28,7 +28,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             if (this.waitingTime > this.maxWaitingTime)
             {
                 float actualAngle = this.soldier.Representation.FacingAngle;
-                float delta = (float)2 * FastMath.PI;
+                float delta = 0.5f * FastMath.PI;
                 float desiredAngle = GeneralMethods.random(actualAngle - delta, actualAngle + delta);
                 desiredAngle = GeneralMethods.checkAngle(desiredAngle);
                 
