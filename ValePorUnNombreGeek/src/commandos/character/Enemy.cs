@@ -9,7 +9,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
     abstract class Enemy : Character
     {
         protected WideVisionCone vision;
-           
+        
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 30;
         
@@ -51,7 +51,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             : base(_position)
         {
 
-              inicializar();
+            this.createVisionCone(DEFAULT_VISION_RADIUS, FastMath.ToRad(DEFAULT_VISION_ANGLE));
 
 
         }
@@ -62,21 +62,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return 100; }
         }
 
-        private void inicializar()
-        {
-
-            crearConoDeVision(DEFAULT_VISION_RADIUS, FastMath.ToRad(DEFAULT_VISION_ANGLE));
-        }
-
         protected override void loadCharacterRepresentation(Vector3 position)
         {
             this.representation = new EnemyRepresentation(position);
         }
 
 
-        private void crearConoDeVision(float radius, float angle )
+        private void createVisionCone(float radius, float angle )
         {
-            vision = new WideVisionCone(this.representation, radius, angle, 50);
+            this.vision = new WideVisionCone(this.representation, radius, angle, 50);
         }
 
        

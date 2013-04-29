@@ -13,8 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target
 
         public Vector3 Position
         {
-            get { return this.position;}
-            set { this.position = value; }
+            get { return this.position; }
         }
 
         public TargeteablePosition(float x, float y, float z)
