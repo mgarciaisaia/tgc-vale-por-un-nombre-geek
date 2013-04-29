@@ -3,7 +3,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using TgcViewer.Utils.TgcSceneLoader;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using Microsoft.DirectX;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.objetos;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.optimization;
 using TgcViewer;
 

@@ -6,7 +6,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using System;
 using TgcViewer.Utils.TgcSceneLoader;
 using System.Collections.Generic;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.objetos;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 {
