@@ -9,6 +9,10 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
 using TgcViewer;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands;
+using Microsoft.DirectX.DirectInput;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands.orders;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -23,6 +27,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         Level level;
         MovementPicking picking;
         Selection selection;
+
+        TextControlPanel controlPanel;
 
         FreeCamera camera;
 
@@ -71,25 +77,28 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
               GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\niveles\\" + "nivel1.xml",
               GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\"
               );
-          
-           
+            
+            
             level = levelParser.getLevel();
-           
-          
+            
+            
             level.add(new Commando(level.Terrain.getPosition(-200, 200)));
             level.add(new Commando(level.Terrain.getPosition(200, 200)));
-          
+            
 
             //Seleccion multiple
             selection = new Selection(level.Characters, level.Terrain);
 
             //Movimiento por picking
             picking = new MovementPicking(level.Terrain);
-       
+            
             //Inicializar camara
             camera = new FreeCamera(level.Terrain.getPosition(0, 150), true);
 
-
+            //Panel de control in game
+            controlPanel = new TextControlPanel();
+            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
+            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);
         }
 
 
@@ -109,7 +118,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
 
             selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
-           
+
+            controlPanel.update();
         }
 
 
