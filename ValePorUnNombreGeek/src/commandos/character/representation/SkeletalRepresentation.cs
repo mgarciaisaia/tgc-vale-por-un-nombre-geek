@@ -14,7 +14,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         protected TgcSkeletalMesh mesh;
         private bool selected;
         private Vector3 angleZeroVector; //rotacion manual
-        private Matrix meshRotationMatrix; //rotacion manual
         private float meshFacingAngle; //hacia donde mira
 
         public bool Selected
@@ -37,13 +36,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.Position = position;
 
             //rotacion manual
-            this.angleZeroVector = new Vector3(0, 0, -1);
-            this.meshRotationMatrix = Matrix.Identity;
             this.AutoTransformEnable = false;
-            this.meshFacingAngle = 0;
-
-            //por algun motivo hay que volver a actualizar la posicion del personaje
-            this.Transform = Matrix.Translation(this.Position); //en este caso transladandolo desde el (0,0,0)
+            this.angleZeroVector = new Vector3(0, 0, -1);
+            this.setRotation(this.angleZeroVector);
         }
 
         protected virtual string getMesh()
@@ -122,7 +117,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         public bool Enabled
         {
-
             get { return this.mesh.Enabled; }
             set { this.mesh.Enabled = value; }
         }
@@ -130,14 +124,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         public Matrix Transform
         {
             get { return this.mesh.Transform; }
-            set { this.mesh.Transform = value; }
+            private set { this.mesh.Transform = value; }
         }
 
-        public Vector3 Scale
+        /*public Vector3 Scale
         {
             get { return this.mesh.Scale; }
             set { this.mesh.Scale = value; }
-        }
+        }*/
 
         public float FacingAngle
         {
@@ -148,12 +142,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         {
             return this.angleZeroVector;
         }
-
-        /*public Vector3 Rotation
-        {
-            get { return this.mesh.Rotation; }
-            set { this.mesh.Rotation = value; }
-        }*/
 
 
         public bool AutoTransformEnable
@@ -168,17 +156,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.setRotation(direction);
         }
 
+        #region Rotation
+
         public void setRotation(Vector3 direction)
         {
             direction.Normalize();
             float angle = FastMath.Acos(Vector3.Dot(this.angleZeroVector, direction));
             Vector3 rotationAxis = Vector3.Cross(this.angleZeroVector, direction);
-            this.meshRotationMatrix = Matrix.RotationAxis(rotationAxis, angle);
+            Matrix rotationMatrix = Matrix.RotationAxis(rotationAxis, angle);
 
             //guardamos la direccion en la que miramos ahora
             this.meshFacingAngle = angle;
 
-            this.applyTransformations();
+            this.applyTransformations(rotationMatrix);
         }
 
         public void setRotation(float angle, bool clockwise)
@@ -186,10 +176,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             float rotationAxisY = Convert.ToSingle(clockwise) * 2 - 1; //convierte el bool en true = 1; false = -1
             Vector3 rotationAxis = new Vector3(0, rotationAxisY, 0);
 
-            this.meshRotationMatrix = Matrix.RotationAxis(rotationAxis, angle);
+            Matrix rotationMatrix = Matrix.RotationAxis(rotationAxis, angle);
+
+            //guardamos la direccion en la que miramos ahora
             this.meshFacingAngle = angle;
 
-            this.applyTransformations();
+            this.applyTransformations(rotationMatrix);
         }
 
         public void rotate(float angle, bool clockwise)
@@ -202,10 +194,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.setRotation(this.meshFacingAngle, true);
         }
 
-        private void applyTransformations()
+        private void applyTransformations(Matrix _rotationMatrix)
         {
-            this.Transform = this.meshRotationMatrix * Matrix.Translation(this.Position);
+            this.Transform = _rotationMatrix * Matrix.Translation(this.Position);
         }
+
+        #endregion
 
         public void moveOrientedY(float movement)
         {
