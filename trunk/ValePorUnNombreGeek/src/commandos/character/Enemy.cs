@@ -103,9 +103,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.vision.dispose();
         }
 
-        public override bool userCanMove()
+        public override bool userCanMove
         {
-            return false;
+            get { return false; }
         }
 
         public VisionCone VisionCone { get { return this.vision; } }

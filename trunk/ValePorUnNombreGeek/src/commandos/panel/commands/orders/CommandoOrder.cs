@@ -17,7 +17,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands.orders
 
         protected List<Character> getCommandos()
         {
-            List<Character> commandos = this.characters.Where(p => p.userCanMove()).ToList();
+            List<Character> commandos = this.characters.Where(p => p.userCanMove).ToList();
             return commandos; //TODO que retorne una lista de Commandos
         }
 
