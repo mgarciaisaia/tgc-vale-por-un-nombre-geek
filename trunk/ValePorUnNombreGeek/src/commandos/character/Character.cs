@@ -10,18 +10,34 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
     abstract class Character : ITargeteable
     {
-       
-        
-        protected bool dead;
         protected ICharacterRepresentation representation;
+        private ITargeteable target;
+        protected Level level;
+        protected bool dead;
+
+        /*********************************************
+         * INICIALIZACION ****************************
+         *********************************************/
+
+        public Character(Vector3 _position)
+        {
+            this.loadCharacterRepresentation(_position);
+            this.Selected = false;
+            this.dead = false;
+        }
+
+
+        //Sobreescribible para que los hijos puedan usar otra representacion
+        protected virtual void loadCharacterRepresentation(Vector3 position)
+        {
+            this.representation = new SkeletalRepresentation(position);
+        }
+
        
         public ICharacterRepresentation Representation
         {
             get { return this.representation; }
         }
-
-        private ITargeteable target;
-        protected Level level;
 
         public abstract float Speed
         {
@@ -58,23 +74,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { if(!dead) this.representation.Selected = value; }
         }
 
-           
-        public Character(Vector3 _position)
-        {
-            this.loadCharacterRepresentation(_position);
-            this.Selected = false;
-            this.dead = false;
-        }
 
-      
-        //Sobreescribible para que los hijos puedan usar otra representacion
-        protected virtual void loadCharacterRepresentation(Vector3 position)
-        {
-            this.representation = new SkeletalRepresentation(position);
-        }
-
-        
-      
         public void die()
         {
             this.dead = true;
