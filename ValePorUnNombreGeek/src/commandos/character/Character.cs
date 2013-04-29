@@ -11,9 +11,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
     abstract class Character : ITargeteable
     {
         protected ICharacterRepresentation representation;
-        private ITargeteable target;
         protected Level level;
-        protected bool dead;
 
         /*********************************************
          * INICIALIZACION ****************************
@@ -23,7 +21,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             this.loadCharacterRepresentation(_position);
             this.Selected = false;
-            this.dead = false;
+            this.Dead = false;
         }
 
 
@@ -55,31 +53,46 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return this.representation.Position; }
             set { this.representation.Position = value; }
         }
-        
-        public bool Enabled //Solo se renderiza si esta en true. Sirve para las optimizaciones
-        {
-            get { return this.representation.Enabled; }
-            set { this.representation.Enabled = value; }
-        }
 
         public TgcBoundingBox BoundingBox
         {
             get { return this.representation.BoundingBox; }
         }
 
+        #region Status
+
+        private bool selected;
         public bool Selected
         {
-
-            get { return representation.Selected; }
-            set { if(!dead) this.representation.Selected = value; }
+            get { return this.selected; }
+            set { if (!this.Dead) this.selected = value; }
         }
 
+        protected bool dead;
+        private bool Dead
+        {
+            get { return this.dead; }
+            set {
+                if (value == true)
+                {
+                    this.Selected = false;
+                    this.representation.die();
+                }
+                this.dead = value;
+            }
+        }
+
+        public bool Enabled //Solo se renderiza si esta en true. Sirve para las optimizaciones
+        {
+            get { return this.representation.Enabled; }
+            set { this.representation.Enabled = value; }
+        }
+
+        #endregion
 
         public void die()
         {
-            this.dead = true;
-            this.Selected = false;
-            this.representation.die();
+            this.Dead = true;
         }
 
 
@@ -99,31 +112,30 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         
         public virtual void render()
         {
-            if (this.Selected && this.hasTarget())
+            if (this.Selected)
             {
-                //marcamos hacia donde vamos
-                TgcBox marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
-                marcaDePicking.Position = this.target.Position;
-                marcaDePicking.render();
+                this.BoundingBox.render();
+                if (this.hasTarget())
+                {
+                    //marcamos hacia donde vamos
+                    TgcBox marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
+                    marcaDePicking.Position = this.target.Position;
+                    marcaDePicking.render();
+                }
             }
-
             representation.render();
         }
 
-
+        #region Target
         /*****************************************
          * TARGET
          * ***************************************/
 
-        protected bool hasTarget()
-        {
-            return this.target != null;
-        }
+        private ITargeteable target;
 
         internal void goToTarget(float elapsedTime)
         {
-
-            if (!this.hasTarget() || dead) return;
+            if (!this.hasTarget() || this.Dead) return;
 
             /*foreach (Character obstaculo in this.level.getCharactersExcept(this))
             {
@@ -154,6 +166,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             return GeneralMethods.isCloseTo(this.representation.Position, this.target.Position, 1);
         }
 
+        protected bool hasTarget()
+        {
+            return this.target != null;
+        }
+
         private void setTarget(ITargeteable _target)
         {
             this.target = _target;
@@ -175,6 +192,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.setTarget(ch);
         }
 
-        public abstract bool userCanMove();
+        #endregion
+
+        public abstract bool userCanMove { get; }
     }
 }

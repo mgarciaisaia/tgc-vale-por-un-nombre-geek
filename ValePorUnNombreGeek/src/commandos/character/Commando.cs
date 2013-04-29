@@ -28,9 +28,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             if (this.isOnTarget()) this.setNoTarget();
         }
 
-        public override bool userCanMove()
+        public override bool userCanMove
         {
-            return true;
+            get { return true; }
         }
 
         public void talk()
