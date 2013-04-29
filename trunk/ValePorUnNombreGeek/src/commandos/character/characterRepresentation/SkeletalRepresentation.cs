@@ -57,6 +57,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             String exMediaDir = GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\";
             return new string[] { 
                     exMediaDir + "Walk-TgcSkeletalAnim.xml",
+                    exMediaDir + "Talk-TgcSkeletalAnim.xml",
                     exMediaDir + "StandBy-TgcSkeletalAnim.xml",
                     exMediaDir + "Jump-TgcSkeletalAnim.xml",
                     myMediaDir + "Die-TgcSkeletalAnim.xml"
