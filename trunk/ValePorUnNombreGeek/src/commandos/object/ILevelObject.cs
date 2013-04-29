@@ -5,13 +5,15 @@ using System.Text;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.objetos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
     interface ILevelObject
     {
-        Vector3 Position { get; set; }
+        //Vector3 Position { get; set; }
+        Vector3 Position { get; }
         
-        TgcBoundingBox BoundingBox { get; set; }
+        //TgcBoundingBox BoundingBox { get; set; }
+        TgcBoundingBox BoundingBox { get; }
         
         void render();
 
