@@ -37,12 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return this.representation; }
         }
 
-        public abstract float Speed
-        {
-            get;
-        }
-
-        public Level Nivel
+        public Level Level
         {
             get { return this.level; }
             set { this.level = value; }
@@ -195,5 +190,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         #endregion
 
         public abstract bool userCanMove { get; }
+
+        public abstract float Speed {  get; }
     }
 }

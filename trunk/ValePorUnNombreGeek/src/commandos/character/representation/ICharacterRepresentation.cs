@@ -16,9 +16,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         void moveOrientedY(float movement);
 
         Vector3 Position { get; set; }
-        Matrix Transform { get; set; }
-        //Vector3 Rotation { get; set; }
-        Vector3 Scale { get; set; }
+        Matrix Transform { get; }
+        //Vector3 Scale { get; set; }
         bool AutoTransformEnable { get; set; }
         float FacingAngle { get; }
 
