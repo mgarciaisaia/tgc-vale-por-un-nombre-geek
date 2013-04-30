@@ -149,39 +149,40 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             return false;
         }
 
+
         private IEnumerable<ILevelObject> getPosibleColliders(ILevelObject collider)
         {
             List<ILevelObject> collisionables = new List<ILevelObject>();
-            Vector3 distance;
-            float radiusSum;
-           
-             
+          
+                        
             //Solo agrego a colisionables aquellos cuyas esferas chocan con el collider
-            //Ver Unidad 6, pagina 13
-            foreach (ILevelObject o in allLevelObjects())
-            {
-                if (o != collider)
-                {
-                    distance = collider.Center - o.Center;
-                  
-                    radiusSum = collider.Radius + o.Radius;
-
-                    if (distance.LengthSq() <= radiusSum*radiusSum)
-                        collisionables.Add(o);
-                }
+            foreach (Character c in this.Characters)
+            
+                if(thereIsSphereCollision(collider, c)) collisionables.Add(c);
                 
-            }
+            
+            foreach (ILevelObject o in this.Objects)
+            
+                if (thereIsSphereCollision(collider, o)) collisionables.Add(o);
+                        
+
             return collisionables;
+
         }
 
-        private List<ILevelObject> allLevelObjects()
+
+        private bool thereIsSphereCollision(ILevelObject collider, ILevelObject o)
         {
-            List<ILevelObject> all = new List<ILevelObject>();
+            if (o == collider) return false;
+           
+            //Ver Unidad 6, pagina 13
+            Vector3 distance = collider.Center - o.Center;
 
-            all.AddRange(characters);
-            all.AddRange(objects);
-            return all;
+            float radiusSum = collider.Radius + o.Radius;
+
+            return distance.LengthSq() <= radiusSum * radiusSum;
+            
         }
-      
+
     }
 }
