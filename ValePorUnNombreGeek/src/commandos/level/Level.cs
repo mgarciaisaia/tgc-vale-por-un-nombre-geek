@@ -170,7 +170,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                   
                     radiusSum = collider.Radius + o.Radius;
 
-                    if (distance.LengthSq() < radiusSum*radiusSum)
+                    if (distance.LengthSq() <= radiusSum*radiusSum)
                         collisionables.Add(o);
                 }
                 
