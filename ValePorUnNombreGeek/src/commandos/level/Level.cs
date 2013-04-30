@@ -63,7 +63,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         private void addCharacter(Character c)
         {
             characters.Add(c);
-            c.Level = this;
+            c.setLevel(this);
         }
 
 

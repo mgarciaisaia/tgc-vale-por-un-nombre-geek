@@ -13,9 +13,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected ICharacterRepresentation representation;
         protected Level level;
 
-        /*********************************************
-         * INICIALIZACION ****************************
-         *********************************************/
+        /*******************************
+         * INICIALIZACION **************
+         *******************************/
 
         public Character(Vector3 _position)
         {
@@ -24,24 +24,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Dead = false;
         }
 
-
         //Sobreescribible para que los hijos puedan usar otra representacion
         protected virtual void loadCharacterRepresentation(Vector3 position)
         {
             this.representation = new SkeletalRepresentation(position);
         }
 
-       
+        public void setLevel(Level _level)
+        {
+            this.level = _level;
+        }
+
+
+
+        /*******************************
+         * SETTERS & GETTERS ***********
+         *******************************/
+
         public ICharacterRepresentation Representation
         {
             get { return this.representation; }
         }
 
-        public Level Level
+        /*public Level Level
         {
             get { return this.level; }
             set { this.level = value; }
-        }
+        }*/
 
         public Vector3 Position
         {
@@ -63,8 +72,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { if (!this.Dead) this.selected = value; }
         }
 
-        protected bool dead;
-        private bool Dead
+        private bool dead;
+        protected bool Dead
         {
             get { return this.dead; }
             set {
@@ -99,9 +108,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
 
 
-        /*****************************************
-         * UPDATE & RENDER
-         * ***************************************/
+        /*******************************
+         * UPDATE & RENDER *************
+         *******************************/
 
         public abstract void update(float elapsedTime);
         
@@ -122,9 +131,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
         #region Target
-        /*****************************************
-         * TARGET
-         * ***************************************/
+
+        /*******************************
+         * TARGET **********************
+         *******************************/
 
         private ITargeteable target;
 
@@ -189,7 +199,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         #endregion
 
-        public abstract bool userCanMove { get; }
+        public abstract bool OwnedByUser { get; }
 
         public abstract float Speed {  get; }
     }

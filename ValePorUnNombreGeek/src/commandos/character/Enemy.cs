@@ -82,7 +82,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
 
-        protected bool watch()
+        protected bool canSeeACommando()
         {
            vision.updatePosition(); 
            foreach(Commando c in this.level.Commandos){
@@ -103,7 +103,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.vision.dispose();
         }
 
-        public override bool userCanMove
+        public override bool OwnedByUser
         {
             get { return false; }
         }

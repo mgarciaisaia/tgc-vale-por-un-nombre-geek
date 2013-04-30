@@ -28,7 +28,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
             {
                 foreach (Character ch in characters)
                 {
-                    if (ch.userCanMove) ch.setPositionTarget(pickingPosition);
+                    if (ch.OwnedByUser) ch.setPositionTarget(pickingPosition);
                 }
             }
         }
