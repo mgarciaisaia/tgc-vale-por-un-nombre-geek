@@ -92,7 +92,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\ICharacterRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\SkeletalRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Commando.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\object\ILevelObject.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\levelObject\ILevelObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\Soldier.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\OnWaitpoint.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\Rotating.cs" />

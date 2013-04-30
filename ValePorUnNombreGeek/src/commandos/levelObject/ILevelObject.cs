@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.levelObject
 {
     interface ILevelObject
     {
