@@ -382,7 +382,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         public void dispose()
         {
             //liberar VertexBuffer
-            vertexBuffer.Dispose();
+            if(vertexBuffer != null) vertexBuffer.Dispose();
         }
 
 
