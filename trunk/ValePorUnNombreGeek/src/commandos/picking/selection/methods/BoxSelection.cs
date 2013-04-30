@@ -64,7 +64,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
 
             Vector3 min = Vector3.Minimize(terrainPointA, terrainPointB);
             Vector3 max = Vector3.Maximize(terrainPointA, terrainPointB);
-            min.Y = 0;
+            min.Y = this.terrain.minY;
             max.Y = selectionBoxHeight;
 
             this.selectionBox.setExtremes(min, max);

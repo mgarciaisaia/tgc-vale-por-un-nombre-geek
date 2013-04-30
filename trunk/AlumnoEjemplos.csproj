@@ -113,9 +113,10 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\MovementPicking.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\BoxSelection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\PickingRaySingleton.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\WorldProjection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\Selection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\SelectionMethod.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\RectangleSelection.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\ScreenProjection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Sky.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\IQuadTree.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTreeDummie.cs" />
