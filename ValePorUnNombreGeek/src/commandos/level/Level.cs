@@ -140,9 +140,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                
               result = TgcCollisionUtils.classifyBoxBox(collider.BoundingBox, colisionable.BoundingBox);
 
-              if (result == TgcCollisionUtils.BoxBoxResult.Adentro || result == TgcCollisionUtils.BoxBoxResult.Atravesando)
-
-                return true;
+             
+                return result != TgcCollisionUtils.BoxBoxResult.Afuera;
               
             }
 
