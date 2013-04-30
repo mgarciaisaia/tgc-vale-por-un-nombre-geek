@@ -111,7 +111,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             foreach (Character ch in this.selectableCharacters)
             {
                 Vector3 collisionPoint; //useless
-                PickingRaySingleton.Instance.updateRay();
+                PickingRaySingleton.Instance.updateRayByMouse();
                 if (TgcCollisionUtils.intersectRayAABB(PickingRaySingleton.Instance.Ray, ch.BoundingBox, out collisionPoint))
                 {
                     ch.Selected = true;

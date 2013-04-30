@@ -48,12 +48,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
         private Vector3 initTerrainPoint;
         public bool canBeginSelection()
         {
+            PickingRaySingleton.Instance.updateRayByMouse();
             return PickingRaySingleton.Instance.terrainIntersection(this.terrain, out this.initTerrainPoint);
         }
 
         public void updateSelection()
         {
             Vector3 terrainPointB;
+            PickingRaySingleton.Instance.updateRayByMouse();
             if (!PickingRaySingleton.Instance.terrainIntersection(this.terrain, out terrainPointB)) return;
             Vector3 terrainPointA = this.initTerrainPoint;
 
