@@ -11,11 +11,11 @@ using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rectangle
 {
-    class RectangleSelection : SelectionMethod
+    class ScreenProjection : SelectionMethod
     {
-        private List<Character> selectableCharacters;
+        protected List<Character> selectableCharacters;
 
-        public RectangleSelection(List<Character> _selectableCharacters)
+        public ScreenProjection(List<Character> _selectableCharacters)
         {
             this.selectableCharacters = _selectableCharacters;
             this.vertices = new CustomVertex.TransformedColored[4];
@@ -70,7 +70,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         #region Update
 
         private Vector2 initMousePos;
-        public bool canBeginSelection()
+        public virtual bool canBeginSelection()
         {
             TgcD3dInput input = GuiController.Instance.D3dInput;
 
@@ -81,7 +81,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 
 
         private Vector2 min, max;
-        public void updateSelection()
+        public virtual void updateSelection()
         {
             TgcD3dInput input = GuiController.Instance.D3dInput;
 
@@ -98,7 +98,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         }
 
 
-        public List<Character> endAndRetSelection()
+        public virtual List<Character> endAndRetSelection()
         {
             Rectangle rectangle = new Rectangle((int)min.X, (int)min.Y, (int)(max.X - min.X), (int)(max.Y - min.Y));
             return this.getCharactersInRectangle(rectangle);

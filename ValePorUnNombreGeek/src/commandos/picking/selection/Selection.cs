@@ -29,7 +29,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             this.selectedCharacters = new List<Character>();
             this.selecting = false;
             //this.selectionMethod = new BoxSelection(_terrain, this.selectableCharacters);
-            this.selectionMethod = new RectangleSelection(this.selectableCharacters);
+            //this.selectionMethod = new ScreenProjection(this.selectableCharacters);
+            this.selectionMethod = new WorldProjection(_terrain, this.selectableCharacters);
         }
 
         #region Update
