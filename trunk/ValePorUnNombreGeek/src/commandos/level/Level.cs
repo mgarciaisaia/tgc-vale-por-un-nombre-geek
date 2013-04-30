@@ -116,8 +116,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             character.move(movementVector);
             character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
-            
-            if (this.positionAllowed(character) /*&& !terrenoMuyEmpinado(previousPosition, character.Position)*/)
+
+            if (!thereIsCollision(character) /*&& !terrenoMuyEmpinado(previousPosition, character.Position)*/)
             {
                 return true;
             }
@@ -130,11 +130,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
            
         }
 
-        private bool positionAllowed(Character character)
-        {   
-           return !thereIsCollision(character);
-        }
-
+       
         private bool thereIsCollision(ILevelObject collider)
         {
             TgcCollisionUtils.BoxBoxResult result;
