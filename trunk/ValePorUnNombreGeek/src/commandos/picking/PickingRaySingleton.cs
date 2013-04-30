@@ -9,7 +9,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 {
-    class PickingRaySingleton : TgcPickingRay
+    class PickingRaySingleton : PickingRay
     {
         private static PickingRaySingleton instance;
      
@@ -43,7 +43,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
         /// </summary>
         public bool terrainIntersection(Terrain terrain, out Vector3 position)
         {
-            this.updateRay();
+            this.updateRayByMouse();
 
             Vector3 aPoint;
             Vector3 foundedPoint;
@@ -91,17 +91,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 
     
 
-        /// <summary>
-        /// Busca la interseccion rayo-plano y=0.
-        /// </summary>
+        /* Pablo -> en desuso.
         public Vector3 getRayGroundIntersection(Terrain terrain)
         {
             //retorna el punto de colision con el plano y=0
             //(pablo) lo uso para ver si el rayo vario su posicion. es mucho mas rapido que getRayIntersection; salva fps.
-            this.updateRay();
+            this.updateRayByMouse();
 
             float t0 = (terrain.minY - this.Ray.Origin.Y) / this.Ray.Direction.Y;
             return this.Ray.Origin + t0 * this.Ray.Direction;
         }
+         */
     }
 }

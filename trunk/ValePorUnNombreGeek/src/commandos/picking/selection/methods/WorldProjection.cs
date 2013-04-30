@@ -39,6 +39,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         private Vector3 initTerrainPoint;
         public override bool canBeginSelection()
         {
+            PickingRaySingleton.Instance.updateRayByMouse();
             if (!PickingRaySingleton.Instance.terrainIntersection(this.terrain, out this.initTerrainPoint))
                 return false;
 
@@ -50,6 +51,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         public override void updateSelection()
         {
             Vector3 intersectionPoint;
+            PickingRaySingleton.Instance.updateRayByMouse();
             if (PickingRaySingleton.Instance.terrainIntersection(this.terrain, out intersectionPoint))
                 this.actualTerrainPoint = intersectionPoint;
             else

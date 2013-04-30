@@ -80,7 +80,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         }
 
 
-        private Vector2 min, max;
+        protected Vector2 min, max;
         public virtual void updateSelection()
         {
             TgcD3dInput input = GuiController.Instance.D3dInput;

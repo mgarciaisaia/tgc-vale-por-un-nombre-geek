@@ -111,6 +111,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\orders\Talk.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\TextControlPanel.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\MovementPicking.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\PickingRay.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\BoxSelection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\PickingRaySingleton.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\WorldProjection.cs" />
