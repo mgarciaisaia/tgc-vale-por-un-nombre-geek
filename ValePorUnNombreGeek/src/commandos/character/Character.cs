@@ -142,15 +142,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             if (!this.hasTarget() || this.Dead) return;
 
-            /*foreach (Character obstaculo in this.level.getCharactersExcept(this))
-            {
-                TgcCollisionUtils.BoxBoxResult result = TgcCollisionUtils.classifyBoxBox(this.BoundingBox, obstaculo.BoundingBox);
-                if (result == TgcCollisionUtils.BoxBoxResult.Adentro || result == TgcCollisionUtils.BoxBoxResult.Atravesando)
-                {
-                    return;
-                }
-            }*/
-
             Vector3 movementVector = this.target.Position - this.representation.Position;
             movementVector.Y = 0;
             movementVector.Normalize();

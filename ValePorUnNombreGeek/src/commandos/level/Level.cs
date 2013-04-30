@@ -105,7 +105,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         }
 
         /// <summary>
-        /// Retorna false si el personaje no se puede mover.
+        /// Retorna false si el personaje no puede realizar el movimiento.
         /// </summary>
         /// <param name="character"></param>
         /// <param name="newPosition"></param>
