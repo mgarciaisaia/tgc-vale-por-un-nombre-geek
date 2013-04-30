@@ -15,7 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         private bool selected;
         private Vector3 angleZeroVector; //rotacion manual
         private float meshFacingAngle; //hacia donde mira
-
+        protected float radius;
         public bool Selected
         {
 
@@ -23,6 +23,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             set { this.selected = value; }
         }
 
+        public float Radius
+        {
+            get { return this.radius; }
+        }
+
+        public Vector3 Center
+        {
+            get { return this.BoundingBox.calculateBoxCenter(); }
+        }
 
         public SkeletalRepresentation(Vector3 position)
         {
@@ -34,7 +43,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
             this.mesh.playAnimation("StandBy", true);
             this.Position = position;
-
+            this.radius = mesh.BoundingBox.calculateBoxRadius();
             //rotacion manual
             this.AutoTransformEnable = false;
             this.angleZeroVector = new Vector3(0, 0, -1);

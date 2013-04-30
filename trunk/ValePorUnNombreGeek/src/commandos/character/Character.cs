@@ -219,5 +219,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public abstract bool OwnedByUser { get; }
 
         public abstract float Speed {  get; }
+
+        public float Radius { get { return this.representation.Radius; } }
+        public Vector3 Center { get { return this.representation.Center; } }
     }
 }
