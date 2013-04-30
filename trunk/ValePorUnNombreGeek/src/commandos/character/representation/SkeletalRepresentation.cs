@@ -63,7 +63,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         public void render()
         {
             this.mesh.animateAndRender();
-            if (this.Selected) this.mesh.BoundingBox.render();
         }
 
 
@@ -72,7 +71,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.mesh.dispose();
         }
 
-        //Animaciones
+        #region Animations
 
         public void standBy()
         {
@@ -89,12 +88,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.mesh.playAnimation("Die", false);
         }
 
-
         public void walk()
         {
             this.mesh.playAnimation("Walk", true);
         }
 
+        #endregion
 
         public Vector3 getEyeLevel()
         {

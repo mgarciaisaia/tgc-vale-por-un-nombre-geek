@@ -37,13 +37,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
 
         public override void update(float elapsedTime)
         {
-            if (this.dead) return;
+            if (this.Dead) return;
 
-            if (this.watch())
+            if (this.canSeeACommando())
             {
-                //waiting = false;
-                chase(elapsedTime);
-
+                this.chase(elapsedTime); //esto deberia ser otro state? mmm
             }
             else
             {
@@ -62,6 +60,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
             goToTarget(elapsedTime);
             //Intentar matarlo(?)
         }
+
+
 
         internal void setNextPositionTarget()
         {

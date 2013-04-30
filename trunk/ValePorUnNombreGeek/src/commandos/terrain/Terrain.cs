@@ -29,8 +29,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         {
             this.loadHeightmap(pathHeightmap, scaleXZ, scaleY, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
-            
-            GuiController.Instance.Modifiers.addBoolean("Terrain", "wireframe", false);
         }
 
         public Terrain() : base()
