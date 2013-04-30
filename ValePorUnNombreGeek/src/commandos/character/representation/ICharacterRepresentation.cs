@@ -33,5 +33,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         Vector3 getEyeLevel();
 
+
+        float Radius { get; }
+
+        Vector3 Center { get; }
     }
 }

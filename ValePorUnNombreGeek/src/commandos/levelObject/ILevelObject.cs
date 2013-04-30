@@ -15,8 +15,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.levelObject
         //TgcBoundingBox BoundingBox { get; set; }
         TgcBoundingBox BoundingBox { get; }
         
+        Vector3 Center { get; }
+
+        float Radius { get; }
+        
         void render();
 
         void dispose();
+
+        
     }
 }

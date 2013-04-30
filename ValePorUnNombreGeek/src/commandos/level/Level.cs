@@ -139,7 +139,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         {
             TgcCollisionUtils.BoxBoxResult result;
 
-            foreach (ILevelObject colisionable in this.getPosibleColiders(collider))
+            foreach (ILevelObject colisionable in this.getPosibleColliders(collider))
             {
                
               result = TgcCollisionUtils.classifyBoxBox(collider.BoundingBox, colisionable.BoundingBox);
@@ -153,19 +153,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             return false;
         }
 
-        private IEnumerable<ILevelObject> getPosibleColiders(ILevelObject collider)
+        private IEnumerable<ILevelObject> getPosibleColliders(ILevelObject collider)
         {
             List<ILevelObject> collisionables = new List<ILevelObject>();
             Vector3 distance;
-            float maxRadius;
-
+            float radiusSum;
+           
+             
+            //Solo agrego a colisionables aquellos cuyas esferas chocan con el collider
+            //Ver Unidad 6, pagina 13
             foreach (ILevelObject o in allLevelObjects())
             {
                 if (o != collider)
                 {
-                    distance = collider.BoundingBox.calculateBoxCenter() - o.BoundingBox.calculateBoxCenter();
-                    maxRadius = FastMath.Max(o.BoundingBox.calculateBoxRadiusSquare(), collider.BoundingBox.calculateBoxRadiusSquare());
-                    if (distance.LengthSq() < maxRadius)
+                    distance = collider.Center - o.Center;
+                  
+                    radiusSum = collider.Radius + o.Radius;
+
+                    if (distance.LengthSq() < radiusSum*radiusSum)
                         collisionables.Add(o);
                 }
                 
