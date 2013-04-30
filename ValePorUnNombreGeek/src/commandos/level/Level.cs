@@ -6,6 +6,7 @@ using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.levelObject;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.optimization;
 using TgcViewer;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
@@ -103,14 +104,64 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
            return this.terrain.getPosition(x, z);
         }
 
+        /// <summary>
+        /// Retorna false si el personaje no se puede mover.
+        /// </summary>
+        /// <param name="character"></param>
+        /// <param name="newPosition"></param>
+        /// <returns></returns>
+        public bool moveCharacter(Character character, Vector3 movementVector){
 
-        /*
-        public List<Character> getCharactersExcept(Character me)
-        {
-            List<Character> ret = new List<Character>(this.Characters);
-            ret.Remove(me);
-            return ret;
+            Vector3 previousPosition = character.Position;
+            character.move(movementVector);
+            character.Position = this.getPosition(character.Position.X, character.Position.Z);
+
+            
+            if (this.positionAllowed(character) /*&& !terrenoMuyEmpinado(previousPosition, character.Position)*/)
+            {
+                return true;
+            }
+            else
+            {
+                character.Position = previousPosition;
+                return false;
+            }
+
+           
         }
-         */
+
+        private bool positionAllowed(Character character)
+        {   
+           return !thereIsCollision(character);
+        }
+
+        private bool thereIsCollision(ILevelObject collider)
+        {
+            TgcCollisionUtils.BoxBoxResult result;
+
+            foreach (ILevelObject colisionable in this.getPosibleColiders(collider))
+            {
+                if (colisionable != collider)
+                {
+                    result = TgcCollisionUtils.classifyBoxBox(collider.BoundingBox, colisionable.BoundingBox);
+
+                    if (result == TgcCollisionUtils.BoxBoxResult.Adentro || result == TgcCollisionUtils.BoxBoxResult.Atravesando)
+
+                        return true;
+
+                }
+            }
+
+            return false;
+        }
+
+        private IEnumerable<ILevelObject> getPosibleColiders(ILevelObject collider)
+        {
+            List<ILevelObject> colisionables = new List<ILevelObject>();
+            colisionables.AddRange(characters);
+            colisionables.AddRange(objects);
+            return colisionables;
+        }
+      
     }
 }
