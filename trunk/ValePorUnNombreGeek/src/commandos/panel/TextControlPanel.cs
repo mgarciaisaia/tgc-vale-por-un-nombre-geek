@@ -37,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel
 
         public void update()
         {
-            if (GuiController.Instance.D3dInput.keyPressed(Key.Home)) this.active = !this.active;
+            if (GuiController.Instance.D3dInput.keyPressed(Key.Tab)) this.active = !this.active;
 
             if (this.active)
             {

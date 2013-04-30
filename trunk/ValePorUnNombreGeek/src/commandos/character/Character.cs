@@ -4,7 +4,7 @@ using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.levelObject;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
