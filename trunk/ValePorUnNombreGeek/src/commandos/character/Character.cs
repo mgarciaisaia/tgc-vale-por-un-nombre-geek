@@ -8,7 +8,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.levelObject;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
-    abstract class Character : ITargeteable
+    abstract class Character : ITargeteable, ILevelObject
     {
         protected ICharacterRepresentation representation;
         protected Level level;
@@ -151,17 +151,34 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                 }
             }*/
 
-            Vector3 direccion = this.target.Position - this.representation.Position;
-            direccion.Y = 0;
-            direccion.Normalize();
+            Vector3 movementVector = this.target.Position - this.representation.Position;
+            movementVector.Y = 0;
+            movementVector.Normalize();
 
             float currentVelocity = this.Speed * elapsedTime;
-            direccion.Multiply(currentVelocity);
+            movementVector.Multiply(currentVelocity);
 
+            if (!this.level.moveCharacter(this, movementVector))
+            {
+                this.manageCollision(movementVector);
+            }
+
+                       
+        }
+
+
+        /// <summary>
+        /// Accion a realizar en caso de choque
+        /// </summary>
+        protected virtual void manageCollision(Vector3 movementVector)
+        {
+            this.Representation.standBy();
+        }
+
+        public void move(Vector3 movement)
+        {
             this.representation.walk();
-            this.representation.move(direccion);
-            if (this.level == null) return;
-            this.representation.Position = this.level.getPosition(this.representation.Position.X, this.representation.Position.Z);
+            this.representation.move(movement);
         }
 
         internal bool isOnTarget()
