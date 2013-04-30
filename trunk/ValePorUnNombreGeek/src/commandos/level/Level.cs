@@ -141,15 +141,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
             foreach (ILevelObject colisionable in this.getPosibleColiders(collider))
             {
-                if (colisionable != collider)
-                {
-                    result = TgcCollisionUtils.classifyBoxBox(collider.BoundingBox, colisionable.BoundingBox);
+               
+              result = TgcCollisionUtils.classifyBoxBox(collider.BoundingBox, colisionable.BoundingBox);
 
-                    if (result == TgcCollisionUtils.BoxBoxResult.Adentro || result == TgcCollisionUtils.BoxBoxResult.Atravesando)
+              if (result == TgcCollisionUtils.BoxBoxResult.Adentro || result == TgcCollisionUtils.BoxBoxResult.Atravesando)
 
-                        return true;
-
-                }
+                return true;
+              
             }
 
             return false;
@@ -157,10 +155,31 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
         private IEnumerable<ILevelObject> getPosibleColiders(ILevelObject collider)
         {
-            List<ILevelObject> colisionables = new List<ILevelObject>();
-            colisionables.AddRange(characters);
-            colisionables.AddRange(objects);
-            return colisionables;
+            List<ILevelObject> collisionables = new List<ILevelObject>();
+            Vector3 distance;
+            float maxRadius;
+
+            foreach (ILevelObject o in allLevelObjects())
+            {
+                if (o != collider)
+                {
+                    distance = collider.BoundingBox.calculateBoxCenter() - o.BoundingBox.calculateBoxCenter();
+                    maxRadius = FastMath.Max(o.BoundingBox.calculateBoxRadiusSquare(), collider.BoundingBox.calculateBoxRadiusSquare());
+                    if (distance.LengthSq() < maxRadius)
+                        collisionables.Add(o);
+                }
+                
+            }
+            return collisionables;
+        }
+
+        private List<ILevelObject> allLevelObjects()
+        {
+            List<ILevelObject> all = new List<ILevelObject>();
+
+            all.AddRange(characters);
+            all.AddRange(objects);
+            return all;
         }
       
     }
