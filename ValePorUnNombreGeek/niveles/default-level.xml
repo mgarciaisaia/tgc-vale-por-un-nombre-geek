@@ -19,5 +19,9 @@
     </soldier>
     
   </enemies>
+  <commandos>
+    <commando>(-200,200)</commando>
+    <commando>(200,200)</commando>
+  </commandos>
          
 </level>

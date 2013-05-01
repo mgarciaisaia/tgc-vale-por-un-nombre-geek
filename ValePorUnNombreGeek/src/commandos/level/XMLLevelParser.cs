@@ -17,14 +17,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
     {
         XmlElement root;
         String mediaDir;
+
         public XMLLevelParser(String filePath, String mediaDir)
         {
             this.root = loadXML(filePath);
             this.mediaDir = mediaDir;
-           
-           
-
-        }
+         }
 
         private Terrain getTerrain()
         {
@@ -52,8 +50,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             Terrain terrain = getTerrain();
             Level level = new Level(terrain);
             foreach (Enemy e in getEnemies(terrain)) level.add(e);
-            
+            foreach (Commando c in getCommandos(terrain)) level.add(c);
             return level;
+        }
+
+        private IEnumerable<Commando> getCommandos(Terrain terrain)
+        {
+            List<Commando> commandos = new List<Commando>();
+
+            //Obtengo lista de nodos commando
+            XmlNodeList commandoNodes = root.GetElementsByTagName("commando");
+
+            foreach (XmlNode node in commandoNodes)
+            {
+                float[] pos = TgcParserUtils.parseFloat2Array(node.InnerText);
+                commandos.Add(new Commando(terrain.getPosition(pos[0], pos[1])));
+            }
+
+            return commandos;
         }
 
 
@@ -67,8 +81,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             foreach (XmlNode node in soldierNodes)
             {
                 
-                int i = 0;
-               
+                            
                 //Cargo los waitpoints
                 List<Vector3> waitpoints = new List<Vector3>();
                 foreach (XmlNode wn in node.ChildNodes)

@@ -27,7 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         Level level;
         MovementPicking picking;
         Selection selection;
-
+        string currentLevel;
         TextControlPanel controlPanel;
 
         FreeCamera camera;
@@ -59,9 +59,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             return "Implementación del Commandos";
         }
 
+        public string getMediaDir()
+        {
+            return GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\";
+        }
+
         #endregion
 
-
+       
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
         /// Escribir aquí todo el código de inicialización: cargar modelos, texturas, modifiers, uservars, etc.
@@ -69,39 +74,50 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void init()
         {
-
+            string initialLevel = GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\niveles\\" + "default-level.xml";
+           
+            GuiController.Instance.Modifiers.addFile("Level", initialLevel, "-level.xml|*-level.xml");
             //Crear SkyBox
             sky = new Sky();
 
-            //Cargar nivel
-            XMLLevelParser levelParser= new XMLLevelParser(
-              GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\niveles\\" + "nivel1.xml",
-              GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\"
-              );
+            loadLevel(initialLevel);
             
             
+           
+        }
+
+        #region LoadLevel
+        private void checkLoadLevel(string selectedPath)
+        {
+            if (selectedPath != currentLevel) loadLevel(selectedPath);
+        }
+
+        private void loadLevel(string newLevel)
+        {
+            if (level != null) level.dispose();
+            
+            currentLevel = newLevel;
+
+            XMLLevelParser levelParser = new XMLLevelParser(newLevel, this.getMediaDir());
             level = levelParser.getLevel();
             
-            
-            level.add(new Commando(level.Terrain.getPosition(-200, 200)));
-            level.add(new Commando(level.Terrain.getPosition(200, 200)));
-            
+            //Movimiento por picking
+            picking = new MovementPicking(level.Terrain);
+               
+
+            //Inicializar camara
+            camera = new FreeCamera(level.Terrain.getPosition(0, 150), true);
 
             //Seleccion multiple
             selection = new Selection(level.Characters, level.Terrain);
-
-            //Movimiento por picking
-            picking = new MovementPicking(level.Terrain);
             
-            //Inicializar camara
-            camera = new FreeCamera(level.Terrain.getPosition(0, 150), true);
 
             //Panel de control in game
             controlPanel = new TextControlPanel();
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);
         }
-
+        #endregion
 
         /// <summary>
         /// Método que se llama cada vez que hay que refrescar la pantalla.
@@ -111,6 +127,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
+            string selectedPath = (string)GuiController.Instance.Modifiers["Level"];
+            
+            checkLoadLevel(selectedPath);
+
             picking.update(selection.getSelectedCharacters());
 
             camera.updateCamera();
@@ -123,6 +143,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             controlPanel.update();
         }
 
+      
 
         /// <summary>
         /// Método que se llama cuando termina la ejecución del ejemplo.
