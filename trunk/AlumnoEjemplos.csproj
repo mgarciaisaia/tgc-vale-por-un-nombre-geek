@@ -185,10 +185,8 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_head.jpg" />
     <Content Include="ValePorUnNombreGeek\documentacion\com.horstmann.violet-0.21.1.jar" />
     <Content Include="ValePorUnNombreGeek\documentacion\umlCharacter.png" />
-    <Content Include="ValePorUnNombreGeek\niveles\nivel1.xml" />
-    <Content Include="ValePorUnNombreGeek\niveles\otroNivel.xml">
-      <SubType>UserControl</SubType>
-    </Content>
+    <Content Include="ValePorUnNombreGeek\niveles\another-level.xml" />
+    <Content Include="ValePorUnNombreGeek\niveles\default-level.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
