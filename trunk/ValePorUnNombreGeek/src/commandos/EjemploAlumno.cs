@@ -69,6 +69,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void init()
         {
+            ThingsToRender.getInstace();
+
             //Crear SkyBox
             sky = new Sky();
 
@@ -120,6 +122,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
 
             controlPanel.update();
+
+            ThingsToRender.getInstace().render();
         }
 
 

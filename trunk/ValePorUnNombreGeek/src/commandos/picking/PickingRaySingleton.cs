@@ -91,16 +91,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 
     
 
-        /* Pablo -> en desuso.
         public Vector3 getRayGroundIntersection(Terrain terrain)
         {
             //retorna el punto de colision con el plano y=0
             //(pablo) lo uso para ver si el rayo vario su posicion. es mucho mas rapido que getRayIntersection; salva fps.
-            this.updateRayByMouse();
-
             float t0 = (terrain.minY - this.Ray.Origin.Y) / this.Ray.Direction.Y;
             return this.Ray.Origin + t0 * this.Ray.Direction;
         }
-         */
     }
 }
