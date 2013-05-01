@@ -63,12 +63,32 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 
         public override List<Character> endAndRetSelection()
         {
-            Vector3 min = Vector3.Minimize(initTerrainPoint, actualTerrainPoint);
-            Vector3 max = Vector3.Maximize(initTerrainPoint, actualTerrainPoint);
-            min.Y = this.terrain.minY;
-            max.Y = this.terrain.maxY;
+            Vector3 boxSize = new Vector3(this.max.X - this.min.X, 300, this.max.Y - this.min.Y);
 
-            TgcBox selectionBox = TgcBox.fromExtremes(min, max);
+            PickingRaySingleton.Instance.updateRayByPos(this.min.X, this.min.Y);
+            Vector3 minPoint = PickingRaySingleton.Instance.getRayGroundIntersection(this.terrain);
+            PickingRaySingleton.Instance.updateRayByPos(this.max.X, this.max.Y);
+            Vector3 maxPoint = PickingRaySingleton.Instance.getRayGroundIntersection(this.terrain);
+
+            Vector3 boxCenter = (maxPoint - minPoint) * 0.5f + minPoint;
+
+            TgcBox selectionBox = TgcBox.fromSize(boxSize);
+            selectionBox.Position = boxCenter;
+
+
+            PickingRaySingleton.Instance.updateRayByMouse();
+            Vector3 direction = PickingRaySingleton.Instance.Ray.Direction;
+            direction.Normalize();
+
+            Vector3 rotation = new Vector3();
+
+            rotation.X = FastMath.Asin(direction.Y) + 0.5f * FastMath.PI;
+
+            selectionBox.Rotation = rotation;
+
+            //daniela, help! estoy estancado!
+
+            ThingsToRender.getInstace().boxes.Add(selectionBox);
             return this.getCharactersInBox(selectionBox);
         }
 
