@@ -43,8 +43,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
         /// </summary>
         public bool terrainIntersection(Terrain terrain, out Vector3 position)
         {
-            this.updateRayByMouse();
-
             Vector3 aPoint;
             Vector3 foundedPoint;
             float t0 = (terrain.Position.Y - this.Ray.Origin.Y) /this.Ray.Direction.Y;
@@ -91,12 +89,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 
     
 
-        public Vector3 getRayGroundIntersection(Terrain terrain)
+        /*public Vector3 getRayGroundIntersection(Terrain terrain)
         {
             //retorna el punto de colision con el plano y=0
             //(pablo) lo uso para ver si el rayo vario su posicion. es mucho mas rapido que getRayIntersection; salva fps.
             float t0 = (terrain.minY - this.Ray.Origin.Y) / this.Ray.Direction.Y;
             return this.Ray.Origin + t0 * this.Ray.Direction;
-        }
+        }*/
     }
 }
