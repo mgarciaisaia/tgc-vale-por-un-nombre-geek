@@ -15,6 +15,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 {
     class WorldProjection : ScreenProjection
     {
+
+        //TODO pablo - este metodo de seleccion funciona pero no de la manera mas sana. por ahora lo dejo en puntos suspensivos.
+
+
         private Terrain terrain;
 
         public WorldProjection(Terrain _terrain, List<Character> _selectableCharacters)
@@ -39,7 +43,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         private Vector3 initTerrainPoint;
         public override bool canBeginSelection()
         {
-            PickingRaySingleton.Instance.updateRayByMouse();
             if (!PickingRaySingleton.Instance.terrainIntersection(this.terrain, out this.initTerrainPoint))
                 return false;
 
@@ -51,7 +54,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         public override void updateSelection()
         {
             Vector3 intersectionPoint;
-            PickingRaySingleton.Instance.updateRayByMouse();
             if (PickingRaySingleton.Instance.terrainIntersection(this.terrain, out intersectionPoint))
                 this.actualTerrainPoint = intersectionPoint;
             else
@@ -63,33 +65,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 
         public override List<Character> endAndRetSelection()
         {
-            Vector3 boxSize = new Vector3(this.max.X - this.min.X, 300, this.max.Y - this.min.Y);
+            Vector3 min = Vector3.Minimize(initTerrainPoint, actualTerrainPoint);
+            Vector3 max = Vector3.Maximize(initTerrainPoint, actualTerrainPoint);
+            min.Y = this.terrain.minY;
+            max.Y = this.terrain.maxY;
 
-            PickingRaySingleton.Instance.updateRayByPos(this.min.X, this.min.Y);
-            Vector3 minPoint = PickingRaySingleton.Instance.getRayGroundIntersection(this.terrain);
-            PickingRaySingleton.Instance.updateRayByPos(this.max.X, this.max.Y);
-            Vector3 maxPoint = PickingRaySingleton.Instance.getRayGroundIntersection(this.terrain);
-
-            Vector3 boxCenter = (maxPoint - minPoint) * 0.5f + minPoint;
-
-            TgcBox selectionBox = TgcBox.fromSize(boxSize);
-            selectionBox.Position = boxCenter;
-
-
-            PickingRaySingleton.Instance.updateRayByMouse();
-            Vector3 direction = PickingRaySingleton.Instance.Ray.Direction;
-            direction.Normalize();
-
-            float angleX = FastMath.Acos(Vector3.Dot(new Vector3(0, 0, 1), direction));
-            selectionBox.rotateX(angleX + 0.5f * FastMath.PI);
-
-            float angleZ = FastMath.Acos(Vector3.Dot(new Vector3(1, 0, 0), direction));
-            selectionBox.rotateZ(angleZ + 0.5f * FastMath.PI);
-
-
-            //daniela, help! estoy estancado!
-
-            ThingsToRender.getInstace().boxes.Add(selectionBox);
+            TgcBox selectionBox = TgcBox.fromExtremes(min, max);
             return this.getCharactersInBox(selectionBox);
         }
 
