@@ -80,11 +80,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
             Vector3 direction = PickingRaySingleton.Instance.Ray.Direction;
             direction.Normalize();
 
-            Vector3 rotation = new Vector3();
+            float angleX = FastMath.Acos(Vector3.Dot(new Vector3(0, 0, 1), direction));
+            selectionBox.rotateX(angleX + 0.5f * FastMath.PI);
 
-            rotation.X = FastMath.Asin(direction.Y) + 0.5f * FastMath.PI;
+            float angleZ = FastMath.Acos(Vector3.Dot(new Vector3(1, 0, 0), direction));
+            selectionBox.rotateZ(angleZ + 0.5f * FastMath.PI);
 
-            selectionBox.Rotation = rotation;
 
             //daniela, help! estoy estancado!
 
