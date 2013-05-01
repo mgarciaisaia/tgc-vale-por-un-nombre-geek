@@ -5,7 +5,7 @@ using System.Text;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer.Utils.TgcGeometry;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.levelObject;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
