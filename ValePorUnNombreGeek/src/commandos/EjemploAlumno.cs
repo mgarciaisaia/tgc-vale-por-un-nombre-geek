@@ -133,7 +133,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             picking.update(selection.getSelectedCharacters());
 
-            camera.updateCamera();
+           
             sky.render();
             level.render(elapsedTime);
 
