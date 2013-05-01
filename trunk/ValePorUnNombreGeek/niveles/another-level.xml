@@ -1,0 +1,36 @@
+﻿<level>
+
+  <terrain
+    heightmap="Heightmaps\\Heightmap3.jpg"
+    texture="Heightmaps\\TerrainTexture3.jpg"
+    scaleXZ="50.0"
+    scaleY="4.0"
+    ></terrain>
+
+  <enemies>
+
+    <soldier>
+
+      <waitpoint>(460,620)</waitpoint>
+      <waitpoint>(-560,600)</waitpoint>
+      <waitpoint>(-800,-260)</waitpoint>
+
+
+    </soldier>
+
+    <soldier>
+
+      <waitpoint>(-71,31)</waitpoint>
+      <waitpoint>(-244,-365)</waitpoint>
+      
+
+    </soldier>
+
+  </enemies>
+  
+  <commandos>
+    <commando>(-200,200)</commando>
+    <commando>(200,200)</commando>
+  </commandos>
+
+</level>
