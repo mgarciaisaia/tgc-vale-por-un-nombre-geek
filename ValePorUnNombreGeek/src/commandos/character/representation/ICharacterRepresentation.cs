@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
+using Microsoft.DirectX.Direct3D;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation
 {
     interface ICharacterRepresentation
@@ -30,6 +31,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         void setRotation(float angle, bool clockwise);
         void rotate(float angle, bool clockwise);
         Vector3 getAngleZeroVector();
+
+
+        Effect Effect { get; set; }
+        string Technique { get; set; }
 
         Vector3 getEyeLevel();
 
