@@ -32,6 +32,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             this.selectionMethod = new ScreenProjection(this.selectableCharacters);
         }
 
+        /// <summary>
+        /// Cancela la seleccion si se estaba seleccionando
+        /// </summary>
+        public void cancelSelection()
+        {
+            this.selecting = false;
+        }
+
         #region Update
 
         /// <summary>
