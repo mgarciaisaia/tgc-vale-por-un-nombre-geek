@@ -9,10 +9,9 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
 using TgcViewer;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands;
 using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands.orders;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.text;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -140,7 +139,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
 
-            controlPanel.update();
+            controlPanel.render();
         }
 
       

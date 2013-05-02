@@ -109,7 +109,10 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\orders\CommandoOrder.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\orders\StandBy.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\orders\Talk.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\panel\TextControlPanel.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\panel\graphical\Sprite.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\panel\graphical\SpriteDrawer.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\panel\graphical\GraphicalControlPanel.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\panel\text\TextControlPanel.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\MovementPicking.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\PickingRay.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\BoxSelection.cs" />
