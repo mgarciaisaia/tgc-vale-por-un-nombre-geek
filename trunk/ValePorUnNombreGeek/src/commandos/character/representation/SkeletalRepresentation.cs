@@ -217,7 +217,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         }
 
-        Effect Effect { get { return this.mesh.Effect; } set {this.mesh.Effect = value ;} }
-        string Technique { get { return this.mesh.Technique; } set { this.mesh.Technique = value; } }
+        public Effect Effect { get { return this.mesh.Effect; } set {this.mesh.Effect = value ;} }
+        public string Technique { get { return this.mesh.Technique; } set { this.mesh.Technique = value; } }
     }
 }
