@@ -12,6 +12,7 @@ using TgcViewer;
 using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands.orders;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.text;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -27,7 +28,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         MovementPicking picking;
         Selection selection;
         string currentLevel;
-        TextControlPanel controlPanel;
+        GraphicalControlPanel controlPanel;
 
         FreeCamera camera;
 
@@ -80,8 +81,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             sky = new Sky();
 
             loadLevel(initialLevel);
-            
-            
+
+            //Panel de control in game
+            controlPanel = new GraphicalControlPanel();
+            /*controlPanel = new TextControlPanel();
+            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
+            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);*/
            
         }
 
@@ -109,12 +114,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Seleccion multiple
             selection = new Selection(level.Characters, level.Terrain);
-            
-
-            //Panel de control in game
-            controlPanel = new TextControlPanel();
-            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
-            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);
         }
         #endregion
 
@@ -150,6 +149,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void close()
         {
+            controlPanel.dispose();
             sky.dispose();
             level.dispose();
         }

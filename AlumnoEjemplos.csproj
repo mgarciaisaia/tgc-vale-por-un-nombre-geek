@@ -186,6 +186,7 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\BasicHuman-TgcSkeletalMesh.xml" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_body.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_head.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\Barrita.jpg" />
     <Content Include="ValePorUnNombreGeek\documentacion\com.horstmann.violet-0.21.1.jar" />
     <Content Include="ValePorUnNombreGeek\documentacion\umlCharacter.png" />
     <Content Include="ValePorUnNombreGeek\niveles\another-level.xml" />
