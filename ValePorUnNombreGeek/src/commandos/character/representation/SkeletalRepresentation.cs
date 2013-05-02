@@ -65,7 +65,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
                     exMediaDir + "Talk-TgcSkeletalAnim.xml",
                     exMediaDir + "StandBy-TgcSkeletalAnim.xml",
                     exMediaDir + "Jump-TgcSkeletalAnim.xml",
-                    myMediaDir + "Die-TgcSkeletalAnim.xml"
+                    myMediaDir + "Die-TgcSkeletalAnim.xml",
+                    myMediaDir + "CrouchWalk-TgcSkeletalAnim.xml"
                 };
         }
 
@@ -103,6 +104,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.mesh.playAnimation("Walk", true);
         }
 
+        public void crouch()
+        {
+            this.mesh.playAnimation("CrouchWalk", true);
+
+        }
+
+        public bool isCrouched()
+        {
+            return this.mesh.CurrentAnimation.Name.Equals("CrouchWalk");
+        }
         #endregion
 
         public Vector3 getEyeLevel()

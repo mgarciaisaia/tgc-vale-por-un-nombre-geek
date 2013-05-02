@@ -99,7 +99,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Dead = true;
         }
 
-
+      
+  
         public virtual void dispose()
         {
             representation.dispose();
@@ -213,5 +214,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public float Radius { get { return this.representation.Radius; } }
         public Vector3 Center { get { return this.representation.Center; } }
+
+      
     }
 }
