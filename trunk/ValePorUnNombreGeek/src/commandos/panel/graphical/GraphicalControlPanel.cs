@@ -5,6 +5,7 @@ using System.Text;
 using TgcViewer;
 using System.Drawing;
 using Microsoft.DirectX;
+using TgcViewer.Utils.Input;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 {
@@ -23,7 +24,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             Rectangle drawingArea = new Rectangle(0, 0, this.controlPanelSprite.ImageInformation.Width, this.controlPanelSprite.ImageInformation.Height);
             this.controlPanelSprite.RegionRectangle = drawingArea;
             this.controlPanelSprite.Position = new Vector2(0, screenHeight - this.controlPanelSprite.ImageInformation.Height);
-            this.controlPanelSprite.Scale = new Vector2(((screenWidth / 900f) * 0.9f), 1f);
+            this.controlPanelSprite.Scale = new Vector2(screenWidth / 1000f, 1f);
 
             this.drawer = new SpriteDrawer();
             this.drawer.addSpriteToDraw(this.controlPanelSprite);
@@ -37,6 +38,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         public void dispose()
         {
             this.controlPanelSprite.dispose();
+        }
+
+        /// <summary>
+        /// Indica si el mouse esta sobre el panel
+        /// </summary>
+        public bool mouseIsOverPanel()
+        {
+            return GuiController.Instance.D3dInput.Ypos > this.controlPanelSprite.Position.Y;
+        }
+
+        /// <summary>
+        /// Metodo que se llama si el mouse esta sobre el panel
+        /// </summary>
+        public void update()
+        {
+            if(GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_RIGHT)){
+                float relativeY = GuiController.Instance.D3dInput.Ypos - this.controlPanelSprite.Position.Y;
+                this.click(GuiController.Instance.D3dInput.Xpos, relativeY);
+            }
+        }
+
+        /// <summary>
+        /// Metodo que se llama si hubo un click sobre el panel
+        /// </summary>
+        private void click(float panelx, float panely)
+        {
+            //TODO
         }
     }
 }

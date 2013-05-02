@@ -129,14 +129,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             
             checkLoadLevel(selectedPath);
 
-            picking.update(selection.getSelectedCharacters());
-
-           
             sky.render();
             level.render(elapsedTime);
 
-
-            selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
+            if (controlPanel.mouseIsOverPanel())
+            {
+                selection.cancelSelection(); //cancelamos la seleccion si se estaba seleccionando
+                controlPanel.update(); //permitimos que el panel ejecute su logica
+            }
+            else
+            {
+                picking.update(selection.getSelectedCharacters());
+                selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
+            }
 
             controlPanel.render();
         }
