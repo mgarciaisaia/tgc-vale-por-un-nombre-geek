@@ -10,7 +10,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         void die();
         void standBy();
         void walk();
-
+        void crouch();
         bool Selected { get; set; }
 
         void move(Vector3 direction);
@@ -42,5 +42,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         float Radius { get; }
 
         Vector3 Center { get; }
+
+        bool isCrouched();
+
+
     }
 }

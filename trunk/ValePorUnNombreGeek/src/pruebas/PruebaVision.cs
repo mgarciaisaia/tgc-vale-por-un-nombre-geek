@@ -101,6 +101,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 
 
            nivel.render(elapsedTime);
+           enemigo.VisionCone.render();
 
          
         }

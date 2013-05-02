@@ -13,10 +13,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
     class VisionCone : Cone
     {
         protected ICharacterRepresentation rep;
-        protected float sqLength;
+        protected float[] sqRange;
         protected float cosAngle;
-       
-
+           
+        public enum eRange : int
+        {
+            LONG_RANGE = 1,
+            SHORT_RANGE = 0,
+        }
+        public eRange current_range;
      
         public VisionCone(ICharacterRepresentation rep, float length, float angle)
             : base(rep.getEyeLevel(), length, angle)
@@ -24,8 +29,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             this.rep = rep;
             this.AutoTransformEnable = false;
             this.AlphaBlendEnabled = true;
-            
-            this.sqLength = FastMath.Pow2(length);
+            this.sqRange = new float[2];
+            this.sqRange[(int)eRange.SHORT_RANGE] = FastMath.Pow2(length * 2 / 3);
+            this.sqRange[(int)eRange.LONG_RANGE] = FastMath.Pow2(length);
             this.cosAngle = FastMath.Cos(angle);
             this.Color1 = System.Drawing.Color.Aquamarine;
             this.Color2 = System.Drawing.Color.Aquamarine;
@@ -36,7 +42,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
            
         public override void updateValues(){
             base.updateValues();
-            this.sqLength = FastMath.Pow2(length);
+            this.sqRange[0] = FastMath.Pow2(length * 2 / 3);
+            this.sqRange[1] = FastMath.Pow2(length);
             this.cosAngle = FastMath.Cos(angle);
         }
 
@@ -82,6 +89,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         {
 
             Vector3 targetPoint = getClosestPointToVertex(target);
+
+            if (target.Representation.isCrouched())
+            {
+                this.current_range = eRange.SHORT_RANGE;
+
+            } else this.current_range = eRange.LONG_RANGE;
+
             if (isPointInsideCone(targetPoint))
             {
                 if (terrain == null || canSeeInTerrain(terrain, targetPoint))
@@ -138,7 +152,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
             //Primero me fijo si cae dentro de la esfera que contiene al cono
             //Comparo los cuadrados de las distancias porque hacer raiz cuadrada es costoso.
-            if (positionToTarget.LengthSq() <= this.sqLength) {
+            if (positionToTarget.LengthSq() <= this.sqRange[(int)current_range]) {
                
                 //Despues comparo angulos para ver si cae dentro del cono
                 

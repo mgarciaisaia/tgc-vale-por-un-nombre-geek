@@ -126,7 +126,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             enemigo.Position = pos;
             previousAngle = angle;
             nivel.render(elapsedTime);
-
+            enemigo.VisionCone.render();
 
 
 
