@@ -6,6 +6,7 @@ using TgcViewer.Utils.TgcSkeletalAnimation;
 using Microsoft.DirectX;
 using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
+using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation
 {
@@ -216,6 +217,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         }
 
-       
+        Effect Effect { get { return this.mesh.Effect; } set {this.mesh.Effect = value ;} }
+        string Technique { get { return this.mesh.Technique; } set { this.mesh.Technique = value; } }
     }
 }
