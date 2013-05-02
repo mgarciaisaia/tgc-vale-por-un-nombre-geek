@@ -17,9 +17,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         protected float cosAngle;
            
         public enum eRange : int
-        {
-            LONG_RANGE = 1,
+        {            
             SHORT_RANGE = 0,
+            LONG_RANGE = 1,
         }
         public eRange current_range;
      
