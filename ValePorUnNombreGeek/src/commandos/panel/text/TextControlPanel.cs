@@ -8,7 +8,7 @@ using TgcViewer.Utils._2D;
 using System.Drawing;
 using TgcViewer;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.text
 {
     class TextControlPanel
     {
@@ -35,7 +35,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel
             this.text.Text += _key.ToString() + " - " + _command.description + "\n";
         }
 
-        public void update()
+        public void render()
         {
             if (GuiController.Instance.D3dInput.keyPressed(Key.Tab)) this.active = !this.active;
 
