@@ -17,22 +17,40 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
 
         public static Enemy getEnemy(XmlNode enemyNode, Terrain terrain)
         {
-            Enemy enemy = null;
+           
             XmlNode at = enemyNode.Attributes.GetNamedItem("class");
-            switch (enemyNode.Attributes.GetNamedItem("class").InnerText)
+            string enemyClass;
+
+            enemyClass = getClass(enemyNode);
+
+            switch (enemyClass)
             {
                 case "soldier": 
-                    enemy = XMLEnemy.getSoldier(enemyNode, terrain);
-                    break;
+                    return XMLEnemy.getSoldier(enemyNode, terrain);
+                    
                 
             }
-            return enemy;
+
+            return null;
+
+        }
+
+        private static string getClass(XmlNode enemyNode)
+        {
+           
+            XmlNode classNode = enemyNode.Attributes.GetNamedItem("class");
+            
+            if (classNode != null)
+            {
+               return classNode.InnerText;
+            }
+            else return "soldier";
 
         }
 
         private static Enemy getSoldier(XmlNode enemyNode, Terrain terrain)
         {
-               //Cargo los waitpoints
+            
             List<Vector3> waitpoints = new List<Vector3>();
             foreach (XmlNode wn in enemyNode.ChildNodes)
             {

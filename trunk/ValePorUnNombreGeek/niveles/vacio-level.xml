@@ -11,20 +11,21 @@
     ></terrain>
   
   <!-- class es opcional, si no se pone nada, usa clase Commando -->
-  <commando class="tipoComando">(X,Y,Z)</commando>
+  <commando class="tipoComando">(X,Z)</commando>
  
   <!-- class es obligatorio. Por ahora la unica disponible es "soldier"-->
   <enemy class="soldier">
     <!--La clase soldier tiene de 1 a N waitpoints-->
-    <waitpoint>(X,Y,Z)</waitpoint>
-    <waitpoint>(X,Y,Z)</waitpoint>
-    <waitpoint>(X,Y,Z)</waitpoint>
+    <waitpoint>(X,Z)</waitpoint>
+    <waitpoint>(X,Z)</waitpoint>
+    <waitpoint>(X,Z)</waitpoint>
   </enemy>
   
   
-  <!--class es opcional. La default es levelObject. Disponibles: "tree"-->
+  <!--class es opcional. La default es levelObject. Disponibles: "tree", "levelObject"-->
   <!--mesh solo lo pide levelObject-->
-  <!--scale es opcional, el default es (1,1,1)-->
-  <levelObject mesh="pathDelTgcScene.xml" scale="(X,Y,Z)">(X,Y,Z)</levelObject>
+  <!--scale es opcional, default (1,1,1)-->
+  <!--rotation es opcional,default (0,0,0)-->
+  <levelObject mesh="pathDelTgcScene.xml" scale="(sX,sY,sZ)" rotation="(radian, radian, radian)" class="tipoObjeto">(X,Z)</levelObject>
   
 </level>  

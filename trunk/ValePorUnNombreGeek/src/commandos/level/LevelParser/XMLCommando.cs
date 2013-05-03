@@ -14,21 +14,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
     {
         public static Commando getCommando(XmlNode commandoNode, Terrain terrain)
         {
-            Commando commando = null;
-            XmlNode commandoClass = commandoNode.Attributes.GetNamedItem("class");
+            
+            string commandoClass;
 
-            if (commandoClass == null)
+            commandoClass = getClass(commandoNode);
+
+            switch (commandoClass)
             {
-                return XMLCommando.getDefault(commandoNode, terrain);
+                case "commando":
+                    return XMLCommando.getDefault(commandoNode, terrain);
+                   
             }
 
-            switch (commandoClass.InnerText)
+
+            return null;
+
+        }
+
+        private static string getClass(XmlNode commandoNode)
+        {
+           
+            XmlNode classNode = commandoNode.Attributes.GetNamedItem("class");
+
+            if (classNode != null)
             {
-               
+                return classNode.InnerText;
             }
-
-
-            return commando;
+            else return "commando";
 
         }
 

@@ -15,30 +15,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
         public static ILevelObject getLevelObject(XmlNode levelObjectNode, Terrain terrain, string mediaDir)
         {
             ILevelObject levelObject = null;
-            XmlNode objectClass = levelObjectNode.Attributes.GetNamedItem("class");
-            XmlNode scaleNode = levelObjectNode.Attributes.GetNamedItem("scale");
-            Vector3 scale;
+        
+            string objectClass;
+            Vector3 scale, rotation;
 
-            if(scaleNode != null){
 
-                 float[] scaleArray = TgcParserUtils.parseFloat3Array(scaleNode.InnerText);
-                 scale = new Vector3(scaleArray[0], scaleArray[1], scaleArray[2]);
-   
-            }else 
-                scale = new Vector3(1, 1, 1);
+            getClassScaleAndRotation(levelObjectNode, out objectClass, out scale, out rotation);
 
-            if (objectClass == null)
-            {
-                return XMLLevelObject.getDefault(levelObjectNode, terrain, mediaDir, scale);
-            }
-
-            switch (objectClass.InnerText)
+            switch (objectClass)
             {
                 case "levelObject":
-                    levelObject = XMLLevelObject.getDefault(levelObjectNode, terrain, mediaDir, scale);
+                    levelObject = XMLLevelObject.getDefault(levelObjectNode, terrain, mediaDir, scale, rotation);
                     break;
                 case "tree":
-                    levelObject = XMLLevelObject.getTree(levelObjectNode, terrain, scale);
+                    levelObject = XMLLevelObject.getTree(levelObjectNode, terrain, scale, rotation);
                     break;
             }
 
@@ -47,22 +37,56 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
 
         }
 
-        private static ILevelObject getTree(XmlNode levelObjectNode, Terrain terrain, Vector3 scale)
+        private static void getClassScaleAndRotation(XmlNode levelObjectNode, out string objectClass, out Vector3 scale, out Vector3 rotation)
+        {
+            XmlNode scaleNode = levelObjectNode.Attributes.GetNamedItem("scale");
+            if (scaleNode != null)
+            {
+
+                float[] scaleArray = TgcParserUtils.parseFloat3Array(scaleNode.InnerText);
+                scale = new Vector3(scaleArray[0], scaleArray[1], scaleArray[2]);
+
+            }
+            else
+                scale = new Vector3(1, 1, 1);
+            
+            
+            XmlNode rotationNode = levelObjectNode.Attributes.GetNamedItem("rotation");
+            if (rotationNode != null)
+            {
+
+                float[] rotationArray = TgcParserUtils.parseFloat3Array(rotationNode.InnerText);
+                rotation = new Vector3(rotationArray[0], rotationArray[1], rotationArray[2]);
+
+            }
+            else rotation = new Vector3(0, 0, 0);
+
+
+            XmlNode classNode = levelObjectNode.Attributes.GetNamedItem("class");
+            if (classNode == null)
+            {
+                objectClass = "levelObject";
+            }
+            else objectClass = classNode.InnerText;
+        }
+
+       
+        private static ILevelObject getTree(XmlNode levelObjectNode, Terrain terrain, Vector3 scale, Vector3 rotation)
         {
             float[] pos = TgcParserUtils.parseFloat2Array(levelObjectNode.InnerText);
                      
 
-            return new Tree(terrain.getPosition(pos[0], pos[1]), scale);
+            return new Tree(terrain.getPosition(pos[0], pos[1]), scale, rotation);
         }
 
 
-        private static ILevelObject getDefault(XmlNode levelObjectNode, Terrain terrain, string mediaDir, Vector3 scale)
+        private static ILevelObject getDefault(XmlNode levelObjectNode, Terrain terrain, string mediaDir, Vector3 scale, Vector3 rotation)
         {
             float[] pos = TgcParserUtils.parseFloat2Array(levelObjectNode.InnerText);
           
             string path = mediaDir + levelObjectNode.Attributes.GetNamedItem("mesh").InnerText;
                        
-            return new LevelObject(path, terrain.getPosition(pos[0], pos[1]), scale);
+            return new LevelObject(path, terrain.getPosition(pos[0], pos[1]), scale, rotation);
         }
 
     }

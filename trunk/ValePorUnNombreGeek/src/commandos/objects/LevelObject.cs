@@ -15,21 +15,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
         protected float radius;
         protected Vector3 center;
 
-        public LevelObject(string path, Vector3 position, Vector3 scale)
+        public LevelObject(string path, Vector3 position, Vector3 scale, Vector3 rotation)
         {
 
            
             TgcSceneLoader loader = new TgcSceneLoader();
-
                    
             TgcScene sceneOriginal = loader.loadSceneFromFile(path);
            
             mesh = sceneOriginal.Meshes[0];
             mesh.Position = position;
             mesh.Scale = scale;
+            mesh.Rotation = rotation;
             center = mesh.BoundingBox.calculateBoxCenter();
             radius = mesh.BoundingBox.calculateBoxRadius();
         }
+
         public Vector3 Position
         {
             get { return mesh.Position; }
@@ -64,7 +65,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 
         public void render()
         {
-            mesh.render();
+            mesh.render();                     
         }
 
         public void dispose()

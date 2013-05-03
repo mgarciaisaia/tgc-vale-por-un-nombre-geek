@@ -12,14 +12,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
     {
         TgcBoundingBox boundingBox;
         static string PATH = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\ArbolSelvatico2\\ArbolSelvatico2-TgcScene.xml";
-        public Tree(Vector3 position, Vector3 scale)
-            : base(PATH, position, scale)
+        public Tree(Vector3 position, Vector3 scale, Vector3 rotation)
+            : base(PATH, position, scale, rotation)
         {
 
             
             //Hago que el bounding box sólo cubra el tronco
             this.boundingBox = mesh.BoundingBox.clone();
-            Vector3 bBScale = new Vector3(0.1f*scale.X, 1f*scale.Y, 0.1f*scale.Z);
+            Vector3 bBScale = new Vector3(0.09f * scale.X, 1f * scale.Y, 0.09f * scale.Z);
             this.boundingBox.scaleTranslate(position, bBScale);
             center = this.boundingBox.calculateBoxCenter();
             radius = this.boundingBox.calculateBoxRadius();
