@@ -8,7 +8,7 @@ using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
-    class Tree: LevelObject
+    class Tree: MeshObject
     {
         TgcBoundingBox boundingBox;
         static string PATH = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\ArbolSelvatico2\\ArbolSelvatico2-TgcScene.xml";
