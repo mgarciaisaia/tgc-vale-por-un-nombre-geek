@@ -26,7 +26,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             this.mediaDir = mediaDir;
          }
 
-         private static XmlElement loadXML(String filePath)
+         private XmlElement loadXML(String filePath)
         {
             string str = File.ReadAllText(filePath);
             XmlDocument dom = new XmlDocument();
