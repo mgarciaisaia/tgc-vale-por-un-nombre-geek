@@ -11,6 +11,7 @@ using TgcViewer.Utils.TgcSceneLoader;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
@@ -65,10 +66,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
             foreach (XmlNode node in objectNodes)
             {
-                float[] pos = TgcParserUtils.parseFloat2Array(node.InnerText);
-                string path = mediaDir + node.Attributes.GetNamedItem("mesh").InnerText;
-                float[] scale = TgcParserUtils.parseFloat3Array(node.Attributes.GetNamedItem("scale").InnerText);
-                levelObjects.Add(new LevelObject(path,terrain.getPosition(pos[0], pos[1]), new Vector3(scale[0],scale[1],scale[2])));
+                
+                levelObjects.Add(XMLLevelObject.getLevelObject(node, terrain, mediaDir));
             }
 
             return levelObjects;
@@ -83,8 +82,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
             foreach (XmlNode node in commandoNodes)
             {
-                float[] pos = TgcParserUtils.parseFloat2Array(node.InnerText);
-                commandos.Add(new Commando(terrain.getPosition(pos[0], pos[1])));
+               
+                commandos.Add(XMLCommando.getCommando(node, terrain));
             }
 
             return commandos;
@@ -97,22 +96,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             List<Enemy> enemies = new List<Enemy>();
 
             //Obtengo lista de nodos soldier
-            XmlNodeList soldierNodes = root.GetElementsByTagName("soldier");
-            foreach (XmlNode node in soldierNodes)
-            {
-                
-                            
-                //Cargo los waitpoints
-                List<Vector3> waitpoints = new List<Vector3>();
-                foreach (XmlNode wn in node.ChildNodes)
-                {
-                    if(wn.NodeType == XmlNodeType.Element){ 
-                        float[] pos = TgcParserUtils.parseFloat2Array(wn.InnerText);
-                        waitpoints.Add(terrain.getPosition(pos[0], pos[1]));
-                    }
-                }
-
-                enemies.Add(new Soldier(waitpoints.ToArray<Vector3>()));
+            XmlNodeList enemyNodes = root.GetElementsByTagName("enemy");
+            
+            foreach (XmlNode node in enemyNodes)
+            {                
+                enemies.Add(XMLEnemy.getEnemy(node, terrain));
+                                
             }
 
             return enemies;
