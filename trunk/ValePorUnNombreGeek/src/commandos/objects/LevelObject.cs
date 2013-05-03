@@ -11,9 +11,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
     class LevelObject:ILevelObject
     {
-        TgcMesh mesh;
-        float radius;
-        Vector3 center;
+        protected TgcMesh mesh;
+        protected float radius;
+        protected Vector3 center;
 
         public LevelObject(string path, Vector3 position, Vector3 scale)
         {
@@ -35,7 +35,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
             get { return mesh.Position; }
         }
 
-        public TgcBoundingBox BoundingBox
+        public virtual TgcBoundingBox BoundingBox
         {
             get { return mesh.BoundingBox; }
         }

@@ -22,7 +22,7 @@
   </enemy>
   
   
-  <!--class es opcional. La default es levelObject.-->
+  <!--class es opcional. La default es levelObject. Disponibles: "tree"-->
   <!--mesh solo lo pide levelObject-->
   <!--scale es opcional, el default es (1,1,1)-->
   <levelObject mesh="pathDelTgcScene.xml" scale="(X,Y,Z)">(X,Y,Z)</levelObject>

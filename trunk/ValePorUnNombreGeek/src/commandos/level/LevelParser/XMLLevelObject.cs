@@ -37,6 +37,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
                 case "levelObject":
                     levelObject = XMLLevelObject.getDefault(levelObjectNode, terrain, mediaDir, scale);
                     break;
+                case "tree":
+                    levelObject = XMLLevelObject.getTree(levelObjectNode, terrain, scale);
+                    break;
             }
 
 
@@ -44,12 +47,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
 
         }
 
-
-        private static ILevelObject getDefault(XmlNode node, Terrain terrain, string mediaDir, Vector3 scale)
+        private static ILevelObject getTree(XmlNode levelObjectNode, Terrain terrain, Vector3 scale)
         {
-            float[] pos = TgcParserUtils.parseFloat2Array(node.InnerText);
+            float[] pos = TgcParserUtils.parseFloat2Array(levelObjectNode.InnerText);
+                     
+
+            return new Tree(terrain.getPosition(pos[0], pos[1]), scale);
+        }
+
+
+        private static ILevelObject getDefault(XmlNode levelObjectNode, Terrain terrain, string mediaDir, Vector3 scale)
+        {
+            float[] pos = TgcParserUtils.parseFloat2Array(levelObjectNode.InnerText);
           
-            string path = mediaDir + node.Attributes.GetNamedItem("mesh").InnerText;
+            string path = mediaDir + levelObjectNode.Attributes.GetNamedItem("mesh").InnerText;
                        
             return new LevelObject(path, terrain.getPosition(pos[0], pos[1]), scale);
         }
