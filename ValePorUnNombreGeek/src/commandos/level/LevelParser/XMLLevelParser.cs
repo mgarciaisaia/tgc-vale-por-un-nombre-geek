@@ -26,19 +26,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             this.mediaDir = mediaDir;
          }
 
-        private Terrain getTerrain()
-        {
-            XmlNode xmlTerrain = root.GetElementsByTagName("terrain")[0];
-
-            String heightmap = mediaDir + xmlTerrain.Attributes.GetNamedItem("heightmap").InnerText;
-            String texture = mediaDir + xmlTerrain.Attributes.GetNamedItem("texture").InnerText;
-            float scaleXZ = TgcParserUtils.parseFloat(xmlTerrain.Attributes.GetNamedItem("scaleXZ").InnerText);
-            float scaleY = TgcParserUtils.parseFloat(xmlTerrain.Attributes.GetNamedItem("scaleY").InnerText);
-           
-            return new Terrain(heightmap,texture, scaleXZ, scaleY);
-        }
-
-        private static XmlElement loadXML(String filePath)
+         private static XmlElement loadXML(String filePath)
         {
             string str = File.ReadAllText(filePath);
             XmlDocument dom = new XmlDocument();
@@ -57,33 +45,44 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             return level;
         }
 
+        private Terrain getTerrain()
+        {
+            XmlNode xmlTerrain = root.GetElementsByTagName("terrain")[0];
+
+            String heightmap = mediaDir + xmlTerrain.Attributes.GetNamedItem("heightmap").InnerText;
+            String texture = mediaDir + xmlTerrain.Attributes.GetNamedItem("texture").InnerText;
+            float scaleXZ = TgcParserUtils.parseFloat(xmlTerrain.Attributes.GetNamedItem("scaleXZ").InnerText);
+            float scaleY = TgcParserUtils.parseFloat(xmlTerrain.Attributes.GetNamedItem("scaleY").InnerText);
+
+            return new Terrain(heightmap, texture, scaleXZ, scaleY);
+        }
+
+
         private IEnumerable<ILevelObject> getLevelObjects(Terrain terrain)
         {
             List<ILevelObject> levelObjects = new List<ILevelObject>();
 
-            //Obtengo lista de nodos levelobject
             XmlNodeList objectNodes = root.GetElementsByTagName("levelObject");
 
             foreach (XmlNode node in objectNodes)
             {
-                
                 levelObjects.Add(XMLLevelObject.getLevelObject(node, terrain, mediaDir));
             }
 
             return levelObjects;
         }
 
+
         private IEnumerable<Commando> getCommandos(Terrain terrain)
         {
             List<Commando> commandos = new List<Commando>();
 
-            //Obtengo lista de nodos commando
+           
             XmlNodeList commandoNodes = root.GetElementsByTagName("commando");
 
             foreach (XmlNode node in commandoNodes)
             {
-               
-                commandos.Add(XMLCommando.getCommando(node, terrain));
+               commandos.Add(XMLCommando.getCommando(node, terrain));
             }
 
             return commandos;
@@ -95,13 +94,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
            
             List<Enemy> enemies = new List<Enemy>();
 
-            //Obtengo lista de nodos soldier
+           
             XmlNodeList enemyNodes = root.GetElementsByTagName("enemy");
             
             foreach (XmlNode node in enemyNodes)
             {                
-                enemies.Add(XMLEnemy.getEnemy(node, terrain));
-                                
+                enemies.Add(XMLEnemy.getEnemy(node, terrain));                         
             }
 
             return enemies;
