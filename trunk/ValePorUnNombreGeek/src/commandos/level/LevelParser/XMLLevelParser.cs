@@ -11,9 +11,9 @@ using TgcViewer.Utils.TgcSceneLoader;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
+
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
 {
     class XMLLevelParser
     {

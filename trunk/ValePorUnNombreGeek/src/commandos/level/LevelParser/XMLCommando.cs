@@ -8,7 +8,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using Microsoft.DirectX;
 
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
 {
     class XMLCommando
     {
