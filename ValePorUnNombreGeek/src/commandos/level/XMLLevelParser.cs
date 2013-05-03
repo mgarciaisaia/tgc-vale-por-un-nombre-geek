@@ -10,6 +10,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer.Utils.TgcSceneLoader;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
@@ -51,7 +52,26 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             Level level = new Level(terrain);
             foreach (Enemy e in getEnemies(terrain)) level.add(e);
             foreach (Commando c in getCommandos(terrain)) level.add(c);
+            foreach (ILevelObject o in getLevelObjects(terrain)) level.add(o);
             return level;
+        }
+
+        private IEnumerable<ILevelObject> getLevelObjects(Terrain terrain)
+        {
+            List<ILevelObject> levelObjects = new List<ILevelObject>();
+
+            //Obtengo lista de nodos levelobject
+            XmlNodeList objectNodes = root.GetElementsByTagName("levelObject");
+
+            foreach (XmlNode node in objectNodes)
+            {
+                float[] pos = TgcParserUtils.parseFloat2Array(node.InnerText);
+                string path = mediaDir + node.Attributes.GetNamedItem("mesh").InnerText;
+                float[] scale = TgcParserUtils.parseFloat3Array(node.Attributes.GetNamedItem("scale").InnerText);
+                levelObjects.Add(new LevelObject(path,terrain.getPosition(pos[0], pos[1]), new Vector3(scale[0],scale[1],scale[2])));
+            }
+
+            return levelObjects;
         }
 
         private IEnumerable<Commando> getCommandos(Terrain terrain)

@@ -23,5 +23,7 @@
     <commando>(-200,200)</commando>
     <commando>(200,200)</commando>
   </commandos>
-         
+  <levelObjects>
+    <levelObject mesh="ArbolSelvatico2\\ArbolSelvatico2-TgcScene.xml" scale="(5,5,5)">(680,-659)</levelObject>
+  </levelObjects>       
 </level>

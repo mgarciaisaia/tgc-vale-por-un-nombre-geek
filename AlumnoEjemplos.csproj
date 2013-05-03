@@ -104,6 +104,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\WideVisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\Level.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\XMLLevelParser.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\objects\LevelObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\BindedCommand.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\Command.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\orders\CommandoOrder.cs" />
