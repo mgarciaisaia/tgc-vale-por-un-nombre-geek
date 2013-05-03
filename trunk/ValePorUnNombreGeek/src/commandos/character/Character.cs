@@ -5,6 +5,7 @@ using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
+using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -215,6 +216,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public float Radius { get { return this.representation.Radius; } }
         public Vector3 Center { get { return this.representation.Center; } }
 
+        public Effect effect
+        {
+            get { return representation.Effect; }
+            set { representation.Effect = value; }
+        }
+
+        public string Technique
+        {
+            get { return representation.Technique; }
+            set { representation.Technique = value; }
+        }
       
     }
 }

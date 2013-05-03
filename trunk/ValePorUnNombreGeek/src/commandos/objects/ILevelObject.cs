@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
+using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
@@ -18,7 +19,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
         Vector3 Center { get; }
 
         float Radius { get; }
-        
+
+        Effect effect { get; set;}
+
+        string Technique { get; set; }
+      
         void render();
 
         void dispose();
