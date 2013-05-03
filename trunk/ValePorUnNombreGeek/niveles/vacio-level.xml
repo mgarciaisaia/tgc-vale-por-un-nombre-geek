@@ -22,10 +22,10 @@
   </enemy>
   
   
-  <!--class es opcional. La default es levelObject. Disponibles: "tree", "levelObject"-->
-  <!--mesh solo lo pide levelObject-->
+  <!--class es opcional. La default es meshObject. Disponibles: "tree", "meshObject"-->
   <!--scale es opcional, default (1,1,1)-->
-  <!--rotation es opcional,default (0,0,0)-->
-  <levelObject mesh="pathDelTgcScene.xml" scale="(sX,sY,sZ)" rotation="(radian, radian, radian)" class="tipoObjeto">(X,Z)</levelObject>
-  
+  <!--rotation es opcional, default (0,0,0)-->
+  <levelObject mesh="pathDelTgcScene.xml" scale="(sX,sY,sZ)" rotation="(radian, radian, radian)">(X,Z)</levelObject>
+  <levelObject scale="(sX,sY,sZ)" rotation="(radian, radian, radian)" class="tree">(X,Z)</levelObject>
+
 </level>  

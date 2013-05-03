@@ -24,8 +24,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
 
             switch (objectClass)
             {
-                case "levelObject":
-                    levelObject = XMLLevelObject.getDefault(levelObjectNode, terrain, mediaDir, scale, rotation);
+                case "meshObject":
+                    levelObject = XMLLevelObject.getMeshObject(levelObjectNode, terrain, mediaDir, scale, rotation);
                     break;
                 case "tree":
                     levelObject = XMLLevelObject.getTree(levelObjectNode, terrain, scale, rotation);
@@ -65,7 +65,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
             XmlNode classNode = levelObjectNode.Attributes.GetNamedItem("class");
             if (classNode == null)
             {
-                objectClass = "levelObject";
+                objectClass = "meshObject";
             }
             else objectClass = classNode.InnerText;
         }
@@ -80,13 +80,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
         }
 
 
-        private static ILevelObject getDefault(XmlNode levelObjectNode, Terrain terrain, string mediaDir, Vector3 scale, Vector3 rotation)
+        private static ILevelObject getMeshObject(XmlNode levelObjectNode, Terrain terrain, string mediaDir, Vector3 scale, Vector3 rotation)
         {
             float[] pos = TgcParserUtils.parseFloat2Array(levelObjectNode.InnerText);
           
             string path = mediaDir + levelObjectNode.Attributes.GetNamedItem("mesh").InnerText;
                        
-            return new LevelObject(path, terrain.getPosition(pos[0], pos[1]), scale, rotation);
+            return new MeshObject(path, terrain.getPosition(pos[0], pos[1]), scale, rotation);
         }
 
     }
