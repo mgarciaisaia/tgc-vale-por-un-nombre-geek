@@ -194,7 +194,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
          
          private bool canSeeWithObstacles(Vector3 targetPoint, List<ILevelObject> obstacles)
          {
-             throw new NotImplementedException();
+             return true;
          }
 
          private void changeColor(bool canSee)

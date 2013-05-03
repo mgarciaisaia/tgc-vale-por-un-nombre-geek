@@ -7,23 +7,19 @@
     scaleY="2.0"
     ></terrain>
   
-  <enemies>
+  
     
-    <soldier>
+  <enemy class="soldier">
 
       <waitpoint>(460,620)</waitpoint>
       <waitpoint>(-560,600)</waitpoint>
       <waitpoint>(-800,-260)</waitpoint>
-     
-      
-    </soldier>
+  </enemy>
     
-  </enemies>
-  <commandos>
-    <commando>(-200,200)</commando>
-    <commando>(200,200)</commando>
-  </commandos>
-  <levelObjects>
-    <levelObject mesh="ArbolSelvatico2\\ArbolSelvatico2-TgcScene.xml" scale="(5,5,5)">(680,-659)</levelObject>
-  </levelObjects>       
+ 
+  <commando>(-200,200)</commando>
+  <commando>(200,200)</commando>
+ 
+  <levelObject mesh="ArbolSelvatico2\\ArbolSelvatico2-TgcScene.xml" scale="(5,5,5)">(680,-659)</levelObject>
+        
 </level>
