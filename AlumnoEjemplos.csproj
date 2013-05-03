@@ -92,9 +92,9 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\ICharacterRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\SkeletalRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Commando.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\level\LevelParser\XMLCommando.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\level\LevelParser\XMLEnemy.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\level\LevelParser\XMLLevelObject.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLCommando.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLEnemy.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLLevelObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\ILevelObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\Soldier.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\OnWaitpoint.cs" />
@@ -106,8 +106,8 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\VisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\WideVisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\Level.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\level\LevelParser\XMLLevelParser.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\objects\LevelObject.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLLevelParser.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\objects\MeshObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\Tree.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\BindedCommand.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\Command.cs" />

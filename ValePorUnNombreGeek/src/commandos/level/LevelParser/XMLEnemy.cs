@@ -9,7 +9,7 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.TgcSceneLoader;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
 {
     class XMLEnemy
     {
