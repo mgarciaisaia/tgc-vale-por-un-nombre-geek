@@ -34,7 +34,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.LevelParser
 
             switch (objectClass.InnerText)
             {
-
+                case "levelObject":
+                    levelObject = XMLLevelObject.getDefault(levelObjectNode, terrain, mediaDir, scale);
+                    break;
             }
 
 

@@ -195,6 +195,7 @@
     <Content Include="ValePorUnNombreGeek\documentacion\umlCharacter.png" />
     <Content Include="ValePorUnNombreGeek\niveles\another-level.xml" />
     <Content Include="ValePorUnNombreGeek\niveles\default-level.xml" />
+    <Content Include="ValePorUnNombreGeek\niveles\vacio-level.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
