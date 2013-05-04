@@ -14,8 +14,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
     {
         public static ILevelObject getLevelObject(XmlNode levelObjectNode, Terrain terrain, string mediaDir)
         {
-            ILevelObject levelObject = null;
-        
             string objectClass;
             Vector3 scale, rotation;
 
@@ -25,16 +23,27 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
             switch (objectClass)
             {
                 case "meshObject":
-                    levelObject = XMLLevelObject.getMeshObject(levelObjectNode, terrain, mediaDir, scale, rotation);
-                    break;
+                    return XMLLevelObject.getMeshObject(levelObjectNode, terrain, mediaDir, scale, rotation);
+                    
                 case "tree":
-                    levelObject = XMLLevelObject.getTree(levelObjectNode, terrain, scale, rotation);
-                    break;
+                    return XMLLevelObject.getTree(levelObjectNode, terrain, scale, rotation);
+                   
+                case "wall":
+                    return XMLLevelObject.getWall(levelObjectNode, terrain);
+                   
             }
 
+            return null;
+    
+        }
 
-            return levelObject;
+        private static ILevelObject getWall(XmlNode levelObjectNode, Terrain terrain)
+        {
+            float[] pos = TgcParserUtils.parseFloat2Array(levelObjectNode.InnerText);
+            Vector3 size = TgcParserUtils.float3ArrayToVector3(TgcParserUtils.parseFloat3Array(levelObjectNode.Attributes.GetNamedItem("size").InnerText));
+            
 
+            return new Wall(terrain.getPosition(pos[0], pos[1]), size);
         }
 
         private static void getClassScaleAndRotation(XmlNode levelObjectNode, out string objectClass, out Vector3 scale, out Vector3 rotation)
