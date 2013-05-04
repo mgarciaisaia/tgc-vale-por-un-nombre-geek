@@ -22,8 +22,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
         public Wall(Vector3 center, Vector3 size){
                
             box = TgcBox.fromSize(center, size, TgcTexture.createTexture(TEXTURE_PATH));
-            
-            this.center = center;
+
+            this.center = box.BoundingBox.calculateBoxCenter();
             radius = box.BoundingBox.calculateBoxRadius();
             
  

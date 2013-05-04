@@ -37,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             commandos = new List<Commando>();
             objects = new List<ILevelObject>();
             this.terrain = terrain;
-            quadtree = new QuadTreeDummie(terrain);           
+            quadtree = new QuadTreeDummie(terrain);
             
         }
 
@@ -141,7 +141,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
               result = TgcCollisionUtils.classifyBoxBox(collider.BoundingBox, colisionable.BoundingBox);
 
              
-                return result != TgcCollisionUtils.BoxBoxResult.Afuera;
+               if (result != TgcCollisionUtils.BoxBoxResult.Afuera) return true;
               
             }
 
@@ -158,11 +158,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             foreach (Character c in this.Characters)
             
                 if(thereIsSphereCollision(collider, c)) collisionables.Add(c);
-                
-            
+
+
             foreach (ILevelObject o in this.Objects)
-            
+
                 if (thereIsSphereCollision(collider, o)) collisionables.Add(o);
+               
                         
 
             return collisionables;
