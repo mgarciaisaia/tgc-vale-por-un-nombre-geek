@@ -66,7 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
                     exMediaDir + "StandBy-TgcSkeletalAnim.xml",
                     exMediaDir + "Jump-TgcSkeletalAnim.xml",
                     myMediaDir + "Die-TgcSkeletalAnim.xml",
-                    myMediaDir + "CrouchWalk-TgcSkeletalAnim.xml"
+                    exMediaDir + "CrouchWalk-TgcSkeletalAnim.xml"
                 };
         }
 
