@@ -1,6 +1,11 @@
 {\rtf1\ansi\ansicpg1252\deff0\deflang3082{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang10\f0\fs22 A continuaci\'f3n destacamos las decisiones de dise\'f1o y las caracter\'edsticas m\'e1s importantes que aplican conceptos de la materia\par
+{\*\generator Msftedit 5.41.21.2509;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang10\f0\fs22 A continuaci\'f3n destacamos las decisiones de dise\'f1o y las caracter\'edsticas m\'e1s importantes que aplican conceptos de la materia\par
 \par
+\b Picking Ray\par
+\b0\i Intersecci\'f3n con HeightMap\ul\i0\par
+\ulnone Para hallar la intersecci\'f3n entre el Picking Ray y el HeightMap, simplemente buscamos el punto del rayo que coincide con un punto en el terreno (dado que el rayo incide casi transversalmente debido a la c\'e1mara).\par
+Esto en un principio es f\'e1cil: una funci\'f3n del HeightMap nos devuelve puntos dado un determinado Y. Hallar la intersecci\'f3n se reduce entonces a variar los valores de Y en la ecucaci\'f3n del rayo y encontrar el valor para el cual (x,y,z) coincide para ambos elementos.\par
+Sin embargo hay que hacer una salvedad. Buscar valores para (x,y,z) desde el origen del rayo recorriendo su verctor direcci\'f3n resulta poco performante. Esto se debe a que el origen se encuenta donde est\'e1 la c\'e1mara, y el punto intersecci\'f3n est\'e1 generalmente al nivel y=0 del terreno. Es decir que estamos recorriendo la recta desde la c\'e1mara hasta el plano m\'e1s bajo del HeightMap, y esto resulta en \par
 -Aplicaci\'f3n del patr\'f3n Singleton para el desarrollo de un Picking Ray que se intersecta con un HeightMap: dado que muchas caracter\'edsticas del juego utilizan el Picking Ray para hallar intersecciones con el HeightMap o su plano m\'e1s bajo, se decidi\'f3 desarrollar una clase que hereda de Picking Ray e implementa el patr\'f3n Singleton. Esto nos evita tener multiples instancias simulat\'e1neas de un mismo elemento que es utilizado por muchos otros componentes. //TODO explicar lo importante, interseccion con heightmap y ground\par
 \par
 -Selecci\'f3n m\'faltiple utilizando TgcBox: utilizando el Picking Ray, y hallando la intersecci\'f3n de este con el HeightMap, es f\'e1cil encontrar los puntos m\'e1ximos y m\'ednimos de la TgcBox. Luego la selecci\'f3n de personajes se resuelve verificando colisiones entre la caja y las Bounding Box de estos.\par

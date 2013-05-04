@@ -130,6 +130,8 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\Sky.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\IQuadTree.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTreeDummie.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\pruebas\cilindro\Cylinder.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\pruebas\cilindro\PruebaCilindro.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\StaticCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\EjemploAlumno.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\GeneralMethods.cs" />
