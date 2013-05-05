@@ -61,6 +61,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\shaders.fx");
             skeletal.Effect = effect;
             terrain.Effect = effect;
+            GuiController.Instance.Modifiers.addFloat("timeSpeed", 0.01f, 0.5f, 0.25f);
 
             FreeCamera camera = new FreeCamera();
             camera.Enable = true;
@@ -112,15 +113,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
         public override void render(float elapsedTime)
         {
 
-            time += 0.1f*elapsedTime;
-            renderNight();
+           
+            renderNight(elapsedTime);
             //renderShadows();
 
        }
 
-        private void renderNight()
+        private void renderNight(float elapsedTime)
         {
-            effect.SetValue("time", time);
+            time += (float)GuiController.Instance.Modifiers.getValue("timeSpeed")* elapsedTime;
+            effect.SetValue("daytime", FastMath.Abs(FastMath.Cos(time)));
            
             skeletal.Technique = "SKELETAL_NIGHT";
 
