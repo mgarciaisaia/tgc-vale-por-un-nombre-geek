@@ -19,12 +19,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             int screenHeight = GuiController.Instance.D3dDevice.Viewport.Height;
             int screenWidth = GuiController.Instance.D3dDevice.Viewport.Width;
 
-            this.controlPanelSprite = new Sprite(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Sprites\\Barrita.jpg", GuiController.Instance.D3dDevice);
+            this.controlPanelSprite = new Sprite(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Sprites\\panelMadera.png", GuiController.Instance.D3dDevice);
 
             Rectangle drawingArea = new Rectangle(0, 0, this.controlPanelSprite.ImageInformation.Width, this.controlPanelSprite.ImageInformation.Height);
             this.controlPanelSprite.RegionRectangle = drawingArea;
             this.controlPanelSprite.Position = new Vector2(0, screenHeight - this.controlPanelSprite.ImageInformation.Height);
-            this.controlPanelSprite.Scale = new Vector2(screenWidth / 1000f, 1f);
+            this.controlPanelSprite.Scale = new Vector2(screenWidth / (1.0f * this.controlPanelSprite.ImageInformation.Width), 1f);
+            
 
             this.drawer = new SpriteDrawer();
             this.drawer.addSpriteToDraw(this.controlPanelSprite);
