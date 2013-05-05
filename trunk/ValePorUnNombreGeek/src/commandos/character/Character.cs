@@ -6,6 +6,8 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepres
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.Shaders;
+using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -13,6 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
     {
         protected ICharacterRepresentation representation;
         protected Level level;
+        protected string technique;
 
         /*******************************
          * INICIALIZACION **************
@@ -21,6 +24,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public Character(Vector3 _position)
         {
             this.loadCharacterRepresentation(_position);
+            this.technique = representation.Technique;
+            this.Effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\shaders.fx");
             this.Selected = false;
             this.Dead = false;
         }
@@ -115,21 +120,39 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
          *******************************/
 
         public abstract void update(float elapsedTime);
-        
+
+        protected Color selectionColor = Color.Red;
+        public Color SelectionColor
+        {
+            get { return this.selectionColor; }
+            set { this.selectionColor = value; }
+        }
+
         public virtual void render()
         {
+            string technique = this.technique;
+
             if (this.Selected)
             {
-                this.BoundingBox.render();
-                if (this.hasTarget())
-                {
-                    //marcamos hacia donde vamos
-                    TgcBox marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
-                    marcaDePicking.Position = this.target.Position;
-                    marcaDePicking.render();
-                }
+                technique = selectionAction(technique);
             }
+            representation.Technique = representation.Prefix+ "_" + technique;
             representation.render();
+        }
+
+        protected virtual string selectionAction(string technique)
+        {
+            technique = this.technique + "_SELECTED";
+            this.representation.Effect.SetValue("selectionColor", ColorValue.FromColor(this.selectionColor));
+
+            if (this.hasTarget())
+            {
+                //marcamos hacia donde vamos
+                TgcBox marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
+                marcaDePicking.Position = this.target.Position;
+                marcaDePicking.render();
+            }
+            return technique;
         }
 
         #region Target
@@ -139,6 +162,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
          *******************************/
 
         private ITargeteable target;
+
 
         internal void goToTarget(float elapsedTime)
         {
@@ -224,8 +248,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public string Technique
         {
-            get { return representation.Technique; }
-            set { representation.Technique = value; }
+            get { return this.technique; }
+            set { this.technique = value; }
         }
       
     }

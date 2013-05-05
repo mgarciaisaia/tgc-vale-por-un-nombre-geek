@@ -46,5 +46,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         bool isCrouched();
 
 
+
+        string Prefix { get;}
     }
 }

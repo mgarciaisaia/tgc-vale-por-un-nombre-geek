@@ -132,6 +132,7 @@
     <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTreeDummie.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\cilindro\Cylinder.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\cilindro\PruebaCilindro.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaShaders.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\StaticCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\EjemploAlumno.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\GeneralMethods.cs" />
@@ -202,6 +203,7 @@
     <Content Include="ValePorUnNombreGeek\niveles\vacio-level.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\shaders.fx" />
     <None Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
     <None Include="ValePorUnNombreGeek\documentacion\Decisiones de diseño.rtf" />
     <None Include="ValePorUnNombreGeek\documentacion\diagrama_de_clases.class.violet" />
