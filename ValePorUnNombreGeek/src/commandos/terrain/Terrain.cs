@@ -129,7 +129,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             float y;
             ret = Vector3.Empty;
 
-            if (!this.getY(x, z, out y)) return false;
+            if (!this.getY(x, z, out y))
+            {
+                ret = new Vector3(x, 0, z);
+            }
 
             ret = new Vector3(x, y, z);
             return true;
