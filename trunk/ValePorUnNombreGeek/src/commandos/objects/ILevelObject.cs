@@ -20,7 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 
         float Radius { get; }
 
-        Effect effect { get; set;}
+        Effect Effect { get; set;}
 
         string Technique { get; set; }
       
