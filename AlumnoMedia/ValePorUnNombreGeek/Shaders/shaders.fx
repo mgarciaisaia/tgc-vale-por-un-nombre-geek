@@ -236,14 +236,15 @@ float4 ps_DiffuseMap_Selected( float2 Texcoord: TEXCOORD0) : COLOR0
 	return tex2D(diffuseMap, Texcoord)*0.5 + selectionColor*0.5  + float4(0.2,0.2,0.2,0);
 }
 
+float time;
 
 float4 ps_Night( float2 Texcoord: TEXCOORD0, float4 Color:COLOR0) : COLOR0
 {      
 	
 	float4 fvBaseColor = tex2D( diffuseMap, Texcoord );
-	  
- 
-	return  (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)*float4(0.5,0.5,0.7,0); 
+	float4 nightColor = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)*float4(0.5,0.5,0.7,0);
+	float absCos = abs(cos(time));
+	return fvBaseColor*absCos + nightColor*(1-absCos); 
 }
 
 

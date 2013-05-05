@@ -39,6 +39,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
         SkeletalRepresentation skeletal;
         Effect effect;
         Terrain terrain;
+        float time=0;
 
         // Shadow map
         readonly int SHADOWMAP_SIZE = 1024;
@@ -111,7 +112,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
         public override void render(float elapsedTime)
         {
 
-
+            time += 0.1f*elapsedTime;
             renderNight();
             //renderShadows();
 
@@ -119,9 +120,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 
         private void renderNight()
         {
-              skeletal.Technique = "SKELETAL_NIGHT";
+            effect.SetValue("time", time);
+           
+            skeletal.Technique = "SKELETAL_NIGHT";
 
-              terrain.Technique = "NIGHT";
+            terrain.Technique = "NIGHT";
             
             skeletal.render();
 
