@@ -48,7 +48,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
             get { return this.radius; }
         }
 
-        public Effect effect
+        public Effect Effect
         {
             get
             {
