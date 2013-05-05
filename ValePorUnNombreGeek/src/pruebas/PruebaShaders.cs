@@ -187,7 +187,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             }
             else
             {
-                skeletal.Technique = "SKELETAL_SHADOWS";
+                skeletal.Technique = "SKELETAL_DIFFUSE_MAP_SHADOWS";
             }
             
             skeletal.render();
