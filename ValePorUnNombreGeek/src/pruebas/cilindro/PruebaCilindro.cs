@@ -7,6 +7,7 @@ using Microsoft.DirectX.Direct3D;
 using System.Drawing;
 using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 {
@@ -35,7 +36,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         public override void init()
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
-            this.cylinder = new Cylinder(new Vector3(0, 0, 0), 100, 100);
+            this.cylinder = new Cylinder(new Vector3(0, 0, -100), 20, 10);
+            FreeCamera camera = new FreeCamera();
+            camera.Enable = true;
         }
 
 
