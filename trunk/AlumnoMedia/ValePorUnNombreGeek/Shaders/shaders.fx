@@ -8,30 +8,17 @@ float4x4 matWorld; //Matriz de transformacion World
 float4x4 matWorldView; //Matriz World * View
 float4x4 matWorldViewProj; //Matriz World * View * Projection
 float4x4 matInverseTransposeWorld; //Matriz Transpose(Invert(World))
-float4 selectionColor;
 
-//Textura para DiffuseMap
-texture texDiffuseMap;
-sampler2D diffuseMap = sampler_state
-{
-	Texture = (texDiffuseMap);
-	ADDRESSU = WRAP;
-	ADDRESSV = WRAP;
-	MINFILTER = LINEAR;
-	MAGFILTER = LINEAR;
-	MIPFILTER = LINEAR;
-};
+
+/**************************************************************************************/
+/* SKINNING (Posicionar el mesh segun el skeleton)*/  
+/**************************************************************************************/
 
 //Matrix Pallette para skinning
 static const int MAX_MATRICES = 26;
 float4x3 bonesMatWorldArray[MAX_MATRICES];
 
 
-
-
-
-
-//Input del Vertex Shader
 struct SKINNING_INPUT
 {
 	float4 Position : POSITION;
@@ -43,7 +30,7 @@ struct SKINNING_INPUT
 
 };
 
-//Output del Vertex Shader
+
 struct SKINNING_OUTPUT
 {
 	float4 Position : POSITION;
@@ -54,12 +41,11 @@ struct SKINNING_OUTPUT
 };
 
 
-
-
 SKINNING_OUTPUT skinning(SKINNING_INPUT input){
 
 	SKINNING_OUTPUT output;
-		//Pasar indices de float4 a array de int
+	
+	//Pasar indices de float4 a array de int
 	int BlendIndicesArray[4] = (int[4])input.BlendIndices;
 	
 	//Skinning de posicion
@@ -96,13 +82,7 @@ SKINNING_OUTPUT skinning(SKINNING_INPUT input){
 	return output;
 }
 
-SKINNING_INPUT fillSkinningInput(
-	float4 Position : POSITION, 
-	float3 Normal :   NORMAL, 
-	float3 Tangent : TANGENT, 
-	float3 Binormal : BINORMAL,
-	float4 BlendWeights : BLENDWEIGHT,
-    float4 BlendIndices : BLENDINDICES)
+SKINNING_INPUT fillSkinningInput(float4 Position, float3 Normal, float3 Tangent, float3 Binormal, float4 BlendWeights, float4 BlendIndices)
 {
 	SKINNING_INPUT input;
 	input.Position = Position;
@@ -113,13 +93,65 @@ SKINNING_INPUT fillSkinningInput(
 	input.BlendIndices = BlendIndices;
 
 	return input;
-
-
 }
 
 
-//Input del Vertex Shader
+/**************************************************************************************/
+/* DIFFUSE MAP */
+/**************************************************************************************/
+
+//Textura para DiffuseMap
+texture texDiffuseMap;
+sampler2D diffuseMap = sampler_state
+{
+	Texture = (texDiffuseMap);
+	ADDRESSU = WRAP;
+	ADDRESSV = WRAP;
+	MINFILTER = LINEAR;
+	MAGFILTER = LINEAR;
+	MIPFILTER = LINEAR;
+};
+
+
 struct VS_INPUT
+{
+	float4 Position : POSITION0;
+	float4 Color : COLOR0; 
+	float2 Texcoord : TEXCOORD0;
+
+};
+
+
+struct VS_OUTPUT
+{
+	float4 Position : POSITION0;
+	float4 Color : COLOR0; 
+	float2 Texcoord : TEXCOORD0;
+};
+
+
+//Vertex Shader comun
+VS_OUTPUT vs_DiffuseMap(VS_INPUT input)
+{
+	VS_OUTPUT output;
+
+	//Enviar color directamente
+	output.Color = input.Color;
+
+	//Enviar Texcoord directamente
+	output.Texcoord = input.Texcoord;
+	
+	//Proyectar posicion 
+	output.Position = mul(input.Position, matWorldViewProj);
+
+	
+	return output;
+}
+
+
+//Para TgcSkeletalMesh es diferente
+
+struct VS_SKELETAL_INPUT
 {
 	float4 Position : POSITION0;
 	float3 Normal :   NORMAL0;
@@ -132,8 +164,8 @@ struct VS_INPUT
 
 };
 
-//Output del Vertex Shader
-struct VS_OUTPUT
+
+struct VS_SKELETAL_OUTPUT
 {
 	float4 Position : POSITION0;
 	float3 WorldNormal : TEXCOORD1;
@@ -144,9 +176,9 @@ struct VS_OUTPUT
 };
 
 //Vertex Shader (Es el que usa TgcSkeletalMesh normalmente)
-VS_OUTPUT vs_Skeletal_DiffuseMap(VS_INPUT input)
+VS_SKELETAL_OUTPUT vs_Skeletal_DiffuseMap(VS_SKELETAL_INPUT input)
 {
-	VS_OUTPUT output;
+	VS_SKELETAL_OUTPUT output;
 
 	SKINNING_OUTPUT sOut = skinning(
 		fillSkinningInput(
@@ -172,12 +204,14 @@ VS_OUTPUT vs_Skeletal_DiffuseMap(VS_INPUT input)
 	output.Texcoord = input.Texcoord;
 	
 	
-	//Proyectar posicion (teniendo en cuenta lo que se hizo por skinning)
+	//Proyectar posicion 
 	output.Position = mul(output.Position, matWorldViewProj);
 
 	
 	return output;
 }
+
+
 
 
 //Input del Pixel Shader
@@ -195,10 +229,37 @@ float4 ps_DiffuseMap(PS_DIFFUSE_MAP input) : COLOR0
 }
 
 
+//Cambia de color el mesh al color de seleccion
+float4 selectionColor;
 
-/*
-* Technique DIFFUSE_MAP
-*/
+float4 ps_DiffuseMap_Selected( float2 Texcoord: TEXCOORD0) : COLOR0
+{      
+	return tex2D(diffuseMap, Texcoord)*0.5 + selectionColor*0.5  + float4(0.2,0.2,0.2,0);
+}
+
+/**************************************************************************************/
+/* Techniques DIFFUSE MAP */
+/**************************************************************************************/
+
+technique DIFFUSE_MAP
+{
+   pass Pass_0
+   {
+	  VertexShader = compile vs_2_0 vs_DiffuseMap();
+	  PixelShader = compile ps_2_0 ps_DiffuseMap();
+   }
+}
+
+technique DIFFUSE_MAP_SELECTED
+{
+   pass Pass_0
+   {
+	  VertexShader = compile vs_2_0 vs_DiffuseMap();
+	  PixelShader = compile ps_2_0 ps_DiffuseMap_Selected();
+   }
+
+}
+
 technique SKELETAL_DIFFUSE_MAP
 {
    pass Pass_0
@@ -208,28 +269,21 @@ technique SKELETAL_DIFFUSE_MAP
    }
 }
 
-float4 ps_Selected( float2 Texcoord: TEXCOORD0) : COLOR0
-{      
-	return tex2D(diffuseMap, Texcoord)*0.5 + selectionColor*0.5  + float4(0.2,0.2,0.2,0);
-}
-
 
 technique SKELETAL_DIFFUSE_MAP_SELECTED
 {
    pass Pass_0
    {
 	  VertexShader = compile vs_2_0 vs_Skeletal_DiffuseMap();
-	  PixelShader = compile ps_2_0 ps_Selected();
+	  PixelShader = compile ps_2_0 ps_DiffuseMap_Selected();
    }
 
 }
 
 
-
-/*
-        SOMBRAS
-*/
-
+/**************************************************************************************/
+/* SHADOW MAP */
+/**************************************************************************************/
 
 
 #define SMAP_SIZE 1024
@@ -256,20 +310,43 @@ sampler_state
 };
 
 
-technique SKELETAL_SHADOWS
-{
-    pass p0
-    {
-        VertexShader = compile vs_2_0 vs_Skeletal_DiffuseMap();
-		PixelShader = compile ps_2_0 ps_DiffuseMap();
-    }
-}
+
+//Aca irian los shaders.
+
+
+
+/**************************************************************************************/
+/* Techniques SHADOW MAP */
+/**************************************************************************************/
 
 technique SKELETAL_SHADOW_MAP
 {
     pass p0
-    {
-        VertexShader = compile vs_2_0 vs_Skeletal_DiffuseMap();
-		PixelShader = compile ps_2_0 ps_DiffuseMap();
+    { //Remplazar por shaders correspondientes
+        VertexShader = compile vs_3_0 vs_Skeletal_DiffuseMap();
+		PixelShader = compile ps_3_0 ps_DiffuseMap();
     }
 }
+
+
+/**************************************************************************************/
+/* Techniques DIFFUSE MAP WITH SHADOWS */
+/**************************************************************************************/
+technique SKELETAL_DIFFUSE_MAP_SHADOWS
+{
+    pass p0
+    {//Remplazar por shaders correspondientes
+        VertexShader = compile vs_3_0 vs_Skeletal_DiffuseMap();
+		PixelShader = compile ps_3_0 ps_DiffuseMap();
+    }
+}
+
+technique SKELETAL_DIFFUSE_MAP_SHADOWS_SELECTED
+{
+    pass p0
+    {//Remplazar por shaders correspondientes
+        VertexShader = compile vs_3_0 vs_Skeletal_DiffuseMap();
+		PixelShader = compile ps_3_0 ps_DiffuseMap_Selected();
+    }
+}
+
