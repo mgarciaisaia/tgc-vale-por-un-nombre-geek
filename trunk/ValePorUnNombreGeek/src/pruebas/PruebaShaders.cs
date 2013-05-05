@@ -59,8 +59,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             
             effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\shaders.fx");
             skeletal.Effect = effect;
+            terrain.Effect = effect;
+
             FreeCamera camera = new FreeCamera();
             camera.Enable = true;
+            //initShadows(d3dDevice);
+
+        }
+
+        private void initShadows(Device d3dDevice)
+        {
 
 
             //--------------------------------------------------------------------------------------
@@ -97,24 +105,40 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             float K = 300;
             GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(80, 120, 0));
             GuiController.Instance.Modifiers.addVertex3f("LightLookAt", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(0, 0, 0));
-
         }
 
 
         public override void render(float elapsedTime)
         {
-                
 
 
+            renderNight();
+            //renderShadows();
+
+       }
+
+        private void renderNight()
+        {
+              skeletal.Technique = "SKELETAL_NIGHT";
+
+              terrain.Technique = "NIGHT";
+            
+            skeletal.render();
+
+            terrain.render();
+        }
+
+        private void renderShadows()
+        {
             Device device = GuiController.Instance.D3dDevice;
             Control panel3d = GuiController.Instance.Panel3d;
             float aspectRatio = (float)panel3d.Width / (float)panel3d.Height;
-         
+
             g_LightPos = (Vector3)GuiController.Instance.Modifiers["LightLookFrom"];
             g_LightDir = (Vector3)GuiController.Instance.Modifiers["LightLookAt"] - g_LightPos;
             g_LightDir.Normalize();
 
-           // Shadow maps:
+            // Shadow maps:
             device.EndScene();      // termino el thread anterior
 
             GuiController.Instance.RotCamera.CameraCenter = new Vector3(0, 0, 0);
@@ -130,8 +154,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             // dibujo la escena pp dicha
             device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
             RenderScene(false);
-
-       }
+        }
 
 
 

@@ -237,6 +237,15 @@ float4 ps_DiffuseMap_Selected( float2 Texcoord: TEXCOORD0) : COLOR0
 }
 
 
+float4 ps_Night( float2 Texcoord: TEXCOORD0, float4 Color:COLOR0) : COLOR0
+{      
+	
+	float4 fvBaseColor = tex2D( diffuseMap, Texcoord );
+	  
+ 
+	return  (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)*float4(0.5,0.5,0.7,0); 
+}
+
 
 /**************************************************************************************/
 /* Techniques DIFFUSE MAP */
@@ -249,16 +258,6 @@ technique DIFFUSE_MAP
 	  VertexShader = compile vs_2_0 vs_DiffuseMap();
 	  PixelShader = compile ps_2_0 ps_DiffuseMap();
    }
-}
-
-technique DIFFUSE_MAP_SELECTED
-{
-   pass Pass_0
-   {
-	  VertexShader = compile vs_2_0 vs_DiffuseMap();
-	  PixelShader = compile ps_2_0 ps_DiffuseMap_Selected();
-   }
-
 }
 
 technique SKELETAL_DIFFUSE_MAP
@@ -282,6 +281,34 @@ technique SKELETAL_DIFFUSE_MAP_SELECTED
 }
 
 
+technique NIGHT
+{
+   pass Pass_0
+   {
+	  VertexShader = compile vs_2_0 vs_DiffuseMap();
+	  PixelShader = compile ps_2_0 ps_Night();
+   }
+}
+
+technique SKELETAL_NIGHT
+{
+   pass Pass_0
+   {
+	  VertexShader = compile vs_2_0 vs_Skeletal_DiffuseMap();
+	  PixelShader = compile ps_2_0 ps_Night();
+   }
+
+}
+
+technique SKELETAL_NIGHT_SELECTED
+{
+   pass Pass_0
+   {
+	  VertexShader = compile vs_2_0 vs_Skeletal_DiffuseMap();
+	   PixelShader = compile ps_2_0 ps_DiffuseMap_Selected();
+   }
+
+}
 /**************************************************************************************/
 /* SHADOW MAP */
 /**************************************************************************************/
