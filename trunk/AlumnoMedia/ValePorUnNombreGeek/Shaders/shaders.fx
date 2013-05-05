@@ -192,7 +192,6 @@ VS_SKELETAL_OUTPUT vs_Skeletal_DiffuseMap(VS_SKELETAL_INPUT input)
 					);
 
 
-	output.Position = sOut.Position;
 	output.WorldNormal = sOut.WorldNormal;
     output.WorldTangent	= sOut.WorldTangent;
     output.WorldBinormal = sOut.WorldBinormal;
@@ -202,13 +201,13 @@ VS_SKELETAL_OUTPUT vs_Skeletal_DiffuseMap(VS_SKELETAL_INPUT input)
 
 	//Enviar Texcoord directamente
 	output.Texcoord = input.Texcoord;
-	
-	
+		
 	//Proyectar posicion 
-	output.Position = mul(output.Position, matWorldViewProj);
+	output.Position = mul(sOut.Position, matWorldViewProj);
 
 	
 	return output;
+
 }
 
 
@@ -236,6 +235,8 @@ float4 ps_DiffuseMap_Selected( float2 Texcoord: TEXCOORD0) : COLOR0
 {      
 	return tex2D(diffuseMap, Texcoord)*0.5 + selectionColor*0.5  + float4(0.2,0.2,0.2,0);
 }
+
+
 
 /**************************************************************************************/
 /* Techniques DIFFUSE MAP */
