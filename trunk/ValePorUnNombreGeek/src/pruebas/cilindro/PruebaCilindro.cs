@@ -17,6 +17,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
     public class PruebaCilindro : TgcExample
     {
         Cylinder cylinder;
+        Vector3 lastCylinderPos;
 
         public override string getCategory()
         {
@@ -36,15 +37,26 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         public override void init()
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
-            this.cylinder = new Cylinder(new Vector3(0, 0, -100), 20, 10);
+
             FreeCamera camera = new FreeCamera();
             camera.Enable = true;
+
+            this.lastCylinderPos = new Vector3(0, 0, 0);
+            GuiController.Instance.Modifiers.addVertex3f("posicion", new Vector3(-100, -100, -100), new Vector3(100, 100, 100), this.lastCylinderPos);
+
+            this.cylinder = new Cylinder(this.lastCylinderPos, 20, 10);
         }
 
 
         public override void render(float elapsedTime)
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
+            Vector3 newCylinderPos = (Vector3)GuiController.Instance.Modifiers.getValue("posicion");
+            if(this.lastCylinderPos != newCylinderPos)
+            {
+                this.lastCylinderPos = newCylinderPos;
+                this.cylinder.Position = newCylinderPos;
+            }
             this.cylinder.render();
         }
 
