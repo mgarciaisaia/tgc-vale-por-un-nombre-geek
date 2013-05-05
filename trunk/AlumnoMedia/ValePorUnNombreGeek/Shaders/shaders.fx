@@ -32,36 +32,33 @@ float4x3 bonesMatWorldArray[MAX_MATRICES];
 
 
 //Input del Vertex Shader
-struct VS_INPUT
+struct SKINNING_INPUT
 {
-	float4 Position : POSITION0;
-	float3 Normal :   NORMAL0;
-	float3 Tangent : TANGENT0;
-	float3 Binormal : BINORMAL0;
+	float4 Position : POSITION;
+	float3 Normal :   NORMAL;
+	float3 Tangent : TANGENT;
+	float3 Binormal : BINORMAL;
 	float4 BlendWeights : BLENDWEIGHT;
     float4 BlendIndices : BLENDINDICES;
-	float4 Color : COLOR0; 
-	float2 Texcoord : TEXCOORD0;
 
 };
 
 //Output del Vertex Shader
-struct VS_OUTPUT
+struct SKINNING_OUTPUT
 {
-	float4 Position : POSITION0;
-	float3 WorldNormal : TEXCOORD1;
-    float3 WorldTangent	: TEXCOORD2;
-    float3 WorldBinormal : TEXCOORD3;
-	float4 Color : COLOR0; 
-	float2 Texcoord : TEXCOORD0;
+	float4 Position : POSITION;
+	float3 WorldNormal : TEXCOORD;
+    float3 WorldTangent	: TEXCOORD;
+    float3 WorldBinormal : TEXCOORD;
+	
 };
 
 
 
 
-VS_OUTPUT skinning(VS_INPUT input){
+SKINNING_OUTPUT skinning(SKINNING_INPUT input){
 
-	VS_OUTPUT output;
+	SKINNING_OUTPUT output;
 		//Pasar indices de float4 a array de int
 	int BlendIndicesArray[4] = (int[4])input.BlendIndices;
 	
@@ -94,21 +91,85 @@ VS_OUTPUT skinning(VS_INPUT input){
 	skinBinormal += mul(input.Binormal, (float3x3)bonesMatWorldArray[BlendIndicesArray[3]]) * input.BlendWeights.w;
 	output.WorldBinormal = normalize(skinBinormal);
 
-	//Enviar color directamente
-	output.Color = input.Color;
 
-	//Enviar Texcoord directamente
-	output.Texcoord = input.Texcoord;
 	  
 	return output;
 }
+
+SKINNING_INPUT fillSkinningInput(
+	float4 Position : POSITION, 
+	float3 Normal :   NORMAL, 
+	float3 Tangent : TANGENT, 
+	float3 Binormal : BINORMAL,
+	float4 BlendWeights : BLENDWEIGHT,
+    float4 BlendIndices : BLENDINDICES)
+{
+	SKINNING_INPUT input;
+	input.Position = Position;
+	input.Normal = Normal;
+	input.Tangent = Tangent;
+	input.Binormal = Binormal;
+	input.BlendWeights = BlendWeights;
+	input.BlendIndices = BlendIndices;
+
+	return input;
+
+
+}
+
+
+//Input del Vertex Shader
+struct VS_INPUT
+{
+	float4 Position : POSITION0;
+	float3 Normal :   NORMAL0;
+	float3 Tangent : TANGENT0;
+	float3 Binormal : BINORMAL0;
+	float4 BlendWeights : BLENDWEIGHT;
+    float4 BlendIndices : BLENDINDICES;
+	float4 Color : COLOR0; 
+	float2 Texcoord : TEXCOORD0;
+
+};
+
+//Output del Vertex Shader
+struct VS_OUTPUT
+{
+	float4 Position : POSITION0;
+	float3 WorldNormal : TEXCOORD1;
+    float3 WorldTangent	: TEXCOORD2;
+    float3 WorldBinormal : TEXCOORD3;
+	float4 Color : COLOR0; 
+	float2 Texcoord : TEXCOORD0;
+};
+
 //Vertex Shader (Es el que usa TgcSkeletalMesh normalmente)
 VS_OUTPUT vs_Skeletal_DiffuseMap(VS_INPUT input)
 {
 	VS_OUTPUT output;
 
-	output = skinning(input);
+	SKINNING_OUTPUT sOut = skinning(
+		fillSkinningInput(
+							input.Position, 
+							input.Normal, 
+							input.Tangent, 
+							input.Binormal,
+							input.BlendWeights,
+							input.BlendIndices
+						)
+					);
 
+
+	output.Position = sOut.Position;
+	output.WorldNormal = sOut.WorldNormal;
+    output.WorldTangent	= sOut.WorldTangent;
+    output.WorldBinormal = sOut.WorldBinormal;
+
+	//Enviar color directamente
+	output.Color = input.Color;
+
+	//Enviar Texcoord directamente
+	output.Texcoord = input.Texcoord;
 	
 	
 	//Proyectar posicion (teniendo en cuenta lo que se hizo por skinning)
