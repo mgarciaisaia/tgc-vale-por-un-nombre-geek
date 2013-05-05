@@ -227,7 +227,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             mesh.moveOrientedY(movement);
 
         }
-
+        public string Prefix{ get{ return "SKELETAL";}}
         public Effect Effect { get { return this.mesh.Effect; } set {this.mesh.Effect = value ;} }
         public string Technique { get { return this.mesh.Technique; } set { this.mesh.Technique = value; } }
     }

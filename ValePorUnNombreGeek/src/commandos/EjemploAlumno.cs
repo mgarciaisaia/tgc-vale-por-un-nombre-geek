@@ -76,11 +76,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         public override void init()
         {
             string initialLevel = GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\niveles\\" + "default-level.xml";
-           
+            
             GuiController.Instance.Modifiers.addFile("Level", initialLevel, "-level.xml|*-level.xml");
             //Crear SkyBox
             sky = new Sky();
-
+            this.level = null;
             loadLevel(initialLevel);
 
             //Panel de control in game
@@ -155,9 +155,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void close()
         {
+            
             controlPanel.dispose();
             sky.dispose();
             level.dispose();
+          
+            
         }
 
     }
