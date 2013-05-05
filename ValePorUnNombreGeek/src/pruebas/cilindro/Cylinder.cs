@@ -14,30 +14,42 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
     {
         private Vector3 center;
         private float radius;
-        private float halfLength;
+        private Vector3 halfLength;
         private int renderColor;
 
-        private const int END_CAPS_RESOLUTION = 50;
-        private CustomVertex.PositionColored[] vertices;
-        private CustomVertex.PositionColored[] bordes;
+        private const int END_CAPS_RESOLUTION = 30; //cantidad de lineas por cada tapa
+        private CustomVertex.PositionColored[] endCapsVertex; //vertices de las tapas
+        private CustomVertex.PositionColored[] bordersVertex; //vertices de los bordes
 
         public Cylinder(Vector3 _center, float _halfLength, float _radius)
         {
             this.center = _center;
             this.radius = _radius;
-            this.halfLength = _halfLength;
+            this.halfLength = new Vector3(0, _halfLength, 0);
             this.renderColor = Color.Yellow.ToArgb();
-            this.updateValues();
+            this.updateDraw();
         }
 
-        private void updateValues()
+        public Vector3 Position
         {
-            if (vertices == null)
+            get { return this.center; }
+            set
+            {
+                this.center = value;
+                this.updateDraw();
+            }
+        }
+
+        #region Draw
+
+        private void updateDraw()
+        {
+            if (endCapsVertex == null)
             {
                 int verticesCount = (END_CAPS_RESOLUTION * 2 + 2) * 3;
                 verticesCount = verticesCount * 2; //por las dos tapas
-                this.vertices = new CustomVertex.PositionColored[verticesCount];
-                this.bordes = new CustomVertex.PositionColored[4]; //bordes laterales
+                this.endCapsVertex = new CustomVertex.PositionColored[verticesCount];
+                this.bordersVertex = new CustomVertex.PositionColored[4]; //bordes laterales
             }
 
             float step = FastMath.TWO_PI / (float)END_CAPS_RESOLUTION;
@@ -45,51 +57,52 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 
             for (float a = 0f; a <= FastMath.TWO_PI; a += step)
             {
+                Vector3 tapaPuntoA = new Vector3(FastMath.Cos(a) * this.radius, 0, FastMath.Sin(a) * this.radius);
+                Vector3 tapaPuntoB = new Vector3(FastMath.Cos(a + step) * this.radius, 0, FastMath.Sin(a + step) * this.radius);
                 //tapa superior
-                vertices[index++] = new CustomVertex.PositionColored(new Vector3(FastMath.Cos(a) * this.radius, this.halfLength, FastMath.Sin(a) * this.radius) + this.center, this.renderColor);
-                vertices[index++] = new CustomVertex.PositionColored(new Vector3(FastMath.Cos(a + step) * this.radius, this.halfLength, FastMath.Sin(a + step) * this.radius) + this.center, this.renderColor);
-
+                endCapsVertex[index++] = new CustomVertex.PositionColored(tapaPuntoA + this.halfLength + this.center, this.renderColor);
+                endCapsVertex[index++] = new CustomVertex.PositionColored(tapaPuntoB + this.halfLength + this.center, this.renderColor);
                 //tapa inferior
-                vertices[index++] = new CustomVertex.PositionColored(new Vector3(FastMath.Cos(a) * this.radius, -this.halfLength, FastMath.Sin(a) * this.radius) + this.center, this.renderColor);
-                vertices[index++] = new CustomVertex.PositionColored(new Vector3(FastMath.Cos(a + step) * this.radius, -this.halfLength, FastMath.Sin(a + step) * this.radius) + this.center, this.renderColor);
+                endCapsVertex[index++] = new CustomVertex.PositionColored(tapaPuntoA - this.halfLength + this.center, this.renderColor);
+                endCapsVertex[index++] = new CustomVertex.PositionColored(tapaPuntoB - this.halfLength + this.center, this.renderColor);
             }
 
-            this.updateBorders();
+            this.updateBordersDraw();
         }
 
-        private void updateBorders()
+        private void updateBordersDraw()
         {
-            Vector3 cameraPos = GuiController.Instance.CurrentCamera.getPosition();
-            Vector3 cameraSeen = cameraPos - this.center;
-            Vector3 vup = new Vector3(0, this.halfLength, 0);
-            Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, vup);
+            Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center;
+            Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, this.halfLength);
             transversalALaCamara.Normalize();
             transversalALaCamara *= this.radius;
 
-            Vector3 puntoA = this.center + vup + transversalALaCamara;
-            Vector3 puntoB = this.center - vup + transversalALaCamara;
+            Vector3 puntoA = this.center + this.halfLength + transversalALaCamara;
+            Vector3 puntoB = this.center - this.halfLength + transversalALaCamara;
 
-            bordes[0] = new CustomVertex.PositionColored(puntoA, this.renderColor);
-            bordes[1] = new CustomVertex.PositionColored(puntoB, this.renderColor);
+            bordersVertex[0] = new CustomVertex.PositionColored(puntoA, this.renderColor);
+            bordersVertex[1] = new CustomVertex.PositionColored(puntoB, this.renderColor);
 
-            puntoA = this.center + vup - transversalALaCamara;
-            puntoB = this.center - vup - transversalALaCamara;
+            puntoA = this.center + this.halfLength - transversalALaCamara;
+            puntoB = this.center - this.halfLength - transversalALaCamara;
 
-            bordes[2] = new CustomVertex.PositionColored(puntoA, this.renderColor);
-            bordes[3] = new CustomVertex.PositionColored(puntoB, this.renderColor);
+            bordersVertex[2] = new CustomVertex.PositionColored(puntoA, this.renderColor);
+            bordersVertex[3] = new CustomVertex.PositionColored(puntoB, this.renderColor);
         }
 
         public void render()
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
-            this.updateBorders();
-            d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, vertices.Length / 2, vertices);
-            d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, bordes.Length / 2, bordes);
+            this.updateBordersDraw();
+            d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, endCapsVertex.Length / 2, endCapsVertex);
+            d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, bordersVertex.Length / 2, bordersVertex);
         }
 
         public void dispose()
         {
-            this.vertices = null;
+            this.endCapsVertex = null;
         }
+
+        #endregion
     }
 }
