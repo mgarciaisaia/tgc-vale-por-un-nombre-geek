@@ -8,6 +8,7 @@ using System.Drawing;
 using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 {
@@ -17,6 +18,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
     public class PruebaCilindro : TgcExample
     {
         Cylinder cylinder;
+        TgcBoundingSphere sphere;
         Vector3 lastCylinderPos;
 
         public override string getCategory()
@@ -45,24 +47,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             GuiController.Instance.Modifiers.addVertex3f("posicion", new Vector3(-100, -100, -100), new Vector3(100, 100, 100), this.lastCylinderPos);
 
             this.cylinder = new Cylinder(this.lastCylinderPos, 20, 10);
+
+            this.sphere = new TgcBoundingSphere(new Vector3(30, 0, 0), 10);
         }
 
 
         public override void render(float elapsedTime)
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
+
+            if (cylinder.thereIsCollisionCySp(this.sphere)) this.cylinder.setColor(Color.Blue);
+            else this.cylinder.setColor(Color.Red);
+
             Vector3 newCylinderPos = (Vector3)GuiController.Instance.Modifiers.getValue("posicion");
             if(this.lastCylinderPos != newCylinderPos)
             {
                 this.lastCylinderPos = newCylinderPos;
                 this.cylinder.Position = newCylinderPos;
             }
+
             this.cylinder.render();
+            this.sphere.render();
         }
 
         public override void close()
         {
             this.cylinder.dispose();
+            this.sphere.dispose();
         }
 
     }
