@@ -20,6 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         Cylinder myCylinder;
         Cylinder cylinder;
         TgcBoundingSphere sphere;
+        TgcBoundingBox boundingBox;
         Vector3 lastCylinderPos;
 
         public override string getCategory()
@@ -50,7 +51,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             this.myCylinder = new Cylinder(this.lastCylinderPos, 20, 10);
 
             this.cylinder = new Cylinder(new Vector3(-30, 0, 0), 40, 15);
-            this.sphere = new TgcBoundingSphere(new Vector3(30, 0, 0), 10);
+            this.sphere = new TgcBoundingSphere(new Vector3(80, 0, 0), 45);
+            this.boundingBox = new TgcBoundingBox(new Vector3(0, 0, -120), new Vector3(40, 40, -80));
         }
 
 
@@ -71,6 +73,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             this.myCylinder.render();
             this.cylinder.render();
             this.sphere.render();
+            this.boundingBox.render();
         }
 
         public override void close()
@@ -78,12 +81,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             this.myCylinder.dispose();
             this.cylinder.dispose();
             this.sphere.dispose();
+            this.boundingBox.dispose();
         }
 
         private bool thereIsCollision()
         {
             if (myCylinder.thereIsCollisionCySp(this.sphere)) return true;
             if (myCylinder.thereIsCollisionCyCy(this.cylinder)) return true;
+            if (myCylinder.thereIsCollisionCyBB(this.boundingBox)) return true;
             return false;
         }
 

@@ -134,17 +134,32 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
                 distance.Y = 0;
                 if (distance.Length() <= this.radius + sphere.Radius) return true;
             }
+            //TODO colision tapas
             return false;
         }
 
         public bool thereIsCollisionCyCy(Cylinder collider)
         {
-            if (FastMath.Abs(this.Position.Y - collider.Position.Y) < collider.HalfHeight + this.HalfHeight)
+            if (FastMath.Abs(this.Position.Y - collider.Position.Y) <= collider.HalfHeight + this.HalfHeight)
             {
                 Vector3 distance = collider.Position - this.Position;
                 distance.Y = 0;
                 if (distance.Length() <= this.radius + collider.radius) return true;
             }
+            return false;
+        }
+
+        public bool thereIsCollisionCyBB(TgcBoundingBox box)
+        {
+            Vector3 boxDimensions = box.calculateSize() * 0.5f;
+            Vector3 boxCenter = box.Position + boxDimensions;
+            float height = boxDimensions.Y;
+
+            if (FastMath.Abs(this.Position.Y - boxCenter.Y) <= boxDimensions.Y + this.HalfHeight)
+                if (FastMath.Abs(this.Position.X - boxCenter.X) <= boxDimensions.X + this.radius)
+                    if (FastMath.Abs(this.Position.Z - boxCenter.Z) <= boxDimensions.Z + this.radius)
+                        return true;
+
             return false;
         }
     }
