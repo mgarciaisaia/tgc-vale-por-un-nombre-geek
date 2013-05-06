@@ -17,6 +17,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
     /// </summary>
     public class PruebaCilindro : TgcExample
     {
+        Cylinder myCylinder;
         Cylinder cylinder;
         TgcBoundingSphere sphere;
         Vector3 lastCylinderPos;
@@ -46,8 +47,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             this.lastCylinderPos = new Vector3(0, 0, 0);
             GuiController.Instance.Modifiers.addVertex3f("posicion", new Vector3(-100, -100, -100), new Vector3(100, 100, 100), this.lastCylinderPos);
 
-            this.cylinder = new Cylinder(this.lastCylinderPos, 20, 10);
+            this.myCylinder = new Cylinder(this.lastCylinderPos, 20, 10);
 
+            this.cylinder = new Cylinder(new Vector3(-30, 0, 0), 40, 15);
             this.sphere = new TgcBoundingSphere(new Vector3(30, 0, 0), 10);
         }
 
@@ -56,24 +58,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
 
-            if (cylinder.thereIsCollisionCySp(this.sphere)) this.cylinder.setColor(Color.Blue);
-            else this.cylinder.setColor(Color.Red);
+            if (this.thereIsCollision()) this.myCylinder.setColor(Color.Blue);
+            else this.myCylinder.setColor(Color.Red);
 
             Vector3 newCylinderPos = (Vector3)GuiController.Instance.Modifiers.getValue("posicion");
             if(this.lastCylinderPos != newCylinderPos)
             {
                 this.lastCylinderPos = newCylinderPos;
-                this.cylinder.Position = newCylinderPos;
+                this.myCylinder.Position = newCylinderPos;
             }
 
+            this.myCylinder.render();
             this.cylinder.render();
             this.sphere.render();
         }
 
         public override void close()
         {
+            this.myCylinder.dispose();
             this.cylinder.dispose();
             this.sphere.dispose();
+        }
+
+        private bool thereIsCollision()
+        {
+            if (myCylinder.thereIsCollisionCySp(this.sphere)) return true;
+            if (myCylinder.thereIsCollisionCyCy(this.cylinder)) return true;
+            return false;
         }
 
     }

@@ -40,6 +40,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             }
         }
 
+        public float HalfHeight
+        {
+            get { return this.halfLength.Y; }
+            set { this.halfLength.Y = value; }
+        }
+
         #region Draw
 
         public void setColor(Color _color)
@@ -120,25 +126,26 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         #endregion
 
 
-
-
         public bool thereIsCollisionCySp(TgcBoundingSphere sphere)
         {
             if (FastMath.Abs(this.center.Y - sphere.Center.Y) <= this.halfLength.Y)
             {
-                Vector3 ap = sphere.Center - this.center;
-                Vector3 apxd = Vector3.Cross(ap, this.halfLength);
-                float distance = apxd.Length() / this.halfLength.Length(); //habra reices feas aca?
-                if (distance <= this.radius + sphere.Radius) return true;
-                //TODO emprolijar, aplicar la formula del paper
+                Vector3 distance = sphere.Center - this.Position;
+                distance.Y = 0;
+                if (distance.Length() <= this.radius + sphere.Radius) return true;
             }
-            else
-            {
-                //TODO colision tapas
-            }
-
             return false;
         }
 
+        public bool thereIsCollisionCyCy(Cylinder collider)
+        {
+            if (FastMath.Abs(this.Position.Y - collider.Position.Y) < collider.HalfHeight + this.HalfHeight)
+            {
+                Vector3 distance = collider.Position - this.Position;
+                distance.Y = 0;
+                if (distance.Length() <= this.radius + collider.radius) return true;
+            }
+            return false;
+        }
     }
 }
