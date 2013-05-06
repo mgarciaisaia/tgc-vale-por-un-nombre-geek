@@ -249,8 +249,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             terrain.dispose();
             wall.dispose();
             tree.dispose();
-            g_pShadowMap.Dispose();
-            g_pDSShadow.Dispose();
+            //g_pShadowMap.Dispose();
+            //g_pDSShadow.Dispose();
             effect.Dispose();
 
         }
