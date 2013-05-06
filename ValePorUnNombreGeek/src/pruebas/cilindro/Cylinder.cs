@@ -42,6 +42,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 
         #region Draw
 
+        public void setColor(Color _color)
+        {
+            this.renderColor = _color.ToArgb();
+        }
+
         private void updateDraw()
         {
             if (endCapsVertex == null)
@@ -70,6 +75,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             this.updateBordersDraw();
         }
 
+        private void updateDrawColor()
+        {
+            for (int i = 0; i < this.endCapsVertex.Count(); i++)
+            {
+                this.endCapsVertex[i].Color = this.renderColor;
+            }
+        }
+
         private void updateBordersDraw()
         {
             Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center;
@@ -94,6 +107,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
             this.updateBordersDraw();
+            this.updateDrawColor();
             d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, endCapsVertex.Length / 2, endCapsVertex);
             d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, bordersVertex.Length / 2, bordersVertex);
         }
@@ -104,5 +118,27 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         }
 
         #endregion
+
+
+
+
+        public bool thereIsCollisionCySp(TgcBoundingSphere sphere)
+        {
+            if (FastMath.Abs(this.center.Y - sphere.Center.Y) <= this.halfLength.Y)
+            {
+                Vector3 ap = sphere.Center - this.center;
+                Vector3 apxd = Vector3.Cross(ap, this.halfLength);
+                float distance = apxd.Length() / this.halfLength.Length(); //habra reices feas aca?
+                if (distance <= this.radius + sphere.Radius) return true;
+                //TODO emprolijar, aplicar la formula del paper
+            }
+            else
+            {
+                //TODO colision tapas
+            }
+
+            return false;
+        }
+
     }
 }
