@@ -236,15 +236,19 @@ float4 ps_DiffuseMap_Selected( float2 Texcoord: TEXCOORD0) : COLOR0
 	return tex2D(diffuseMap, Texcoord)*0.5 + selectionColor*0.5  + float4(0.2,0.2,0.2,0);
 }
 
-float daytime;
+float dayFactor; //Valor entre 0 y 1
+float4 someKindOfBlue = float4(0.5,0.5,0.7,0);
 
 float4 ps_Night( float2 Texcoord: TEXCOORD0, float4 Color:COLOR0) : COLOR0
 {      
 	
 	float4 fvBaseColor = tex2D( diffuseMap, Texcoord );
-	float4 nightColor = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)*float4(0.5,0.5,0.7,0);
-	
-	return fvBaseColor*daytime + nightColor*(1-daytime); 
+
+	float luminance = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z); //Paso a escala de grises
+	float4 nightColor = luminance*someKindOfBlue; //Lo cambio al color deseado
+	nightColor[3] = fvBaseColor[3]; //Mantengo el alpha
+
+	return fvBaseColor*dayFactor + nightColor*(1-dayFactor); //Combino los colores
 }
 
 
