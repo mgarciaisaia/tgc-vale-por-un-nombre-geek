@@ -39,6 +39,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
         SkeletalRepresentation skeletal;
         Effect effect;
         Terrain terrain;
+        Tree tree;
+        Wall wall;
+
         float time=0;
 
         // Shadow map
@@ -57,10 +60,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             Device d3dDevice = GuiController.Instance.D3dDevice;
             terrain = new Terrain();
             skeletal = new SkeletalRepresentation(terrain.getPosition(477, 129));
-            
+            tree = new Tree(terrain.getPosition(420, 129), new Vector3(5,7,5),new Vector3(0,0,0));
+            wall = new Wall(terrain.getPosition(200, 337), new Vector3(500,100,50));
+  
             effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\shaders.fx");
             skeletal.Effect = effect;
             terrain.Effect = effect;
+            wall.Effect = effect;
+            tree.Effect = effect;
+
             GuiController.Instance.Modifiers.addFloat("timeSpeed", 0.01f, 0.5f, 0.25f);
 
             FreeCamera camera = new FreeCamera();
@@ -122,15 +130,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
         private void renderNight(float elapsedTime)
         {
             time += (float)GuiController.Instance.Modifiers.getValue("timeSpeed")* elapsedTime;
-            effect.SetValue("daytime", FastMath.Abs(FastMath.Cos(time)));
+            effect.SetValue("dayFactor", FastMath.Abs(FastMath.Cos(time)));
            
             skeletal.Technique = "SKELETAL_NIGHT";
 
             terrain.Technique = "NIGHT";
+
+            wall.Technique = "NIGHT";
+
+            tree.Technique = "NIGHT";
             
             skeletal.render();
 
             terrain.render();
+
+            wall.render();
+
+            tree.render();
         }
 
         private void renderShadows()
@@ -217,10 +233,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             {
                 skeletal.Technique = "SKELETAL_DIFFUSE_MAP_SHADOWS";
             }
-            
-            skeletal.render();
 
             terrain.render();
+            skeletal.render();
+          
+
+            
         }
 
 
@@ -228,7 +246,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
         {
             
             skeletal.dispose();
-            terrain.render();
+            terrain.dispose();
+            wall.dispose();
+            tree.dispose();
             g_pShadowMap.Dispose();
             g_pDSShadow.Dispose();
             effect.Dispose();
