@@ -110,15 +110,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         /// <param name="character"></param>
         /// <param name="newPosition"></param>
         /// <returns></returns>
-        public bool moveCharacter(Character character, Vector3 movementVector){
+        public bool moveCharacter(Character character, Vector3 direction, float speed){
 
             Vector3 previousPosition = character.Position;
-            character.move(movementVector);
+            character.move(direction, speed);
             character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
             // FIXME: dejar de limitarlo a los personajes que controlamos nosotros cuando implementemos un re-routeo
             // (es decir, si no puede moverse, que tome otro camino alternativo)
-            if (!thereIsCollision(character) && ((!character.OwnedByUser) || !terrenoMuyEmpinado(previousPosition, movementVector)))
+            if (!thereIsCollision(character) && ((!character.OwnedByUser) || !terrenoMuyEmpinado(previousPosition, direction)))
             //if (!thereIsCollision(character) && !terrenoMuyEmpinado(previousPosition, movementVector))
             {
                     return true;
@@ -134,20 +134,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
         const float MAX_DELTA_Y = 20f;
 
-        private bool terrenoMuyEmpinado(Vector3 origin, Vector3 movement)
+        private bool terrenoMuyEmpinado(Vector3 origin, Vector3 direction)
         {
            
-            Vector3 normalizedMovement = new Vector3(movement.X, 0, movement.Z);
-            normalizedMovement.Normalize();
-           
-            normalizedMovement.Multiply(5);
+                              
+            Vector3 deltaXZ = direction*5;
            
             Vector3 target = new Vector3(origin.X, 0, origin.Z);
-            target.Add(normalizedMovement);
+            target.Add(deltaXZ);
             float targetDeltaY = this.getPosition(target.X, target.Z).Y - origin.Y;
             
             
-            GuiController.Instance.Logger.log("Pendiente: " + origin.Y + " -> " + (origin.Y + targetDeltaY) + " = " + targetDeltaY );
+            if(targetDeltaY > MAX_DELTA_Y)GuiController.Instance.Logger.log("Pendiente: " + origin.Y + " -> " + (origin.Y + targetDeltaY) + " = " + targetDeltaY );
             
             return targetDeltaY > MAX_DELTA_Y;
         }

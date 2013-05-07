@@ -163,25 +163,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         private ITargeteable target;
 
+       
 
         internal void goToTarget(float elapsedTime)
         {
             if (!this.hasTarget() || this.Dead) return;
 
-            Vector3 movementVector = this.target.Position - this.representation.Position;
-           
-            movementVector.Y = 0;
-            movementVector.Normalize();
+            Vector3 direction = calculateMovementVector(elapsedTime);
+            
 
-            float currentVelocity = this.Speed * elapsedTime;
-            movementVector.Multiply(currentVelocity);
-
-            if (!this.level.moveCharacter(this, movementVector))
+            if (!this.level.moveCharacter(this, direction,this.Speed * elapsedTime))
             {
-                this.manageCollision(movementVector);
+                this.manageCollision(direction);
             }
 
                        
+        }
+
+        protected virtual Vector3 calculateMovementVector(float elapsedTime)
+        {
+            Vector3 direction = this.target.Position - this.representation.Position;
+
+            direction.Y = 0;
+            direction.Normalize();
+
+           
+          
+            return direction;
         }
 
 
@@ -195,10 +203,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
           
         }
 
-        public void move(Vector3 movement)
+        public void move(Vector3 movement, float speed)
         {
             this.representation.walk();
-            this.representation.move(movement);
+            
+            this.representation.move(movement*speed);
         }
 
         internal bool isOnTarget()
@@ -216,6 +225,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private void setTarget(ITargeteable _target)
         {
             this.target = _target;
+        }
+
+        public ITargeteable getTarget()
+        {
+            return this.target;
         }
 
         public void setNoTarget()

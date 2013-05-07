@@ -55,9 +55,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 if (terrain.getPosition(aPoint.X, aPoint.Z, out foundedPoint))
                 {
 
-                    GuiController.Instance.Logger.log("terrainIntersection aPoint: " + 
+                    /*
+                     * //INFINITE LOOP!!
+                     * GuiController.Instance.Logger.log("terrainIntersection aPoint: " + 
                         aPoint.X +","+aPoint.Y+","+ aPoint.Z + 
-                        "   foundedPoint: "+foundedPoint.X +","+foundedPoint.Y+","+ foundedPoint.Z);
+                        "   foundedPoint: "+foundedPoint.X +","+foundedPoint.Y+","+ foundedPoint.Z);*/
                     if (GeneralMethods.isCloseTo(aPoint.Y, foundedPoint.Y, 1))
                     {
                         //encontramos el punto de interseccion
