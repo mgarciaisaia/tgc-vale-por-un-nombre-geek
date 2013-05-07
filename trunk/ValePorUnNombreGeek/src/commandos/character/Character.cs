@@ -191,13 +191,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         /// <summary>
         /// Accion a realizar en caso de choque
         /// </summary>
-        internal virtual void manageCollision(Vector3 previousPosition, Vector3 movementVector,  Vector3 realmovement, float speed, ILevelObject obj)
+        public virtual bool manageCollision(ILevelObject obj)
         {
 
             if (obj.Equals(this.target))
             {
                 this.collisionedTarget();
-                return;
+                return true;
             }
 
             TgcCollisionUtils.BoxBoxResult result = TgcCollisionUtils.classifyBoxBox(this.marcaDePicking.BoundingBox, obj.BoundingBox);
@@ -207,8 +207,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             {
                 this.setNoTarget();
                 this.representation.standBy();
+                return true;
             }
+
+            return false;
           
+        }
+
+        public virtual bool manageSteepTarrain()
+        {
+            this.setNoTarget();
+            this.representation.standBy();
+            return true;
         }
 
         protected virtual void collisionedTarget(){
@@ -279,6 +289,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return this.technique; }
             set { this.technique = value; }
         }
+
+
       
     }
 }
