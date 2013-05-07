@@ -116,7 +116,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             character.move(movementVector);
             character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
-
             // FIXME: dejar de limitarlo a los personajes que controlamos nosotros cuando implementemos un re-routeo
             // (es decir, si no puede moverse, que tome otro camino alternativo)
             if (!thereIsCollision(character) && ((!character.OwnedByUser) || !terrenoMuyEmpinado(previousPosition, movementVector)))
@@ -137,10 +136,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
         private bool terrenoMuyEmpinado(Vector3 origin, Vector3 movement)
         {
+           
             Vector3 normalizedMovement = new Vector3(movement.X, 0, movement.Z);
-            
-            //normalizedMovement.Normalize();
-            //normalizedMovement.Multiply(5);
+            normalizedMovement.Normalize();
+           
+            normalizedMovement.Multiply(5);
+           
             Vector3 target = new Vector3(origin.X, 0, origin.Z);
             target.Add(normalizedMovement);
             float targetDeltaY = this.getPosition(target.X, target.Z).Y - origin.Y;
