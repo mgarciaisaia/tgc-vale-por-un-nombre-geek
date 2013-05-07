@@ -138,14 +138,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             return false;
         }
 
-        public bool thereIsCollisionCyCy(Cylinder collider)
+        public bool thereIsCollisionCyCy(Cylinder collider, out Vector3 n)
         {
             if (FastMath.Abs(this.Position.Y - collider.Position.Y) <= collider.HalfHeight + this.HalfHeight)
             {
                 Vector3 distance = collider.Position - this.Position;
                 distance.Y = 0;
-                if (distance.Length() <= this.radius + collider.radius) return true;
+                if (distance.Length() <= this.radius + collider.radius)
+                {
+                    distance = this.Position - collider.Position; //lo recalculo por que lo necesito :p
+                    n = Vector3.Cross(this.halfLength, distance);
+                    n = Vector3.Cross(n, this.halfLength);
+                    n.Normalize();
+                    return true;
+                }
             }
+            n = Vector3.Empty;
             return false;
         }
 
