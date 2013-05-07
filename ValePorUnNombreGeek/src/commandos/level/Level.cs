@@ -136,9 +136,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                     character.Position = previousPosition;
                     character.move(newDirection, speed);
                     character.Position = this.getPosition(character.Position.X, character.Position.Z);
-                
+                    character.manageCollision(previousPosition, direction, newDirection, speed, obj);
                 }
-
+                
                 return false;
             }
 
