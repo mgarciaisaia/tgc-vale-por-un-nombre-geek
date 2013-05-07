@@ -2,6 +2,7 @@
 using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -90,6 +91,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
            }
            return false;
         }
+
+        protected override Vector3 calculateDirectionVector(ITargeteable target)
+        {
+            Vector3 movementVector = target.Position - this.representation.Position;
+           
+            //Ver si hay obstaculo. Modificar direccion...
+            
+            movementVector.Y = 0;
+            movementVector.Normalize();
+
+            
+            return movementVector;
+        }
+
 
         public override void render() 
         {

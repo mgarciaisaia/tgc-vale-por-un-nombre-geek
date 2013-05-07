@@ -169,7 +169,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             if (!this.hasTarget() || this.Dead) return;
 
-            Vector3 direction = calculateMovementVector(elapsedTime);
+            Vector3 direction = calculateDirectionVector(this.target);
             
 
             if (!this.level.moveCharacter(this, direction,this.Speed * elapsedTime))
@@ -180,9 +180,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                        
         }
 
-        protected virtual Vector3 calculateMovementVector(float elapsedTime)
+        protected virtual Vector3 calculateDirectionVector(ITargeteable target)
         {
-            Vector3 direction = this.target.Position - this.representation.Position;
+            Vector3 direction = target.Position - this.representation.Position;
 
             direction.Y = 0;
             direction.Normalize();
@@ -225,11 +225,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private void setTarget(ITargeteable _target)
         {
             this.target = _target;
-        }
-
-        public ITargeteable getTarget()
-        {
-            return this.target;
         }
 
         public void setNoTarget()
