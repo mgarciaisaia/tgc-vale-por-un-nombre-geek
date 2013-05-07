@@ -127,15 +127,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         {
             //devuelve la posicion y true si es parte del heightmap
             float y;
+           
             ret = Vector3.Empty;
 
-            if (!this.getY(x, z, out y))
+            if (this.getY(x, z, out y))
             {
-                ret = new Vector3(x, 0, z);
+                ret = new Vector3(x, y, z);
+                return true;
             }
 
-            ret = new Vector3(x, y, z);
-            return true;
+            return false;
+            
+           
         }
 
         /// <summary>
