@@ -120,12 +120,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             character.move(direction, speed);
             character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
-            
-            while(thereIsCollision(character, out obj)){
+            int intentos;
+            int maxIntentos = 10;
+            for (intentos = 0; thereIsCollision(character, out obj); intentos++)
+            {
 
                 //Cancelo el movimiento
                 character.Position = previousPosition;
-                
+                if (intentos == maxIntentos) break;
+
                 //Si el pj ya arregló el problema, parar.             
                 if (character.manageCollision(obj)) break;
 
@@ -133,12 +136,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 Vector3 reaction = (character.Center - obj.Center);
                 reaction.Y = 0;
                 reaction.Normalize();
-                realMovement = reaction + realMovement*0.4f;
-                
+                realMovement = reaction + realMovement * 0.4f;
+                realMovement.Normalize();
                 character.move(realMovement, speed);
                 character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
-              
+                
+            
+
             }
 
            //Cuando se pueda hacer que no se traben, se quita character.OwnedByUser
