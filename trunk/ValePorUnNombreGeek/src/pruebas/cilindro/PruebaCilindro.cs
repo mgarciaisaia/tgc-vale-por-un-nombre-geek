@@ -23,6 +23,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         TgcBoundingBox boundingBox;
         Vector3 lastCylinderPos;
 
+        TgcArrow normal;
+
         public override string getCategory()
         {
             return "AlumnoEjemplos";
@@ -53,6 +55,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             this.cylinder = new Cylinder(new Vector3(-30, 0, 0), 40, 15);
             this.sphere = new TgcBoundingSphere(new Vector3(80, 0, 0), 45);
             this.boundingBox = new TgcBoundingBox(new Vector3(0, 0, -120), new Vector3(40, 40, -80));
+
+            this.normal = new TgcArrow();
+            this.normal.Thickness = 2f;
+            this.normal.HeadSize = new Vector2(4f, 4f);
+            this.normal.Enabled = true;
         }
 
 
@@ -60,8 +67,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
 
-            if (this.thereIsCollision()) this.myCylinder.setColor(Color.Blue);
-            else this.myCylinder.setColor(Color.Red);
+            if (this.thereIsCollision()) this.myCylinder.setColor(Color.DarkOliveGreen);
+            else this.myCylinder.setColor(Color.LightPink);
 
             Vector3 newCylinderPos = (Vector3)GuiController.Instance.Modifiers.getValue("posicion");
             if(this.lastCylinderPos != newCylinderPos)
@@ -82,12 +89,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             this.cylinder.dispose();
             this.sphere.dispose();
             this.boundingBox.dispose();
+            this.normal.dispose();
         }
 
         private bool thereIsCollision()
         {
+            Vector3 n;
             if (myCylinder.thereIsCollisionCySp(this.sphere)) return true;
-            if (myCylinder.thereIsCollisionCyCy(this.cylinder)) return true;
+            if (myCylinder.thereIsCollisionCyCy(this.cylinder, out n))
+            {
+                this.normal.PStart = this.myCylinder.Position;
+                this.normal.PEnd = n * 50 + this.myCylinder.Position;
+                this.normal.updateValues();
+                this.normal.render();
+                return true;
+            }
             if (myCylinder.thereIsCollisionCyBB(this.boundingBox)) return true;
             return false;
         }
