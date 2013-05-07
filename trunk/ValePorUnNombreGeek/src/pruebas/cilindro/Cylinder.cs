@@ -157,18 +157,28 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             return false;
         }
 
-        public bool thereIsCollisionCyBB(TgcBoundingBox box)
+        public bool thereIsCollisionCyBB(TgcBoundingBox aabb)
         {
-            Vector3 boxDimensions = box.calculateSize() * 0.5f;
-            Vector3 boxCenter = box.Position + boxDimensions;
-            float height = boxDimensions.Y;
+            Vector3 boxDimensions = aabb.calculateSize() * 0.5f;
+            Vector3 boxCenter = aabb.Position + boxDimensions;
 
-            if (FastMath.Abs(this.Position.Y - boxCenter.Y) <= boxDimensions.Y + this.HalfHeight)
-                if (FastMath.Abs(this.Position.X - boxCenter.X) <= boxDimensions.X + this.radius)
-                    if (FastMath.Abs(this.Position.Z - boxCenter.Z) <= boxDimensions.Z + this.radius)
-                        return true;
+            Vector3 centerToCenter;
+            centerToCenter.X = FastMath.Abs(this.Position.X - boxCenter.X);
+            centerToCenter.Z = FastMath.Abs(this.Position.Z - boxCenter.Z);
 
-            return false;
+            //vemos si esta muy lejos
+            if (centerToCenter.X > (boxDimensions.X + this.radius)) return false;
+            if (centerToCenter.Z > (boxDimensions.Z + this.radius)) return false;
+
+            //vemos si esta muy cerca
+            if (centerToCenter.X <= boxDimensions.X) return true;
+            if (centerToCenter.Z <= boxDimensions.Z) return true;
+
+            //vemos si toca una esquina
+            float cornerDistance = FastMath.Pow2(centerToCenter.X - boxDimensions.X) + FastMath.Pow2(centerToCenter.Z - boxDimensions.Z);
+            return cornerDistance <= FastMath.Pow2(this.radius);
+
+            //TODO pablito, acordate, para normal de colision hay que usar proyeccion
         }
     }
 }
