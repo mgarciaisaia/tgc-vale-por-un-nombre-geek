@@ -113,19 +113,32 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         public bool moveCharacter(Character character, Vector3 direction, float speed){
 
             Vector3 previousPosition = character.Position;
+            ILevelObject obj;
             character.move(direction, speed);
             character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
             // FIXME: dejar de limitarlo a los personajes que controlamos nosotros cuando implementemos un re-routeo
             // (es decir, si no puede moverse, que tome otro camino alternativo)
-            if (!thereIsCollision(character) && ((!character.OwnedByUser) || !terrenoMuyEmpinado(previousPosition, direction)))
+            if (!thereIsCollision(character, out obj) && ((!character.OwnedByUser) || !terrenoMuyEmpinado(previousPosition, direction)))
             //if (!thereIsCollision(character) && !terrenoMuyEmpinado(previousPosition, movementVector))
-            {
+            {       
+                    
                     return true;
             }
             else
             {
-                character.Position = previousPosition;
+                if (obj != null)
+                {
+                    Vector3 reaction = (character.Center - obj.Center);
+                    reaction.Y = 0;
+                    reaction.Normalize();
+                    Vector3 newDirection = reaction + direction*0.4f;
+                    character.Position = previousPosition;
+                    character.move(newDirection, speed);
+                    character.Position = this.getPosition(character.Position.X, character.Position.Z);
+                
+                }
+
                 return false;
             }
 
@@ -151,17 +164,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         }
 
        
-        private bool thereIsCollision(ILevelObject collider)
+        private bool thereIsCollision(ILevelObject collider, out ILevelObject obj)
         {
             TgcCollisionUtils.BoxBoxResult result;
+            obj = null;
 
             foreach (ILevelObject colisionable in this.getPosibleColliders(collider))
             {
                
               result = TgcCollisionUtils.classifyBoxBox(collider.BoundingBox, colisionable.BoundingBox);
 
-             
-               if (result != TgcCollisionUtils.BoxBoxResult.Afuera) return true;
+
+              if (result != TgcCollisionUtils.BoxBoxResult.Afuera)
+              {
+                  obj = colisionable;
+                  return true;
+              }
               
             }
 
