@@ -47,12 +47,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
             Vector3 foundedPoint;
             float t0 = (terrain.Position.Y - this.Ray.Origin.Y) /this.Ray.Direction.Y;
             float t = t0;
+           
             while (true)
             {
                 aPoint = this.Ray.Origin + t * this.Ray.Direction;
 
                 if (terrain.getPosition(aPoint.X, aPoint.Z, out foundedPoint))
                 {
+
+                    GuiController.Instance.Logger.log("terrainIntersection aPoint: " + 
+                        aPoint.X +","+aPoint.Y+","+ aPoint.Z + 
+                        "   foundedPoint: "+foundedPoint.X +","+foundedPoint.Y+","+ foundedPoint.Z);
                     if (GeneralMethods.isCloseTo(aPoint.Y, foundedPoint.Y, 1))
                     {
                         //encontramos el punto de interseccion
@@ -72,7 +77,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                         GuiController.Instance.UserVars.setValue("WorldY", position.Y);
                         GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
 
-                    
+                  
                         return true;
                     }
                 }
@@ -80,6 +85,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 {
                     //ya nos fuimos o muy arriba o muy abajo
                     position = Vector3.Empty;
+                 
                     return false;
                 }
 
