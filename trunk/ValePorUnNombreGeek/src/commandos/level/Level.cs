@@ -138,16 +138,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         private bool terrenoMuyEmpinado(Vector3 origin, Vector3 movement)
         {
             Vector3 normalizedMovement = new Vector3(movement.X, 0, movement.Z);
-            normalizedMovement.Normalize();
-            normalizedMovement.Multiply(5);
+            
+            //normalizedMovement.Normalize();
+            //normalizedMovement.Multiply(5);
             Vector3 target = new Vector3(origin.X, 0, origin.Z);
             target.Add(normalizedMovement);
             float targetDeltaY = this.getPosition(target.X, target.Z).Y - origin.Y;
             
-            if(FastMath.Abs(targetDeltaY) > MAX_DELTA_Y)
-                GuiController.Instance.Logger.log("Pendiente: " + origin.Y + " -> " + (origin.Y + targetDeltaY) + " = " + targetDeltaY);
             
-            return FastMath.Abs(targetDeltaY) > MAX_DELTA_Y;
+            GuiController.Instance.Logger.log("Pendiente: " + origin.Y + " -> " + (origin.Y + targetDeltaY) + " = " + targetDeltaY );
+            
+            return targetDeltaY > MAX_DELTA_Y;
         }
 
        
