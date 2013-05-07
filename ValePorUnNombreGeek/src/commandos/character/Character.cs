@@ -169,6 +169,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             if (!this.hasTarget() || this.Dead) return;
 
             Vector3 movementVector = this.target.Position - this.representation.Position;
+           
             movementVector.Y = 0;
             movementVector.Normalize();
 
@@ -190,6 +191,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected virtual void manageCollision(Vector3 movementVector)
         {
             this.Representation.standBy();
+            this.setNoTarget();
+          
         }
 
         public void move(Vector3 movement)
