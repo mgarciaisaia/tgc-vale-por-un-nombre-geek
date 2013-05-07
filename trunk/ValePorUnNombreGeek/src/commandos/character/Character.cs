@@ -16,6 +16,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected ICharacterRepresentation representation;
         protected Level level;
         protected string technique;
+        protected TgcBox marcaDePicking;
 
         /*******************************
          * INICIALIZACION **************
@@ -147,9 +148,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             if (this.hasTarget())
             {
-                //marcamos hacia donde vamos
-                TgcBox marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
-                marcaDePicking.Position = this.target.Position;
+              
                 marcaDePicking.render();
             }
             return technique;
@@ -172,12 +171,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             Vector3 direction = calculateDirectionVector(this.target);
             Vector3 previousPosition = this.Position;
 
-            if (!this.level.moveCharacter(this, direction,this.Speed * elapsedTime))
-            {
-                this.manageCollision(direction, previousPosition);
-            }
-
-                       
+            this.level.moveCharacter(this, direction, this.Speed * elapsedTime);
+             
         }
 
         protected virtual Vector3 calculateDirectionVector(ITargeteable target)
@@ -196,15 +191,30 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         /// <summary>
         /// Accion a realizar en caso de choque
         /// </summary>
-        protected virtual void manageCollision(Vector3 movementVector, Vector3 previousPosition)
+        internal virtual void manageCollision(Vector3 previousPosition, Vector3 movementVector,  Vector3 realmovement, float speed, ILevelObject obj)
         {
 
-            if (this.Position.Equals(previousPosition))
+            if (obj.Equals(this.target))
+            {
+                this.collisionedTarget();
+                return;
+            }
+
+            TgcCollisionUtils.BoxBoxResult result = TgcCollisionUtils.classifyBoxBox(this.marcaDePicking.BoundingBox, obj.BoundingBox);
+
+            //Si la cosa con la que choqué está sobre mi objetivo.
+            if (result != TgcCollisionUtils.BoxBoxResult.Afuera)
             {
                 this.setNoTarget();
                 this.representation.standBy();
             }
+          
         }
+
+        protected virtual void collisionedTarget(){
+
+        }
+      
 
         public void move(Vector3 movement, float speed)
         {
@@ -228,6 +238,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private void setTarget(ITargeteable _target)
         {
             this.target = _target;
+            //marcamos hacia donde vamos
+            marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
+            marcaDePicking.Position = this.target.Position;
         }
 
         public void setNoTarget()
