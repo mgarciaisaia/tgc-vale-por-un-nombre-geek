@@ -170,11 +170,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             if (!this.hasTarget() || this.Dead) return;
 
             Vector3 direction = calculateDirectionVector(this.target);
-            
+            Vector3 previousPosition = this.Position;
 
             if (!this.level.moveCharacter(this, direction,this.Speed * elapsedTime))
             {
-                this.manageCollision(direction);
+                this.manageCollision(direction, previousPosition);
             }
 
                        
@@ -196,11 +196,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         /// <summary>
         /// Accion a realizar en caso de choque
         /// </summary>
-        protected virtual void manageCollision(Vector3 movementVector)
+        protected virtual void manageCollision(Vector3 movementVector, Vector3 previousPosition)
         {
-            this.Representation.standBy();
-            this.setNoTarget();
-          
+
+            if (this.Position.Equals(previousPosition))
+            {
+                this.setNoTarget();
+                this.representation.standBy();
+            }
         }
 
         public void move(Vector3 movement, float speed)

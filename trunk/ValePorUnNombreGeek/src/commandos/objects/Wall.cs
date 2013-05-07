@@ -74,7 +74,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 
         public void render()
         {
-            this.box.render();
+            //this.box.render();
+            this.box.BoundingBox.render();
         }
 
         public void dispose()
