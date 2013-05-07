@@ -110,37 +110,49 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         /// <param name="character"></param>
         /// <param name="newPosition"></param>
         /// <returns></returns>
-        public bool moveCharacter(Character character, Vector3 direction, float speed){
+        public void moveCharacter(Character character, Vector3 direction, float speed){
 
             Vector3 previousPosition = character.Position;
+            Vector3 realMovement = direction;
             ILevelObject obj;
+            
+            //Muevo el personaje
             character.move(direction, speed);
             character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
-            // FIXME: dejar de limitarlo a los personajes que controlamos nosotros cuando implementemos un re-routeo
-            // (es decir, si no puede moverse, que tome otro camino alternativo)
-            if (!thereIsCollision(character, out obj) && ((!character.OwnedByUser) || !terrenoMuyEmpinado(previousPosition, direction)))
-            //if (!thereIsCollision(character) && !terrenoMuyEmpinado(previousPosition, movementVector))
-            {       
-                    
-                    return true;
+            
+            while(thereIsCollision(character, out obj)){
+
+                //Cancelo el movimiento
+                character.Position = previousPosition;
+                
+                //Si el pj ya arregló el problema, parar.             
+                if (character.manageCollision(obj)) break;
+
+                //Hace que el pj se desvie                              
+                Vector3 reaction = (character.Center - obj.Center);
+                reaction.Y = 0;
+                reaction.Normalize();
+                realMovement = reaction + realMovement*0.4f;
+                
+                character.move(realMovement, speed);
+                character.Position = this.getPosition(character.Position.X, character.Position.Z);
+
+              
             }
-            else
-            {
-                if (obj != null)
+
+           //Cuando se pueda hacer que no se traben, se quita character.OwnedByUser
+           if (character.OwnedByUser && terrenoMuyEmpinado(previousPosition, direction)){
+                
+                character.Position = previousPosition;
+                if (!character.manageSteepTarrain())
                 {
-                    Vector3 reaction = (character.Center - obj.Center);
-                    reaction.Y = 0;
-                    reaction.Normalize();
-                    Vector3 newDirection = reaction + direction*0.4f;
-                    character.Position = previousPosition;
-                    character.move(newDirection, speed);
-                    character.Position = this.getPosition(character.Position.X, character.Position.Z);
-                    character.manageCollision(previousPosition, direction, newDirection, speed, obj);
+                    //Do something
                 }
                 
-                return false;
-            }
+           }
+
+          
 
            
         }
@@ -158,7 +170,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             float targetDeltaY = this.getPosition(target.X, target.Z).Y - origin.Y;
             
             
-            if(targetDeltaY > MAX_DELTA_Y)GuiController.Instance.Logger.log("Pendiente: " + origin.Y + " -> " + (origin.Y + targetDeltaY) + " = " + targetDeltaY );
+            //if(targetDeltaY > MAX_DELTA_Y)GuiController.Instance.Logger.log("Pendiente: " + origin.Y + " -> " + (origin.Y + targetDeltaY) + " = " + targetDeltaY );
             
             return targetDeltaY > MAX_DELTA_Y;
         }
