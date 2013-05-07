@@ -214,9 +214,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.setRotation(this.meshFacingAngle, true);
         }
 
+        public Vector3 Left { get { return left; } }
+        public Vector3 Right { get { return right; } }
+        public Vector3 Front { get { return front; } }
+
+        Vector3 left = new Vector3(1,0,0);
+        Vector3 front = new Vector3(0,0,-1);
+        Vector3 right = new Vector3(-1,0,0);
+        
         private void applyTransformations(Matrix _rotationMatrix)
         {
             this.Transform = _rotationMatrix * Matrix.Translation(this.Position);
+            this.left = Vector3.TransformCoordinate(new Vector3(1,0,0), _rotationMatrix);
+            this.right = Vector3.TransformCoordinate(new Vector3(-1,0,0), _rotationMatrix);
+            this.front = Vector3.TransformCoordinate(new Vector3(0, 0, -1), _rotationMatrix);
         }
 
         #endregion
