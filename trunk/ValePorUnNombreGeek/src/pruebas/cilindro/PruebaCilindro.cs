@@ -104,7 +104,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
                 this.normal.render();
                 return true;
             }
-            if (myCylinder.thereIsCollisionCyBB(this.boundingBox)) return true;
+            if (myCylinder.thereIsCollisionCyBB(this.boundingBox, out n))
+            {
+                this.normal.PStart = this.myCylinder.Position;
+                this.normal.PEnd = n * 50 + this.myCylinder.Position;
+                this.normal.updateValues();
+                this.normal.render();
+                return true;
+            }
             return false;
         }
 
