@@ -48,13 +48,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             camera.Enable = true;
 
             this.lastCylinderPos = new Vector3(0, 0, 0);
-            GuiController.Instance.Modifiers.addVertex3f("posicion", new Vector3(-100, -100, -100), new Vector3(100, 100, 100), this.lastCylinderPos);
+            GuiController.Instance.Modifiers.addVertex3f("posicion", new Vector3(-200, -50, -200), new Vector3(200, 50, 200), this.lastCylinderPos);
 
             this.myCylinder = new Cylinder(this.lastCylinderPos, 20, 10);
 
             this.cylinder = new Cylinder(new Vector3(-30, 0, 0), 40, 15);
             this.sphere = new TgcBoundingSphere(new Vector3(80, 0, 0), 45);
-            this.boundingBox = new TgcBoundingBox(new Vector3(0, 0, -120), new Vector3(40, 40, -80));
+            this.boundingBox = new TgcBoundingBox(new Vector3(0, 0, -120), new Vector3(80, 40, -80));
 
             this.normal = new TgcArrow();
             this.normal.Thickness = 2f;

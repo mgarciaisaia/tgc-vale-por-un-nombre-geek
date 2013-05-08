@@ -163,13 +163,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             {
                 Vector3 boxDimensions = aabb.calculateSize() * 0.5f;
                 Vector3 boxCenter = aabb.Position + boxDimensions;
-
+                
                 Vector3 centerToCenter;
-                centerToCenter.X = FastMath.Abs(this.Position.X - boxCenter.X);
-                centerToCenter.Z = FastMath.Abs(this.Position.Z - boxCenter.Z);
+                centerToCenter.X = this.Position.X - boxCenter.X;
+                centerToCenter.Z = this.Position.Z - boxCenter.Z;
 
-                if (centerToCenter.X / boxDimensions.X > centerToCenter.Z / boxDimensions.Z) n = new Vector3(1, 0, 0);
-                else n = new Vector3(0, 0, 1);
+                float relacionX = centerToCenter.X * boxDimensions.Z; //esto tiene toda la pinta (es) un producto cruzado
+                float relacionZ = centerToCenter.Z * boxDimensions.X;
+
+                if (FastMath.Abs(relacionX) > FastMath.Abs(relacionZ)) n = new Vector3(1, 0, 0);
+                else if (FastMath.Abs(relacionZ) > FastMath.Abs(relacionX)) n = new Vector3(0, 0, 1);
+                else /*who knows*/
+                {
+                    n = new Vector3(relacionX, 0, relacionZ);
+                    n.Normalize();
+                }
                 return true;
             }
             else
