@@ -109,6 +109,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\Level.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLLevelParser.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\MeshObject.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\objects\StaticObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\Tree.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\Wall.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\BindedCommand.cs" />
