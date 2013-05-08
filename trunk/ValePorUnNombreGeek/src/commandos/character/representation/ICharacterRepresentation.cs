@@ -2,6 +2,7 @@
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX.Direct3D;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation
 {
     interface ICharacterRepresentation
@@ -26,6 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         float FacingAngle { get; }
 
         TgcBoundingBox BoundingBox { get; }
+        Cylinder BoundingCylinder { get; }
 
         void render();
         bool Enabled { get; set; }

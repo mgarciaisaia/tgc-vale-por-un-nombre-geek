@@ -7,6 +7,7 @@ using Microsoft.DirectX;
 using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX.Direct3D;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation
 {
@@ -17,6 +18,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         private Vector3 angleZeroVector; //rotacion manual
         private float meshFacingAngle; //hacia donde mira
         protected float radius;
+
+        private Cylinder boundingCylinder;
+
         public bool Selected
         {
 
@@ -43,8 +47,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
                 getAnimations());
 
             this.mesh.playAnimation("StandBy", true);
+
             this.Position = position;
             this.radius = mesh.BoundingBox.calculateBoxRadius();
+
+            //this.mesh.AutoUpdateBoundingBox = false;
+            //seguimos actualizando la bb por que de momento la necesitamos para seleccionar al personaje
+            this.boundingCylinder = new Cylinder(this.Position, 100, 30); //TODO ver valores
+
             //rotacion manual
             this.AutoTransformEnable = false;
             this.angleZeroVector = new Vector3(0, 0, -1);
@@ -74,12 +84,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         public void render()
         {
             this.mesh.animateAndRender();
+            this.boundingCylinder.render();
         }
 
 
         public void dispose()
         {
             this.mesh.dispose();
+            this.boundingCylinder.dispose();
         }
 
         #region Animations
@@ -132,7 +144,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         public TgcBoundingBox BoundingBox
         {
             get { return this.mesh.BoundingBox; }
-            set { this.mesh.BoundingBox = value; }
+        }
+
+        public Cylinder BoundingCylinder
+        {
+            get { return this.boundingCylinder; }
         }
 
         public bool Enabled
@@ -174,6 +190,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         {
             this.mesh.move(direction);
             this.setRotation(direction);
+            this.boundingCylinder.Position = this.Position;
         }
 
         #region Rotation
