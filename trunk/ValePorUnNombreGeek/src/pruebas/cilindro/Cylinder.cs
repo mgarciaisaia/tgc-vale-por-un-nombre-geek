@@ -162,20 +162,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             if (funesMori(aabb))
             {
                 Vector3 boxDimensions = aabb.calculateSize() * 0.5f;
+                Vector2 boxDimensions2d = new Vector2(boxDimensions.X, boxDimensions.Z);
+
                 Vector3 boxCenter = aabb.Position + boxDimensions;
-                
-                Vector3 centerToCenter;
-                centerToCenter.X = this.Position.X - boxCenter.X;
-                centerToCenter.Z = this.Position.Z - boxCenter.Z;
+                Vector3 centerToCenter = new Vector3(this.Position.X - boxCenter.X, 0, this.Position.Z - boxCenter.Z);
+                Vector2 centerToCenter2d = new Vector2(FastMath.Abs(centerToCenter.X), FastMath.Abs(centerToCenter.Z));
 
-                float relacionX = centerToCenter.X * boxDimensions.Z; //esto tiene toda la pinta (es) un producto cruzado
-                float relacionZ = centerToCenter.Z * boxDimensions.X;
+                float cross = Vector2.Ccw(centerToCenter2d, boxDimensions2d);
 
-                if (FastMath.Abs(relacionX) > FastMath.Abs(relacionZ)) n = new Vector3(1, 0, 0);
-                else if (FastMath.Abs(relacionZ) > FastMath.Abs(relacionX)) n = new Vector3(0, 0, 1);
+                float relacionX = centerToCenter2d.X * boxDimensions.Z; //TODO borrar
+                float relacionY = centerToCenter2d.Y * boxDimensions.X; //TODO borrar
+
+                if (cross > 0) n = new Vector3(1, 0, 0);
+                else if (cross < 0) n = new Vector3(0, 0, 1);
                 else /*who knows*/
                 {
-                    n = new Vector3(relacionX, 0, relacionZ);
+                    n = new Vector3(relacionX, 0, relacionY);
                     n.Normalize();
                 }
                 return true;
