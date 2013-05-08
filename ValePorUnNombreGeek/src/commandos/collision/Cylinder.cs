@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.DirectX;
+using System.Drawing;
 using Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.TgcGeometry;
-using System.Drawing;
 using TgcViewer;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
 {
     class Cylinder
     {
@@ -20,6 +20,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         private const int END_CAPS_RESOLUTION = 30; //cantidad de lineas por cada tapa
         private CustomVertex.PositionColored[] endCapsVertex; //vertices de las tapas
         private CustomVertex.PositionColored[] bordersVertex; //vertices de los bordes
+        
+
+        //TODO emprolijar toda la clase! la hice "a las chapas"
+
 
         public Cylinder(Vector3 _center, float _halfLength, float _radius)
         {
@@ -121,31 +125,34 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         public void dispose()
         {
             this.endCapsVertex = null;
+            this.bordersVertex = null;
         }
 
         #endregion
-        
-        public bool thereIsCollisionCyCy(Cylinder collider, out Vector3 n)
+
+        public bool thereIsCollision(Cylinder collider, out Vector3 n)
         {
-            if (FastMath.Abs(this.Position.Y - collider.Position.Y) <= collider.HalfHeight + this.HalfHeight)
+            //nota: no se checkea la altura, debido a la naturaleza del juego
+            Vector3 distance = collider.Position - this.Position;
+            distance.Y = 0;
+            if (distance.Length() <= this.radius + collider.radius)
             {
-                Vector3 distance = collider.Position - this.Position;
-                distance.Y = 0;
-                if (distance.Length() <= this.radius + collider.radius)
-                {
-                    distance = this.Position - collider.Position; //lo recalculo por que lo necesito :p
-                    n = Vector3.Cross(this.halfHeight, distance);
-                    n = Vector3.Cross(n, this.halfHeight);
-                    n.Normalize();
-                    return true;
-                }
+                distance = this.Position - collider.Position;
+                n = Vector3.Cross(this.halfHeight, distance);
+                n = Vector3.Cross(n, this.halfHeight);
+                n.Normalize();
+                return true;
             }
-            n = Vector3.Empty;
-            return false;
+            else
+            {
+                n = Vector3.Empty;
+                return false;
+            }
         }
 
-        public bool thereIsCollisionCyBB(TgcBoundingBox aabb, out Vector3 n)
+        public bool thereIsCollision(TgcBoundingBox aabb, out Vector3 n)
         {
+            //nota: no se checkea la altura, debido a la naturaleza del juego
             if (funesMori(aabb))
             {
                 Vector3 boxDimensions = aabb.calculateSize() * 0.5f;
@@ -173,7 +180,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             }
         }
 
-        private bool funesMori(TgcBoundingBox aabb)
+        private bool funesMori(TgcBoundingBox aabb) //TODO rename D:
         {
             Vector3 boxDimensions = aabb.calculateSize() * 0.5f;
             Vector3 boxCenter = aabb.Position + boxDimensions;
