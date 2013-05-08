@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX.Direct3D;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
@@ -30,9 +30,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
             get;
         }
 
-        public bool collidesWith(Cylinder cyl, out Vector3 n)
+        public bool collidesWith(Character ch, out Vector3 n)
         {
-            return cyl.thereIsCollision(this.BoundingBox, out n);
+            return ch.collidesWith(this.BoundingBox, out n);
         }
     }
 }

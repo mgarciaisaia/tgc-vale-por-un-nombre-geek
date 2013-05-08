@@ -120,6 +120,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             character.move(direction, speed);
             character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
+            Vector3 n;
+            if (thereIsCollision(character, out obj, out n))
+            {
+                TgcArrow arrow = new TgcArrow(); //flechita demostrativa de que funciona xd
+                arrow.Enabled = true;
+                arrow.PStart = character.Center;
+                arrow.PEnd = n * 100 + arrow.PStart;
+                arrow.Thickness = 5;
+                arrow.HeadSize = new Vector2(10, 10);
+                arrow.updateValues();
+                arrow.render();
+
+                character.Position = previousPosition;
+
+                //TODO borrar este if y rehabilitar el for de abajo
+            }
+
+            /*
             int intentos;
             int maxIntentos = 10;
             for (intentos = 0; thereIsCollision(character, out obj); intentos++)
@@ -141,10 +159,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 character.move(realMovement, speed);
                 character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
-                
-            
-
-            }
+            }*/
 
            //Cuando se pueda hacer que no se traben, se quita character.OwnedByUser
            if (character.OwnedByUser && terrenoMuyEmpinado(previousPosition, direction)){
@@ -181,25 +196,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         }
 
        
-        private bool thereIsCollision(ILevelObject collider, out ILevelObject obj)
+        private bool thereIsCollision(Character ch, out ILevelObject obj, out Vector3 n)
         {
-            TgcCollisionUtils.BoxBoxResult result;
             obj = null;
 
-            foreach (ILevelObject colisionable in this.getPosibleColliders(collider))
-            {
-               
-              result = TgcCollisionUtils.classifyBoxBox(collider.BoundingBox, colisionable.BoundingBox);
+            foreach (ILevelObject colisionable in this.getPosibleColliders(ch))
+                if (colisionable.collidesWith(ch, out n))
+                    return true;
 
-
-              if (result != TgcCollisionUtils.BoxBoxResult.Afuera)
-              {
-                  obj = colisionable;
-                  return true;
-              }
-              
-            }
-
+            n = Vector3.Empty;
             return false;
         }
 

@@ -291,10 +291,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { this.technique = value; }
         }
 
+        public bool collidesWith(Character ch, out Vector3 n)
+        {
+            return ch.collidesWith(this.Representation.BoundingCylinder, out n);
+        }
+
         public bool collidesWith(Cylinder cyl, out Vector3 n)
         {
-            return this.representation.BoundingCylinder.thereIsCollision(this.BoundingBox, out n);
+            return this.Representation.BoundingCylinder.thereIsCollision(cyl, out n);
         }
-      
+
+        public bool collidesWith(TgcBoundingBox aabb, out Vector3 n)
+        {
+            return this.Representation.BoundingCylinder.thereIsCollision(aabb, out n);
+        }
     }
 }

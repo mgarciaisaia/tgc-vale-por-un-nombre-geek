@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX.Direct3D;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
@@ -27,6 +27,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 
         void dispose();
 
-        bool collidesWith(Cylinder cyl, out Vector3 n);
+        bool collidesWith(Character ch, out Vector3 n);
     }
 }
