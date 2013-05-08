@@ -95,7 +95,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         private bool thereIsCollision()
         {
             Vector3 n;
-            if (myCylinder.thereIsCollisionCySp(this.sphere)) return true;
+            //if (myCylinder.thereIsCollisionCySp(this.sphere)) return true;
             if (myCylinder.thereIsCollisionCyCy(this.cylinder, out n))
             {
                 this.normal.PStart = this.myCylinder.Position;
