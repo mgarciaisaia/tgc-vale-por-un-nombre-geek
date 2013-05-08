@@ -11,7 +11,7 @@ using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
-    class Wall : ILevelObject
+    class Wall : LevelObject
     {
         TgcBox box;
         float radius;
@@ -28,27 +28,28 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
             
  
         }
-        public Vector3 Position
+        public override Vector3 Position
         {
             get { return this.box.Position; }
+            set { this.box.Position = value; } //setter necesario para ILevelObject (solo sirve en SkeletalRepresentation)
         }
 
-        public TgcBoundingBox BoundingBox
+        public override TgcBoundingBox BoundingBox
         {
             get { return this.box.BoundingBox; }
         }
 
-        public Vector3 Center
+        public override Vector3 Center
         {
             get { return this.center; }
         }
 
-        public float Radius
+        public override float Radius
         {
             get { return this.radius; }
         }
 
-        public Effect Effect
+        public override Effect Effect
         {
             get
             {
@@ -60,7 +61,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
             }
         }
 
-        public string Technique
+        public override string Technique
         {
             get
             {
@@ -72,13 +73,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
             }
         }
 
-        public void render()
+        public override void render()
         {
             //this.box.render();
             this.box.BoundingBox.render();
         }
 
-        public void dispose()
+        public override void dispose()
         {
             this.box.dispose();
         }

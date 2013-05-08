@@ -15,7 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         List<Character> characters;
         List<Enemy> enemies;
         List<Commando> commandos;
-        List<ILevelObject> objects;
+        List<LevelObject> objects;
         Terrain terrain;
         IQuadTree quadtree;
 
@@ -23,7 +23,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         public List<Character> Characters { get { return this.characters; } }
         public List<Enemy> Enemies { get { return this.enemies; } }
         public List<Commando> Commandos { get { return this.commandos; } }
-        public List<ILevelObject> Objects { get { return this.objects; } }
+        public List<LevelObject> Objects { get { return this.objects; } }
 
        
         public Terrain Terrain{
@@ -35,7 +35,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             characters = new List<Character>();
             enemies = new List<Enemy>();
             commandos = new List<Commando>();
-            objects = new List<ILevelObject>();
+            objects = new List<LevelObject>();
             this.terrain = terrain;
             quadtree = new QuadTreeDummie(terrain);
             
@@ -55,7 +55,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         }
 
      
-        public void add(ILevelObject levelObject)
+        public void add(LevelObject levelObject)
         {
             objects.Add(levelObject);
             quadtree.add(levelObject);
@@ -89,7 +89,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 ch.dispose();
             
 
-            foreach (ILevelObject o in this.objects)
+            foreach (LevelObject o in this.objects)
             
                 o.dispose();
             
@@ -114,7 +114,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
             Vector3 previousPosition = character.Position;
             Vector3 realMovement = direction;
-            ILevelObject obj;
+            LevelObject obj;
             
             //Muevo el personaje
             character.move(direction, speed);
@@ -181,12 +181,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         }
 
        
-        private bool thereIsCollision(ILevelObject collider, out ILevelObject obj)
+        private bool thereIsCollision(LevelObject collider, out LevelObject obj)
         {
             TgcCollisionUtils.BoxBoxResult result;
             obj = null;
 
-            foreach (ILevelObject colisionable in this.getPosibleColliders(collider))
+            foreach (LevelObject colisionable in this.getPosibleColliders(collider))
             {
                
               result = TgcCollisionUtils.classifyBoxBox(collider.BoundingBox, colisionable.BoundingBox);
@@ -204,9 +204,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         }
 
 
-        private IEnumerable<ILevelObject> getPosibleColliders(ILevelObject collider)
+        private IEnumerable<LevelObject> getPosibleColliders(LevelObject collider)
         {
-            List<ILevelObject> collisionables = new List<ILevelObject>();
+            List<LevelObject> collisionables = new List<LevelObject>();
           
                         
             //Solo agrego a colisionables aquellos cuyas esferas chocan con el collider
@@ -215,7 +215,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 if(thereIsSphereCollision(collider, c)) collisionables.Add(c);
 
 
-            foreach (ILevelObject o in this.Objects)
+            foreach (LevelObject o in this.Objects)
 
                 if (thereIsSphereCollision(collider, o)) collisionables.Add(o);
                
@@ -226,7 +226,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         }
 
 
-        private bool thereIsSphereCollision(ILevelObject collider, ILevelObject o)
+        private bool thereIsSphereCollision(LevelObject collider, LevelObject o)
         {
             if (o == collider) return false;
            

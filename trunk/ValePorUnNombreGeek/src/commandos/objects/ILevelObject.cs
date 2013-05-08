@@ -8,26 +8,23 @@ using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
-    interface ILevelObject
+    abstract class LevelObject
     {
-        //Vector3 Position { get; set; }
-        Vector3 Position { get; }
+        public abstract Vector3 Position { get; set; }
         
         //TgcBoundingBox BoundingBox { get; set; }
-        TgcBoundingBox BoundingBox { get; }
-        
-        Vector3 Center { get; }
+        public abstract TgcBoundingBox BoundingBox { get; }
 
-        float Radius { get; }
+        public abstract Vector3 Center { get; }
 
-        Effect Effect { get; set;}
+        public abstract float Radius { get; }
 
-        string Technique { get; set; }
-      
-        void render();
+        public abstract Effect Effect { get; set; }
 
-        void dispose();
+        public abstract string Technique { get; set; }
 
-        
+        public abstract void render();
+
+        public abstract void dispose();
     }
 }

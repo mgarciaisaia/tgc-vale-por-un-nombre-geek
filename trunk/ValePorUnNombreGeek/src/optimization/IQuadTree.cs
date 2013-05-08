@@ -7,7 +7,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
     interface IQuadTree
     {
-        void add(ILevelObject obstacle);
+        void add(LevelObject obstacle);
         void render(TgcFrustum frustum, List<Commando> commandos, List<Enemy> enemies);
     }
 }
