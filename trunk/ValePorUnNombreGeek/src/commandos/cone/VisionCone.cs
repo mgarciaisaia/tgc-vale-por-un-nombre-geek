@@ -80,12 +80,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             return isInsideVisionRange(target, terrain, null);
         }
 
-        public bool isInsideVisionRange(Character target, List<LevelObject> obstacles)
+        public bool isInsideVisionRange(Character target, List<ILevelObject> obstacles)
         {
             return isInsideVisionRange(target, null, obstacles);
         }
 
-        public bool isInsideVisionRange(Character target, Terrain terrain, List<LevelObject> obstacles)
+        public bool isInsideVisionRange(Character target, Terrain terrain, List<ILevelObject> obstacles)
         {
 
             Vector3 targetPoint = getClosestPointToVertex(target);
@@ -192,7 +192,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
 
          
-         private bool canSeeWithObstacles(Vector3 targetPoint, List<LevelObject> obstacles)
+         private bool canSeeWithObstacles(Vector3 targetPoint, List<ILevelObject> obstacles)
          {
              return true;
          }
