@@ -11,17 +11,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
     class QuadTreeDummie : AlumnoEjemplos.ValePorUnNombreGeek.src.optimization.IQuadTree
     {
-        List<LevelObject> objects;
+        List<ILevelObject> objects;
         Terrain terrain;
 
        
         public QuadTreeDummie(Terrain terrain)
         {
             this.terrain = terrain;
-            this.objects = new List<LevelObject>();
+            this.objects = new List<ILevelObject>();
         }
 
-        public void add(LevelObject obstacle)
+        public void add(ILevelObject obstacle)
         {
             objects.Add(obstacle);
         }
@@ -29,7 +29,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         public void render(TgcFrustum frustum, List<Commando> commandos, List<Enemy> enemies)
         {
             terrain.render();
-            foreach (LevelObject o in objects) o.render();
+            foreach (ILevelObject o in objects) o.render();
             foreach(Commando c in commandos) c.render();
             foreach (Enemy e in enemies) e.render();
         }

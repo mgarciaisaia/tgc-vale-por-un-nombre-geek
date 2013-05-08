@@ -25,22 +25,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         //TODO emprolijar toda la clase! la hice "a las chapas"
 
 
-        public Cylinder(Vector3 _base, float _height, float _radius)
+        public Cylinder(Vector3 _center, float _halfLength, float _radius)
         {
+            this.center = _center;
             this.radius = _radius;
-            this.halfHeight = new Vector3(0, _height / 2, 0);
-            this.center = _base + this.halfHeight;
+            this.halfHeight = new Vector3(0, _halfLength, 0);
             this.renderColor = Color.Yellow.ToArgb();
             this.updateDraw();
         }
 
         public Vector3 Position
-        {
-            get { return this.Center - this.halfHeight; }
-            set { this.Center = value + this.halfHeight; }
-        }
-
-        public Vector3 Center
         {
             get { return this.center; }
             set
@@ -139,11 +133,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         public bool thereIsCollision(Cylinder collider, out Vector3 n)
         {
             //nota: no se checkea la altura, debido a la naturaleza del juego
-            Vector3 distance = collider.Center - this.Center;
+            Vector3 distance = collider.Position - this.Position;
             distance.Y = 0;
             if (distance.Length() <= this.radius + collider.radius)
             {
-                distance = this.Center - collider.Center;
+                distance = this.Position - collider.Position;
                 n = Vector3.Cross(this.halfHeight, distance);
                 n = Vector3.Cross(n, this.halfHeight);
                 n.Normalize();
@@ -165,7 +159,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
                 Vector2 boxDimensions2d = new Vector2(boxDimensions.X, boxDimensions.Z);
 
                 Vector3 boxCenter = aabb.Position + boxDimensions;
-                Vector3 centerToCenter = new Vector3(this.Center.X - boxCenter.X, 0, this.Center.Z - boxCenter.Z);
+                Vector3 centerToCenter = new Vector3(this.Position.X - boxCenter.X, 0, this.Position.Z - boxCenter.Z);
                 Vector2 centerToCenter2d = new Vector2(FastMath.Abs(centerToCenter.X), FastMath.Abs(centerToCenter.Z));
 
                 float cross = Vector2.Ccw(centerToCenter2d, boxDimensions2d);
@@ -192,8 +186,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             Vector3 boxCenter = aabb.Position + boxDimensions;
 
             Vector3 centerToCenter;
-            centerToCenter.X = FastMath.Abs(this.Center.X - boxCenter.X);
-            centerToCenter.Z = FastMath.Abs(this.Center.Z - boxCenter.Z);
+            centerToCenter.X = FastMath.Abs(this.Position.X - boxCenter.X);
+            centerToCenter.Z = FastMath.Abs(this.Position.Z - boxCenter.Z);
 
             //vemos si esta muy lejos
             if (centerToCenter.X > (boxDimensions.X + this.radius)) return false;

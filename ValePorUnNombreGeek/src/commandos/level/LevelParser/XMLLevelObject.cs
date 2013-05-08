@@ -12,7 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
 {
     class XMLLevelObject
     {
-        public static LevelObject getLevelObject(XmlNode levelObjectNode, Terrain terrain, string mediaDir)
+        public static ILevelObject getLevelObject(XmlNode levelObjectNode, Terrain terrain, string mediaDir)
         {
             string objectClass;
             Vector3 scale, rotation;
@@ -37,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
     
         }
 
-        private static LevelObject getWall(XmlNode levelObjectNode, Terrain terrain)
+        private static ILevelObject getWall(XmlNode levelObjectNode, Terrain terrain)
         {
             float[] pos = TgcParserUtils.parseFloat2Array(levelObjectNode.InnerText);
             Vector3 size = TgcParserUtils.float3ArrayToVector3(TgcParserUtils.parseFloat3Array(levelObjectNode.Attributes.GetNamedItem("size").InnerText));
@@ -80,7 +80,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
         }
 
        
-        private static LevelObject getTree(XmlNode levelObjectNode, Terrain terrain, Vector3 scale, Vector3 rotation)
+        private static ILevelObject getTree(XmlNode levelObjectNode, Terrain terrain, Vector3 scale, Vector3 rotation)
         {
             float[] pos = TgcParserUtils.parseFloat2Array(levelObjectNode.InnerText);
                      
@@ -89,7 +89,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
         }
 
 
-        private static LevelObject getMeshObject(XmlNode levelObjectNode, Terrain terrain, string mediaDir, Vector3 scale, Vector3 rotation)
+        private static ILevelObject getMeshObject(XmlNode levelObjectNode, Terrain terrain, string mediaDir, Vector3 scale, Vector3 rotation)
         {
             float[] pos = TgcParserUtils.parseFloat2Array(levelObjectNode.InnerText);
           

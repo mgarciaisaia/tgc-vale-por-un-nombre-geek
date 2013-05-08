@@ -9,7 +9,7 @@ using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
-    class MeshObject : LevelObject
+    class MeshObject:ILevelObject
     {
         protected TgcMesh mesh;
         protected float radius;
@@ -31,45 +31,44 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
             radius = mesh.BoundingBox.calculateBoxRadius();
         }
 
-        public override Vector3 Position
+        public Vector3 Position
         {
             get { return mesh.Position; }
-            set { this.mesh.Position = value; } //setter necesario para ILevelObject (solo sirve en SkeletalRepresentation)
         }
 
-        public override TgcBoundingBox BoundingBox
+        public virtual TgcBoundingBox BoundingBox
         {
             get { return mesh.BoundingBox; }
         }
 
-        public override Vector3 Center
+        public Vector3 Center
         {
             get { return this.center; }
         }
 
-        public override float Radius
+        public float Radius
         {
             get { return this.radius; }
         }
 
-        public override Effect Effect
+        public Effect Effect
         {
             get{ return mesh.Effect;}
             set{mesh.Effect = value;}
         }
 
-        public override string Technique
+        public string Technique
         {
             get{ return mesh.Technique;}
             set{mesh.Technique = value;}
         }
 
-        public override void render()
+        public void render()
         {
             mesh.render();                     
         }
 
-        public override void dispose()
+        public void dispose()
         {
             mesh.dispose();
         }

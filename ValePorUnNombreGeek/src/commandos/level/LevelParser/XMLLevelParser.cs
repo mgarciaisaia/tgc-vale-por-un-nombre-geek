@@ -41,7 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
             Level level = new Level(terrain);
             foreach (Enemy e in getEnemies(terrain)) level.add(e);
             foreach (Commando c in getCommandos(terrain)) level.add(c);
-            foreach (LevelObject o in getLevelObjects(terrain)) level.add(o);
+            foreach (ILevelObject o in getLevelObjects(terrain)) level.add(o);
             return level;
         }
 
@@ -58,9 +58,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
         }
 
 
-        private IEnumerable<LevelObject> getLevelObjects(Terrain terrain)
+        private IEnumerable<ILevelObject> getLevelObjects(Terrain terrain)
         {
-            List<LevelObject> levelObjects = new List<LevelObject>();
+            List<ILevelObject> levelObjects = new List<ILevelObject>();
 
             XmlNodeList objectNodes = root.GetElementsByTagName("levelObject");
 
