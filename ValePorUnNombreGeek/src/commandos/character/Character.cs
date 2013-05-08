@@ -8,6 +8,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.Shaders;
 using TgcViewer;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -290,7 +291,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { this.technique = value; }
         }
 
-
+        public bool collidesWith(Cylinder cyl, out Vector3 n)
+        {
+            return this.representation.BoundingCylinder.thereIsCollision(this.BoundingBox, out n);
+        }
       
     }
 }

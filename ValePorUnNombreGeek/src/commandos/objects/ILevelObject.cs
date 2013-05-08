@@ -5,15 +5,14 @@ using System.Text;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX.Direct3D;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
     interface ILevelObject
     {
-        //Vector3 Position { get; set; }
         Vector3 Position { get; }
         
-        //TgcBoundingBox BoundingBox { get; set; }
         TgcBoundingBox BoundingBox { get; }
         
         Vector3 Center { get; }
@@ -28,6 +27,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 
         void dispose();
 
-        
+        bool collidesWith(Cylinder cyl, out Vector3 n);
     }
 }
