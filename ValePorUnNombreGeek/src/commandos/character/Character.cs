@@ -11,7 +11,7 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
-    abstract class Character : ITargeteable, ILevelObject
+    abstract class Character : LevelObject, ITargeteable
     {
         protected ICharacterRepresentation representation;
         protected Level level;
@@ -59,13 +59,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { this.level = value; }
         }*/
 
-        public Vector3 Position
+        public override Vector3 Position
         {
             get { return this.representation.Position; }
             set { this.representation.Position = value; }
         }
 
-        public TgcBoundingBox BoundingBox
+        public override TgcBoundingBox BoundingBox
         {
             get { return this.representation.BoundingBox; }
         }
@@ -106,9 +106,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Dead = true;
         }
 
-      
-  
-        public virtual void dispose()
+
+
+        public override void dispose()
         {
             representation.dispose();
         }
@@ -129,7 +129,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { this.selectionColor = value; }
         }
 
-        public virtual void render()
+        public override void render()
         {
             string technique = this.technique;
 
@@ -191,7 +191,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         /// <summary>
         /// Accion a realizar en caso de choque
         /// </summary>
-        public virtual bool manageCollision(ILevelObject obj)
+        public virtual bool manageCollision(LevelObject obj)
         {
 
             if (obj.Equals(this.target))
@@ -275,16 +275,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public abstract float Speed {  get; }
 
-        public float Radius { get { return this.representation.Radius; } }
-        public Vector3 Center { get { return this.representation.Center; } }
+        public override float Radius { get { return this.representation.Radius; } }
+        public override Vector3 Center { get { return this.representation.Center; } }
 
-        public Effect Effect
+        public override Effect Effect
         {
             get { return representation.Effect; }
             set { representation.Effect = value; }
         }
 
-        public string Technique
+        public override string Technique
         {
             get { return this.technique; }
             set { this.technique = value; }

@@ -53,7 +53,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
             //this.mesh.AutoUpdateBoundingBox = false;
             //seguimos actualizando la bb por que de momento la necesitamos para seleccionar al personaje
-            this.boundingCylinder = new Cylinder(this.Position, 100, 30); //TODO ver valores
+            Vector3 size = this.BoundingBox.calculateSize();
+            this.boundingCylinder = new Cylinder(this.Position, size.Y, size.X / 2);
 
             //rotacion manual
             this.AutoTransformEnable = false;
