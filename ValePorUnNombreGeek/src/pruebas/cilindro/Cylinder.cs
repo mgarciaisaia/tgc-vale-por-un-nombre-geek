@@ -126,7 +126,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         #endregion
 
 
-        public bool thereIsCollisionCySp(TgcBoundingSphere sphere)
+        /*public bool thereIsCollisionCySp(TgcBoundingSphere sphere)
         {
             if (FastMath.Abs(this.center.Y - sphere.Center.Y) <= this.halfLength.Y)
             {
@@ -136,7 +136,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             }
             //TODO colision tapas
             return false;
-        }
+        }*/
 
         public bool thereIsCollisionCyCy(Cylinder collider, out Vector3 n)
         {
@@ -170,16 +170,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 
                 float cross = Vector2.Ccw(centerToCenter2d, boxDimensions2d);
 
-                float relacionX = centerToCenter2d.X * boxDimensions.Z; //TODO borrar
-                float relacionY = centerToCenter2d.Y * boxDimensions.X; //TODO borrar
-
-                if (cross > 0) n = new Vector3(1, 0, 0);
-                else if (cross < 0) n = new Vector3(0, 0, 1);
-                else /*who knows*/
+                if (cross > 0) n = new Vector3(centerToCenter.X, 0, 0);
+                else if (cross < 0) n = new Vector3(0, 0, centerToCenter.Z);
+                else
                 {
-                    n = new Vector3(relacionX, 0, relacionY);
-                    n.Normalize();
+                    n = new Vector3(centerToCenter.X * boxDimensions2d.Y, 0, centerToCenter.Z * boxDimensions2d.X);
                 }
+                n.Normalize();
                 return true;
             }
             else
