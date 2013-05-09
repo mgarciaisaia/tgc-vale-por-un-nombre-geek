@@ -50,9 +50,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             this.lastCylinderPos = new Vector3(0, 0, 0);
             GuiController.Instance.Modifiers.addVertex3f("posicion", new Vector3(-200, -50, -200), new Vector3(200, 50, 200), this.lastCylinderPos);
 
-            this.myCylinder = new Cylinder(this.lastCylinderPos, 20, 10);
+            this.myCylinder = new Cylinder(this.lastCylinderPos, 20, 10, Color.Yellow);
 
-            this.cylinder = new Cylinder(new Vector3(-30, 0, 0), 40, 15);
+            this.cylinder = new Cylinder(new Vector3(-30, 0, 0), 40, 15, Color.Yellow);
             this.sphere = new TgcBoundingSphere(new Vector3(80, 0, 0), 45);
             this.boundingBox = new TgcBoundingBox(new Vector3(0, 0, -120), new Vector3(80, 40, -80));
 
@@ -67,8 +67,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
 
-            if (this.thereIsCollision()) this.myCylinder.setColor(Color.DarkOliveGreen);
-            else this.myCylinder.setColor(Color.LightPink);
+            if (this.thereIsCollision()) this.myCylinder.Color = Color.DarkOliveGreen;
+            else this.myCylinder.Color = Color.Yellow;
 
             Vector3 newCylinderPos = (Vector3)GuiController.Instance.Modifiers.getValue("posicion");
             if(this.lastCylinderPos != newCylinderPos)
@@ -95,7 +95,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         private bool thereIsCollision()
         {
             Vector3 n;
-            //if (myCylinder.thereIsCollisionCySp(this.sphere)) return true;
             if (myCylinder.thereIsCollisionCyCy(this.cylinder, out n))
             {
                 this.normal.PStart = this.myCylinder.Position;
