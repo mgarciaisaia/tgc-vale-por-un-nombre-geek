@@ -298,12 +298,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public bool collidesWith(Cylinder cyl, out Vector3 n)
         {
-            return this.Representation.BoundingCylinder.thereIsCollision(cyl, out n);
+            return this.Representation.BoundingCylinder.thereIsCollisionCyCy(cyl, out n);
         }
 
         public bool collidesWith(TgcBoundingBox aabb, out Vector3 n)
         {
-            return this.Representation.BoundingCylinder.thereIsCollision(aabb, out n);
+            return this.Representation.BoundingCylinder.thereIsCollisionCyBB(aabb, out n);
         }
     }
 }

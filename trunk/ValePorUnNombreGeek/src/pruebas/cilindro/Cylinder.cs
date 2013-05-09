@@ -162,8 +162,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             return false;
 
         celculateNormal:
-            Vector2 boxDimensions2d = this.fromVector3(boxDimensions);
-            Vector2 centerToCenter2d = this.fromVector3(absCenterToCenter);
+            Vector2 boxDimensions2d = fromVector3(boxDimensions);
+            Vector2 centerToCenter2d = fromVector3(absCenterToCenter);
 
             float cross = Vector2.Ccw(centerToCenter2d, boxDimensions2d);
 
