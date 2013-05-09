@@ -215,7 +215,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
           
         }
 
-        public virtual bool manageSteepTarrain()
+        public virtual bool manageSteepTerrain()
         {
             this.setNoTarget();
             this.representation.standBy();

@@ -124,8 +124,37 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             Vector3 realMovement = direction;
             ILevelObject obj;
             
+            
+
+            //Cuando se pueda hacer que no se traben, se quita character.OwnedByUser
+            if (character.OwnedByUser && terrenoMuyEmpinado(previousPosition, direction*speed))
+            {
+
+                /*//Busco movimientos alternativos
+                foreach (Vector3 alt in getAlternativeMovements(direction))
+                {
+
+                    if (!terrenoMuyEmpinado(previousPosition, alt*speed))
+                    {
+                        realMovement = alt;
+                        break;
+                    }
+                }
+               
+               */
+
+               if (realMovement == direction)
+               {
+                   character.manageSteepTerrain();
+                   return;
+               }
+              
+               
+
+            }
+
             //Muevo el personaje
-            character.move(direction, speed);
+            character.move(realMovement, speed);
             character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
             Vector3 n;
@@ -159,23 +188,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
             }
-            renderVector(character, centrifugal, Color.Red);
-            renderVector(character, realMovement, Color.Green);
+           // renderVector(character, centrifugal, Color.Red);
+           // renderVector(character, realMovement, Color.Green);
 
-           //Cuando se pueda hacer que no se traben, se quita character.OwnedByUser
-           if (character.OwnedByUser && terrenoMuyEmpinado(previousPosition, direction)){
-                
-                character.Position = previousPosition;
-                if (!character.manageSteepTarrain())
-                {
-                    //Do something
-                }
-                
-           }
+         
 
           
 
            
+        }
+
+        private Vector3[] getAlternativeMovements(Vector3 direction)
+        {
+            Vector3[] alternatives = new Vector3[2];
+            alternatives[0] = Vector3.TransformCoordinate(direction, Matrix.RotationY(FastMath.PI_HALF));
+            alternatives[1] = Vector3.TransformCoordinate(direction, Matrix.RotationY(-FastMath.PI_HALF));
+            return alternatives;
+
         }
 
         private void renderVector(Character character, Vector3 n, Color color)
