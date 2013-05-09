@@ -145,6 +145,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             }
 
             controlPanel.render();
+            level.Map.Technique = "MAPA_VIEJO";
+            level.Map.render();
         }
 
       

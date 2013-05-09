@@ -96,6 +96,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLCommando.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLEnemy.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLLevelObject.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\map\Map.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\ILevelObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\Soldier.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\OnWaitpoint.cs" />
@@ -190,13 +191,13 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\pez-TgcKeyFrameMesh.xml" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Sound\WATER.WAV" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Textures\fish.bmp" />
-    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Die-TgcSkeletalAnim.xml" />
-    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Run-TgcSkeletalAnim.xml" />
-    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\StandBy-TgcSkeletalAnim.xml" />
-    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Walk-TgcSkeletalAnim.xml" />
-    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\BasicHuman-TgcSkeletalMesh.xml" />
-    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_body.jpg" />
-    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_head.jpg" />
+    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Die-TgcSkeletalAnim.xml" />
+    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Run-TgcSkeletalAnim.xml" />
+    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\StandBy-TgcSkeletalAnim.xml" />
+    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Walk-TgcSkeletalAnim.xml" />
+    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\BasicHuman-TgcSkeletalMesh.xml" />
+    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_body.jpg" />
+    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_head.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\Barrita.jpg" />
     <Content Include="ValePorUnNombreGeek\documentacion\com.horstmann.violet-0.21.1.jar" />
     <Content Include="ValePorUnNombreGeek\documentacion\umlCharacter.png" />
@@ -207,8 +208,9 @@
     <Content Include="ValePorUnNombreGeek\niveles\vacio-level.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\mapa.fx" />
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\shaders.fx" />
-    <None Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
+    <None Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
     <None Include="ValePorUnNombreGeek\documentacion\Decisiones de diseño.rtf" />
     <None Include="ValePorUnNombreGeek\documentacion\diagrama_de_clases.class.violet" />
     <None Include="ValePorUnNombreGeek\documentacion\soldier_state_diagram.state.violet" />

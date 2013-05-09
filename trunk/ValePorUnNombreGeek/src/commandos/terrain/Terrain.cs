@@ -10,6 +10,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         float scaleY;
         float halfWidth; //Se usa mas la mitad que el total
         float halfLength;
+        string texturePath;
+        string heightmapPath;
+
 
         #region Getters
 
@@ -19,7 +22,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         public float getLength() { return halfLength*2; }
         public float getScaleXZ() { return scaleXZ; }
         public float getScaleY() { return scaleY; }
-
+        public string TexturePath { get { return texturePath; } }
+        public string HeightmapPath { get { return heightmapPath; } }
         #endregion
 
         #region Initialize
@@ -29,6 +33,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         {
             this.loadHeightmap(pathHeightmap, scaleXZ, scaleY, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
+            this.texturePath = pathTextura;
+            this.heightmapPath = pathHeightmap;
         }
 
         public Terrain() : base()
@@ -39,12 +45,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             string mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\" + "Heightmaps\\";
             pathHeightmap = mediaDir  + "heightmap.jpg";
             pathTextura = mediaDir + "TerrainTexture5.jpg";
+            this.heightmapPath = pathHeightmap;
             //pathHeightmap = mediaDir + "Heightmap3.jpg";
             //pathTextura = mediaDir + "TerrainTexture3.jpg";
 
             //Cargar heightmap
             this.loadHeightmap(pathHeightmap, 20f, 2f, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
+            this.texturePath = pathTextura;
         }
 
 

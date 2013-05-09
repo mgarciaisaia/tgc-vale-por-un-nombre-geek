@@ -8,6 +8,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.optimization;
 using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
@@ -19,6 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         List<ILevelObject> objects;
         Terrain terrain;
         IQuadTree quadtree;
+        Map map;
 
 
         public List<Character> Characters { get { return this.characters; } }
@@ -31,6 +33,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             get{return this.terrain;}
         }
 
+        public Map Map
+        {
+            get { return this.map; }
+        }
          public Level(Terrain terrain)
         {
             characters = new List<Character>();
@@ -38,6 +44,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             commandos = new List<Commando>();
             objects = new List<ILevelObject>();
             this.terrain = terrain;
+            this.map = new Map(this);
             quadtree = new QuadTreeDummie(terrain);
             
         }
