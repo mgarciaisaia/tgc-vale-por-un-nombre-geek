@@ -44,7 +44,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             commandos = new List<Commando>();
             objects = new List<ILevelObject>();
             this.terrain = terrain;
-            this.map = new LevelMap(this, 100,100,1);
+            this.map = new LevelMap(this, 100,100,2);
             quadtree = new QuadTreeDummie(terrain);
             
         }

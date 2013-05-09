@@ -73,7 +73,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         public LevelMap(Level level, float width, float height, float zoom)
         {
             this.level = level;
-            this.zoom = 1;
+            this.zoom = zoom;
             this.width= width;
             this.height= height;
             Bitmap bitmap = (Bitmap)Bitmap.FromFile(level.Terrain.TexturePath);
