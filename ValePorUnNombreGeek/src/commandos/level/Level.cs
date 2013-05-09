@@ -20,7 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         List<ILevelObject> objects;
         Terrain terrain;
         IQuadTree quadtree;
-        Map map;
+        LevelMap map;
 
 
         public List<Character> Characters { get { return this.characters; } }
@@ -33,7 +33,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             get{return this.terrain;}
         }
 
-        public Map Map
+        public LevelMap Map
         {
             get { return this.map; }
         }
@@ -44,7 +44,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             commandos = new List<Commando>();
             objects = new List<ILevelObject>();
             this.terrain = terrain;
-            this.map = new Map(this);
+            this.map = new LevelMap(this, 100,100,1);
             quadtree = new QuadTreeDummie(terrain);
             
         }

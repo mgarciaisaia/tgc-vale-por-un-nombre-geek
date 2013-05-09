@@ -14,6 +14,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands.orders;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.text;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -82,7 +83,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             sky = new Sky();
             this.level = null;
             loadLevel(initialLevel);
-
+            LevelMap map = level.Map;
+            map.Width = 2 * level.Map.Height;
+            map.setPosition(new Vector2(GuiController.Instance.Panel3d.Width - 10 - level.Map.Width, level.Map.Position.Y));
+            
             //Panel de control in game
             controlPanel = new GraphicalControlPanel();
             /*controlPanel = new TextControlPanel();
