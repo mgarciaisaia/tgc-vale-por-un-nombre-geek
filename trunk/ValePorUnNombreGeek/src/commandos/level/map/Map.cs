@@ -135,7 +135,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
                 float widthFactor = width / 2/ zoom;
                 float heightFactor = height / 2 / zoom;
 
-                //0 0 = half width half height
+                
                 float minX = (cameraCoords.X + widthFactor) / width;
                 float maxX = (cameraCoords.X - widthFactor) / width;
                 float minY = (cameraCoords.Y - heightFactor ) / height;
