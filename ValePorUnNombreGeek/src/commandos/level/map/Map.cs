@@ -132,13 +132,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             {
                 float width = level.Terrain.getWidth();
                 float height = level.Terrain.getLength();
-
+                float widthFactor = width / 2/ zoom;
+                float heightFactor = height / 2 / zoom;
 
                 //0 0 = half width half height
-                float minX = (cameraCoords.X + width / 2/ zoom) / width;
-                float maxX = (cameraCoords.X - width / 2/zoom) / width;
-                float minY = (cameraCoords.Y - height / 2/zoom) / height;
-                float maxY = (cameraCoords.Y + height / 2/zoom) / height;
+                float minX = (cameraCoords.X + widthFactor) / width;
+                float maxX = (cameraCoords.X - widthFactor) / width;
+                float minY = (cameraCoords.Y - heightFactor ) / height;
+                float maxY = (cameraCoords.Y + heightFactor) / height;
                 
 
                 //Arriba izq
