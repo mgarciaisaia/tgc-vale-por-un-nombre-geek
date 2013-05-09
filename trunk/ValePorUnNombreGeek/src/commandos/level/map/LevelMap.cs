@@ -9,10 +9,11 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.Shaders;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 {
-    class Map
+    class LevelMap
     {
         private Texture texDiffuseMap;
         private Texture textHeightmap;
@@ -28,6 +29,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private float height;
         private bool enabled = true;
 
+
+
+        //Para calculos de proporciones de cosas..
+
+        float terrainWidth;
+        float terrainHeight;
+        float realZoom;
+        float widthFactor;
+        float heightFactor;
 
         public Effect Effect
         {
@@ -46,21 +56,28 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             get { return this.enabled; }
             set { this.enabled = value; }
         }
+        private bool mustRecalculate = true;
 
+        public float Zoom
+        {
+            get { return this.zoom; }
+            set { this.realZoom = value; mustRecalculate = true; }
+        }
         
         public Vector2 Position{
 
             get{ return this.position;}
-            set { this.position = value; mustUpdate = true; }
+            
         }
         
-        public Map(Level level)
+        public LevelMap(Level level, float width, float height, float zoom)
         {
             this.level = level;
-            this.zoom = 2;
-            this.width = 100;
-            this.height = 100;
+            this.zoom = 1;
+            this.width= width;
+            this.height= height;
             Bitmap bitmap = (Bitmap)Bitmap.FromFile(level.Terrain.TexturePath);
+            
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
             texDiffuseMap = Texture.FromBitmap(GuiController.Instance.D3dDevice, bitmap, Usage.None, Pool.Managed);
                  
@@ -91,6 +108,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             this.vertices[3] = new CustomVertex.TransformedTextured(position.X+Width, position.Y+Height, 0, 1, 0, 0);
 
             mustUpdate = false;
+            mustRecalculate = true;
         }
 
         public void render()
@@ -98,7 +116,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
             if (!enabled) return;
             if (mustUpdate) this.crearRectangulo();
-
+            if (mustRecalculate) this.updatePropotions();
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
 
             actualizarVista();
@@ -120,6 +138,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             
         }
 
+        private void updatePropotions()
+        {
+
+            terrainWidth = level.Terrain.getWidth();
+            terrainHeight = level.Terrain.getLength();
+            realZoom = FastMath.Max(this.width / terrainWidth, this.height / terrainHeight) * this.zoom;
+            widthFactor = terrainWidth / 2 / realZoom * this.width / terrainWidth;
+            heightFactor = terrainHeight / 2 / realZoom * this.height / terrainHeight;
+            mustRecalculate = false;
+        }
+
 
 
         private void actualizarVista()
@@ -130,16 +159,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             Vector2 cameraCoords;
             if (this.level.Terrain.xzToHeightmapCoords(cameraPosition.X, cameraPosition.Z, out cameraCoords))
             {
-                float width = level.Terrain.getWidth();
-                float height = level.Terrain.getLength();
-                float widthFactor = width / 2/ zoom;
-                float heightFactor = height / 2 / zoom;
+           
 
                 
-                float minX = (cameraCoords.X + widthFactor) / width;
-                float maxX = (cameraCoords.X - widthFactor) / width;
-                float minY = (cameraCoords.Y - heightFactor ) / height;
-                float maxY = (cameraCoords.Y + heightFactor) / height;
+                float minX = (cameraCoords.X + widthFactor) / terrainWidth;
+                float maxX = (cameraCoords.X - widthFactor) / terrainWidth;
+                float minY = (cameraCoords.Y - heightFactor ) / terrainHeight;
+                float maxY = (cameraCoords.Y + heightFactor) / terrainHeight;
                 
 
                 //Arriba izq
@@ -169,5 +195,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         public float Width { get { return this.width; } set { this.width = value; mustUpdate = true; } }
 
         public float Height { get { return this.height; } set { this.height = value; mustUpdate = true; } }
+
+        public void setPosition(Vector2 vector2)
+        {
+            this.position = vector2; 
+            mustUpdate = true;
+        }
     }
 }
