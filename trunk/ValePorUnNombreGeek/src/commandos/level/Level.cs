@@ -125,7 +125,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                
             int intentos;
             int maxIntentos = 50;
-            Vector3 centripetal = Vector3.Empty;
+            Vector3 centrifugal = Vector3.Empty;
             for (intentos = 0; thereIsCollision(character, out obj, out n); intentos++)
             {
                 
@@ -139,20 +139,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 if (character.manageCollision(obj)) break;
 
                 //Calculo un vec que se aleja del centro del objeto para que el pj gire alrededor.                        
-                centripetal = (character.Center - obj.Center);
+                centrifugal = (character.Center - obj.Center);
                 
 
-                centripetal.Y = 0;
-                centripetal.Normalize();
+                centrifugal.Y = 0;
+                centrifugal.Normalize();
                 
-                realMovement = centripetal + realMovement;  //Voy haciendo que la direccion tienda mas hacia la centripeta.
+                realMovement = centrifugal + realMovement;  //Voy haciendo que la direccion tienda mas hacia la centrifuga.
                 realMovement.Normalize();
 
                 character.move(realMovement, speed);
                 character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
             }
-            renderVector(character, centripetal, Color.Red);
+            renderVector(character, centrifugal, Color.Red);
             renderVector(character, realMovement, Color.Green);
 
            //Cuando se pueda hacer que no se traben, se quita character.OwnedByUser
