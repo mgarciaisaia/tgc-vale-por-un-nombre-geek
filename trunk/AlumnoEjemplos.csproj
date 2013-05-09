@@ -200,7 +200,9 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\Barrita.jpg" />
     <Content Include="ValePorUnNombreGeek\documentacion\com.horstmann.violet-0.21.1.jar" />
     <Content Include="ValePorUnNombreGeek\documentacion\umlCharacter.png" />
-    <Content Include="ValePorUnNombreGeek\niveles\another-level.xml" />
+    <Content Include="ValePorUnNombreGeek\niveles\another-level.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ValePorUnNombreGeek\niveles\default-level.xml" />
     <Content Include="ValePorUnNombreGeek\niveles\vacio-level.xml" />
   </ItemGroup>
