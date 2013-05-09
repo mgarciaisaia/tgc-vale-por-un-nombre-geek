@@ -74,8 +74,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 
         public override void render()
         {
-            //this.box.render();
-            this.box.BoundingBox.render();
+            this.box.render();
+           
         }
 
         public override void dispose()

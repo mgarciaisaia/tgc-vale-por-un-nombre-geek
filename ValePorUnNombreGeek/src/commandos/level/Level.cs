@@ -7,6 +7,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.optimization;
 using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
+using System.Drawing;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
@@ -121,28 +122,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
             Vector3 n;
-            if (thereIsCollision(character, out obj, out n))
-            {
-                TgcArrow arrow = new TgcArrow(); //flechita demostrativa de que funciona xd
-                arrow.Enabled = true;
-                arrow.PStart = character.Center;
-                arrow.PEnd = n * 100 + arrow.PStart;
-                arrow.Thickness = 5;
-                arrow.HeadSize = new Vector2(10, 10);
-                arrow.updateValues();
-                arrow.render();
-
-                character.Position = previousPosition;
-
-                //TODO borrar este if y rehabilitar el for de abajo
-            }
-
-            /*
+               
             int intentos;
-            int maxIntentos = 10;
-            for (intentos = 0; thereIsCollision(character, out obj); intentos++)
+            int maxIntentos = 50;
+            Vector3 centripetal = Vector3.Empty;
+            for (intentos = 0; thereIsCollision(character, out obj, out n); intentos++)
             {
-
+                
+                //renderVector(character, n, Color.Black);
+                
                 //Cancelo el movimiento
                 character.Position = previousPosition;
                 if (intentos == maxIntentos) break;
@@ -150,16 +138,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 //Si el pj ya arregló el problema, parar.             
                 if (character.manageCollision(obj)) break;
 
-                //Hace que el pj se desvie                              
-                Vector3 reaction = (character.Center - obj.Center);
-                reaction.Y = 0;
-                reaction.Normalize();
-                realMovement = reaction + realMovement * 0.4f;
+                //Calculo un vec que se aleja del centro del objeto para que el pj gire alrededor.                        
+                centripetal = (character.Center - obj.Center);
+                
+
+                centripetal.Y = 0;
+                centripetal.Normalize();
+                
+                realMovement = centripetal + realMovement;  //Voy haciendo que la direccion tienda mas hacia la centripeta.
                 realMovement.Normalize();
+
                 character.move(realMovement, speed);
                 character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
-            }*/
+            }
+            renderVector(character, centripetal, Color.Red);
+            renderVector(character, realMovement, Color.Green);
 
            //Cuando se pueda hacer que no se traben, se quita character.OwnedByUser
            if (character.OwnedByUser && terrenoMuyEmpinado(previousPosition, direction)){
@@ -174,6 +168,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
           
 
+           
+        }
+
+        private void renderVector(Character character, Vector3 n, Color color)
+        {
+            if (n.Equals(Vector3.Empty)) return;
+            TgcArrow arrow = new TgcArrow(); //flechita demostrativa de que funciona xd
+            arrow.Enabled = true;
+            arrow.PStart = character.Center;
+            arrow.PEnd = n * 100 + arrow.PStart;
+            arrow.Thickness = 5;
+            arrow.HeadSize = new Vector2(10, 10);
+            arrow.BodyColor = color;
+            arrow.updateValues();
+            arrow.render();
            
         }
 
@@ -201,8 +210,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             obj = null;
 
             foreach (ILevelObject colisionable in this.getPosibleColliders(ch))
-                if (colisionable.collidesWith(ch, out n))
+                if (colisionable.collidesWith(ch, out n)){
+                    obj = colisionable;
                     return true;
+                }
 
             n = Vector3.Empty;
             return false;
