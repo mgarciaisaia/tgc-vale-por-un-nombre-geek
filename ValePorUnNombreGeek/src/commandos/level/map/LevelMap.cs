@@ -41,7 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private float zoom;
         private bool enabled = true;
 
-        private bool followCamera = true;        
+        private bool followCamera;        
         private Vector3 previousViewCenter;
         private Vector3 viewCenter;
 
@@ -135,7 +135,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
             this.position = new Vector2(GuiController.Instance.Panel3d.Width-this.width-10,10);
             this.effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\mapa.fx");
-            this.technique = "MAPA";                             
+            this.technique = "MAPA";
+
+            this.followCamera = true;
            
         }
 
@@ -170,10 +172,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         public void render()
         {                 
             if (!enabled) return;          
+
             if (mustUpdateRectangle) this.createRectangle();
             if (mustUpdateProportions) this.updateProportions();
-
-            
 
             if (followCamera)
             {
@@ -183,22 +184,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             if (!viewCenter.Equals(previousViewCenter)) mustUpdateView = true;
            
             
-            if(mustUpdateView)updateView(viewCenter);
-
-
-
-           
+            if(mustUpdateView)updateView(viewCenter);         
 
          
            //Renderizo las posiciones de los pj en una textura.
             renderCharacterPositions();
-
-
+            
+            //Renderizo el mapa
             renderMapTexture();
 
-
+            //Renderizo la textura con las posiciones para que queden sobre el mapa.
             renderCharacterPositionsTexture();
-
          
         }
 
