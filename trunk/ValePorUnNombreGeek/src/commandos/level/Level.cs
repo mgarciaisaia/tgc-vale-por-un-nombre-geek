@@ -22,6 +22,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         IQuadTree quadtree;
         LevelMap map;
 
+        UserCheckBox showCollisionVector; //TODO mover a otra clase
+
 
         public List<Character> Characters { get { return this.characters; } }
         public List<Enemy> Enemies { get { return this.enemies; } }
@@ -30,14 +32,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
        
         public Terrain Terrain{
-            get{return this.terrain;}
+            get{ return this.terrain; }
         }
 
         public LevelMap Map
         {
             get { return this.map; }
         }
-         public Level(Terrain terrain)
+        
+        public Level(Terrain terrain)
         {
             characters = new List<Character>();
             enemies = new List<Enemy>();
@@ -46,7 +49,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             this.terrain = terrain;
             this.map = new LevelMap(this, 100,100,2);
             quadtree = new QuadTreeDummie(terrain);
-            
+
+            this.showCollisionVector = new UserCheckBox("FlechasColisiones", false); //TODO mover a otra clase
         }
 
        
@@ -164,9 +168,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             Vector3 centrifugal = Vector3.Empty;
             for (intentos = 0; thereIsCollision(character, out obj, out n); intentos++)
             {
-                
-                //renderVector(character, n, Color.Black);
-                
                 //Cancelo el movimiento
                 character.Position = previousPosition;
                 if (intentos == maxIntentos) break;
@@ -187,9 +188,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 character.move(realMovement, speed);
                 character.Position = this.getPosition(character.Position.X, character.Position.Z);
 
+                if (this.showCollisionVector.Value)
+                {
+                    this.renderVector(character, n, Color.Red);
+                    //this.renderVector(character, direction, Color.Yellow);
+                    //this.renderVector(character, realMovement, Color.Green);
+                }
             }
-           // renderVector(character, centrifugal, Color.Red);
-           // renderVector(character, realMovement, Color.Green);
 
          
 
@@ -210,7 +215,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         private void renderVector(Character character, Vector3 n, Color color)
         {
             if (n.Equals(Vector3.Empty)) return;
-            TgcArrow arrow = new TgcArrow(); //flechita demostrativa de que funciona xd
+            TgcArrow arrow = new TgcArrow();
             arrow.Enabled = true;
             arrow.PStart = character.Center;
             arrow.PEnd = n * 100 + arrow.PStart;
