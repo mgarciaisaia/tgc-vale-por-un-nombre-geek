@@ -23,7 +23,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private CustomVertex.TransformedTextured[] vertices;
         private Vector2 position;
         private Effect effect;
-        private bool mustUpdate = true;
+        private bool mustUpdateRectangle = true;
+        private bool mustUpdateView = true;
+        private bool mustUpdateProportions = true;
         private string technique;
          private Level level;
         private float zoom;
@@ -59,13 +61,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             get { return this.enabled; }
             set { this.enabled = value; }
         }
-        private bool mustRecalculate = true;
+      
        
 
         public float Zoom
         {
             get { return this.zoom; }
-            set { this.realZoom = value; mustRecalculate = true; }
+            set
+            {
+                this.zoom = value; 
+                mustUpdateProportions = true;
+                mustUpdateView = true;
+            }
         }
         
         public Vector2 Position{
@@ -80,6 +87,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             this.zoom = zoom;
             this.width= width;
             this.height= height;
+
+          
             Bitmap bitmap = (Bitmap)Bitmap.FromFile(level.Terrain.TexturePath);
             
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
@@ -126,29 +135,40 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             //Abajo der
             this.vertices[3] = new CustomVertex.TransformedTextured(position.X+Width, position.Y+Height, 0, 1, 0, 0);
 
-            mustUpdate = false;
-            mustRecalculate = true;
+            mustUpdateRectangle = false;
+            mustUpdateProportions = true;
+            mustUpdateView = true;
         }
-        int a = 0;
+        
+
         public void render()
         {
+
+
             Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
-            if (!enabled) return;
-            if (mustUpdate) this.crearRectangulo();
-            if (mustRecalculate) this.updateProportions();
+
+                   
+            if (!enabled) return;          
+            if (mustUpdateRectangle) this.crearRectangulo();
+            if (mustUpdateProportions) this.updateProportions();
+
+            Vector3 cameraPosition = GuiController.Instance.CurrentCamera.getPosition();
+            if (!cameraPosition.Equals(previousCameraPosition)) mustUpdateView = true;
+            if(mustUpdateView)actualizarVista(cameraPosition);
+
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
 
-            actualizarVista();
+           
 
          
            //Renderizo las posiciones de los pj en una textura.
             renderCharacterPositions();
                             
-
             //Renderizo el mapa
             effect.Technique = technique;
             effect.SetValue("texDiffuseMap", texDiffuseMap);
             effect.SetValue("texHeightMap", textHeightmap);
+
             texturesManager.clear(1);
             int passes = effect.Begin(0);
             for (int i = 0; i < passes; i++)
@@ -162,11 +182,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
 
             //Renderizo las posiciones
-            bool alphaBlendEnabled = device.RenderState.AlphaBlendEnable;
-            device.RenderState.AlphaBlendEnable = true;
+          
       
-            effect.Technique = "MAPA";
+            effect.Technique = "POSICIONES";
             effect.SetValue("texDiffuseMap", g_Posiciones);
+            GuiController.Instance.Shaders.VariosShader.SetValue("texDiffuseMap", g_Posiciones);
+          
             texturesManager.clear(1);
             passes = effect.Begin(0);
             for (int i = 0; i < passes; i++)
@@ -178,16 +199,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             }
             effect.End();
 
-            device.RenderState.AlphaBlendEnable = alphaBlendEnabled;
+         
         }
 
         private void renderCharacterPositions()
         {
             Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
+           
+                      
+            //Renderizo posiciones de personajes sobre una textura
 
             Surface pOldRT;
             Surface pOldDS;
-            //Renderizo posiciones de personajes
 
             device.EndScene();
 
@@ -216,22 +239,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
 
 
-            if (a == 0)
-            {
-                TextureLoader.Save("test.bmp", ImageFileFormat.Bmp, g_Posiciones);
-                a++;
-                GuiController.Instance.Logger.log("listo");
-
-            }
-
-
             device.EndScene();
             device.BeginScene();
 
 
             device.DepthStencilSurface = pOldDS;
             device.SetRenderTarget(0, pOldRT);
-                
+
+           
         }
 
         private IEnumerable<CustomVertex.TransformedColored[]> getCharacterRectangles()
@@ -239,11 +254,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             List<CustomVertex.TransformedColored[]> rectangles = new List<CustomVertex.TransformedColored[]>();
             int width = 2;
             int height = 2;
-            int color = Color.Green.ToArgb();
+            int color;
             CustomVertex.TransformedColored[] vertices;
 
-            foreach(Commando c in level.Commandos){
+            foreach(Character c in level.Characters){
                 Vector2 position;
+                if (c.OwnedByUser) color = Color.Green.ToArgb(); else color = Color.Red.ToArgb();
                 level.Terrain.xzToHeightmapCoords(c.Position.X, c.Position.Z, out position);
 
 
@@ -274,18 +290,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             realZoom = FastMath.Max(this.width / terrainWidth, this.height / terrainHeight) * this.zoom;
             widthFactor = terrainWidth / 2 / realZoom * this.width / terrainWidth;
             heightFactor = terrainHeight / 2 / realZoom * this.height / terrainHeight;
-            mustRecalculate = false;
+            mustUpdateProportions = false;
+            mustUpdateView = true;
+
         }
 
 
 
-        private void actualizarVista()
+        private void actualizarVista(Vector3 center)
         {
-            Vector3 cameraPosition = GuiController.Instance.CurrentCamera.getPosition();
-            if (previousCameraPosition != null && previousCameraPosition.Equals(cameraPosition)) return;
+          
            
             Vector2 cameraCoords;
-            if (this.level.Terrain.xzToHeightmapCoords(cameraPosition.X, cameraPosition.Z, out cameraCoords))
+            if (this.level.Terrain.xzToHeightmapCoords(center.X, center.Z, out cameraCoords))
             {
            
 
@@ -316,18 +333,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
                 this.vertices[3].Tu = maxX;
                 this.vertices[3].Tv = maxY;
             }
-            previousCameraPosition = cameraPosition;
+            previousCameraPosition = center;
+            mustUpdateView = false;
         }
 
 
-        public float Width { get { return this.width; } set { this.width = value; mustUpdate = true; } }
+        public float Width { get { return this.width; } set { this.width = value; mustUpdateRectangle = true; } }
 
-        public float Height { get { return this.height; } set { this.height = value; mustUpdate = true; } }
+        public float Height { get { return this.height; } set { this.height = value; mustUpdateRectangle = true; } }
 
         public void setPosition(Vector2 vector2)
         {
             this.position = vector2; 
-            mustUpdate = true;
+            mustUpdateRectangle = true;
         }
     }
 }

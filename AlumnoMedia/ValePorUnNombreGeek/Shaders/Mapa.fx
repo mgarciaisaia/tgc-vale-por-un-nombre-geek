@@ -53,21 +53,21 @@ VS_OUTPUT vs_mapa(VS_INPUT input)
 	return output;
 }
 
-//Input del Pixel Shader
+
 struct PS_INPUT
 {
-	
 	float2 Texcoord : TEXCOORD0;   
 };
 
-//Pixel Shader
+//Desvuelve el color de la textura
 float4 ps_mapa(PS_INPUT input) : COLOR0
 {      
 	return tex2D(diffuseMap, input.Texcoord);
+
 	
 }
 
-//Pixel Shader
+//Tiñe el mapa 
 float4 sepia = float4(0.64, 0.55, 0.4, 1);
 float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 {    
@@ -76,6 +76,17 @@ float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 	float luminance = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)+0.2; 
 	float height = (0.1*fvHeight.x + 0.95*fvHeight.y+0.2*fvHeight.z)+0.2; 
 	return (luminance + 0.6 - height)*sepia;	
+	
+}
+
+//Descarta el color negro
+float4 ps_posiciones(PS_INPUT input) : COLOR0
+{      
+	float4 color = tex2D(diffuseMap, input.Texcoord);
+	if(color.r+color.g+color.b <0.01)
+    discard;
+	else
+	return color;
 	
 }
 
@@ -88,6 +99,15 @@ float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
    {
 	  VertexShader = compile vs_2_0 vs_mapa();
 	  PixelShader = compile ps_2_0 ps_mapa();
+   }
+}
+
+ technique POSICIONES
+{
+   pass Pass_0
+   {
+	  VertexShader = compile vs_2_0 vs_mapa();
+	  PixelShader = compile ps_2_0 ps_posiciones();
    }
 }
 
