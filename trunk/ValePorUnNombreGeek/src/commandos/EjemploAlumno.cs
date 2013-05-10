@@ -88,6 +88,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             map.Height = 1.5f * level.Map.Height;
             map.setPosition(new Vector2(GuiController.Instance.Panel3d.Width - 10 - level.Map.Width, level.Map.Position.Y));
             GuiController.Instance.Modifiers.addFloat("ZoomMapa", 0.5f, 5, 2);
+
+            UserVars.initialize();
             
             //Panel de control in game
             controlPanel = new GraphicalControlPanel();

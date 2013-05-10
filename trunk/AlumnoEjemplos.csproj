@@ -131,7 +131,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\SelectionMethod.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\ScreenProjection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Sky.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\UserCheckBox.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\UserVars.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\IQuadTree.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTreeDummie.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\cilindro\Cylinder.cs" />

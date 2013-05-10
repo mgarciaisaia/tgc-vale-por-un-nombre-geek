@@ -99,6 +99,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             }
         }
 
+        public void die()
+        {
+            this.Dead = true;
+        }
+
         public bool Enabled //Solo se renderiza si esta en true. Sirve para las optimizaciones
         {
             get { return this.representation.Enabled; }
@@ -106,21 +111,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
         #endregion
-
-        public void die()
-        {
-            this.Dead = true;
-        }
-
-      
-  
-        public virtual void dispose()
-        {
-            representation.dispose();
-            this.boundingCylinder.dispose();
-        }
-
-
 
 
         /*******************************
@@ -148,6 +138,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             representation.render();
 
             this.boundingCylinder.render();
+        }
+
+        public virtual void dispose()
+        {
+            representation.dispose();
+            this.boundingCylinder.dispose();
         }
 
         protected virtual string selectionAction(string technique)
@@ -291,29 +287,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
 
+        #region Collision
 
         public bool collidesWith(Character ch, out Vector3 n)
         {
-            return ch.collidesWith(this.BoundingCylinder, out n);
+            return ch.collidesWith(this.boundingCylinder, out n);
         }
 
         public bool collidesWith(Cylinder cyl, out Vector3 n)
         {
-            return this.BoundingCylinder.thereIsCollisionCyCy(cyl, out n);
+            return this.boundingCylinder.thereIsCollisionCyCy(cyl, out n);
         }
 
         public bool collidesWith(TgcBoundingBox aabb, out Vector3 n)
         {
-            return this.BoundingCylinder.thereIsCollisionCyBB(aabb, out n);
+            return this.boundingCylinder.thereIsCollisionCyBB(aabb, out n);
         }
 
-        public Cylinder BoundingCylinder
-        {
-            get { return this.boundingCylinder; }
-        }
-
-
-
+        #endregion
 
 
 
@@ -325,7 +316,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public void doMovement(Vector3 movement, float speed)
         {
             this.representation.walk();
-
             this.representation.move(movement * speed);
             this.Position = this.level.Terrain.getPosition(this.Position.X, this.Position.Z);
             this.boundingCylinder.Center = this.Center;
@@ -386,12 +376,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
                 this.doMovement(realMovement, speed);
 
-                /*if (this.showCollisionVector.Value)
+                if (UserVars.Instance.renderCollisionNormal)
                 {
-                    this.renderVector(character, n, Color.Red);
-                    //this.renderVector(character, direction, Color.Yellow);
-                    //this.renderVector(character, realMovement, Color.Green);
-                }*/
+                    GeneralMethods.renderVector(this.Center, n, Color.Red);
+                    //GeneralMethods.renderVector(this.Center, direction, Color.Yellow);
+                    //GeneralMethods.renderVector(this.Center, realMovement, Color.Green);
+                }
             }
         }
 

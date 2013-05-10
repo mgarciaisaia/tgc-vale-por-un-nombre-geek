@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
+using System.Drawing;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
@@ -98,6 +99,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             
 
             return angle;
+        }
+
+
+        public static void renderVector(Vector3 origin, Vector3 n, Color color)
+        {
+            //TODO ver donde meter este metodo
+            if (n.Equals(Vector3.Empty)) return;
+            TgcArrow arrow = new TgcArrow();
+            arrow.Enabled = true;
+            arrow.PStart = origin;
+            arrow.PEnd = n * 100 + arrow.PStart;
+            arrow.Thickness = 5;
+            arrow.HeadSize = new Vector2(10, 10);
+            arrow.BodyColor = color;
+            arrow.updateValues();
+            arrow.render();
         }
         
     }

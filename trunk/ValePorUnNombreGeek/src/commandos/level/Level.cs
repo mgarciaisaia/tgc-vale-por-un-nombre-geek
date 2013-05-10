@@ -22,8 +22,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         IQuadTree quadtree;
         LevelMap map;
 
-        UserCheckBox showCollisionVector; //TODO mover a otra clase
-
 
         public List<Character> Characters { get { return this.characters; } }
         public List<Enemy> Enemies { get { return this.enemies; } }
@@ -49,8 +47,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             this.terrain = terrain;
             this.map = new LevelMap(this, 100,100,2);
             quadtree = new QuadTreeDummie(terrain);
-
-            this.showCollisionVector = new UserCheckBox("FlechasColisiones", false); //TODO mover a otra clase
         }
 
        
@@ -118,21 +114,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             alternatives[1] = Vector3.TransformCoordinate(direction, Matrix.RotationY(-FastMath.PI_HALF));
             return alternatives;
 
-        }
-
-        private void renderVector(Character character, Vector3 n, Color color)
-        {
-            if (n.Equals(Vector3.Empty)) return;
-            TgcArrow arrow = new TgcArrow();
-            arrow.Enabled = true;
-            arrow.PStart = character.Center;
-            arrow.PEnd = n * 100 + arrow.PStart;
-            arrow.Thickness = 5;
-            arrow.HeadSize = new Vector2(10, 10);
-            arrow.BodyColor = color;
-            arrow.updateValues();
-            arrow.render();
-           
         }
 
 
