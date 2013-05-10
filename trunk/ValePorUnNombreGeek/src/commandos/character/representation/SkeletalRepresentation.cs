@@ -19,8 +19,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         private float meshFacingAngle; //hacia donde mira
         protected float radius;
 
-        private Cylinder boundingCylinder;
-
         public bool Selected
         {
 
@@ -51,11 +49,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.Position = position;
             this.radius = mesh.BoundingBox.calculateBoxRadius();
 
-            //this.mesh.AutoUpdateBoundingBox = false;
-            //seguimos actualizando la bb por que de momento la necesitamos para seleccionar al personaje
-            Vector3 boundingSize = this.BoundingBox.calculateSize();
-            this.boundingCylinder = new Cylinder(this.Position, boundingSize.Y, boundingSize.X / 2);
-
             //rotacion manual
             this.AutoTransformEnable = false;
             this.angleZeroVector = new Vector3(0, 0, -1);
@@ -85,14 +78,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         public void render()
         {
             this.mesh.animateAndRender();
-            this.boundingCylinder.render();
         }
 
 
         public void dispose()
         {
             this.mesh.dispose();
-            this.boundingCylinder.dispose();
         }
 
         #region Animations
@@ -147,11 +138,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             get { return this.mesh.BoundingBox; }
         }
 
-        public Cylinder BoundingCylinder
-        {
-            get { return this.boundingCylinder; }
-        }
-
         public bool Enabled
         {
             get { return this.mesh.Enabled; }
@@ -191,7 +177,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         {
             this.mesh.move(direction);
             this.setRotation(direction);
-            this.boundingCylinder.Position = this.Position;
         }
 
         #region Rotation
