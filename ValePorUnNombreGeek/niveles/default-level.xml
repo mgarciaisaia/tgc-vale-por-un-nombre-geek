@@ -22,6 +22,6 @@
 
   <!--<levelObject mesh="ArbolSelvatico2\\ArbolSelvatico2-TgcScene.xml" scale="(5,5,5)"></levelObject>-->
   <levelObject class="tree" scale="(5,7,5)">(56,530)</levelObject>
-  <levelObject class="wall" size="(500,100,50)">(200,337)</levelObject>
+  <levelObject class="wall" size="(500,100,50)">(200,700)</levelObject>
 
 </level>
