@@ -109,7 +109,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public override void render() 
         {
             base.render();
-            if(this.Selected) vision.render();
+            //if(this.Selected)
+                vision.render();
         }
 
         public override void dispose()
