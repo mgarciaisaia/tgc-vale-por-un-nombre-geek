@@ -10,6 +10,7 @@ using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.Shaders;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer.Utils.TgcGeometry;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 {
@@ -17,6 +18,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
     {
         private Texture texDiffuseMap;
         private Texture textHeightmap;
+        private Texture g_Posiciones;
+        private Surface g_pDepthStencil;
         private CustomVertex.TransformedTextured[] vertices;
         private Vector2 position;
         private Effect effect;
@@ -33,8 +36,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
         //Para calculos de proporciones de cosas..
 
-        float terrainWidth;
-        float terrainHeight;
+        int terrainWidth;
+        int terrainHeight;
         float realZoom;
         float widthFactor;
         float heightFactor;
@@ -57,6 +60,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             set { this.enabled = value; }
         }
         private bool mustRecalculate = true;
+       
 
         public float Zoom
         {
@@ -69,7 +73,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             get{ return this.position;}
             
         }
-        
+ 
         public LevelMap(Level level, float width, float height, float zoom)
         {
             this.level = level;
@@ -84,10 +88,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             bitmap = (Bitmap)Bitmap.FromFile(level.Terrain.HeightmapPath);
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
             textHeightmap = Texture.FromBitmap(GuiController.Instance.D3dDevice, bitmap, Usage.None, Pool.Managed);
-            
+         
+
             this.position = new Vector2(GuiController.Instance.Panel3d.Width-this.width-10,10);
             this.effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\mapa.fx");
             this.technique = "MAPA";
+            this.updateProportions();
+            Device d3dDevice = GuiController.Instance.D3dDevice;
+            g_Posiciones = new Texture(GuiController.Instance.D3dDevice, terrainWidth,
+                                                                         terrainHeight,
+                                    1, Usage.RenderTarget, Format.X8R8G8B8,
+                                    Pool.Default);
+            g_pDepthStencil = GuiController.Instance.D3dDevice.CreateDepthStencilSurface(terrainWidth,
+                                                                          terrainHeight,
+                                                                          DepthFormat.D24S8,
+                                                                          MultiSampleType.None,
+                                                                          0,
+                                                                          true);
+
+            
            
         }
 
@@ -110,18 +129,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             mustUpdate = false;
             mustRecalculate = true;
         }
-
+        int a = 0;
         public void render()
         {
-            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
+            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
             if (!enabled) return;
             if (mustUpdate) this.crearRectangulo();
-            if (mustRecalculate) this.updatePropotions();
+            if (mustRecalculate) this.updateProportions();
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
 
             actualizarVista();
-                                  
-            //Renderizo textura
+
+         
+           //Renderizo las posiciones de los pj en una textura.
+            renderCharacterPositions();
+                            
+
+            //Renderizo el mapa
             effect.Technique = technique;
             effect.SetValue("texDiffuseMap", texDiffuseMap);
             effect.SetValue("texHeightMap", textHeightmap);
@@ -130,19 +154,123 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             for (int i = 0; i < passes; i++)
             {
                 effect.BeginPass(i);
-                d3dDevice.VertexFormat = CustomVertex.TransformedTextured.Format;
-                d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
+                device.VertexFormat = CustomVertex.TransformedTextured.Format;
+                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
                 effect.EndPass();
             }
             effect.End();
-            
+
+
+            //Renderizo las posiciones
+            bool alphaBlendEnabled = device.RenderState.AlphaBlendEnable;
+            device.RenderState.AlphaBlendEnable = true;
+      
+            effect.Technique = "MAPA";
+            effect.SetValue("texDiffuseMap", g_Posiciones);
+            texturesManager.clear(1);
+            passes = effect.Begin(0);
+            for (int i = 0; i < passes; i++)
+            {
+                effect.BeginPass(i);
+                device.VertexFormat = CustomVertex.TransformedTextured.Format;
+                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
+                effect.EndPass();
+            }
+            effect.End();
+
+            device.RenderState.AlphaBlendEnable = alphaBlendEnabled;
         }
 
-        private void updatePropotions()
+        private void renderCharacterPositions()
+        {
+            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
+
+            Surface pOldRT;
+            Surface pOldDS;
+            //Renderizo posiciones de personajes
+
+            device.EndScene();
+
+
+            //Guardo el render target actual
+            pOldRT = device.GetRenderTarget(0);
+
+            //Obtengo la superficie para renderizar
+            Surface pSurf = g_Posiciones.GetSurfaceLevel(0);
+
+            pOldDS = device.DepthStencilSurface;
+            device.DepthStencilSurface = g_pDepthStencil;
+
+            device.SetRenderTarget(0, pSurf);
+
+            device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
+
+            device.BeginScene();
+
+            foreach (CustomVertex.TransformedColored[] characterRectangle in this.getCharacterRectangles())
+            {
+
+                device.VertexFormat = CustomVertex.TransformedColored.Format;
+                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, characterRectangle);
+            }
+
+
+
+            if (a == 0)
+            {
+                TextureLoader.Save("test.bmp", ImageFileFormat.Bmp, g_Posiciones);
+                a++;
+                GuiController.Instance.Logger.log("listo");
+
+            }
+
+
+            device.EndScene();
+            device.BeginScene();
+
+
+            device.DepthStencilSurface = pOldDS;
+            device.SetRenderTarget(0, pOldRT);
+                
+        }
+
+        private IEnumerable<CustomVertex.TransformedColored[]> getCharacterRectangles()
+        {
+            List<CustomVertex.TransformedColored[]> rectangles = new List<CustomVertex.TransformedColored[]>();
+            int width = 2;
+            int height = 2;
+            int color = Color.Green.ToArgb();
+            CustomVertex.TransformedColored[] vertices;
+
+            foreach(Commando c in level.Commandos){
+                Vector2 position;
+                level.Terrain.xzToHeightmapCoords(c.Position.X, c.Position.Z, out position);
+
+
+                vertices =  new CustomVertex.TransformedColored[4];
+          
+                      
+                 //Arriba izq
+                 vertices[0] = new CustomVertex.TransformedColored(position.X, position.Y, 0, 1, color);
+                //Arriba der
+                 vertices[1] = new CustomVertex.TransformedColored(position.X + width, position.Y, 0, 1, color);
+                //Abajo izq
+                 vertices[2] = new CustomVertex.TransformedColored(position.X, position.Y + height,0, 1, color);
+                //Abajo der
+                 vertices[3] = new CustomVertex.TransformedColored(position.X + width, position.Y + height, 0, 1,color);
+
+                 rectangles.Add(vertices);
+
+            }
+
+            return rectangles;
+        }
+
+        private void updateProportions()
         {
 
-            terrainWidth = level.Terrain.getWidth();
-            terrainHeight = level.Terrain.getLength();
+            terrainWidth = (int)level.Terrain.getWidth();
+            terrainHeight = (int)level.Terrain.getLength();
             realZoom = FastMath.Max(this.width / terrainWidth, this.height / terrainHeight) * this.zoom;
             widthFactor = terrainWidth / 2 / realZoom * this.width / terrainWidth;
             heightFactor = terrainHeight / 2 / realZoom * this.height / terrainHeight;
