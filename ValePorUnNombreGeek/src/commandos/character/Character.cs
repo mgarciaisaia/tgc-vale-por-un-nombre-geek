@@ -18,6 +18,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected Level level;
         protected string technique;
         protected TgcBox marcaDePicking;
+        private Cylinder boundingCylinder;
 
         /*******************************
          * INICIALIZACION **************
@@ -30,6 +31,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\shaders.fx");
             this.Selected = false;
             this.Dead = false;
+            
+
+            Vector3 boundingSize = this.BoundingBox.calculateSize() * 0.5f;
+            this.boundingCylinder = new Cylinder(this.Center, boundingSize.Y, boundingSize.X);
         }
 
         //Sobreescribible para que los hijos puedan usar otra representacion
@@ -112,6 +117,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public virtual void dispose()
         {
             representation.dispose();
+            this.boundingCylinder.dispose();
         }
 
 
@@ -140,6 +146,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             }
             representation.Technique = representation.Prefix+ "_" + technique;
             representation.render();
+
+            this.boundingCylinder.render();
         }
 
         protected virtual string selectionAction(string technique)
@@ -172,7 +180,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             Vector3 direction = calculateDirectionVector(this.target);
             Vector3 previousPosition = this.Position;
 
-            this.moveCharacter(direction, this.Speed * elapsedTime);
+            this.move(direction, this.Speed * elapsedTime);
         }
 
         protected virtual Vector3 calculateDirectionVector(ITargeteable target)
@@ -223,15 +231,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         protected virtual void collisionedTarget(){
 
-        }
-      
-
-        public void move(Vector3 movement, float speed)
-        {
-            this.representation.walk();
-
-            this.representation.move(movement * speed);
-            this.Position = this.level.Terrain.getPosition(this.Position.X, this.Position.Z);
         }
 
         internal bool isOnTarget()
@@ -291,19 +290,26 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { this.technique = value; }
         }
 
+
+
         public bool collidesWith(Character ch, out Vector3 n)
         {
-            return ch.collidesWith(this.Representation.BoundingCylinder, out n);
+            return ch.collidesWith(this.BoundingCylinder, out n);
         }
 
         public bool collidesWith(Cylinder cyl, out Vector3 n)
         {
-            return this.Representation.BoundingCylinder.thereIsCollisionCyCy(cyl, out n);
+            return this.BoundingCylinder.thereIsCollisionCyCy(cyl, out n);
         }
 
         public bool collidesWith(TgcBoundingBox aabb, out Vector3 n)
         {
-            return this.Representation.BoundingCylinder.thereIsCollisionCyBB(aabb, out n);
+            return this.BoundingCylinder.thereIsCollisionCyBB(aabb, out n);
+        }
+
+        public Cylinder BoundingCylinder
+        {
+            get { return this.boundingCylinder; }
         }
 
 
@@ -316,12 +322,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
 
 
+        public void doMovement(Vector3 movement, float speed)
+        {
+            this.representation.walk();
 
-        public void moveCharacter(Vector3 direction, float speed)
+            this.representation.move(movement * speed);
+            this.Position = this.level.Terrain.getPosition(this.Position.X, this.Position.Z);
+            this.boundingCylinder.Center = this.Center;
+        }
+
+
+        public void move(Vector3 direction, float speed)
         {
             Vector3 previousPosition = this.Position;
             Vector3 realMovement = direction;
-            ILevelObject obj;
 
             //Cuando se pueda hacer que no se traben, se quita character.OwnedByUser
             if (this.OwnedByUser && this.terrenoMuyEmpinado(previousPosition, direction * speed))
@@ -329,14 +343,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                 /*//Busco movimientos alternativos
                 foreach (Vector3 alt in getAlternativeMovements(direction))
                 {
-
                     if (!terrenoMuyEmpinado(previousPosition, alt*speed))
                     {
                         realMovement = alt;
                         break;
                     }
                 }
-               
                */
                 if (realMovement == direction)
                 {
@@ -346,27 +358,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             }
 
             //Muevo el personaje
-            //this.representation.move(realMovement, speed); //PABLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-            //this.Position = this.getPosition(character.Position.X, character.Position.Z);
-            this.move(realMovement, speed);
+            this.doMovement(realMovement, speed);
 
+            ILevelObject obj;
             Vector3 n;
+            Vector3 centrifugal = Vector3.Empty;
 
             int intentos;
             int maxIntentos = 50;
-            Vector3 centrifugal = Vector3.Empty;
             for (intentos = 0; this.level.thereIsCollision(this, out obj, out n); intentos++)
             {
                 //Cancelo el movimiento
                 this.Position = previousPosition;
                 if (intentos == maxIntentos) break;
 
-                //Si el pj ya arregló el problema, parar.             
+                //Si el pj ya arregló el problema, parar.
                 if (this.manageCollision(obj)) break;
 
-                //Calculo un vec que se aleja del centro del objeto para que el pj gire alrededor.                        
+                //Calculo un vec que se aleja del centro del objeto para que el pj gire alrededor.
                 centrifugal = (this.Center - obj.Center);
-
 
                 centrifugal.Y = 0;
                 centrifugal.Normalize();
@@ -374,8 +384,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                 realMovement = centrifugal + realMovement;  //Voy haciendo que la direccion tienda mas hacia la centrifuga.
                 realMovement.Normalize();
 
-                this.move(realMovement, speed);
-                //character.Position = this.getPosition(character.Position.X, character.Position.Z);
+                this.doMovement(realMovement, speed);
 
                 /*if (this.showCollisionVector.Value)
                 {
@@ -390,16 +399,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         const float MAX_DELTA_Y = 20f;
 
-        private bool terrenoMuyEmpinado(Vector3 origin, Vector3 direction) //TODO mover a terrain?
+        private bool terrenoMuyEmpinado(Vector3 origin, Vector3 direction)
         {
-
-
             Vector3 deltaXZ = direction * 5;
 
             Vector3 target = new Vector3(origin.X, 0, origin.Z);
             target.Add(deltaXZ);
             float targetDeltaY = this.level.Terrain.getPosition(target.X, target.Z).Y - origin.Y;
-
 
             //if(targetDeltaY > MAX_DELTA_Y)GuiController.Instance.Logger.log("Pendiente: " + origin.Y + " -> " + (origin.Y + targetDeltaY) + " = " + targetDeltaY );
 

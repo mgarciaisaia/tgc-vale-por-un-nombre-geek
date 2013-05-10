@@ -27,7 +27,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         float FacingAngle { get; }
 
         TgcBoundingBox BoundingBox { get; }
-        Cylinder BoundingCylinder { get; }
 
         void render();
         bool Enabled { get; set; }

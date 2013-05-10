@@ -22,17 +22,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         private CustomVertex.PositionColored[] bordersVertex; //vertices de los bordes
 
 
-        public Cylinder(Vector3 _base, float _height, float _radius)
-            : this(_base, _height, _radius, Color.Yellow)
+        public Cylinder(Vector3 _center, float _halfHeight, float _radius)
+            : this(_center, _halfHeight, _radius, Color.Yellow)
         {
             //nothing to do
         }
 
-        public Cylinder(Vector3 _base, float _height, float _radius, Color _color)
+        public Cylinder(Vector3 _center, float _halfHeight, float _radius, Color _color)
         {
             this.radius = _radius;
-            this.halfHeight = new Vector3(0, _height / 2, 0);
-            this.center = _base + this.halfHeight;
+            this.halfHeight = new Vector3(0, _halfHeight, 0);
+            this.center = _center;
             this.borderColor = _color.ToArgb();
             this.updateDraw();
         }
@@ -133,7 +133,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
 
         public bool thereIsCollisionCyCy(Cylinder collider, out Vector3 n)
         {
-            Vector3 distance = collider.Position - this.Position;
+            Vector3 distance = collider.Center - this.Center;
             if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) <= FastMath.Pow2(this.radius + collider.radius))
             {
                 n = Vector3.Cross(distance, this.halfHeight);
