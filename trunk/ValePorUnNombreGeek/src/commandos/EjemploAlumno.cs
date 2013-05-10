@@ -85,7 +85,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             loadLevel(initialLevel);
             LevelMap map = level.Map;
             map.Width = 2 * level.Map.Height;
+            map.Height = 1.5f * level.Map.Height;
             map.setPosition(new Vector2(GuiController.Instance.Panel3d.Width - 10 - level.Map.Width, level.Map.Position.Y));
+            GuiController.Instance.Modifiers.addFloat("ZoomMapa", 0.5f, 5, 2);
             
             //Panel de control in game
             controlPanel = new GraphicalControlPanel();
@@ -150,6 +152,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             controlPanel.render();
             level.Map.Technique = "MAPA_VIEJO";
+            level.Map.Zoom = (float)GuiController.Instance.Modifiers.getValue("ZoomMapa");
             level.Map.render();
         }
 
