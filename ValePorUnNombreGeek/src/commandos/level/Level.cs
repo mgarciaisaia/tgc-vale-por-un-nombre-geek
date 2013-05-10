@@ -111,98 +111,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
 
 
-        public Vector3 getPosition(float x, float z)
-        {
-           return this.terrain.getPosition(x, z);
-        }
-
-        /// <summary>
-        /// Retorna false si el personaje no puede realizar el movimiento.
-        /// </summary>
-        /// <param name="character"></param>
-        /// <param name="newPosition"></param>
-        /// <returns></returns>
-        public void moveCharacter(Character character, Vector3 direction, float speed){
-
-            Vector3 previousPosition = character.Position;
-            Vector3 realMovement = direction;
-            ILevelObject obj;
-            
-            
-
-            //Cuando se pueda hacer que no se traben, se quita character.OwnedByUser
-            if (character.OwnedByUser && terrenoMuyEmpinado(previousPosition, direction*speed))
-            {
-
-                /*//Busco movimientos alternativos
-                foreach (Vector3 alt in getAlternativeMovements(direction))
-                {
-
-                    if (!terrenoMuyEmpinado(previousPosition, alt*speed))
-                    {
-                        realMovement = alt;
-                        break;
-                    }
-                }
-               
-               */
-
-               if (realMovement == direction)
-               {
-                   character.manageSteepTerrain();
-                   return;
-               }
-              
-               
-
-            }
-
-            //Muevo el personaje
-            character.move(realMovement, speed);
-            character.Position = this.getPosition(character.Position.X, character.Position.Z);
-
-            Vector3 n;
-               
-            int intentos;
-            int maxIntentos = 50;
-            Vector3 centrifugal = Vector3.Empty;
-            for (intentos = 0; thereIsCollision(character, out obj, out n); intentos++)
-            {
-                //Cancelo el movimiento
-                character.Position = previousPosition;
-                if (intentos == maxIntentos) break;
-
-                //Si el pj ya arregló el problema, parar.             
-                if (character.manageCollision(obj)) break;
-
-                //Calculo un vec que se aleja del centro del objeto para que el pj gire alrededor.                        
-                centrifugal = (character.Center - obj.Center);
-                
-
-                centrifugal.Y = 0;
-                centrifugal.Normalize();
-                
-                realMovement = centrifugal + realMovement;  //Voy haciendo que la direccion tienda mas hacia la centrifuga.
-                realMovement.Normalize();
-
-                character.move(realMovement, speed);
-                character.Position = this.getPosition(character.Position.X, character.Position.Z);
-
-                if (this.showCollisionVector.Value)
-                {
-                    this.renderVector(character, n, Color.Red);
-                    //this.renderVector(character, direction, Color.Yellow);
-                    //this.renderVector(character, realMovement, Color.Green);
-                }
-            }
-
-         
-
-          
-
-           
-        }
-
         private Vector3[] getAlternativeMovements(Vector3 direction)
         {
             Vector3[] alternatives = new Vector3[2];
@@ -227,26 +135,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
            
         }
 
-        const float MAX_DELTA_Y = 20f;
-
-        private bool terrenoMuyEmpinado(Vector3 origin, Vector3 direction)
-        {
-           
-                              
-            Vector3 deltaXZ = direction*5;
-           
-            Vector3 target = new Vector3(origin.X, 0, origin.Z);
-            target.Add(deltaXZ);
-            float targetDeltaY = this.getPosition(target.X, target.Z).Y - origin.Y;
-            
-            
-            //if(targetDeltaY > MAX_DELTA_Y)GuiController.Instance.Logger.log("Pendiente: " + origin.Y + " -> " + (origin.Y + targetDeltaY) + " = " + targetDeltaY );
-            
-            return targetDeltaY > MAX_DELTA_Y;
-        }
 
        
-        private bool thereIsCollision(Character ch, out ILevelObject obj, out Vector3 n)
+        public bool thereIsCollision(Character ch, out ILevelObject obj, out Vector3 n)
         {
             obj = null;
 
