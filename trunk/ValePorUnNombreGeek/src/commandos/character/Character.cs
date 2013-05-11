@@ -137,7 +137,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             representation.Technique = representation.Prefix+ "_" + technique;
             representation.render();
 
-            this.boundingCylinder.render();
+            if(UserVars.Instance.renderCollisionNormal) this.boundingCylinder.render();
         }
 
         public virtual void dispose()
@@ -378,7 +378,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
                 if (UserVars.Instance.renderCollisionNormal)
                 {
-                    GeneralMethods.renderVector(this.Center, n, Color.Red);
+                    GeneralMethods.renderVector(this.Center, n, Color.LightPink);
                     //GeneralMethods.renderVector(this.Center, direction, Color.Yellow);
                     //GeneralMethods.renderVector(this.Center, realMovement, Color.Green);
                 }
