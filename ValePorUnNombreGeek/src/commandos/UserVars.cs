@@ -13,7 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         private UserVars()
         {
             //singleton or something like that
-            GuiController.Instance.Modifiers.addBoolean("showCollision", "Mostrar colisiones", false);
+            GuiController.Instance.Modifiers.addBoolean("showCylinder", "Ver cilindros", false);
         }
 
         public static void initialize()
@@ -32,7 +32,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         public bool renderCollisionNormal
         {
-            get { return (bool)GuiController.Instance.Modifiers["showCollision"]; }
+            get { return (bool)GuiController.Instance.Modifiers["showCylinder"]; }
         }
     }
 }
