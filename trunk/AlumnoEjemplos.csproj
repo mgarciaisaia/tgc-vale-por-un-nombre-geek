@@ -120,6 +120,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\orders\CommandoOrder.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\orders\StandBy.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\commands\orders\Talk.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\panel\graphical\CommandButton.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\graphical\Sprite.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\graphical\SpriteDrawer.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\panel\graphical\GraphicalControlPanel.cs" />
@@ -200,6 +201,8 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_lf.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_rt.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_up.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\cancelp.png" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\emptyp.png" />
     <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Die-TgcSkeletalAnim.xml" />
     <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Run-TgcSkeletalAnim.xml" />
     <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\StandBy-TgcSkeletalAnim.xml" />

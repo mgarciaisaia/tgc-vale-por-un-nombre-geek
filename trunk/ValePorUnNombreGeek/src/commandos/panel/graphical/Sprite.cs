@@ -5,23 +5,24 @@ using System.Text;
 using Microsoft.DirectX.Direct3D;
 using System.Drawing;
 using Microsoft.DirectX;
+using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 {
     class Sprite
     {
-        public Sprite(string _filaPath, Device _d3dDevice)
+        public Sprite(string _filePath)
         {
-            this.texture = TextureLoader.FromFile(_d3dDevice, _filaPath, 0, 0, 0, Usage.RenderTarget, Format.A8R8G8B8, Pool.Default, Filter.Linear, Filter.Linear, Color.Magenta.ToArgb(), ref this.imageInformation);
+            this.texture = TextureLoader.FromFile(GuiController.Instance.D3dDevice, _filePath, 0, 0, 0, Usage.RenderTarget, Format.A8R8G8B8, Pool.Default, Filter.Linear, Filter.Linear, Color.Magenta.ToArgb(), ref this.imageInformation);
             
-
             this.transformationMatrix = Matrix.Identity;
 
             //Set an empty rectangle to indicate the entire bitmap.
             this.regionRectangle = Rectangle.Empty;
 
             this.position = new Vector2(0, 0);
-            this.scale = new Vector2(0.90f, 0.9f);
+            //this.scale = new Vector2(0.90f, 0.9f);
+            this.scale = new Vector2(1f, 1f);
             this.scalingCenter = new Vector2(0, 0);
             this.rotation = 0;
             this.rotationCenter = new Vector2(0, 0);
@@ -125,6 +126,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
                 this.scale = value;
                 this.updateTransformationMatrix();
             }
+        }
+
+        public int Width
+        {
+            get { return (int)(this.ImageInformation.Width * this.Scale.X); }
+        }
+
+        public int Height
+        {
+            get { return (int)(this.ImageInformation.Height * this.Scale.Y); }
         }
 
         #endregion

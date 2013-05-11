@@ -76,7 +76,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void init()
         {
-            string initialLevel = GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\niveles\\" + "default-level.xml";
+            string mediaPath = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\";
+            string initialLevel = GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\niveles\\default-level.xml";
             
             GuiController.Instance.Modifiers.addFile("Level", initialLevel, "-level.xml|*-level.xml");
             //Crear SkyBox
@@ -93,6 +94,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             
             //Panel de control in game
             controlPanel = new GraphicalControlPanel();
+            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), mediaPath + "Sprites\\emptyp.png");
+            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), mediaPath + "Sprites\\cancelp.png");
             /*controlPanel = new TextControlPanel();
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);*/
