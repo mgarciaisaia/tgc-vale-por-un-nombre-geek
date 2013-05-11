@@ -49,14 +49,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
                 return true;
             }
 
-          
+          /*
             Commando commando;
             if (this.canSeeACommando(out commando))
             {
                 this.setState(new Chasing(this, commando));
                 return true;
             }
-               
+               */
             
 
             return false;
