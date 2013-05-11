@@ -15,6 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
 
         public override void update(float elapsedTime)
         {
+            this.lookForCommando();
             this.soldier.goToTarget(elapsedTime);
             if (this.soldier.isOnTarget())
             {

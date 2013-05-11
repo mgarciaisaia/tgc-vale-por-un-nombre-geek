@@ -1,5 +1,7 @@
 ﻿using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.states;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
+using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
 {
@@ -21,16 +23,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
 
 
         public Soldier(Vector3 position)
-            : base(position)
+            : this(new Vector3[] { position })
         {
-            this.setState(new Waiting(this, 0));
+            
+           
         }
 
       
         public Soldier(Vector3[] waitpoints)
-            : this(waitpoints[0])
+            : base(waitpoints[0])
         {
             this.Waitpoints = waitpoints;
+            this.setState(new Waiting(this, 0));
         }
 
     
@@ -38,15 +42,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
         public override void update(float elapsedTime)
         {
             if (this.Dead) return;
-
-            if (this.canSeeACommando())
-            {
-                this.chase(elapsedTime); //esto deberia ser otro state? mmm
-            }
-            else
-            {
-                recorrerWaitpoints(elapsedTime);
-            }
+                     
+            this.state.update(elapsedTime);
+            this.vision.updatePosition();
            
         }
 
@@ -55,12 +53,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
             if (waitpoints != null) this.state.update(elapsedTime);
         }
 
-        protected void chase(float elapsedTime)
-        {
-            goToTarget(elapsedTime);
-            //Intentar matarlo(?)
-        }
-
+       
 
 
         internal void setNextPositionTarget()
@@ -69,6 +62,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
             this.setPositionTarget(waitpoints[currentWaitpoint]);
         }
 
+        internal void setPreviousPositionTarget()
+        {
+            currentWaitpoint = currentWaitpoint - 1;
+            if (currentWaitpoint < 0) currentWaitpoint = waitpoints.Length - 1;
+            this.setPositionTarget(waitpoints[currentWaitpoint]);
+        }
         internal Vector3 getNextPositionTarget()
         {
             return waitpoints[(currentWaitpoint + 1) % waitpoints.Length];

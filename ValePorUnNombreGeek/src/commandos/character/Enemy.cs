@@ -83,12 +83,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
 
-        protected bool canSeeACommando()
+        public bool canSeeACommando(out Commando commando)
         {
-           vision.updatePosition(); 
+          
            foreach(Commando c in this.level.Commandos){
-               if (this.canSee(c)) return true;  //y onerlo como target(?)
+               if (this.canSee(c))
+               {
+                   commando = c;
+                   
+                   return true;  
+               }
            }
+           commando = null;
            return false;
         }
 
@@ -96,7 +102,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             Vector3 movementVector = target.Position - this.representation.Position;
            
-            //Ver si hay obstaculo. Modificar direccion...
             
             movementVector.Y = 0;
             movementVector.Normalize();

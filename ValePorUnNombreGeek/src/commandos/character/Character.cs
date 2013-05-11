@@ -166,7 +166,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
          *******************************/
 
         private ITargeteable target;
-
+        public ITargeteable Target
+        {
+            get { return this.target; }
+            set { this.target = value; }
+        }
        
 
         internal void goToTarget(float elapsedTime)
