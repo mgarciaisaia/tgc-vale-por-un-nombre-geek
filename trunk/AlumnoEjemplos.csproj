@@ -192,6 +192,12 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\pez-TgcKeyFrameMesh.xml" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Sound\WATER.WAV" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Textures\fish.bmp" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_bk.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_dn.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_ft.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_lf.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_rt.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_up.jpg" />
     <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Die-TgcSkeletalAnim.xml" />
     <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Run-TgcSkeletalAnim.xml" />
     <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\StandBy-TgcSkeletalAnim.xml" />
