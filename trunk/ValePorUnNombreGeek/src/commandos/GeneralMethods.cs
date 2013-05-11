@@ -21,9 +21,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         public static bool isCloseTo(Vector3 a, Vector3 b, float delta)
         {
-            return Math.Abs(a.X - b.X) < delta &&
-                  Math.Abs(a.Y - b.Y) < delta &&
-                  Math.Abs(a.Z - b.Z) < delta; 
+            return Vector3.LengthSq(a-b)<= FastMath.Pow2(delta); 
         }
 
         public static float checkAngle(float angle)

@@ -24,6 +24,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
         /// </summary>
         public override void update(float elapsedTime)
         {
+            this.lookForCommando();
+
             this.timeOnWaitpoint += elapsedTime;
 
             if (this.timeOnWaitpoint > MAX_TIME_ON_WAITPOINT)

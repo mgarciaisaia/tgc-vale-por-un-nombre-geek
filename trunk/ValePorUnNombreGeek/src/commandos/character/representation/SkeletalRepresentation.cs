@@ -90,28 +90,36 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         public void standBy()
         {
-            this.mesh.playAnimation("StandBy", true);
+            this.playAnimation("StandBy", true);
         }
 
         public void talk()
         {
-            this.mesh.playAnimation("Talk", true);
+            this.playAnimation("Talk", true);
         }
 
         public void die()
         {
-            this.mesh.playAnimation("Die", false);
+            this.playAnimation("Die", false);
         }
 
         public void walk()
         {
-            this.mesh.playAnimation("Walk", true);
+            this.playAnimation("Walk", true);
         }
 
         public void crouch()
         {
-            this.mesh.playAnimation("CrouchWalk", true);
+            this.playAnimation("CrouchWalk", true);
 
+        }
+
+        private void playAnimation(string p, bool p_2)
+        {
+            if (!this.mesh.CurrentAnimation.Name.Equals(p))
+            {
+               this.mesh.playAnimation(p, p_2);
+            }
         }
 
         public bool isCrouched()

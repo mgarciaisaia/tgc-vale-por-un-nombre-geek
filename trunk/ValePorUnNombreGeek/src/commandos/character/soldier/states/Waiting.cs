@@ -12,7 +12,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             : base(_soldier, _timeOnWaitpoint)
         {
             this.waitingTime = 0;
+            this.soldier.Representation.standBy();
             this.maxWaitingTime = GeneralMethods.random(1, 3);
+
         }
 
         public override void onWaitpointUpdate(float elapsedTime)
