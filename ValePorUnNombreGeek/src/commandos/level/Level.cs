@@ -100,8 +100,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             foreach (ILevelObject o in this.objects)
             
                 o.dispose();
-            
 
+            map.dispose();
             terrain.dispose();
         }
 

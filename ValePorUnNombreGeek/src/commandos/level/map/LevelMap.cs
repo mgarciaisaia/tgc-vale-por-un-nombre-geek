@@ -399,6 +399,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         }
 
 
-       
+       public void dispose(){
+           effect.Dispose();
+           textHeightmap.Dispose();
+           texDiffuseMap.Dispose();
+           g_pDepthStencil.Dispose();
+           g_Posiciones.Dispose();
+       }
     }
 }

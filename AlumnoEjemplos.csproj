@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\FreeCamera.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\character\Life.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\EnemyRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\ICharacterRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\SkeletalRepresentation.cs" />
@@ -216,6 +217,7 @@
     <Content Include="ValePorUnNombreGeek\niveles\vacio-level.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\life.fx" />
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\mapa.fx" />
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\shaders.fx" />
     <None Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
