@@ -83,9 +83,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
 
-        public bool canSeeACommando(out Commando commando)
+        /*public bool canSeeACommando(out Commando commando)
         {
-          
+            Commando closest = null;
            foreach(Commando c in this.level.Commandos){
                if (this.canSee(c))
                {
@@ -94,9 +94,27 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                    return true;  
                }
            }
-           commando = null;
+           commando = closest;
            return false;
         }
+        */
+        public bool canSeeACommando(out Commando commando)
+        {
+            Commando closest = null;
+            foreach (Commando c in this.level.Commandos)
+            {
+                if (this.canSee(c))
+                {
+                    if (closest == null || Vector3.LengthSq(this.Position - c.Position) < Vector3.LengthSq(this.Position - closest.Position))
+                        closest = c;
+
+
+                }
+            }
+            commando = closest;
+            return commando != null;
+        }
+
 
         protected override Vector3 calculateDirectionVector(ITargeteable target)
         {

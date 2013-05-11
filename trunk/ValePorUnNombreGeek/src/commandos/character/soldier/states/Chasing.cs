@@ -21,6 +21,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
         {
             if (this.soldier.canSee(commando))
             {
+
                 if (GeneralMethods.isCloseTo(this.soldier.Position, commando.Position, this.soldier.Radius))
                 {
                     this.soldier.Representation.talk();
@@ -38,6 +39,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             }
             else
             {
+                if (soldier.canSeeACommando(out commando)) return;
                 this.soldier.setPreviousPositionTarget();
                 this.soldier.setState(new Waiting(soldier, 0));
                 
