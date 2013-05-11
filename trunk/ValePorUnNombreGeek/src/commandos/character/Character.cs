@@ -19,7 +19,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected string technique;
         protected TgcBox marcaDePicking;
         private Cylinder boundingCylinder;
+        protected Life life;
 
+
+        public Life Life
+        {
+            get { return this.life; }
+        }
         /*******************************
          * INICIALIZACION **************
          *******************************/
@@ -31,8 +37,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\shaders.fx");
             this.Selected = false;
             this.Dead = false;
-            
-
+            this.life = new Life(this, 100, new Vector2(20, 60), Color.Red, new Vector2(60, 10));
+            //this.life = new Life(this, 100, new Vector2(60, 20), Color.Red, new Vector2(60, 10));
             Vector3 boundingSize = this.BoundingBox.calculateSize() * 0.5f;
             this.boundingCylinder = new Cylinder(this.Center, boundingSize.Y, boundingSize.X);
         }
@@ -143,6 +149,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public virtual void dispose()
         {
             representation.dispose();
+            life.dispose();
             this.boundingCylinder.dispose();
         }
 
@@ -406,5 +413,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             return targetDeltaY > MAX_DELTA_Y;
         }
 
+        public bool isDead(){
+            return this.dead;
+        }
     }
 }
