@@ -183,6 +183,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         internal void goToTarget(float elapsedTime)
         {
             if (!this.hasTarget() || this.Dead) return;
+            if (GeneralMethods.isCloseTo(this.Position, target.Position, 1)) //pablo
+            {
+                this.setNoTarget();
+                return;
+            }
 
             Vector3 direction = calculateDirectionVector(this.target);
             Vector3 previousPosition = this.Position;
@@ -247,7 +252,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             return GeneralMethods.isCloseTo(this.representation.Position, this.target.Position, 1);
         }
 
-        protected bool hasTarget()
+        public bool hasTarget()
         {
             return this.target != null;
         }

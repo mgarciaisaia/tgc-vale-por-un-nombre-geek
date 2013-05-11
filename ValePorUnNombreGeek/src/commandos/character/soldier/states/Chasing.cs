@@ -30,8 +30,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 }
                 else
                 {
-
-                    this.soldier.setCharacterTarget(commando);
+                    this.soldier.setPositionTarget(commando.Position); //pablo
+                    //this.soldier.setCharacterTarget(commando);
                     this.soldier.goToTarget(elapsedTime);
                     
                 }
@@ -39,7 +39,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             }
             else
             {
-                if (soldier.canSeeACommando(out commando)) return;
+                //if (soldier.canSeeACommando(out commando)) return;
+                if (soldier.hasTarget()) //pablo
+                {
+                    this.soldier.goToTarget(elapsedTime);
+                    return;
+                }
                 this.soldier.setPreviousPositionTarget();
                 this.soldier.setState(new Waiting(soldier, 0));
                 
