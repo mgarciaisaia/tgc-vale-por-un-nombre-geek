@@ -2,6 +2,8 @@
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.states;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
 using TgcViewer;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
 {
@@ -38,6 +40,28 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier
         }
 
     
+         public override bool manageCollision(ILevelObject obj)
+        {
+
+            if (obj.Equals(this.Target))
+            {
+                this.collisionedTarget();
+                return true;
+            }
+
+          
+            Commando commando;
+            if (this.canSeeACommando(out commando))
+            {
+                this.setState(new Chasing(this, commando));
+                return true;
+            }
+               
+            
+
+            return false;
+          
+        }
 
         public override void update(float elapsedTime)
         {
