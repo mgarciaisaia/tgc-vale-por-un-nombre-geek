@@ -1,4 +1,4 @@
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public Color Color
         {
             get { return color; }
-            set { this.color = value; }
+            set { this.color = value; mustUpdate = true;}
         }
 
         public Vector2 Position
