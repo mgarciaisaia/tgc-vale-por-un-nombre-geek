@@ -19,6 +19,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected string technique;
         protected TgcBox marcaDePicking;
         private Cylinder boundingCylinder;
+        public static bool RenderCylinder = false;
         protected Life life;
 
 
@@ -143,7 +144,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             representation.Technique = representation.Prefix+ "_" + technique;
             representation.render();
 
-            if(UserVars.Instance.renderCollisionNormal) this.boundingCylinder.render();
+            if(Character.RenderCylinder) this.boundingCylinder.render();
         }
 
         public virtual void dispose()
@@ -392,7 +393,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
                 this.doMovement(realMovement, speed);
 
-                if (UserVars.Instance.renderCollisionNormal)
+                if (Character.RenderCylinder)
                 {
                     GeneralMethods.renderVector(this.Center, n, Color.LightPink);
                     //GeneralMethods.renderVector(this.Center, direction, Color.Yellow);

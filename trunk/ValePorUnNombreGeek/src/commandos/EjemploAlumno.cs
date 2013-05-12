@@ -88,7 +88,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             map.Width = 2 * level.Map.Height;
             map.Height = 1.5f * level.Map.Height;
             map.setPosition(new Vector2(GuiController.Instance.Panel3d.Width - 10 - level.Map.Width, level.Map.Position.Y));
-            GuiController.Instance.Modifiers.addFloat("ZoomMapa", 0.5f, 5, 2);
+         
 
             UserVars.initialize();
             
@@ -142,6 +142,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             checkLoadLevel(selectedPath);
 
             sky.render();
+
+            Character.RenderCylinder = UserVars.Instance.renderCollisionNormal;
             level.render(elapsedTime);
 
             if (controlPanel.mouseIsOverPanel())
@@ -157,7 +159,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             controlPanel.render();
             level.Map.Technique = "MAPA_VIEJO";
-            level.Map.Zoom = (float)GuiController.Instance.Modifiers.getValue("ZoomMapa");
+            level.Map.Zoom = UserVars.Instance.zoomMapa;
             level.Map.render();
 
             //Prueba barrita de vida
