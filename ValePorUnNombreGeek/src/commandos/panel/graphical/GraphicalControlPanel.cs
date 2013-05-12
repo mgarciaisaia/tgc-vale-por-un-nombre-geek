@@ -22,12 +22,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             int screenWidth = GuiController.Instance.D3dDevice.Viewport.Width;
 
             this.controlPanelSprite = new Sprite(path);
-
-            //Rectangle drawingArea = new Rectangle(0, 0, this.controlPanelSprite.ImageInformation.Width, this.controlPanelSprite.ImageInformation.Height);
-            //this.controlPanelSprite.RegionRectangle = drawingArea;
             this.controlPanelSprite.Position = new Vector2(0, screenHeight - this.controlPanelSprite.ImageInformation.Height);
-            float scale = screenWidth / (1.0f * this.controlPanelSprite.ImageInformation.Width);
-            this.controlPanelSprite.Scale = new Vector2(scale, scale);
+            this.controlPanelSprite.Width = screenWidth;
 
             buttons = new List<CommandButton>();
 
