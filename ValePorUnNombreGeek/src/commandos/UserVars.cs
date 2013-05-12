@@ -14,6 +14,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         {
             //singleton or something like that
             GuiController.Instance.Modifiers.addBoolean("showCylinder", "Ver cilindros", false);
+            GuiController.Instance.Modifiers.addFloat("ZoomMapa", 0.5f, 5, 2);
+
         }
 
         public static void initialize()
@@ -34,5 +36,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         {
             get { return (bool)GuiController.Instance.Modifiers["showCylinder"]; }
         }
+
+        public float zoomMapa { get { return (float)GuiController.Instance.Modifiers.getValue("ZoomMapa"); } }
     }
 }
