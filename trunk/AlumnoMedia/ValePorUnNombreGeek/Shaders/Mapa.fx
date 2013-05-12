@@ -11,6 +11,18 @@ sampler2D diffuseMap = sampler_state
 	MIPFILTER = LINEAR;
 };
 
+texture g_Posiciones;
+sampler2D posiciones = sampler_state
+{
+	Texture = (g_Posiciones);
+	ADDRESSU = BORDER;
+	ADDRESSV = BORDER;
+	BORDERCOLOR = 0;
+	MINFILTER = LINEAR;
+	MAGFILTER = LINEAR;
+	MIPFILTER = LINEAR;
+};
+
 
 texture texHeightMap;
 sampler2D heightMap = sampler_state
@@ -79,16 +91,23 @@ float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 	
 }
 
-//Descarta el color negro
-float4 ps_posiciones(PS_INPUT input) : COLOR0
-{      
-	float4 color = tex2D(diffuseMap, input.Texcoord);
-	if(color.r+color.g+color.b <0.01)
-    discard;
-	else
+float4 ps_posiciones(PS_INPUT input):COLOR0
+{
+	float4 color = tex2D(posiciones, input.Texcoord);
+	if(color.r+color.g+color.b <0.01) color = ps_mapa(input);
 	return color;
-	
+
 }
+
+float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
+{
+	float4 color = tex2D(posiciones, input.Texcoord);
+	if(color.r+color.g+color.b <0.01) color = ps_mapa_viejo(input);
+	return color;
+
+}
+
+
 
 
 
@@ -102,7 +121,17 @@ float4 ps_posiciones(PS_INPUT input) : COLOR0
    }
 }
 
- technique POSICIONES
+
+ technique MAPA_VIEJO
+{
+   pass Pass_0
+   {
+	  VertexShader = compile vs_2_0 vs_mapa();
+	  PixelShader = compile ps_2_0 ps_mapa_viejo();
+   }
+}
+
+ technique MAPA_POSICIONES
 {
    pass Pass_0
    {
@@ -111,12 +140,13 @@ float4 ps_posiciones(PS_INPUT input) : COLOR0
    }
 }
 
- technique MAPA_VIEJO
+
+ technique MAPA_VIEJO_POSICIONES
 {
    pass Pass_0
    {
 	  VertexShader = compile vs_2_0 vs_mapa();
-	  PixelShader = compile ps_2_0 ps_mapa_viejo();
+	  PixelShader = compile ps_2_0 ps_posiciones_viejo();
    }
 }
 
