@@ -11,6 +11,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 {
     class Sprite
     {
+        
+        //Determina si se mantienen las proporciones al cambiar el alto o ancho
+        public bool KeepOriginalProportions
+        {
+            get;
+            set;
+        }
         public Sprite(string _filePath)
         {
             this.texture = TextureLoader.FromFile(GuiController.Instance.D3dDevice, _filePath, 0, 0, 0, Usage.RenderTarget, Format.A8R8G8B8, Pool.Default, Filter.Linear, Filter.Linear, Color.Magenta.ToArgb(), ref this.imageInformation);
@@ -27,7 +34,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             this.rotation = 0;
             this.rotationCenter = new Vector2(0, 0);
             this.color = Color.White;
-
+            this.KeepOriginalProportions = true;
             this.updateTransformationMatrix();
         }
 
@@ -134,6 +141,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             set
             {
                 this.scale.X = value / this.ImageInformation.Width;
+                if (this.KeepOriginalProportions) this.scale.Y = this.scale.X;
                 this.updateTransformationMatrix();
             }
         }
@@ -142,7 +150,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         {
             get { return (int)(this.ImageInformation.Height * this.Scale.Y); }
             set { 
-                    this.scale.Y = value / this.ImageInformation.Height; 
+                    this.scale.Y = value / this.ImageInformation.Height;
+                    if (this.KeepOriginalProportions) this.scale.X = this.scale.Y;
                     this.updateTransformationMatrix(); 
             }
         }
