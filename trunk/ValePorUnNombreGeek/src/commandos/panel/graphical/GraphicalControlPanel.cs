@@ -16,17 +16,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         private Sprite controlPanelSprite;
         private List<CommandButton> buttons;
 
-        public GraphicalControlPanel()
+        public GraphicalControlPanel(string path)
         {
             int screenHeight = GuiController.Instance.D3dDevice.Viewport.Height;
             int screenWidth = GuiController.Instance.D3dDevice.Viewport.Width;
 
-            this.controlPanelSprite = new Sprite(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Sprites\\panelMadera.png");
+            this.controlPanelSprite = new Sprite(path);
 
             //Rectangle drawingArea = new Rectangle(0, 0, this.controlPanelSprite.ImageInformation.Width, this.controlPanelSprite.ImageInformation.Height);
             //this.controlPanelSprite.RegionRectangle = drawingArea;
             this.controlPanelSprite.Position = new Vector2(0, screenHeight - this.controlPanelSprite.ImageInformation.Height);
-            this.controlPanelSprite.Scale = new Vector2(screenWidth / (1.0f * this.controlPanelSprite.ImageInformation.Width), 1f);
+            float scale = screenWidth / (1.0f * this.controlPanelSprite.ImageInformation.Width);
+            this.controlPanelSprite.Scale = new Vector2(scale, scale);
 
             buttons = new List<CommandButton>();
 
