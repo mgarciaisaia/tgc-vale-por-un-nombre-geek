@@ -27,7 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             : base(rep.getEyeLevel(), length, angle)
         {
             this.rep = rep;
-            this.AutoTransformEnable = false;
+            this.AutoTransformEnabled = false;
             this.AlphaBlendEnabled = true;
             this.sqRange = new float[2];
             this.sqRange[(int)eRange.SHORT_RANGE] = FastMath.Pow2(length * 2 / 3);

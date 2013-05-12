@@ -22,39 +22,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         CustomVertex.PositionColored[] vertices;
         protected float angle, length;
         protected int triangles;
-        private bool autoTransformEnable;
+    
 
         public bool AlphaBlendEnabled{ get; set;}
         
-        private Vector3 translation;
-        private Vector3 rotation;
+      
         int cantVertices;
 
-        private bool enabled;
-        /// <summary>
-        /// Indica si el cono esta habilitado para ser renderizado
-        /// </summary>
-        public bool Enabled
-        {
-            get { return enabled; }
-            set { enabled = value; }
-        }
+       
+        public bool Enabled{get; set;}
+         
 
-        protected bool mustUpdate;
-
-        public bool AutoTransformEnable
-        {
-            get { return autoTransformEnable; }
-            set { autoTransformEnable = value; }
-        }
-
-        public Matrix Transform
-        {
-            get;
-            set;
-        }
-
-
+        public bool AutoTransformEnabled { get; set; }
+        public Matrix Transform { get; set; }
+        private Vector3 translation;
+        private Vector3 rotation;
+        
         public Vector3 Position
         {
             get{ return this.translation;  }
@@ -87,13 +70,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
 
         public Color Color1 { get; set; }
-
-
         public Color Color2 { get; set; }
+        
+        protected bool mustUpdate;
         public float Length { get { return length; } set { length = value; mustUpdate = true; } }
-
         public float Angle { get { return angle; } set { angle = value; mustUpdate = true; } }
-
         public int Triangles { get { return triangles; } set { triangles = value; mustUpdate = true; } }
       
 
@@ -113,11 +94,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             this.angle = angle;
             this.triangles = triangles;
 
-            this.autoTransformEnable = true;
+            this.AutoTransformEnabled = true;
             this.AlphaBlendEnabled = false;
             this.translation = vertex;
             this.rotation = new Vector3(0, 0, 0);
-            this.enabled = true;
+            this.Enabled = true;
             this.Transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
 
             this.ShowDirection = false;
@@ -245,12 +226,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
 
-            if(!enabled) return;
+            if(!Enabled) return;
             if (mustUpdate) updateValues();
             if (this.ShowDirection) renderDirection();
 
             
-            if (autoTransformEnable)
+            if (AutoTransformEnabled)
             {
                 this.Transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
                 
