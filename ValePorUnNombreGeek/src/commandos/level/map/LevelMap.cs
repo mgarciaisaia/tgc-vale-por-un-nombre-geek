@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private Texture g_Posiciones;
         private Surface g_pDepthStencil;
 
-        private CustomVertex.TransformedTextured[] vertices;
+        private MyVertex.TransformedTextured[] vertices;
 
   
       
@@ -250,7 +250,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             for (int i = 0; i < passes; i++)
             {
                 Effect.BeginPass(i);
-                device.VertexFormat = CustomVertex.TransformedTextured.Format;
+                device.VertexDeclaration = MyVertex.TransformedTexturedDeclaration;
                 device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
                 Effect.EndPass();
             }
@@ -298,17 +298,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         {
 
 
-            vertices = new CustomVertex.TransformedTextured[4];
+            vertices = new MyVertex.TransformedTextured[4];
 
 
             //Arriba izq
-            this.vertices[0] = new CustomVertex.TransformedTextured(position.X, position.Y, 0, 1, 0, 0);
+            this.vertices[0] = new MyVertex.TransformedTextured(position.X, position.Y, 0, 1, 0, 0);
             //Arriba der
-            this.vertices[1] = new CustomVertex.TransformedTextured(position.X + Width, position.Y, 0, 1, 0, 0);
+            this.vertices[1] = new MyVertex.TransformedTextured(position.X + Width, position.Y, 0, 1, 0, 0);
             //Abajo izq
-            this.vertices[2] = new CustomVertex.TransformedTextured(position.X, position.Y + Height, 0, 1, 0, 0);
+            this.vertices[2] = new MyVertex.TransformedTextured(position.X, position.Y + Height, 0, 1, 0, 0);
             //Abajo der
-            this.vertices[3] = new CustomVertex.TransformedTextured(position.X + Width, position.Y + Height, 0, 1, 0, 0);
+            this.vertices[3] = new MyVertex.TransformedTextured(position.X + Width, position.Y + Height, 0, 1, 0, 0);
 
             mustUpdateRectangle = false;
             mustUpdateProportions = true;
@@ -341,20 +341,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
                 float maxY = (cameraCoords.Y + heightFactor) / terrainHeight;
                
                 //Arriba izq
-                this.vertices[0].Tu = minX;
-                this.vertices[0].Tv = minY;
+                this.vertices[0].Tu1 = minX;
+                this.vertices[0].Tv1 = minY;
 
                 //Arriba der
-                this.vertices[1].Tu = maxX;
-                this.vertices[1].Tv = minY;
+                this.vertices[1].Tu1 = maxX;
+                this.vertices[1].Tv1 = minY;
 
                 //Abajo izq
-                this.vertices[2].Tu = minX;
-                this.vertices[2].Tv = maxY;
+                this.vertices[2].Tu1 = minX;
+                this.vertices[2].Tv1 = maxY;
 
                 //Abajo der
-                this.vertices[3].Tu = maxX;
-                this.vertices[3].Tv = maxY;
+                this.vertices[3].Tu1 = maxX;
+                this.vertices[3].Tv1 = maxY;
             }
 
             previousViewCenter = center;
