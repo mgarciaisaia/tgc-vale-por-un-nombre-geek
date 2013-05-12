@@ -93,7 +93,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             UserVars.initialize();
             
             //Panel de control in game
-            controlPanel = new GraphicalControlPanel();
+            controlPanel = new GraphicalControlPanel(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Sprites\\panel2.jpg");
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), mediaPath + "Sprites\\emptyp.png");
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), mediaPath + "Sprites\\cancelp.png");
             /*controlPanel = new TextControlPanel();
