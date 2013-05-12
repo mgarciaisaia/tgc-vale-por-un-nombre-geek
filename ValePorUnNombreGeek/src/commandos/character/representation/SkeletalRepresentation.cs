@@ -14,17 +14,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
     class SkeletalRepresentation : ICharacterRepresentation
     {
         protected TgcSkeletalMesh mesh;
-        private bool selected;
         private Vector3 angleZeroVector; //rotacion manual
         private float meshFacingAngle; //hacia donde mira
         protected float radius;
 
-        public bool Selected
-        {
-
-            get { return selected; }
-            set { this.selected = value; }
-        }
+        public bool Selected{ get; set;}
 
         public float Radius
         {

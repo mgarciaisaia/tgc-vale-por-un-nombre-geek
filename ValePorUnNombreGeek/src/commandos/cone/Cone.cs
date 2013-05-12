@@ -23,13 +23,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         protected float angle, length;
         protected int triangles;
         private bool autoTransformEnable;
-        private bool alphaBlendEnabled;
-        public bool AlphaBlendEnabled
-        {
-            get { return alphaBlendEnabled; }
-            set { alphaBlendEnabled = value; }
-        }
-        private Matrix transform;
+
+        public bool AlphaBlendEnabled{ get; set;}
+        
         private Vector3 translation;
         private Vector3 rotation;
         int cantVertices;
@@ -54,8 +50,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         public Matrix Transform
         {
-            get { return transform; }
-            set { transform = value; }
+            get;
+            set;
         }
 
 
@@ -65,9 +61,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
             set { this.translation = value; }
         }
-        protected bool showDirection;
-
-        public bool ShowDirection { get { return this.showDirection; } set { this.showDirection = value; } }
+     
+        public bool ShowDirection { get; set; }
 
         /// <summary>
         /// Calcuula y retorna el vector direccion del cono.
@@ -89,13 +84,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         }
 
-        protected Color color1;
 
-        public Color Color1 { get { return color1; } set { color1 = value;} }
 
-        protected Color color2;
+        public Color Color1 { get; set; }
 
-        public Color Color2 { get { return color2; } set { color2 = value; } }
+
+        public Color Color2 { get; set; }
         public float Length { get { return length; } set { length = value; mustUpdate = true; } }
 
         public float Angle { get { return angle; } set { angle = value; mustUpdate = true; } }
@@ -120,15 +114,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             this.triangles = triangles;
 
             this.autoTransformEnable = true;
-            this.alphaBlendEnabled = false;
+            this.AlphaBlendEnabled = false;
             this.translation = vertex;
             this.rotation = new Vector3(0, 0, 0);
             this.enabled = true;
-            this.transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
+            this.Transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
 
-            this.showDirection = false;
-            this.color1 = Color.BlueViolet;
-            this.color2 = Color.Aqua;
+            this.ShowDirection = false;
+            this.Color1 = Color.BlueViolet;
+            this.Color2 = Color.Aqua;
             this.mustUpdate = true;
             
             
@@ -199,15 +193,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
                                *     circunferencia[j]------------ circunferencia[j+1]  
                                */
 
-                vertices[i] = new CustomVertex.PositionColored(0, 0, 0, color1.ToArgb());
-                vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X,  circunferencia[j].Y , circunferencia[j].Z , color2.ToArgb());
-                vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[j + 1].X , circunferencia[j + 1].Y , circunferencia[j + 1].Z, color2.ToArgb());
+                vertices[i] = new CustomVertex.PositionColored(0, 0, 0, Color1.ToArgb());
+                vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X,  circunferencia[j].Y , circunferencia[j].Z , Color2.ToArgb());
+                vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[j + 1].X , circunferencia[j + 1].Y , circunferencia[j + 1].Z, Color2.ToArgb());
 
             }
 
-            vertices[i] = new CustomVertex.PositionColored(0, 0, 0, color1.ToArgb());
-            vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X , circunferencia[j].Y , circunferencia[j].Z, color2.ToArgb());
-            vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[0].X , circunferencia[0].Y , circunferencia[0].Z , color2.ToArgb());
+            vertices[i] = new CustomVertex.PositionColored(0, 0, 0, Color1.ToArgb());
+            vertices[i + 1] = new CustomVertex.PositionColored(circunferencia[j].X , circunferencia[j].Y , circunferencia[j].Z, Color2.ToArgb());
+            vertices[i + 2] = new CustomVertex.PositionColored(circunferencia[0].X , circunferencia[0].Y , circunferencia[0].Z , Color2.ToArgb());
 
 
         }
@@ -253,12 +247,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
             if(!enabled) return;
             if (mustUpdate) updateValues();
-            if (this.showDirection) renderDirection();
+            if (this.ShowDirection) renderDirection();
 
             
             if (autoTransformEnable)
             {
-                this.transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
+                this.Transform = Matrix.RotationYawPitchRoll(rotation.Y, rotation.X, rotation.Z) * Matrix.Translation(translation);
                 
             }
 
@@ -271,13 +265,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             {
                
                if (i % 3 == 0) color = this.Color1; else color = this.Color2;
-               vTrans[i].Position = Vector3.TransformCoordinate(vertices[i].Position, this.transform);
+               vTrans[i].Position = Vector3.TransformCoordinate(vertices[i].Position, this.Transform);
                vTrans[i].Color = Color.FromArgb(TRANSLUCENCY, 0, 0, 0).ToArgb() + color.ToArgb();
 
             }
             
             bool alphaBlendEnabled = d3dDevice.RenderState.AlphaBlendEnable;
-            d3dDevice.RenderState.AlphaBlendEnable = this.alphaBlendEnabled;
+            d3dDevice.RenderState.AlphaBlendEnable = this.AlphaBlendEnabled;
 
             vertexBuffer.SetData(vTrans, 0, LockFlags.None);
             

@@ -23,10 +23,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected Life life;
 
 
-        public Life Life
-        {
-            get { return this.life; }
-        }
         /*******************************
          * INICIALIZACION **************
          *******************************/
@@ -83,6 +79,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return this.representation.BoundingBox; }
         }
 
+
+        public Life Life
+        {
+            get { return this.life; }
+        }
         #region Status
 
         private bool selected;
