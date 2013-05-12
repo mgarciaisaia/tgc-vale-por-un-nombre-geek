@@ -128,14 +128,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             }
         }
 
-        public int Width
+        public float Width
         {
             get { return (int)(this.ImageInformation.Width * this.Scale.X); }
+            set
+            {
+                this.scale.X = value / this.ImageInformation.Width;
+                this.updateTransformationMatrix();
+            }
         }
 
-        public int Height
+        public float Height
         {
             get { return (int)(this.ImageInformation.Height * this.Scale.Y); }
+            set { 
+                    this.scale.Y = value / this.ImageInformation.Height; 
+                    this.updateTransformationMatrix(); 
+            }
         }
 
         #endregion
