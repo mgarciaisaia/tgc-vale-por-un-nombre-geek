@@ -21,6 +21,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
         {
             if (this.soldier.canSee(commando))
             {
+                this.soldier.setPositionTarget(commando.Position); //pablo
 
                 if (GeneralMethods.isCloseTo(this.soldier.Position, commando.Position, this.soldier.Radius))
                 {
@@ -30,7 +31,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 }
                 else
                 {
-                    this.soldier.setPositionTarget(commando.Position); //pablo
                     //this.soldier.setCharacterTarget(commando);
                     this.soldier.goToTarget(elapsedTime);
                     
