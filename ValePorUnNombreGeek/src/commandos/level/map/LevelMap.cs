@@ -27,9 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private CustomVertex.TransformedTextured[] vertices;
 
   
-        private Effect effect;
-        private string technique;
-
+      
         private float width;
         private float height;
         private Vector2 position;
@@ -39,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private bool mustUpdateProportions = true;
 
         private float zoom;
-        private bool enabled = true;
+       
 
         private bool followCamera;        
         private Vector3 previousViewCenter;
@@ -52,26 +50,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private float widthFactor;
         private float heightFactor;
 
-             
+
+
+
      
-
-        public Effect Effect
-        {
-
-            set { this.effect = value; }
-            get { return this.effect; }
-        }
-        public string Technique
-        {
-
-            set { this.technique = value; }
-            get { return this.technique; }
-        }
-        public bool Enabled
-        {
-            get { return this.enabled; }
-            set { this.enabled = value; }
-        }
       
        
 
@@ -99,16 +81,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         public Vector2 Position{
 
             get{ return this.position;}
+            set { this.position = value; mustUpdateRectangle = true; }
             
         }
 
-        //Por alguna razon me tiraba error en el setter de arriba
-        public void setPosition(Vector2 vector2)
-        {
-            this.position = vector2;
-            mustUpdateRectangle = true;
-        }
+        public bool ShowCharacters { get; set; }
 
+        public Effect Effect { get; set; }
+
+        public string Technique { get; set; }
+
+        public bool Enabled { get; set; }
+       
         public float Width { get { return this.width; } set { this.width = value; mustUpdateRectangle = true; } }
 
         public float Height { get { return this.height; } set { this.height = value; mustUpdateRectangle = true; } }
@@ -134,9 +118,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             createTextures(level);
 
             this.position = new Vector2(GuiController.Instance.Panel3d.Width-this.width-10,10);
-            this.effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\mapa.fx");
-            this.technique = "MAPA";
-
+            this.Effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\mapa.fx");
+            this.Technique = "MAPA";
+            this.Enabled = true;
+            this.ShowCharacters = true;
             this.followCamera = true;
            
         }
@@ -146,17 +131,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             Device d3dDevice = GuiController.Instance.D3dDevice;
             Bitmap bitmap;
             
-
+            //Textura del terreno
             bitmap = (Bitmap)Bitmap.FromFile(level.Terrain.TexturePath);
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
             texDiffuseMap = Texture.FromBitmap(d3dDevice, bitmap, Usage.None, Pool.Managed);
 
-
+            //Heightmap por si se quiere dar un efecto segun la altura
             bitmap = (Bitmap)Bitmap.FromFile(level.Terrain.HeightmapPath);
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
             textHeightmap = Texture.FromBitmap(d3dDevice, bitmap, Usage.None, Pool.Managed);
 
-
+            //Textura auxiliar para renderizar las posiciones de los personajes
             g_Posiciones = new Texture(d3dDevice, terrainWidth, terrainHeight, 1, Usage.RenderTarget, Format.X8R8G8B8, Pool.Default);
             g_pDepthStencil = d3dDevice.CreateDepthStencilSurface(terrainWidth,
                                                                           terrainHeight,
@@ -171,9 +156,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
         public void render()
         {                 
-            if (!enabled) return;          
+            if (!Enabled) return;          
 
-            if (mustUpdateRectangle) this.createRectangle();
+            if (mustUpdateRectangle) this.updateRectangle();
             if (mustUpdateProportions) this.updateProportions();
 
             if (followCamera)
@@ -188,60 +173,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
          
            //Renderizo las posiciones de los pj en una textura.
-            renderCharacterPositions();
+            if(ShowCharacters)renderCharacterPositions();
             
             //Renderizo el mapa
-            renderMapTexture();
+            renderMap();
 
-            //Renderizo la textura con las posiciones para que queden sobre el mapa.
-            renderCharacterPositionsTexture();
          
         }
 
-        private void renderCharacterPositionsTexture()
-        {
-            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
-                   
-            effect.Technique = "POSICIONES";
-            effect.SetValue("texDiffuseMap", g_Posiciones);
-            GuiController.Instance.Shaders.VariosShader.SetValue("texDiffuseMap", g_Posiciones);
-
-            TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
-            texturesManager.clear(1);
-            int passes = effect.Begin(0);
-            for (int i = 0; i < passes; i++)
-            {
-                effect.BeginPass(i);
-                device.VertexFormat = CustomVertex.TransformedTextured.Format;
-                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
-                effect.EndPass();
-            }
-            effect.End();
-        }
-
-        private void renderMapTexture()
-        {
-            TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
-            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
-          
-            effect.Technique = technique;
-            effect.SetValue("texDiffuseMap", texDiffuseMap);
-            effect.SetValue("texHeightMap", textHeightmap);
-
-
-            texturesManager.clear(1);
-
-            int passes = effect.Begin(0);
-            for (int i = 0; i < passes; i++)
-            {
-                effect.BeginPass(i);
-                device.VertexFormat = CustomVertex.TransformedTextured.Format;
-                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
-                effect.EndPass();
-            }
-            effect.End();
-        }
-
+       
         private void renderCharacterPositions()
         {
             Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
@@ -255,19 +195,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             device.EndScene();
 
 
-            //Guardo el render target actual
-            pOldRT = device.GetRenderTarget(0);
-
+           
+           
             //Obtengo la superficie para renderizar
             Surface pSurf = g_Posiciones.GetSurfaceLevel(0);
 
+            //Cambio la superficie en la que se hace el render por la superficie de posiciones.
+            pOldRT = device.GetRenderTarget(0);
             pOldDS = device.DepthStencilSurface;
             device.DepthStencilSurface = g_pDepthStencil;
-
             device.SetRenderTarget(0, pSurf);
-
             device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
-
+            
+            //Renderizo los rectangulitos.
             device.BeginScene();
 
             foreach (CustomVertex.TransformedColored[] characterRectangle in this.getCharacterRectangles())
@@ -277,18 +217,46 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
                 device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, characterRectangle);
             }
 
-
-
             device.EndScene();
+
+            //Dejo el device como estaba antes.
             device.BeginScene();
-
-
             device.DepthStencilSurface = pOldDS;
             device.SetRenderTarget(0, pOldRT);
 
 
            
         }
+
+        private void renderMap()
+        {
+            TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
+            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
+
+            Effect.Technique = Technique;
+            Effect.SetValue("texDiffuseMap", texDiffuseMap);
+            Effect.SetValue("texHeightMap", textHeightmap);
+
+            if (ShowCharacters)
+            {
+                Effect.SetValue("g_Posiciones", g_Posiciones);
+                Effect.Technique = Technique + "_POSICIONES";
+            }
+
+
+            texturesManager.clear(1);
+
+            int passes = Effect.Begin(0);
+            for (int i = 0; i < passes; i++)
+            {
+                Effect.BeginPass(i);
+                device.VertexFormat = CustomVertex.TransformedTextured.Format;
+                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
+                Effect.EndPass();
+            }
+            Effect.End();
+        }
+
 
         private IEnumerable<CustomVertex.TransformedColored[]> getCharacterRectangles()
         {
@@ -299,7 +267,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             CustomVertex.TransformedColored[] vertices;
 
             foreach(Character c in level.Characters){
+                
                 Vector2 position;
+
                 if (c.OwnedByUser) color = Color.Green.ToArgb(); else color = Color.Red.ToArgb();
                 level.Terrain.xzToHeightmapCoords(c.Position.X, c.Position.Z, out position);
 
@@ -324,7 +294,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         }
 
 
-        private void createRectangle()
+        private void updateRectangle()
         {
 
 
@@ -364,47 +334,42 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
            
             Vector2 cameraCoords;
             if (this.level.Terrain.xzToHeightmapCoords(center.X, center.Z, out cameraCoords))
-            {
-           
-
-                
+            {                
                 float minX = (cameraCoords.X + widthFactor) / terrainWidth;
                 float maxX = (cameraCoords.X - widthFactor) / terrainWidth;
                 float minY = (cameraCoords.Y - heightFactor ) / terrainHeight;
                 float maxY = (cameraCoords.Y + heightFactor) / terrainHeight;
-                
-
-                //Arriba izq
                
+                //Arriba izq
                 this.vertices[0].Tu = minX;
                 this.vertices[0].Tv = minY;
 
                 //Arriba der
-                
                 this.vertices[1].Tu = maxX;
                 this.vertices[1].Tv = minY;
 
                 //Abajo izq
-              
                 this.vertices[2].Tu = minX;
                 this.vertices[2].Tv = maxY;
 
                 //Abajo der
-               
                 this.vertices[3].Tu = maxX;
                 this.vertices[3].Tv = maxY;
             }
+
             previousViewCenter = center;
             mustUpdateView = false;
         }
 
 
        public void dispose(){
-           effect.Dispose();
+           Effect.Dispose();
            textHeightmap.Dispose();
            texDiffuseMap.Dispose();
            g_pDepthStencil.Dispose();
            g_Posiciones.Dispose();
        }
+
+  
     }
 }

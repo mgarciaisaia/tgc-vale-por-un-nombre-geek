@@ -87,7 +87,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             LevelMap map = level.Map;
             map.Width = 2 * level.Map.Height;
             map.Height = 1.5f * level.Map.Height;
-            map.setPosition(new Vector2(GuiController.Instance.Panel3d.Width - 10 - level.Map.Width, level.Map.Position.Y));
+            map.Position = new Vector2(GuiController.Instance.Panel3d.Width - 10 - level.Map.Width, level.Map.Position.Y);
          
 
             UserVars.initialize();
@@ -160,6 +160,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             controlPanel.render();
             level.Map.Technique = "MAPA_VIEJO";
             level.Map.Zoom = UserVars.Instance.zoomMapa;
+            level.Map.ShowCharacters = UserVars.Instance.showCharacters;
             level.Map.render();
 
             //Prueba barrita de vida
