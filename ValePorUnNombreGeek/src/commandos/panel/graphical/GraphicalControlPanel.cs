@@ -39,7 +39,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             this.buttons.Add(_button);
             this.drawer.addSpriteToDraw(_button);
 
-            int X = this.controlPanelSprite.Width / 10;
+            float X = this.controlPanelSprite.Width / 10;
             foreach (CommandButton button in this.buttons)
                 X = Math.Max(X, (int)button.Position.X + button.Width + 5);
 
