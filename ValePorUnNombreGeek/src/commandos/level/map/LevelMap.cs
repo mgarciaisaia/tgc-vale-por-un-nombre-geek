@@ -19,12 +19,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private Level level;
 
         private Texture texDiffuseMap;
-        private Texture textHeightmap;
-
+        private Texture texHeightmap;
+        
+        private Texture g_mask;
         private Texture g_Posiciones;
         private Surface g_pDepthStencil;
 
-        private MyVertex.TransformedTextured[] vertices;
+        private MyVertex.TransformedDoubleTextured[] vertices;
 
   
       
@@ -123,7 +124,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             this.Enabled = true;
             this.ShowCharacters = true;
             this.followCamera = true;
-           
+        
         }
 
         private void createTextures(Level level)
@@ -139,7 +140,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             //Heightmap por si se quiere dar un efecto segun la altura
             bitmap = (Bitmap)Bitmap.FromFile(level.Terrain.HeightmapPath);
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
-            textHeightmap = Texture.FromBitmap(d3dDevice, bitmap, Usage.None, Pool.Managed);
+            texHeightmap = Texture.FromBitmap(d3dDevice, bitmap, Usage.None, Pool.Managed);
 
             //Textura auxiliar para renderizar las posiciones de los personajes
             g_Posiciones = new Texture(d3dDevice, terrainWidth, terrainHeight, 1, Usage.RenderTarget, Format.X8R8G8B8, Pool.Default);
@@ -149,6 +150,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
                                                                           MultiSampleType.None,
                                                                           0,
                                                                           true);
+            g_mask = TextureLoader.FromFile(d3dDevice, EjemploAlumno.getMediaDir() + "Mapa\\mask.jpg");
         }
 
         
@@ -232,10 +234,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         {
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
             Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
+            bool alphaBlendEnable = device.RenderState.AlphaBlendEnable;
+            device.RenderState.AlphaBlendEnable = true;
 
             Effect.Technique = Technique;
             Effect.SetValue("texDiffuseMap", texDiffuseMap);
-            Effect.SetValue("texHeightMap", textHeightmap);
+            Effect.SetValue("texHeightMap", texHeightmap);
+            Effect.SetValue("g_mask", g_mask);
 
             if (ShowCharacters)
             {
@@ -250,11 +255,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             for (int i = 0; i < passes; i++)
             {
                 Effect.BeginPass(i);
-                device.VertexDeclaration = MyVertex.TransformedTexturedDeclaration;
+                device.VertexDeclaration = MyVertex.TransformedDoubleTexturedDeclaration;
                 device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
                 Effect.EndPass();
             }
             Effect.End();
+
+            device.RenderState.AlphaBlendEnable = alphaBlendEnable;
         }
 
 
@@ -298,17 +305,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         {
 
 
-            vertices = new MyVertex.TransformedTextured[4];
+            vertices = new MyVertex.TransformedDoubleTextured[4];
 
 
             //Arriba izq
-            this.vertices[0] = new MyVertex.TransformedTextured(position.X, position.Y, 0, 1, 0, 0);
+            this.vertices[0] = new MyVertex.TransformedDoubleTextured(position.X, position.Y, 0, 1, 0, 0, 0, 0);
             //Arriba der
-            this.vertices[1] = new MyVertex.TransformedTextured(position.X + Width, position.Y, 0, 1, 0, 0);
+            this.vertices[1] = new MyVertex.TransformedDoubleTextured(position.X + Width, position.Y, 0, 1, 0, 0, 1, 0);
             //Abajo izq
-            this.vertices[2] = new MyVertex.TransformedTextured(position.X, position.Y + Height, 0, 1, 0, 0);
+            this.vertices[2] = new MyVertex.TransformedDoubleTextured(position.X, position.Y + Height, 0, 1, 0, 0, 0, 1);
             //Abajo der
-            this.vertices[3] = new MyVertex.TransformedTextured(position.X + Width, position.Y + Height, 0, 1, 0, 0);
+            this.vertices[3] = new MyVertex.TransformedDoubleTextured(position.X + Width, position.Y + Height, 0, 1, 0, 0, 1 ,1);
 
             mustUpdateRectangle = false;
             mustUpdateProportions = true;
@@ -364,7 +371,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
        public void dispose(){
            Effect.Dispose();
-           textHeightmap.Dispose();
+           texHeightmap.Dispose();
            texDiffuseMap.Dispose();
            g_pDepthStencil.Dispose();
            g_Posiciones.Dispose();

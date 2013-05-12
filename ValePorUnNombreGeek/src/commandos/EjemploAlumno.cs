@@ -61,7 +61,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             return "Implementación del Commandos";
         }
 
-        public string getMediaDir()
+        public static string getMediaDir()
         {
             return GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\";
         }
@@ -114,7 +114,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             
             currentLevel = newLevel;
 
-            XMLLevelParser levelParser = new XMLLevelParser(newLevel, this.getMediaDir());
+            XMLLevelParser levelParser = new XMLLevelParser(newLevel, getMediaDir());
             level = levelParser.getLevel();
             
             //Movimiento por picking
