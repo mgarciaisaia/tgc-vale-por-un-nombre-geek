@@ -194,7 +194,29 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
          
          private bool canSeeWithObstacles(Vector3 targetPoint, List<ILevelObject> obstacles)
          {
+             Vector3 pt =  targetPoint-this.Position;
+             Vector3 q;
+             TgcRay ray = new TgcRay(this.Position, pt);
+             foreach (ILevelObject o in obstacles)
+             {
+                 if (objectInsideRadius(pt.Length(), o))
+                 {
+                     if (TgcCollisionUtils.intersectRayAABB(ray, o.BoundingBox, out q)) return false;
+                 }
+             }
              return true;
+         }
+
+         private bool objectInsideRadius(float radius, ILevelObject o)
+         {
+           
+             //Ver Unidad 6, pagina 13
+             Vector3 distance = this.Position - o.Center;
+
+             float radiusSum = radius + o.Radius;
+
+             return distance.LengthSq() <= radiusSum * radiusSum;
+
          }
 
          private void changeColor(bool canSee)
