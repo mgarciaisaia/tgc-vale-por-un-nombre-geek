@@ -48,8 +48,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                     return;
                 }
                 this.soldier.setPreviousPositionTarget();
-                this.soldier.setState(new Waiting(soldier, 0));
-                
+                this.soldier.setState(new Waiting(soldier, 0, true));
             }
         }
     }

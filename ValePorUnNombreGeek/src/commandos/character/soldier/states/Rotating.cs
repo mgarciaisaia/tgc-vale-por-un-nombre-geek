@@ -10,13 +10,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
     {
         private bool clockwise;
         private float desiredAngle;
-        private float ROTATION_ANGLE = 2 * FastMath.PI;
+        private float ROTATION_ANGLE;
 
         public Rotating(Soldier _soldier, float _desiredAngle, bool _clockwise, float _timeOnWaitpoint)
             : base(_soldier, _timeOnWaitpoint)
         {
             this.desiredAngle = _desiredAngle;
             this.clockwise = _clockwise;
+            ROTATION_ANGLE = 2 * FastMath.PI;
+        }
+
+        public Rotating(Soldier _soldier, float _desiredAngle, bool _clockwise, float _timeOnWaitpoint, bool _alert)
+            : this(_soldier, _desiredAngle, _clockwise, _timeOnWaitpoint)
+        {
+            this.Alert = _alert;
+            if (this.Alert) ROTATION_ANGLE = 6 * FastMath.PI;
         }
 
         public override void onWaitpointUpdate(float elapsedTime)
@@ -30,7 +38,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
 
         protected virtual void onDesiredAngle()
         {
-            this.soldier.setState(new Waiting(this.soldier, this.timeOnWaitpoint));
+            this.soldier.setState(new Waiting(this.soldier, this.timeOnWaitpoint, this.Alert));
         }
     }
 }
