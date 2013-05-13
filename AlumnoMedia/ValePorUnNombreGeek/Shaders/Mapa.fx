@@ -60,8 +60,45 @@ sampler2D frame = sampler_state
 	MIPFILTER = LINEAR;
 };
 
+/**************************************************************************************/
+/* Posiciones de los personajes*/
+/**************************************************************************************/
 
-//Input del Vertex Shader
+
+struct VS_INPUT_TransformedColored
+{
+   float4 Position : POSITION0;
+   float4 Color : COLOR0;
+};
+
+
+//Vertex Shader
+VS_INPUT_TransformedColored vs_TransformedColored(VS_INPUT_TransformedColored input)
+{
+	return input;
+}
+
+
+float4 ps_TransformedColored(float4 Color : COLOR0) : COLOR0
+{      
+	return Color;
+}
+
+
+technique POSICIONES
+{
+	pass Pass_0
+	{
+	  VertexShader = compile vs_2_0 vs_TransformedColored();
+	  PixelShader = compile ps_2_0 ps_TransformedColored();
+   }
+}
+
+
+
+/**************************************************************************************/
+/* MAPA */
+/**************************************************************************************/
 struct VS_INPUT
 {
    float4 Position : POSITION0;
@@ -77,9 +114,9 @@ struct VS_OUTPUT
    float2 Maskcoord : TEXCOORD1;
 };
 
+float2x2 rotation;
 
-//Vertex Shader
-VS_OUTPUT vs_2d(VS_INPUT input)
+VS_OUTPUT vs_mapa(VS_INPUT input)
 {
 	VS_OUTPUT output;
 
@@ -87,12 +124,22 @@ VS_OUTPUT vs_2d(VS_INPUT input)
 	output.Position = input.Position;
 
 	
-	output.Mapcoord = input.Mapcoord;
+	output.Mapcoord = mul(input.Mapcoord, rotation);
+
 
 	output.Maskcoord = input.Maskcoord;
 
 	return output;
 }
+
+
+
+float alpha(float2 maskcoord){
+
+	float4 maskColor = tex2D(mask, maskcoord);
+	return 0.1*maskColor.x + 0.95*maskColor.y+0.2*maskColor.z;
+}
+
 
 
 struct PS_INPUT
@@ -101,13 +148,7 @@ struct PS_INPUT
 	float2 Maskcoord : TEXCOORD1;
 };
 
-float alpha(float2 maskcoord){
-
-	float4 maskColor = tex2D(mask, maskcoord);
-	return 0.1*maskColor.x + 0.95*maskColor.y+0.2*maskColor.z;
-}
-
-//Desvuelve el color de la textura
+//Mapita sin efectos
 float4 ps_mapa(PS_INPUT input) : COLOR0
 {      
 	float4 color = tex2D(diffuseMap, input.Mapcoord);
@@ -132,6 +173,8 @@ float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 	
 }
 
+//Para cuando se muestran las posiciones:
+
 float4 ps_posiciones(PS_INPUT input):COLOR0
 {
 	
@@ -143,6 +186,7 @@ float4 ps_posiciones(PS_INPUT input):COLOR0
 
 }
 
+
 float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
 	
@@ -153,11 +197,7 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 }
 
 
-float4 ps_frame(PS_INPUT input):COLOR0
-{
-	
-	return tex2D(frame, input.Maskcoord);
-}
+
 
 
 
@@ -165,7 +205,7 @@ float4 ps_frame(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_2d();
+	  VertexShader = compile vs_2_0 vs_mapa();
 	  PixelShader = compile ps_2_0 ps_mapa();
    }
 }
@@ -175,7 +215,7 @@ float4 ps_frame(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_2d();
+	  VertexShader = compile vs_2_0 vs_mapa();
 	  PixelShader = compile ps_2_0 ps_mapa_viejo();
    }
 }
@@ -184,7 +224,7 @@ float4 ps_frame(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_2d();
+	  VertexShader = compile vs_2_0 vs_mapa();
 	  PixelShader = compile ps_2_0 ps_posiciones();
    }
 }
@@ -194,19 +234,49 @@ float4 ps_frame(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_2d();
+	  VertexShader = compile vs_2_0 vs_mapa();
 	  PixelShader = compile ps_2_0 ps_posiciones_viejo();
    }
+}
+
+
+
+
+
+/**************************************************************************************/
+/* MARCO */
+/**************************************************************************************/
+
+
+struct VS_FRAME
+{
+   float4 Position : POSITION0;
+   float2 Framecoord: TEXCOORD1;
+};
+
+
+
+VS_FRAME vs_frame(VS_FRAME input)
+{
+	return input;
+}
+
+
+float4 ps_frame(float2 framecoord:TEXCOORD1):COLOR0
+{
+	
+	return tex2D(frame, framecoord);
 }
 
  technique FRAME
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_2d();
+	  VertexShader = compile vs_2_0 vs_frame();
 	  PixelShader = compile ps_2_0 ps_frame();
    }
 }
+
 
 
 

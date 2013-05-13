@@ -25,9 +25,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private Texture g_Frame;
         private Texture g_Posiciones;
         private Surface g_pDepthStencil;
-        
-        
 
+      
         private MyVertex.TransformedDoubleTextured[] vertices;
 
   
@@ -125,6 +124,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             this.FrameEnable = false;
             this.ShowCharacters = true;
             this.FollowCamera = true;
+            
         
         }
 
@@ -187,7 +187,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
          
            //Renderizo las posiciones de los pj en una textura.
-            if(ShowCharacters)renderCharacterPositions();
+             if(ShowCharacters)renderCharacterPositions();
             
             //Renderizo el mapa
             renderMap();
@@ -250,12 +250,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             
             //Renderizo los rectangulitos.
             device.BeginScene();
-
-            foreach (CustomVertex.TransformedColored[] characterRectangle in this.getCharacterRectangles())
+            Effect.Technique = "POSICIONES";
+             int passes = Effect.Begin(0);
+            for (int i = 0; i < passes; i++)
             {
-                device.VertexFormat = CustomVertex.TransformedColored.Format;
-                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, characterRectangle);
+                Effect.BeginPass(i);
+                foreach (CustomVertex.TransformedColored[] characterRectangle in this.getCharacterRectangles())
+                {
+                    device.VertexFormat = CustomVertex.TransformedColored.Format;
+                    device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, characterRectangle);
+                }
+                Effect.EndPass();
             }
+            Effect.End();
 
             device.EndScene();
 
@@ -276,6 +283,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             device.RenderState.AlphaBlendEnable = MaskEnable;
 
             Effect.Technique = Technique;
+            Effect.SetValue("rotation", cameraRotation());
             Effect.SetValue("texDiffuseMap", texDiffuseMap);
             Effect.SetValue("texHeightMap", texHeightmap);
             if(MaskEnable) Effect.SetValue("g_mask", g_Mask);
@@ -414,7 +422,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
            g_pDepthStencil.Dispose();
            g_Posiciones.Dispose();
        }
+       Vector2 zero = new Vector2(0, 0);
+        public float[] cameraRotation(){
 
+            float[] matrix = new float[4];
+            Vector3 lookAt = GuiController.Instance.CurrentCamera.getLookAt();
+            Vector2 look2d = new Vector2(lookAt.X, lookAt.Y);
+            look2d.Normalize();
+            float cos = Vector2.Dot(look2d,zero);
+            float sin = FastMath.Sin(FastMath.Acos(cos));
+
+            matrix[0] = cos;
+            matrix[1] = -sin;
+            matrix[2] = sin;
+            matrix[3] = cos;
+            return matrix;
+        }
 
 
        public bool FrameEnable { get; set; }
