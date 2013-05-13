@@ -204,13 +204,6 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_up.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\cancelp.png" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\emptyp.png" />
-    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Die-TgcSkeletalAnim.xml" />
-    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Run-TgcSkeletalAnim.xml" />
-    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\StandBy-TgcSkeletalAnim.xml" />
-    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Walk-TgcSkeletalAnim.xml" />
-    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\BasicHuman-TgcSkeletalMesh.xml" />
-    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_body.jpg" />
-    <Content Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_head.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\Barrita.jpg" />
     <Content Include="ValePorUnNombreGeek\documentacion\com.horstmann.violet-0.21.1.jar" />
     <Content Include="ValePorUnNombreGeek\documentacion\umlCharacter.png" />
@@ -226,7 +219,6 @@
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\life.fx" />
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\mapa.fx" />
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\shaders.fx" />
-    <None Include="ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
     <None Include="ValePorUnNombreGeek\documentacion\Decisiones de diseño.rtf" />
     <None Include="ValePorUnNombreGeek\documentacion\diagrama_de_clases.class.violet" />
     <None Include="ValePorUnNombreGeek\documentacion\soldier_state_diagram.state.violet" />
