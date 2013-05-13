@@ -14,7 +14,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             this.waitingTime = 0;
             this.soldier.Representation.standBy();
             this.maxWaitingTime = GeneralMethods.random(1, 3);
-
+        }
+        public Waiting(Soldier _soldier, float _timeOnWaitpoint, bool _alert)
+            : this(_soldier, _timeOnWaitpoint)
+        {
+            this.Alert = _alert;
+            if(_alert) this.maxWaitingTime = GeneralMethods.random(1, 2);
         }
 
         public override void onWaitpointUpdate(float elapsedTime)
@@ -31,7 +36,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
 
                 bool clockwise = this.shallRotateClockwise(desiredAngle);
 
-                this.soldier.setState(new Rotating(this.soldier, desiredAngle, clockwise, this.timeOnWaitpoint));
+                this.soldier.setState(new Rotating(this.soldier, desiredAngle, clockwise, this.timeOnWaitpoint, this.Alert));
                 return;
             }
         }

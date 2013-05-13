@@ -12,8 +12,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
         public SoldierState(Soldier _soldier)
         {
             this.soldier = _soldier;
-            
+            this.Alert = false;
         }
+        /*public SoldierState(Soldier _soldier, bool _alert)
+        {
+            this.soldier = _soldier;
+            this.Alert = _alert;
+        }*/
 
         public abstract void update(float elapsedTime);
 
@@ -23,6 +28,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             {
                 soldier.setState(new Chasing(soldier, c));
             }
+        }
+
+        public bool Alert
+        {
+            get;
+            set;
         }
     }
 }
