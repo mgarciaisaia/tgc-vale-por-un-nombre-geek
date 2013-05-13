@@ -92,20 +92,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
         public string Technique { get; set; }
 
-        public bool Enabled { get; set; }
+        public bool Enable { get; set; }
        
         public float Width { get { return this.width; } set { this.width = value; mustUpdateRectangle = true; } }
 
         public float Height { get { return this.height; } set { this.height = value; mustUpdateRectangle = true; } }
 
-       
+        public bool MaskEnable { get; set; }
 
-        public bool FollowCamera
-        {
-            get { return this.followCamera; }
-            set { this.followCamera = value;}
-        }
- 
+        public bool FollowCamera { get; set; }
+       
         public LevelMap(Level level, float width, float height, float zoom)
         {
             this.level = level;
@@ -119,14 +115,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             createTextures(level);
 
             this.position = new Vector2(GuiController.Instance.Panel3d.Width-this.width-10,10);
-            this.Effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\mapa.fx");
+            this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "mapa.fx");
             this.Technique = "MAPA";
-            this.Enabled = true;
+            this.Enable = true;
+            this.MaskEnable = false;
             this.ShowCharacters = true;
-            this.followCamera = true;
+            this.FollowCamera = true;
         
         }
 
+        public void setMask(string path)
+        {
+            g_mask = TextureLoader.FromFile(GuiController.Instance.D3dDevice, path);
+            this.MaskEnable = true;
+        }
         private void createTextures(Level level)
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
@@ -150,7 +152,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
                                                                           MultiSampleType.None,
                                                                           0,
                                                                           true);
-            g_mask = TextureLoader.FromFile(d3dDevice, EjemploAlumno.getMediaDir() + "Mapa\\mask.jpg");
+          
         }
 
         
@@ -158,12 +160,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
         public void render()
         {                 
-            if (!Enabled) return;          
+            if (!Enable) return;          
 
             if (mustUpdateRectangle) this.updateRectangle();
             if (mustUpdateProportions) this.updateProportions();
 
-            if (followCamera)
+            if (FollowCamera)
             {
                 viewCenter = GuiController.Instance.CurrentCamera.getPosition();
             }
@@ -214,7 +216,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
             foreach (CustomVertex.TransformedColored[] characterRectangle in this.getCharacterRectangles())
             {
-
                 device.VertexFormat = CustomVertex.TransformedColored.Format;
                 device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, characterRectangle);
             }
@@ -235,12 +236,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
             Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
             bool alphaBlendEnable = device.RenderState.AlphaBlendEnable;
-            device.RenderState.AlphaBlendEnable = true;
+            device.RenderState.AlphaBlendEnable = MaskEnable;
 
             Effect.Technique = Technique;
             Effect.SetValue("texDiffuseMap", texDiffuseMap);
             Effect.SetValue("texHeightMap", texHeightmap);
-            Effect.SetValue("g_mask", g_mask);
+            if(MaskEnable) Effect.SetValue("g_mask", g_mask);
 
             if (ShowCharacters)
             {

@@ -67,7 +67,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaMoverPersonaje
             TgcTexture pisoTexture = TgcTexture.createTexture(d3dDevice, GuiController.Instance.ExamplesMediaDir + "Texturas\\tierra.jpg");
             piso = TgcBox.fromSize(new Vector3(0, -60, 0), new Vector3(1000, 5, 1000), pisoTexture);
 
-            String mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\";
+            String mediaDir = EjemploAlumno.MediaDir;
            
 
            //Cargar modelo con una animación Key Frame

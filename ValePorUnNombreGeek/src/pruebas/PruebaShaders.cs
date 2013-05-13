@@ -63,7 +63,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             tree = new Tree(terrain.getPosition(420, 129), new Vector3(5,7,5),new Vector3(0,0,0));
             wall = new Wall(terrain.getPosition(200, 337), new Vector3(500,100,50));
   
-            effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\shaders.fx");
+            effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "shaders.fx");
             skeletal.Effect = effect;
             terrain.Effect = effect;
             wall.Effect = effect;

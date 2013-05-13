@@ -217,7 +217,9 @@
     <Content Include="ValePorUnNombreGeek\niveles\another-level.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="ValePorUnNombreGeek\niveles\default-level.xml" />
+    <Content Include="ValePorUnNombreGeek\niveles\default-level.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ValePorUnNombreGeek\niveles\vacio-level.xml" />
   </ItemGroup>
   <ItemGroup>

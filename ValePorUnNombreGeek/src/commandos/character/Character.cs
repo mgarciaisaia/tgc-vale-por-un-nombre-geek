@@ -31,7 +31,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             this.loadCharacterRepresentation(_position);
             this.technique = representation.Technique;
-            this.Effect = TgcShaders.loadEffect(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\shaders.fx");
+            this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "shaders.fx");
             this.Selected = false;
             this.Dead = false;
             this.life = new Life(this, 100, new Vector2(20, 60), Color.Red, new Vector2(60, 10));

@@ -52,7 +52,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.EscenarioRio
         public override void init()
         {
 
-            String mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir+"ValePorUnNombreGeek\\";
+            String mediaDir = EjemploAlumno.MediaDir;
 
             pathHeightmap = mediaDir + "Heightmaps\\" + "HeightmapRio.jpg";
 
