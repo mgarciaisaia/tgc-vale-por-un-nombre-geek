@@ -11,7 +11,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 {
     abstract class AABBObject : ILevelObject
     {
-        public abstract Vector3 Position { get; }
+        public abstract Vector3 Position { get; set; }
 
         public abstract Vector3 Center { get; }
 

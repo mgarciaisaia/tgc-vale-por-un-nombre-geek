@@ -15,24 +15,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
     {
         TgcBox box;
         float radius;
-        Vector3 center;
+        Vector3 position;
         public static string TEXTURE_PATH = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Pared\\pared.jpg";
        
         
-        public Wall(Vector3 center, Vector3 size){
+        public Wall(Vector3 position, Vector3 size){
             TgcTexture textura = TgcTexture.createTexture(TEXTURE_PATH);
-            box = TgcBox.fromSize(center, size, textura);
+            box = TgcBox.fromSize(position+new Vector3(0, size.Y/2,0), size, textura);
 
             box.UVTiling = new Vector2(size.X / textura.Width*3, size.Y / textura.Height*3);
             box.updateValues();
-            this.center = box.BoundingBox.calculateBoxCenter();
+
+            this.position = position;
             radius = box.BoundingBox.calculateBoxRadius();
-            
- 
+
         }
         public override Vector3 Position
         {
-            get { return this.box.Position; }
+            get { return this.position; }
+            set { this.box.Position = value + new Vector3(0, this.Size.Y / 2, 0); this.position = value; }
         }
 
         public override TgcBoundingBox BoundingBox
@@ -42,12 +43,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 
         public override Vector3 Center
         {
-            get { return this.center; }
+            get { return this.box.Position; }
+          
         }
 
         public override float Radius
         {
             get { return this.radius; }
+        }
+
+        public Vector3 Size
+        {
+            get { return this.box.Size; }
+            set { this.box.Size = value; this.Position = position; this.box.updateValues(); }
         }
 
         public override Effect Effect
