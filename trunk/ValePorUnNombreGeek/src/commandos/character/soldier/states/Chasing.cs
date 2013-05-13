@@ -18,7 +18,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
 
         }
         public override void update(float elapsedTime)
-        {
+        {   
             if (this.soldier.canSee(commando))
             {
                 this.soldier.setPositionTarget(commando.Position); //pablo
@@ -42,7 +42,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             else
             {
                 //if (soldier.canSeeACommando(out commando)) return;
-                if (soldier.hasTarget()) //pablo
+                if (soldier.hasTarget() && !commando.isDead()) //pablo
                 {
                     this.soldier.goToTarget(elapsedTime);
                     return;
