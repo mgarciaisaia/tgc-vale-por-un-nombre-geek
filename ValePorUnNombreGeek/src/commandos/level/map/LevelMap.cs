@@ -176,7 +176,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
             if (FollowCamera)
             {
-                viewCenter = GuiController.Instance.CurrentCamera.getPosition();
+                viewCenter = GuiController.Instance.CurrentCamera.getLookAt();
             }
 
             if (!viewCenter.Equals(previousViewCenter)) mustUpdateView = true;
@@ -384,13 +384,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         {
           
            
-            Vector2 cameraCoords;
-            if (this.level.Terrain.xzToHeightmapCoords(center.X, center.Z, out cameraCoords))
+            Vector2 centerCoords;
+            if (this.level.Terrain.xzToHeightmapCoords(center.X, center.Z, out centerCoords))
             {                
-                float minX = (cameraCoords.X + widthFactor) / terrainWidth;
-                float maxX = (cameraCoords.X - widthFactor) / terrainWidth;
-                float minY = (cameraCoords.Y - heightFactor ) / terrainHeight;
-                float maxY = (cameraCoords.Y + heightFactor) / terrainHeight;
+                float minX = (centerCoords.X + widthFactor) / terrainWidth;
+                float maxX = (centerCoords.X - widthFactor) / terrainWidth;
+                float minY = (centerCoords.Y - heightFactor ) / terrainHeight;
+                float maxY = (centerCoords.Y + heightFactor) / terrainHeight;
                
                 //Arriba izq
                 this.vertices[0].Tu1 = minX;
