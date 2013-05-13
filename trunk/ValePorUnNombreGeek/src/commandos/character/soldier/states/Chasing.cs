@@ -23,9 +23,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             {
                 this.soldier.setPositionTarget(commando.Position); //pablo
 
+                if(GeneralMethods.isCloseTo(this.soldier.Position, commando.Position, 100)) commando.Life.decrement(elapsedTime*10);
                 if (GeneralMethods.isCloseTo(this.soldier.Position, commando.Position, this.soldier.Radius))
                 {
                     this.soldier.Representation.talk();
+                    
                     talk.play();
                   
                 }

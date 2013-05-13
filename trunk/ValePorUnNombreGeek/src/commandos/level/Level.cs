@@ -54,6 +54,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         {
             addCharacter(commando);
             commandos.Add(commando);
+            commando.Life.Position = new Vector2(60 + commandos.IndexOf(commando) * (commando.Life.Size.X + 10), 10);
         }
 
         public void add(Enemy enemy)
@@ -85,6 +86,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 
          
             quadtree.render(GuiController.Instance.Frustum, commandos, enemies);
+            
+            foreach (Commando c in this.commandos)    
+                c.Life.render();
+            
 
         }
 
