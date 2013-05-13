@@ -21,9 +21,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private Texture texDiffuseMap;
         private Texture texHeightmap;
         
-        private Texture g_mask;
+        private Texture g_Mask;
+        private Texture g_Frame;
         private Texture g_Posiciones;
         private Surface g_pDepthStencil;
+        
+        
 
         private MyVertex.TransformedDoubleTextured[] vertices;
 
@@ -119,6 +122,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             this.Technique = "MAPA";
             this.Enable = true;
             this.MaskEnable = false;
+            this.FrameEnable = false;
             this.ShowCharacters = true;
             this.FollowCamera = true;
         
@@ -126,8 +130,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
         public void setMask(string path)
         {
-            g_mask = TextureLoader.FromFile(GuiController.Instance.D3dDevice, path);
+            g_Mask = TextureLoader.FromFile(GuiController.Instance.D3dDevice, path);
             this.MaskEnable = true;
+        }
+
+        public void setFrame(string path)
+        {
+            g_Frame = TextureLoader.FromFile(GuiController.Instance.D3dDevice, path);
+            this.FrameEnable = true;
         }
         private void createTextures(Level level)
         {
@@ -182,9 +192,36 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             //Renderizo el mapa
             renderMap();
 
+            if (FrameEnable) renderFrame();
+
          
         }
+        private void renderFrame()
+        {
 
+            TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
+            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
+            bool alphaBlendEnable = device.RenderState.AlphaBlendEnable;
+            device.RenderState.AlphaBlendEnable = true;
+
+            Effect.Technique = "FRAME";
+            Effect.SetValue("g_frame",  g_Frame);
+                    
+            
+            texturesManager.clear(1);
+
+            int passes = Effect.Begin(0);
+            for (int i = 0; i < passes; i++)
+            {
+                Effect.BeginPass(i);
+                device.VertexDeclaration = MyVertex.TransformedDoubleTexturedDeclaration;
+                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
+                Effect.EndPass();
+            }
+            Effect.End();
+
+            device.RenderState.AlphaBlendEnable = alphaBlendEnable;
+        }
        
         private void renderCharacterPositions()
         {
@@ -241,7 +278,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             Effect.Technique = Technique;
             Effect.SetValue("texDiffuseMap", texDiffuseMap);
             Effect.SetValue("texHeightMap", texHeightmap);
-            if(MaskEnable) Effect.SetValue("g_mask", g_mask);
+            if(MaskEnable) Effect.SetValue("g_mask", g_Mask);
 
             if (ShowCharacters)
             {
@@ -378,6 +415,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
            g_Posiciones.Dispose();
        }
 
-  
+
+
+       public bool FrameEnable { get; set; }
     }
 }

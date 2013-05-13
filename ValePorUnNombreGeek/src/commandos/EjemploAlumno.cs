@@ -85,9 +85,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             loadLevel(initialLevel);
             LevelMap map = level.Map;
             map.setMask(EjemploAlumno.MediaDir + "Mapa\\mask.jpg");
+            map.setFrame(EjemploAlumno.MediaDir + "Mapa\\frame.png");
             map.Width = 2 * level.Map.Height;
             map.Height = 1.5f * level.Map.Height;
-            map.Position = new Vector2(GuiController.Instance.Panel3d.Width - 10 - level.Map.Width, level.Map.Position.Y);
+            map.Position = new Vector2(GuiController.Instance.Panel3d.Width/2 - level.Map.Width/2, GuiController.Instance.Panel3d.Height- level.Map.Height);
          
 
             UserVars.initialize();
