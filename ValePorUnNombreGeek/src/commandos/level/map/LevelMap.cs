@@ -41,8 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
         private float zoom;
        
-
-        private bool followCamera;        
+      
         private Vector3 previousViewCenter;
         private Vector3 viewCenter;
 
@@ -422,24 +421,27 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
            g_pDepthStencil.Dispose();
            g_Posiciones.Dispose();
        }
-       Vector2 zero = new Vector2(0, 0);
+      
+        Vector2 zero = new Vector2(0, -1);
         public float[] cameraRotation(){
 
             float[] matrix = new float[4];
-            Vector3 lookAt = GuiController.Instance.CurrentCamera.getLookAt();
+            Vector3 lookAt = GuiController.Instance.CurrentCamera.getLookAt()-GuiController.Instance.CurrentCamera.getPosition();
+          
             Vector2 look2d = new Vector2(lookAt.X, lookAt.Y);
             look2d.Normalize();
+
             float cos = Vector2.Dot(look2d,zero);
             float sin = FastMath.Sin(FastMath.Acos(cos));
+        
 
-            matrix[0] = cos;
-            matrix[1] = -sin;
-            matrix[2] = sin;
-            matrix[3] = cos;
+            matrix[0] = cos; matrix[1] = -sin;
+            matrix[2] = sin; matrix[3] = cos;
+
             return matrix;
         }
-
-
+        
+        
        public bool FrameEnable { get; set; }
     }
 }
