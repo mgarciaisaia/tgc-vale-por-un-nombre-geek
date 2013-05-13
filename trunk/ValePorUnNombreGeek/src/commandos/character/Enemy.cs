@@ -7,7 +7,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
    
-    abstract class Enemy : Character
+    class Enemy : Character
     {
         protected WideVisionCone vision;
         
@@ -148,5 +148,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
         public VisionCone VisionCone { get { return this.vision; } }
+
+        public override void update(float elapsedTime) { this.VisionCone.updatePosition(); }
     }
 }

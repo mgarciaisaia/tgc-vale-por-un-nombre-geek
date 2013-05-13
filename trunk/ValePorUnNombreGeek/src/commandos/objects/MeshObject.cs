@@ -34,6 +34,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
         public override Vector3 Position
         {
             get { return mesh.Position; }
+            set { this.mesh.Position = value; this.center = mesh.BoundingBox.calculateBoxCenter(); }
         }
 
         public override TgcBoundingBox BoundingBox

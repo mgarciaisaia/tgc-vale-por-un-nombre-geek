@@ -12,6 +12,7 @@ using Microsoft.DirectX.Direct3D;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
@@ -46,8 +47,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
        
         Commando pj;
         Enemy enemigo;
-
+        Wall pared;
         Level nivel;
+    
 
         public override void init(){
         
@@ -61,21 +63,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
                     1f
                     )
                  );
-            pj = new Commando(new Vector3(0, 0, -10));
+            pared = new Wall(new Vector3(0,0,0), new Vector3(200, 50, 10));
+                        
+            pj = new Commando(new Vector3(0, 0, -40));
             pj.Representation.AutoTransformEnable = true;
 
 
-            enemigo = new Soldier(new Vector3(0, 0, 0)); //TODO arreglar
+            enemigo = new Enemy(new Vector3(0, 0, 40));
             enemigo.ShowConeDirection = true;
+            nivel.add(pared);
             nivel.add(enemigo);
             nivel.add(pj);
-            
 
 
+            GuiController.Instance.Modifiers.addFloat("AlturaPared", 10, 60, 10);
             GuiController.Instance.Modifiers.addFloat("RadioVision", 0, 500,100);
             GuiController.Instance.Modifiers.addFloat("AnguloVision", 0, 90, 45);
             GuiController.Instance.Modifiers.addBoolean("Direccion","Mostrar",false);
             GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox);
+            GuiController.Instance.RotCamera.CameraDistance = 200;
             GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-100, -100, -100), new Vector3(100, 100, 100), new Vector3(0, 0, -20));
           
         }
@@ -99,8 +105,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
            pj.Position = (Vector3)GuiController.Instance.Modifiers.getValue("posicionTarget");
 
 
-
+           float alturaPared = (float)GuiController.Instance.Modifiers.getValue("AlturaPared");
+          
+           if (alturaPared != pared.Size.Y) pared.Size = new Vector3(pared.Size.X, alturaPared, pared.Size.Z);
+          
+              
+           
            nivel.render(elapsedTime);
+           enemigo.canSee(pj);
            enemigo.VisionCone.render();
 
          
