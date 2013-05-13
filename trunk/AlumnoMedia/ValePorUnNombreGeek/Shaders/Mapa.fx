@@ -42,11 +42,24 @@ sampler2D mask = sampler_state
 	Texture = (g_mask);
 	ADDRESSU = BORDER;
 	ADDRESSV = BORDER;
-	BORDERCOLOR = 255;
+	BORDERCOLOR = 0;
 	MINFILTER = LINEAR;
 	MAGFILTER = LINEAR;
 	MIPFILTER = LINEAR;
 };
+
+
+texture g_frame;
+sampler2D frame = sampler_state
+{
+	Texture = (g_frame);
+	ADDRESSU = WRAP;
+	ADDRESSV = WRAP;
+	MINFILTER = LINEAR;
+	MAGFILTER = LINEAR;
+	MIPFILTER = LINEAR;
+};
+
 
 //Input del Vertex Shader
 struct VS_INPUT
@@ -66,7 +79,7 @@ struct VS_OUTPUT
 
 
 //Vertex Shader
-VS_OUTPUT vs_mapa(VS_INPUT input)
+VS_OUTPUT vs_2d(VS_INPUT input)
 {
 	VS_OUTPUT output;
 
@@ -140,7 +153,11 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 }
 
 
-
+float4 ps_frame(PS_INPUT input):COLOR0
+{
+	
+	return tex2D(frame, input.Maskcoord);
+}
 
 
 
@@ -148,7 +165,7 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_mapa();
+	  VertexShader = compile vs_2_0 vs_2d();
 	  PixelShader = compile ps_2_0 ps_mapa();
    }
 }
@@ -158,7 +175,7 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_mapa();
+	  VertexShader = compile vs_2_0 vs_2d();
 	  PixelShader = compile ps_2_0 ps_mapa_viejo();
    }
 }
@@ -167,7 +184,7 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_mapa();
+	  VertexShader = compile vs_2_0 vs_2d();
 	  PixelShader = compile ps_2_0 ps_posiciones();
    }
 }
@@ -177,11 +194,19 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_mapa();
+	  VertexShader = compile vs_2_0 vs_2d();
 	  PixelShader = compile ps_2_0 ps_posiciones_viejo();
    }
 }
 
+ technique FRAME
+{
+   pass Pass_0
+   {
+	  VertexShader = compile vs_2_0 vs_2d();
+	  PixelShader = compile ps_2_0 ps_frame();
+   }
+}
 
 
 
