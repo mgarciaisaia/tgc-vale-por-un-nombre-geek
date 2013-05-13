@@ -52,7 +52,7 @@ sampler2D mask = sampler_state
 struct VS_INPUT
 {
    float4 Position : POSITION0;
-   float2 Texcoord : TEXCOORD0;
+   float2 Mapcoord : TEXCOORD0;
    float2 Maskcoord: TEXCOORD1;
 };
 
@@ -60,7 +60,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
    float4 Position : POSITION0;
-   float2 Texcoord : TEXCOORD0;
+   float2 Mapcoord : TEXCOORD0;
    float2 Maskcoord : TEXCOORD1;
 };
 
@@ -74,7 +74,7 @@ VS_OUTPUT vs_mapa(VS_INPUT input)
 	output.Position = input.Position;
 
 	
-	output.Texcoord = input.Texcoord;
+	output.Mapcoord = input.Mapcoord;
 
 	output.Maskcoord = input.Maskcoord;
 
@@ -84,7 +84,7 @@ VS_OUTPUT vs_mapa(VS_INPUT input)
 
 struct PS_INPUT
 {
-	float2 Texcoord : TEXCOORD0;   
+	float2 Mapcoord : TEXCOORD0;   
 	float2 Maskcoord : TEXCOORD1;
 };
 
@@ -97,7 +97,7 @@ float alpha(float2 maskcoord){
 //Desvuelve el color de la textura
 float4 ps_mapa(PS_INPUT input) : COLOR0
 {      
-	float4 color = tex2D(diffuseMap, input.Texcoord);
+	float4 color = tex2D(diffuseMap, input.Mapcoord);
 	color[3] = alpha(input.Maskcoord);
 	return color;
 
@@ -109,8 +109,8 @@ float4 sepia = float4(0.64, 0.55, 0.4, 1);
 float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 {    
 	
-	float4 fvBaseColor = tex2D(diffuseMap, input.Texcoord);
-	float4 fvHeight = tex2D(heightMap, input.Texcoord);
+	float4 fvBaseColor = tex2D(diffuseMap, input.Mapcoord);
+	float4 fvHeight = tex2D(heightMap, input.Mapcoord);
 	float luminance = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)+0.2; 
 	float height = (0.1*fvHeight.x + 0.95*fvHeight.y+0.2*fvHeight.z)+0.2; 
 	float4 color = (luminance + 0.6 - height)*sepia;
@@ -122,7 +122,7 @@ float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 float4 ps_posiciones(PS_INPUT input):COLOR0
 {
 	
-	float4 color = tex2D(posiciones, input.Texcoord);
+	float4 color = tex2D(posiciones, input.Mapcoord);
 	if(color.r+color.g+color.b <0.01) color = ps_mapa(input);
 		else color[3] = alpha(input.Maskcoord);
 	
@@ -133,7 +133,7 @@ float4 ps_posiciones(PS_INPUT input):COLOR0
 float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
 	
-	float4 color = tex2D(posiciones, input.Texcoord);
+	float4 color = tex2D(posiciones, input.Mapcoord);
 	if(color.r+color.g+color.b <0.01) color = ps_mapa_viejo(input);
 		else color[3] = alpha(input.Maskcoord);
 	return color;

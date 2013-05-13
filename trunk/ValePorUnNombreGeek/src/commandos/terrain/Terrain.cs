@@ -42,7 +42,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             string pathHeightmap;
             string pathTextura;
             
-            string mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\" + "Heightmaps\\";
+            string mediaDir = EjemploAlumno.MediaDir + "Heightmaps\\";
             pathHeightmap = mediaDir  + "heightmap.jpg";
             pathTextura = mediaDir + "TerrainTexture5.jpg";
             this.heightmapPath = pathHeightmap;

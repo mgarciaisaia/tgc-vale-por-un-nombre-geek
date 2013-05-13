@@ -56,7 +56,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         protected virtual string[] getAnimations()
         {
-            String myMediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\SkeletalAnimations\\BasicHuman\\Animations\\";
+            String myMediaDir = EjemploAlumno.MediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\";
             String exMediaDir = GuiController.Instance.ExamplesMediaDir + "SkeletalAnimations\\BasicHuman\\Animations\\";
             return new string[] { 
                     exMediaDir + "Walk-TgcSkeletalAnim.xml",

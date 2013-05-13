@@ -16,7 +16,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         {
             this.Center = new Vector3(0, 0, 0);
             this.Size = new Vector3(5000, 5000, 5000);
-            string texturesPath = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\SkyBox\\";
+            string texturesPath = EjemploAlumno.MediaDir + "SkyBox\\";
             this.setFaceTexture(TgcSkyBox.SkyFaces.Up, texturesPath + "lun4_up.jpg");
             this.setFaceTexture(TgcSkyBox.SkyFaces.Down, texturesPath + "lun4_dn.jpg");
             this.setFaceTexture(TgcSkyBox.SkyFaces.Left, texturesPath + "lun4_lf.jpg");

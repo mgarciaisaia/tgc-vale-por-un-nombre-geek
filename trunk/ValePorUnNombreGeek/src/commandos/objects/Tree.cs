@@ -11,7 +11,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
     class Tree: MeshObject
     {
         TgcBoundingBox boundingBox;
-        static string MESH_PATH = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\ArbolSelvatico2\\ArbolSelvatico2-TgcScene.xml";
+        static string MESH_PATH = EjemploAlumno.MediaDir + "\\ArbolSelvatico2\\ArbolSelvatico2-TgcScene.xml";
        
         public Tree(Vector3 position, Vector3 scale, Vector3 rotation)
             : base(MESH_PATH, position, scale, rotation)
