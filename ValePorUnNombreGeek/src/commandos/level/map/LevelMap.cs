@@ -26,6 +26,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private Texture g_Posiciones;
         private Surface g_pDepthStencil;
 
+        public bool FrameEnable { get; set; }
       
         private MyVertex.TransformedDoubleTextured[] vertices;
 
@@ -282,7 +283,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             device.RenderState.AlphaBlendEnable = MaskEnable;
 
             Effect.Technique = Technique;
-            Effect.SetValue("rotation", cameraRotation());
+           
             Effect.SetValue("texDiffuseMap", texDiffuseMap);
             Effect.SetValue("texHeightMap", texHeightmap);
             if(MaskEnable) Effect.SetValue("g_mask", g_Mask);
@@ -382,31 +383,30 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
         private void updateView(Vector3 center)
         {
-          
-           
+
             Vector2 centerCoords;
             if (this.level.Terrain.xzToHeightmapCoords(center.X, center.Z, out centerCoords))
             {                
-                float minX = (centerCoords.X + widthFactor) / terrainWidth;
-                float maxX = (centerCoords.X - widthFactor) / terrainWidth;
-                float minY = (centerCoords.Y - heightFactor ) / terrainHeight;
-                float maxY = (centerCoords.Y + heightFactor) / terrainHeight;
+                
+                Vector2 min = new Vector2((centerCoords.X + widthFactor) / terrainWidth, (centerCoords.Y - heightFactor ) / terrainHeight);
+                Vector2 max = new Vector2((centerCoords.X - widthFactor) / terrainWidth, (centerCoords.Y + heightFactor) / terrainHeight);
+                
                
                 //Arriba izq
-                this.vertices[0].Tu1 = minX;
-                this.vertices[0].Tv1 = minY;
+                this.vertices[0].Tu1 = min.X;
+                this.vertices[0].Tv1 = min.Y;
 
                 //Arriba der
-                this.vertices[1].Tu1 = maxX;
-                this.vertices[1].Tv1 = minY;
+                this.vertices[1].Tu1 = max.X;
+                this.vertices[1].Tv1 = min.Y;
 
                 //Abajo izq
-                this.vertices[2].Tu1 = minX;
-                this.vertices[2].Tv1 = maxY;
+                this.vertices[2].Tu1 = min.X;
+                this.vertices[2].Tv1 = max.Y;
 
                 //Abajo der
-                this.vertices[3].Tu1 = maxX;
-                this.vertices[3].Tv1 = maxY;
+                this.vertices[3].Tu1 = max.X;
+                this.vertices[3].Tv1 = max.Y;
             }
 
             previousViewCenter = center;
@@ -422,26 +422,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
            g_Posiciones.Dispose();
        }
       
-        Vector2 zero = new Vector2(0, -1);
-        public float[] cameraRotation(){
-
-            float[] matrix = new float[4];
-            Vector3 lookAt = GuiController.Instance.CurrentCamera.getLookAt()-GuiController.Instance.CurrentCamera.getPosition();
-          
-            Vector2 look2d = new Vector2(lookAt.X, lookAt.Y);
-            look2d.Normalize();
-
-            float cos = Vector2.Dot(look2d,zero);
-            float sin = FastMath.Sin(FastMath.Acos(cos));
-        
-
-            matrix[0] = cos; matrix[1] = -sin;
-            matrix[2] = sin; matrix[3] = cos;
-
-            return matrix;
-        }
-        
-        
-       public bool FrameEnable { get; set; }
+    
     }
 }

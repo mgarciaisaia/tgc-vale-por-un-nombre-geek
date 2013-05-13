@@ -134,11 +134,6 @@ VS_OUTPUT vs_mapa(VS_INPUT input)
 	return output;
 }
 
-float2 mapCoord(float2 mapCoord){
-
-	return mul(mapCoord, rotation);
-}
-
 
 float alpha(float2 maskcoord){
 
@@ -157,7 +152,7 @@ struct PS_INPUT
 //Mapita sin efectos
 float4 ps_mapa(PS_INPUT input) : COLOR0
 {      
-	float4 color = tex2D(diffuseMap, mapCoord(input.Mapcoord));
+	float4 color = tex2D(diffuseMap, input.Mapcoord);
 	color[3] = alpha(input.Maskcoord);
 	return color;
 
@@ -168,9 +163,8 @@ float4 ps_mapa(PS_INPUT input) : COLOR0
 float4 sepia = float4(0.64, 0.55, 0.4, 1);
 float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 {    
-	float2 mapCoord = mapCoord(input.Mapcoord);
-	float4 fvBaseColor = tex2D(diffuseMap,mapCoord );
-	float4 fvHeight = tex2D(heightMap, mapCoord);
+	float4 fvBaseColor = tex2D(diffuseMap, input.Mapcoord);
+	float4 fvHeight = tex2D(heightMap,input.Mapcoord);
 	float luminance = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)+0.2; 
 	float height = (0.1*fvHeight.x + 0.95*fvHeight.y+0.2*fvHeight.z)+0.2; 
 	float4 color = (luminance + 0.6 - height)*sepia;
@@ -184,7 +178,7 @@ float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 float4 ps_posiciones(PS_INPUT input):COLOR0
 {
 	
-	float4 color = tex2D(posiciones,  mapCoord(input.Mapcoord));
+	float4 color = tex2D(posiciones,  input.Mapcoord);
 	if(color.r+color.g+color.b <0.01) color = ps_mapa(input);
 		else color[3] = alpha(input.Maskcoord);
 	
@@ -196,7 +190,7 @@ float4 ps_posiciones(PS_INPUT input):COLOR0
 float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
 	
-	float4 color = tex2D(posiciones,  mapCoord(input.Mapcoord));
+	float4 color = tex2D(posiciones,  input.Mapcoord);
 	if(color.r+color.g+color.b <0.01) color = ps_mapa_viejo(input);
 		else color[3] = alpha(input.Maskcoord);
 	return color;
