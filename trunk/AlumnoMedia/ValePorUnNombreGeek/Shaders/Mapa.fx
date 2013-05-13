@@ -48,6 +48,8 @@ sampler2D mask = sampler_state
 	MIPFILTER = LINEAR;
 };
 
+float2x2 rotation;
+
 
 texture g_frame;
 sampler2D frame = sampler_state
@@ -114,7 +116,7 @@ struct VS_OUTPUT
    float2 Maskcoord : TEXCOORD1;
 };
 
-float2x2 rotation;
+
 
 VS_OUTPUT vs_mapa(VS_INPUT input)
 {
