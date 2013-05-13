@@ -30,11 +30,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             {
                 float actualAngle = this.soldier.Representation.FacingAngle;
                 float delta = 0.5f * FastMath.PI;
-                float desiredAngle = GeneralMethods.random(actualAngle - delta, actualAngle + delta);
-
-                desiredAngle = GeneralMethods.checkAngle(desiredAngle);
-
-                bool clockwise = this.shallRotateClockwise(desiredAngle);
+                float desiredAngle;
+                bool clockwise;
+                if (this.Alert)
+                {
+                    desiredAngle = actualAngle + FastMath.PI;
+                    desiredAngle = GeneralMethods.checkAngle(desiredAngle);
+                    clockwise = GeneralMethods.randomBool();
+                     
+                }
+                else
+                {
+                    desiredAngle = GeneralMethods.random(actualAngle - delta, actualAngle + delta);
+                    desiredAngle = GeneralMethods.checkAngle(desiredAngle);
+                    clockwise =   this.shallRotateClockwise(desiredAngle);
+                }
+                
+               
+                
 
                 this.soldier.setState(new Rotating(this.soldier, desiredAngle, clockwise, this.timeOnWaitpoint, this.Alert));
                 return;

@@ -24,7 +24,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             : this(_soldier, _desiredAngle, _clockwise, _timeOnWaitpoint)
         {
             this.Alert = _alert;
-            if (this.Alert) ROTATION_ANGLE = 6 * FastMath.PI;
+            if (this.Alert) ROTATION_ANGLE = 4 * FastMath.PI;
         }
 
         public override void onWaitpointUpdate(float elapsedTime)

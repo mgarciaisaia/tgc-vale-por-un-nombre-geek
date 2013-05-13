@@ -7,6 +7,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class GeneralMethods //TODO darle un mejor nombre
     {
+        public static Random rnd = new Random();
 
         public static bool isCloseTo(float a, float b, float delta)
         {
@@ -35,11 +36,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         public static float random(float min, float max)
         {
-            Random rnd = new Random();
+           
             float delta = max - min;
             return min + delta * (float)rnd.NextDouble();
         }
 
+        public static bool randomBool()
+        {
+            return rnd.NextDouble() > 0.5;
+        }
        
 
 
@@ -114,6 +119,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             arrow.updateValues();
             arrow.render();
         }
-        
+
+
+   
     }
 }
