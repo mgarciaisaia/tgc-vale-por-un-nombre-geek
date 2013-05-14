@@ -24,18 +24,6 @@ sampler2D posiciones = sampler_state
 };
 
 
-texture texHeightMap;
-sampler2D heightMap = sampler_state
-{
-	Texture = (texHeightMap);
-	ADDRESSU = BORDER;
-	ADDRESSV = BORDER;
-	BORDERCOLOR = 0;
-	MINFILTER = LINEAR;
-	MAGFILTER = LINEAR;
-	MIPFILTER = LINEAR;
-};
-
 texture g_mask;
 sampler2D mask = sampler_state
 {
@@ -96,10 +84,9 @@ float4 sepia = float4(0.64, 0.55, 0.4, 1);
 float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 {    
 	float4 fvBaseColor = tex2D(diffuseMap, input.Mapcoord);
-	float4 fvHeight = tex2D(heightMap,input.Mapcoord);
 	float luminance = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)+0.2; 
-	float height = (0.1*fvHeight.x + 0.95*fvHeight.y+0.2*fvHeight.z)+0.2; 
-	float4 color = (luminance + 0.6 - height)*sepia;
+	
+	float4 color = luminance*sepia;
 	color[3] = alpha(input.Maskcoord);
 	return color;	
 	
