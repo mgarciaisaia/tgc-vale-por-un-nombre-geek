@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.DirectX.Direct3D;
+﻿using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
 using TgcViewer;
 using TgcViewer.Utils.Shaders;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
@@ -56,6 +52,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         {
             this.MaskEnable = false;
             this.FrameEnable = false;
+            this.Position = new Vector2(0, 0);
             this.texDiffuseMap = texture;
             this.Technique = "DIFFUSE_MAP";
             this.FrameTechnique = "FRAME";
@@ -63,6 +60,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             this.Height = height;
             this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "picture.fx");
             this.Enable = true;
+           
            
             mustUpdate = true;
 
