@@ -54,7 +54,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         {
             addCharacter(commando);
             commandos.Add(commando);
-            commando.Life.Position = new Vector2(60 + commandos.IndexOf(commando) * (commando.Life.Size.X + 10), 10);
+            if (commandos.Count > 1)
+            {   Commando last = commandos[commandos.IndexOf(commando) - 1];
+                commando.Life.Position = last.Life.Position + new Vector2(last.Life.Width+10, 0);
+            }else commando.Life.Position = new Vector2(60, 10);
         }
 
         public void add(Enemy enemy)
