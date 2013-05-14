@@ -5,7 +5,7 @@ using TgcViewer;
 using TgcViewer.Utils.Shaders;
 using TgcViewer.Utils.TgcSceneLoader;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture
 {
     class Picture
     {
@@ -87,7 +87,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             device.RenderState.AlphaBlendEnable = AlphaBlendEnable||MaskEnable;
             
            
-            if (mustUpdate) update();
+            update();
 
             if (MaskEnable)
             {
@@ -107,11 +107,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
             device.RenderState.AlphaBlendEnable = alphaBlendEnable;
            
-            if (FrameEnable) renderFrame();
+            renderFrame();
         }
 
         protected virtual void renderFrame()
         {
+            if (!FrameEnable) return;
 
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
             Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
@@ -138,6 +139,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         protected virtual void update()
         {
+            if (!mustUpdate) return;
 
             vertices = new MyVertex.TransformedDoubleTextured[4];
 

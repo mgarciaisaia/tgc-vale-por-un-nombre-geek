@@ -7,6 +7,7 @@ using TgcViewer;
 using TgcViewer.Utils.Shaders;
 using TgcViewer.Utils.TgcGeometry;
 using TgcViewer.Utils.TgcSceneLoader;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
@@ -21,8 +22,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
        
 
-        private bool mustUpdateView = true;
-        private bool mustUpdateProportions = true;
+        private bool mustUpdateTextureCoords = true;
+        private bool mustUpdateValues = true;
 
         private float zoom;
        
@@ -43,8 +44,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             set
             {
                 this.zoom = value; 
-                mustUpdateProportions = true;
-                mustUpdateView = true;
+                mustUpdateValues = true;
+                mustUpdateTextureCoords = true;
             }
         }
 
@@ -55,14 +56,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             set
             {
                 this.viewCenter = value;
-                mustUpdateView = true;
+                mustUpdateTextureCoords = true;
             }
         }
  
 
         public bool ShowCharacters { get; set; }
-            
-     
         public bool FollowCamera { get; set; }
        
         public LevelMap(Level level, float width, float height, float zoom):base(loadDiffuseMap(level), width, height)
@@ -88,63 +87,175 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
             Bitmap bitmap;
+            Texture texture;
 
-            //Textura del terreno
+            //Hay que rotar la textura porque por alguna razon TgcSimpleTerrain la rota.
             bitmap = (Bitmap)Bitmap.FromFile(level.Terrain.TexturePath);
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
-            return Texture.FromBitmap(d3dDevice, bitmap, Usage.None, Pool.Managed);
-           
+            texture = Texture.FromBitmap(d3dDevice, bitmap, Usage.None, Pool.Managed);
+            bitmap.Dispose();
+
+            return texture;
         }
 
+        #region update
+        /// <summary>
+        /// Actualiza la posicion de los vertices del rectangulo.
+        /// </summary>
+        protected override void update()
+        {
+            if (!mustUpdate) return;
+            base.update();
+            mustUpdateValues = true;
+        
+        }
+
+        /// <summary>
+        /// Calcula valores que luego van a usarse en updateView para calcular las coordenadas de textura.
+        /// </summary>
+        private void updateValues()
+        {
+            if (!mustUpdateValues) return;
+            realZoom = FastMath.Max(this.width / terrainWidth, this.height / terrainHeight) * this.zoom;
+            widthFactor = terrainWidth / 2 / realZoom * this.width / terrainWidth;
+            heightFactor = terrainHeight / 2 / realZoom * this.height / terrainHeight;
+            mustUpdateValues = false;
+            mustUpdateTextureCoords = true;
+
+        }
+
+        /// <summary>
+        /// Calcula las coordenadas de textura que debe tener cada vertice para que en el centro del rectangulo
+        /// se vea la posicion que se pasa como center (por default, la posicion de la camara), y con el zoom
+        /// correspondiente.
+        /// </summary>
+        /// <param name="center"></param>
+        private void updateTextureCoords()
+        {
+            if (FollowCamera) viewCenter = GuiController.Instance.CurrentCamera.getLookAt();
+                    
+            if(!mustUpdateTextureCoords && viewCenter.Equals(previousViewCenter)) return;
+
+            Vector2 centerCoords;
+            if (this.level.Terrain.xzToHeightmapCoords(viewCenter.X, viewCenter.Z, out centerCoords))
+            {
+
+                Vector2 min = new Vector2((centerCoords.X + widthFactor) / terrainWidth, (centerCoords.Y - heightFactor) / terrainHeight);
+                Vector2 max = new Vector2((centerCoords.X - widthFactor) / terrainWidth, (centerCoords.Y + heightFactor) / terrainHeight);
+
+
+                //Arriba izq
+                this.vertices[0].Tu1 = min.X;
+                this.vertices[0].Tv1 = min.Y;
+
+                //Arriba der
+                this.vertices[1].Tu1 = max.X;
+                this.vertices[1].Tv1 = min.Y;
+
+                //Abajo izq
+                this.vertices[2].Tu1 = min.X;
+                this.vertices[2].Tv1 = max.Y;
+
+                //Abajo der
+                this.vertices[3].Tu1 = max.X;
+                this.vertices[3].Tv1 = max.Y;
+            }
+
+            previousViewCenter = viewCenter;
+            mustUpdateTextureCoords = false;
+        }
+
+        #endregion
+
+
+        public override void render()
+        {                 
+            if (!Enable) return;          
+                        
+            this.update();
+            
+            this.updateValues();
+
+            this.updateTextureCoords();         
+                     
+            renderCharacterPositions();
+            
+            Effect.SetValue("show_characters", ShowCharacters);
+            Effect.SetValue("g_Posiciones", g_Posiciones);
+
+            base.render();
+         
+        }
+
+             
+
+        public override void dispose()
+        {
+            base.dispose();
+            g_pDepthStencil.Dispose();
+            g_Posiciones.Dispose();
+        }
+      
+
+        #region Characters Positions
 
         private void createPositionsTexture(Level level)
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
-           
-           
+
             //Textura auxiliar para renderizar las posiciones de los personajes
             g_Posiciones = new Texture(d3dDevice, terrainWidth, terrainHeight, 1, Usage.RenderTarget, Format.X8R8G8B8, Pool.Default);
+            //Z-Buffer
             g_pDepthStencil = d3dDevice.CreateDepthStencilSurface(terrainWidth,
                                                                           terrainHeight,
                                                                           DepthFormat.D24S8,
                                                                           MultiSampleType.None,
                                                                           0,
                                                                           true);
-          
         }
 
         
-        
 
-        public override void render()
-        {                 
-            if (!Enable) return;          
+        private IEnumerable<CustomVertex.TransformedColored[]> getCharacterRectangles()
+        {
+            List<CustomVertex.TransformedColored[]> rectangles = new List<CustomVertex.TransformedColored[]>();
+            int width = 2;
+            int height = 2;
+            int color;
+            CustomVertex.TransformedColored[] vertices;
 
-            if (mustUpdate) this.update();
-            if (mustUpdateProportions) this.updateProportions();
-
-            if (FollowCamera)
+            foreach (Character c in level.Characters)
             {
-                viewCenter = GuiController.Instance.CurrentCamera.getLookAt();
+
+                Vector2 position;
+
+                if (c.OwnedByUser) color = Color.Green.ToArgb(); else color = Color.Red.ToArgb();
+                level.Terrain.xzToHeightmapCoords(c.Position.X, c.Position.Z, out position);
+
+
+                vertices = new CustomVertex.TransformedColored[4];
+
+
+                //Arriba izq
+                vertices[0] = new CustomVertex.TransformedColored(position.X, position.Y, 0, 1, color);
+                //Arriba der
+                vertices[1] = new CustomVertex.TransformedColored(position.X + width, position.Y, 0, 1, color);
+                //Abajo izq
+                vertices[2] = new CustomVertex.TransformedColored(position.X, position.Y + height, 0, 1, color);
+                //Abajo der
+                vertices[3] = new CustomVertex.TransformedColored(position.X + width, position.Y + height, 0, 1, color);
+
+                rectangles.Add(vertices);
+
             }
 
-            if (!viewCenter.Equals(previousViewCenter)) mustUpdateView = true;
-           
-            
-            if(mustUpdateView)updateView(viewCenter);         
-
-         
-           //Renderizo las posiciones de los pj en una textura.
-             if(ShowCharacters)renderCharacterPositions();
-            
-            //Renderizo el mapa
-            renderMap();                    
-
-         
+            return rectangles;
         }
-       
+
         private void renderCharacterPositions()
         {
+            if (!ShowCharacters) return;
+
             Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
            
                       
@@ -187,120 +298,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
            
         }
 
-        private void renderMap()
-        {
-            TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
-            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
-          
-
-            Effect.SetValue("show_characters", ShowCharacters);
-            Effect.SetValue("g_Posiciones", g_Posiciones);
-            
-
-
-          
-
-            base.render();
-
-        }
-
-
-        private IEnumerable<CustomVertex.TransformedColored[]> getCharacterRectangles()
-        {
-            List<CustomVertex.TransformedColored[]> rectangles = new List<CustomVertex.TransformedColored[]>();
-            int width = 2;
-            int height = 2;
-            int color;
-            CustomVertex.TransformedColored[] vertices;
-
-            foreach(Character c in level.Characters){
-                
-                Vector2 position;
-
-                if (c.OwnedByUser) color = Color.Green.ToArgb(); else color = Color.Red.ToArgb();
-                level.Terrain.xzToHeightmapCoords(c.Position.X, c.Position.Z, out position);
-
-
-                vertices =  new CustomVertex.TransformedColored[4];
-          
-                      
-                 //Arriba izq
-                 vertices[0] = new CustomVertex.TransformedColored(position.X, position.Y, 0, 1, color);
-                //Arriba der
-                 vertices[1] = new CustomVertex.TransformedColored(position.X + width, position.Y, 0, 1, color);
-                //Abajo izq
-                 vertices[2] = new CustomVertex.TransformedColored(position.X, position.Y + height,0, 1, color);
-                //Abajo der
-                 vertices[3] = new CustomVertex.TransformedColored(position.X + width, position.Y + height, 0, 1,color);
-
-                 rectangles.Add(vertices);
-
-            }
-
-            return rectangles;
-        }
-
-
-        protected override void update()
-        {
-            base.update();
-                        
-            mustUpdateProportions = true;
-            mustUpdateView = true;
-        }
+       #endregion 
+       
         
-
-        private void updateProportions()
-        {
-
-            realZoom = FastMath.Max(this.width / terrainWidth, this.height / terrainHeight) * this.zoom;
-            widthFactor = terrainWidth / 2 / realZoom * this.width / terrainWidth;
-            heightFactor = terrainHeight / 2 / realZoom * this.height / terrainHeight;
-            mustUpdateProportions = false;
-            mustUpdateView = true;
-
-        }
-        
-
-        private void updateView(Vector3 center)
-        {
-
-            Vector2 centerCoords;
-            if (this.level.Terrain.xzToHeightmapCoords(center.X, center.Z, out centerCoords))
-            {                
-                
-                Vector2 min = new Vector2((centerCoords.X + widthFactor) / terrainWidth, (centerCoords.Y - heightFactor ) / terrainHeight);
-                Vector2 max = new Vector2((centerCoords.X - widthFactor) / terrainWidth, (centerCoords.Y + heightFactor) / terrainHeight);
-                
-               
-                //Arriba izq
-                this.vertices[0].Tu1 = min.X;
-                this.vertices[0].Tv1 = min.Y;
-
-                //Arriba der
-                this.vertices[1].Tu1 = max.X;
-                this.vertices[1].Tv1 = min.Y;
-
-                //Abajo izq
-                this.vertices[2].Tu1 = min.X;
-                this.vertices[2].Tv1 = max.Y;
-
-                //Abajo der
-                this.vertices[3].Tu1 = max.X;
-                this.vertices[3].Tv1 = max.Y;
-            }
-
-            previousViewCenter = center;
-            mustUpdateView = false;
-        }
-
-
-       public override void dispose(){
-           base.dispose();
-           g_pDepthStencil.Dispose();
-           g_Posiciones.Dispose();
-       }
-      
+    
     
     }
 }
