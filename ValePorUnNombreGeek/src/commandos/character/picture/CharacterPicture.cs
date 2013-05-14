@@ -20,6 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
         {
            
             this.character = character;
+            
             this.Effect = character.Effect;
             this.Technique = "CHARACTER_PICTURE";
             this.SelectionColor = Color.Red;
