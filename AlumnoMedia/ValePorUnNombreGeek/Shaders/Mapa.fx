@@ -62,32 +62,6 @@ sampler2D frame = sampler_state
 	MIPFILTER = LINEAR;
 };
 
-/**************************************************************************************/
-/* Posiciones de los personajes*/
-/**************************************************************************************/
-
-
-struct VS_INPUT_TransformedColored
-{
-   float4 Position : POSITION0;
-   
-};
-
-
-float4 ps_TransformedColored(float4 Color : COLOR0) : COLOR0
-{      
-	return Color;
-}
-
-
-technique POSICIONES
-{
-	pass Pass_0
-	{
-		 PixelShader = compile ps_2_0 ps_TransformedColored();
-   }
-}
-
 
 
 /**************************************************************************************/

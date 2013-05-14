@@ -250,19 +250,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             
             //Renderizo los rectangulitos.
             device.BeginScene();
-            Effect.Technique = "POSICIONES";
-             int passes = Effect.Begin(0);
-            for (int i = 0; i < passes; i++)
+      
+            foreach (CustomVertex.TransformedColored[] characterRectangle in this.getCharacterRectangles())
             {
-                Effect.BeginPass(i);
-                foreach (CustomVertex.TransformedColored[] characterRectangle in this.getCharacterRectangles())
-                {
-                    device.VertexFormat = CustomVertex.TransformedColored.Format;
-                    device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, characterRectangle);
-                }
-                Effect.EndPass();
+                device.VertexFormat = CustomVertex.TransformedColored.Format;
+                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, characterRectangle);
             }
-            Effect.End();
+
 
             device.EndScene();
 
