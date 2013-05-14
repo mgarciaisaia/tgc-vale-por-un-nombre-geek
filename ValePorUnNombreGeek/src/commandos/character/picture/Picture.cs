@@ -7,6 +7,7 @@ using Microsoft.DirectX;
 using TgcViewer;
 using TgcViewer.Utils.Shaders;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
+using TgcViewer.Utils.TgcSceneLoader;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
 {
@@ -15,29 +16,56 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
         protected Texture texture;
         private Texture g_Mask;
         public bool MaskEnable { get; set; }
+
         protected MyVertex.TransformedDoubleTextured[] vertices;
         public MyVertex.TransformedDoubleTextured[] Vertices { get; set; }
         protected Vector2 position;
         protected float width;
         protected float height;
         protected bool mustUpdate;
+        private Texture g_Frame;
 
         public Picture(string path)
         {
-            this.MaskEnable = false;
-            this.texture = TextureLoader.FromFile(GuiController.Instance.D3dDevice, path);
-            this.Technique = "DIFFUSE_MAP";
             this.information = TextureLoader.ImageInformationFromFile(path);
-            this.Width = information.Width;
-            this.Height = information.Height;
-            this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "picture.fx");
-             mustUpdate = true;
-         }
 
-        public void setMask(string path)
+            this.init(TextureLoader.FromFile(GuiController.Instance.D3dDevice, path), information.Width, information.Height);
+        }
+
+        public Picture(string path, float width, float height)
         {
-            g_Mask = TextureLoader.FromFile(GuiController.Instance.D3dDevice, path);
+            this.init(TextureLoader.FromFile(GuiController.Instance.D3dDevice, path), width, height);
+        }
+
+        public Picture(Texture texture, float width, float height)
+        {
+            this.init(texture, width, height);
+        }
+
+        protected void init(Texture texture, float width, float height)
+        {
+            this.MaskEnable = false;
+            this.FrameEnable = false;
+            this.texture = texture;
+            this.Technique = "DIFFUSE_MAP";
+            this.Width = width;
+            this.Height = height;
+            this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "picture.fx");
+           
+            mustUpdate = true;
+
+        }
+
+        public void setMask(Texture mask)
+        {
+            g_Mask = mask;
             this.MaskEnable = true;
+        }
+
+        public void setFrame(Texture frame)
+        {
+            g_Frame = frame;
+            this.FrameEnable = true;
         }
 
         public virtual void render()
@@ -66,7 +94,36 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
 
             device.RenderState.AlphaBlendEnable = alphaBlendEnable;
             if (MaskEnable) Effect.SetValue("mask_enable", false);
+            if (FrameEnable) renderFrame();
         }
+
+        private void renderFrame()
+        {
+
+            TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
+            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
+            bool alphaBlendEnable = device.RenderState.AlphaBlendEnable;
+            device.RenderState.AlphaBlendEnable = true;
+
+            Effect.Technique = "FRAME";
+            Effect.SetValue("g_frame", g_Frame);
+
+
+            texturesManager.clear(1);
+
+            int passes = Effect.Begin(0);
+            for (int i = 0; i < passes; i++)
+            {
+                Effect.BeginPass(i);
+                device.VertexDeclaration = MyVertex.TransformedDoubleTexturedDeclaration;
+                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
+                Effect.EndPass();
+            }
+            Effect.End();
+
+            device.RenderState.AlphaBlendEnable = alphaBlendEnable;
+        }
+
         private void update()
         {
 
@@ -98,5 +155,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
         public float Height { get { return this.height; } set { this.height= value; mustUpdate = true; } }
 
         public bool AlphaBlendEnable { get; set; }
+
+        public bool FrameEnable { get; set; }
     }
 }

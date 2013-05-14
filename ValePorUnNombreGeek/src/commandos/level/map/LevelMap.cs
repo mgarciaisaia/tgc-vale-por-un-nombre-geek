@@ -109,7 +109,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             this.zoom = zoom;
             this.width= width;
             this.height= height;
-
+           
             terrainWidth = (int)level.Terrain.getWidth();
             terrainHeight = (int)level.Terrain.getLength();
 
@@ -127,17 +127,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         
         }
 
-        public void setMask(string path)
+        public void setMask(Texture mask)
         {
-            g_Mask = TextureLoader.FromFile(GuiController.Instance.D3dDevice, path);
+            g_Mask = mask;
             this.MaskEnable = true;
         }
 
-        public void setFrame(string path)
+        public void setFrame(Texture frame)
         {
-            g_Frame = TextureLoader.FromFile(GuiController.Instance.D3dDevice, path);
+            g_Frame = frame;
             this.FrameEnable = true;
         }
+
         private void createTextures(Level level)
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;

@@ -10,6 +10,18 @@ sampler2D diffuseMap = sampler_state
 	MIPFILTER = LINEAR;
 };
 
+texture g_frame;
+sampler2D frame = sampler_state
+{
+	Texture = (g_frame);
+	ADDRESSU = WRAP;
+	ADDRESSV = WRAP;
+	MINFILTER = LINEAR;
+	MAGFILTER = LINEAR;
+	MIPFILTER = LINEAR;
+};
+
+
 texture g_mask;
 bool mask_enable;
 sampler2D mask = sampler_state
@@ -54,3 +66,20 @@ technique DIFFUSE_MAP
 		PixelShader = compile ps_3_0  ps_DiffuseMap();
     }
 }
+
+
+float4 ps_frame(float2 framecoord:TEXCOORD1):COLOR0
+{
+	
+	return tex2D(frame, framecoord);
+}
+
+ technique FRAME
+{
+   pass Pass_0
+   {
+	  
+	  PixelShader = compile ps_2_0 ps_frame();
+   }
+}
+
