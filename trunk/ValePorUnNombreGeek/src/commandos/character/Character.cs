@@ -22,7 +22,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private Cylinder boundingCylinder;
         public static bool RenderCylinder = false;
         protected Life life;
-        public Picture Picture { get; set; }
+        public CharacterPicture Picture { get; set; }
 
 
         /*******************************
@@ -37,16 +37,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Selected = false;
             this.Dead = false;
             this.Picture = this.getPicture();
+            this.SelectionColor = Color.Red;
             this.life = new Life(this, 100, new Vector2(20, 60), Color.Red, new Vector2(60, 10));
-           
-            //this.life = new Life(this, 100, new Vector2(60, 20), Color.Red, new Vector2(60, 10));
+          
+          
             Vector3 boundingSize = this.BoundingBox.calculateSize() * 0.5f;
             this.boundingCylinder = new Cylinder(this.Center, boundingSize.Y, boundingSize.X);
         }
 
-        protected virtual picture.Picture getPicture()
+        protected virtual picture.CharacterPicture getPicture()
         {
-            return new Picture(this, EjemploAlumno.MediaDir + "CharacterPictures\\1.jpg");
+            return new CharacterPicture(this, EjemploAlumno.MediaDir + "CharacterPictures\\1.jpg");
         }
 
         //Sobreescribible para que los hijos puedan usar otra representacion
@@ -136,12 +137,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public abstract void update(float elapsedTime);
 
-        protected Color selectionColor = Color.Red;
-        public Color SelectionColor
-        {
-            get { return this.selectionColor; }
-            set { this.selectionColor = value; }
-        }
+        
+        public Color SelectionColor { get; set; }
+       
 
         public virtual void render()
         {
@@ -168,7 +166,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected virtual string selectionAction(string technique)
         {
             technique = this.technique + "_SELECTED";
-            this.representation.Effect.SetValue("selectionColor", ColorValue.FromColor(this.selectionColor));
+            this.representation.Effect.SetValue("selectionColor", ColorValue.FromColor(SelectionColor));
 
             if (this.hasTarget())
             {
