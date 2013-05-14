@@ -15,6 +15,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.text;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
+using Microsoft.DirectX.Direct3D;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -84,8 +85,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             this.level = null;
             loadLevel(initialLevel);
             LevelMap map = level.Map;
-            map.setMask(EjemploAlumno.MediaDir + "Mapa\\mask.jpg");
-            map.setFrame(EjemploAlumno.MediaDir + "Mapa\\frame.png");
+            map.setMask( TextureLoader.FromFile(GuiController.Instance.D3dDevice,EjemploAlumno.MediaDir + "Mapa\\mask.jpg"));
+            map.setFrame( TextureLoader.FromFile(GuiController.Instance.D3dDevice,EjemploAlumno.MediaDir + "Mapa\\frame.png"));
             map.Width = 2 * level.Map.Height;
             map.Height = 1.5f * level.Map.Height;
             map.Position = new Vector2(GuiController.Instance.Panel3d.Width/2 - level.Map.Width/2, GuiController.Instance.Panel3d.Height- level.Map.Height);

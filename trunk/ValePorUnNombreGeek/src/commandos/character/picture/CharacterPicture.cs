@@ -20,7 +20,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
         {
            
             this.character = character;
-            
+            this.setMask(TextureLoader.FromFile(GuiController.Instance.D3dDevice, EjemploAlumno.MediaDir + "Mapa\\mask.jpg"));
+           this.setFrame(TextureLoader.FromFile(GuiController.Instance.D3dDevice, EjemploAlumno.MediaDir + "Mapa\\frame.png"));
+           
             this.Effect = character.Effect;
             this.Technique = "CHARACTER_PICTURE";
             this.SelectionColor = Color.Red;
