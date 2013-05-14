@@ -164,9 +164,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             level.Map.ShowCharacters = UserVars.Instance.showCharacters;
             level.Map.render();
 
-            //Prueba barrita de vida
-           // level.Commandos[0].Life.decrement(elapsedTime * 5);
-           // level.Commandos[0].Life.render();
+        
+          
         }
 
       

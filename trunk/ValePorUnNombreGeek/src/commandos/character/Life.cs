@@ -23,6 +23,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected Vector2 position;
         protected bool mustUpdate;
         protected string technique;
+        private picture.Picture Picture
+        {
+            get { return this.character.Picture; }
+        }
 
         public Color Color
         {
@@ -32,8 +36,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public Vector2 Position
         {
-            get { return position; }
-            set { this.position = value; mustUpdate = true; }
+            get { return this.Picture.Position; }
+            set
+            {
+                this.Picture.Position = value; this.position = value + new Vector2(this.Picture.Width, 0); mustUpdate = true;
+            }
         }
 
 
@@ -43,6 +50,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return size; }
             set { this.size = value; mustUpdate = true; }
         }
+
+        public float Width
+        {
+            get { return this.size.X + this.Picture.Width; }
+            
+        }
+
+        public float Height
+        {
+            get { return this.size.Y; }
+
+        }
+
 
 
         public Effect Effect
@@ -69,7 +89,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.maxPoints = maxPoints;
             this.points = maxPoints;
             this.character = character;
-            this.position = position;
+            this.Picture.Position = position;
+            this.position = position + new Vector2(this.Picture.Width,0);
+            this.Picture.Width = size.Y / this.Picture.Height * this.Picture.Width;
+            this.Picture.Height = size.Y;
             this.size = size;
             this.color = color;
             this.mustUpdate = true;
@@ -128,6 +151,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                 effect.EndPass();
             }
             effect.End();
+
+            this.Picture.render();
         }
 
         public void decrement(float points)

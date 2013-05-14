@@ -9,6 +9,7 @@ using Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.Shaders;
 using TgcViewer;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -21,6 +22,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private Cylinder boundingCylinder;
         public static bool RenderCylinder = false;
         protected Life life;
+        public Picture Picture { get; set; }
 
 
         /*******************************
@@ -34,10 +36,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "shaders.fx");
             this.Selected = false;
             this.Dead = false;
+            this.Picture = this.getPicture();
             this.life = new Life(this, 100, new Vector2(20, 60), Color.Red, new Vector2(60, 10));
+           
             //this.life = new Life(this, 100, new Vector2(60, 20), Color.Red, new Vector2(60, 10));
             Vector3 boundingSize = this.BoundingBox.calculateSize() * 0.5f;
             this.boundingCylinder = new Cylinder(this.Center, boundingSize.Y, boundingSize.X);
+        }
+
+        protected virtual picture.Picture getPicture()
+        {
+            return new Picture(this, EjemploAlumno.MediaDir + "CharacterPictures\\1.jpg");
         }
 
         //Sobreescribible para que los hijos puedan usar otra representacion
@@ -152,6 +161,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             representation.dispose();
             life.dispose();
+            Picture.dispose();
             this.boundingCylinder.dispose();
         }
 

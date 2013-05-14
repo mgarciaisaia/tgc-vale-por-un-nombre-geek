@@ -412,6 +412,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
            Effect.Dispose();
            texHeightmap.Dispose();
            texDiffuseMap.Dispose();
+           if(g_Frame!=null)g_Frame.Dispose();
+           if(g_Mask != null) g_Mask.Dispose();
            g_pDepthStencil.Dispose();
            g_Posiciones.Dispose();
        }
