@@ -12,30 +12,19 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer.Utils.TgcGeometry;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
+
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 {
-    class LevelMap
+    class LevelMap:Picture
     {
         private Level level;
 
-        private Texture texDiffuseMap;
-       
-        private Texture g_Mask;
-        private Texture g_Frame;
+   
         private Texture g_Posiciones;
         private Surface g_pDepthStencil;
 
-        public bool FrameEnable { get; set; }
-      
-        private MyVertex.TransformedDoubleTextured[] vertices;
+       
 
-  
-      
-        private float width;
-        private float height;
-        private Vector2 position;
-
-        private bool mustUpdateRectangle = true;
         private bool mustUpdateView = true;
         private bool mustUpdateProportions = true;
 
@@ -51,13 +40,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private float realZoom;
         private float widthFactor;
         private float heightFactor;
-
-
-
-
-     
-      
-       
 
         public float Zoom
         {
@@ -80,75 +62,51 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
                 mustUpdateView = true;
             }
         }
-        public Vector2 Position{
-
-            get{ return this.position;}
-            set { this.position = value; mustUpdateRectangle = true; }
-            
-        }
+ 
 
         public bool ShowCharacters { get; set; }
-
-        public Effect Effect { get; set; }
-
-        public string Technique { get; set; }
-
-        public bool Enable { get; set; }
-       
-        public float Width { get { return this.width; } set { this.width = value; mustUpdateRectangle = true; } }
-
-        public float Height { get { return this.height; } set { this.height = value; mustUpdateRectangle = true; } }
-
-        public bool MaskEnable { get; set; }
-
+            
+     
         public bool FollowCamera { get; set; }
        
-        public LevelMap(Level level, float width, float height, float zoom)
+        public LevelMap(Level level, float width, float height, float zoom):base(loadDiffuseMap(level), width, height)
         {
             this.level = level;
             this.zoom = zoom;
-            this.width= width;
-            this.height= height;
+            this.Width= width;
+            this.Height= height;
            
             terrainWidth = (int)level.Terrain.getWidth();
             terrainHeight = (int)level.Terrain.getLength();
 
-            createTextures(level);
+            createPositionsTexture(level);
 
             this.position = new Vector2(GuiController.Instance.Panel3d.Width-this.width-10,10);
             this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "mapa.fx");
             this.Technique = "MAPA";
-            this.Enable = true;
-            this.MaskEnable = false;
-            this.FrameEnable = false;
             this.ShowCharacters = true;
             this.FollowCamera = true;
             
         
         }
 
-        public void setMask(Texture mask)
-        {
-            g_Mask = mask;
-            this.MaskEnable = true;
-        }
-
-        public void setFrame(Texture frame)
-        {
-            g_Frame = frame;
-            this.FrameEnable = true;
-        }
-
-        private void createTextures(Level level)
+        private static Texture loadDiffuseMap(Level level)
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
             Bitmap bitmap;
-            
+
             //Textura del terreno
             bitmap = (Bitmap)Bitmap.FromFile(level.Terrain.TexturePath);
             bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
-            texDiffuseMap = Texture.FromBitmap(d3dDevice, bitmap, Usage.None, Pool.Managed);
+            return Texture.FromBitmap(d3dDevice, bitmap, Usage.None, Pool.Managed);
+           
+        }
 
+
+        private void createPositionsTexture(Level level)
+        {
+            Device d3dDevice = GuiController.Instance.D3dDevice;
+           
            
             //Textura auxiliar para renderizar las posiciones de los personajes
             g_Posiciones = new Texture(d3dDevice, terrainWidth, terrainHeight, 1, Usage.RenderTarget, Format.X8R8G8B8, Pool.Default);
@@ -164,11 +122,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         
         
 
-        public void render()
+        public override void render()
         {                 
             if (!Enable) return;          
 
-            if (mustUpdateRectangle) this.updateRectangle();
+            if (mustUpdate) this.update();
             if (mustUpdateProportions) this.updateProportions();
 
             if (FollowCamera)
@@ -186,37 +144,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
              if(ShowCharacters)renderCharacterPositions();
             
             //Renderizo el mapa
-            renderMap();
-
-            if (FrameEnable) renderFrame();
+            renderMap();                    
 
          
-        }
-        private void renderFrame()
-        {
-
-            TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
-            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
-            bool alphaBlendEnable = device.RenderState.AlphaBlendEnable;
-            device.RenderState.AlphaBlendEnable = true;
-
-            Effect.Technique = "FRAME";
-            Effect.SetValue("g_frame",  g_Frame);
-                    
-            
-            texturesManager.clear(1);
-
-            int passes = Effect.Begin(0);
-            for (int i = 0; i < passes; i++)
-            {
-                Effect.BeginPass(i);
-                device.VertexDeclaration = MyVertex.TransformedDoubleTexturedDeclaration;
-                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
-                Effect.EndPass();
-            }
-            Effect.End();
-
-            device.RenderState.AlphaBlendEnable = alphaBlendEnable;
         }
        
         private void renderCharacterPositions()
@@ -230,9 +160,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             Surface pOldDS;
 
             device.EndScene();
-
-
-           
+                       
            
             //Obtengo la superficie para renderizar
             Surface pSurf = g_Posiciones.GetSurfaceLevel(0);
@@ -269,35 +197,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         {
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
             Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
-            bool alphaBlendEnable = device.RenderState.AlphaBlendEnable;
-            device.RenderState.AlphaBlendEnable = MaskEnable;
+          
 
-            Effect.Technique = Technique;
-           
-            Effect.SetValue("texDiffuseMap", texDiffuseMap);
-           
-            if(MaskEnable) Effect.SetValue("g_mask", g_Mask);
-
-            if (ShowCharacters)
-            {
-                Effect.SetValue("g_Posiciones", g_Posiciones);
-                Effect.Technique = Technique + "_POSICIONES";
-            }
+            Effect.SetValue("show_characters", ShowCharacters);
+            Effect.SetValue("g_Posiciones", g_Posiciones);
+            
 
 
-            texturesManager.clear(1);
+          
 
-            int passes = Effect.Begin(0);
-            for (int i = 0; i < passes; i++)
-            {
-                Effect.BeginPass(i);
-                device.VertexDeclaration = MyVertex.TransformedDoubleTexturedDeclaration;
-                device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
-                Effect.EndPass();
-            }
-            Effect.End();
+            base.render();
 
-            device.RenderState.AlphaBlendEnable = alphaBlendEnable;
         }
 
 
@@ -337,23 +247,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         }
 
 
-        private void updateRectangle()
+        protected override void update()
         {
-
-
-            vertices = new MyVertex.TransformedDoubleTextured[4];
-
-
-            //Arriba izq
-            this.vertices[0] = new MyVertex.TransformedDoubleTextured(position.X, position.Y, 0, 1, 0, 0, 0, 0);
-            //Arriba der
-            this.vertices[1] = new MyVertex.TransformedDoubleTextured(position.X + Width, position.Y, 0, 1, 1, 0, 1, 0);
-            //Abajo izq
-            this.vertices[2] = new MyVertex.TransformedDoubleTextured(position.X, position.Y + Height, 0, 1, 0, 1, 0, 1);
-            //Abajo der
-            this.vertices[3] = new MyVertex.TransformedDoubleTextured(position.X + Width, position.Y + Height, 0, 1, 1, 1, 1 ,1);
-
-            mustUpdateRectangle = false;
+            base.update();
+                        
             mustUpdateProportions = true;
             mustUpdateView = true;
         }
@@ -404,11 +301,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         }
 
 
-       public void dispose(){
-           Effect.Dispose();
-           texDiffuseMap.Dispose();
-           if(g_Frame!=null)g_Frame.Dispose();
-           if(g_Mask != null) g_Mask.Dispose();
+       public override void dispose(){
+           base.dispose();
            g_pDepthStencil.Dispose();
            g_Posiciones.Dispose();
        }

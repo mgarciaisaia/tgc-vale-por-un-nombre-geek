@@ -9,7 +9,7 @@ using Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.Shaders;
 using TgcViewer;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture;
+
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -45,7 +45,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.boundingCylinder = new Cylinder(this.Center, boundingSize.Y, boundingSize.X);
         }
 
-        protected virtual picture.CharacterPicture getPicture()
+        protected virtual CharacterPicture getPicture()
         {
             return new CharacterPicture(this, EjemploAlumno.MediaDir + "CharacterPictures\\1.jpg");
         }

@@ -7,7 +7,7 @@ using TgcViewer;
 using System.Drawing;
 using Microsoft.DirectX;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
     class CharacterPicture:Picture
     {

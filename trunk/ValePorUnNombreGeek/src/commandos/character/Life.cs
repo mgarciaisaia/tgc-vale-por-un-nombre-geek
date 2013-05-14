@@ -23,7 +23,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected Vector2 position;
         protected bool mustUpdate;
         protected string technique;
-        private picture.CharacterPicture Picture
+        private CharacterPicture Picture
         {
             get { return this.character.Picture; }
         }
