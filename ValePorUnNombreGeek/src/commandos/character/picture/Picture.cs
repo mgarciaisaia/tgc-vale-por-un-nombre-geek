@@ -3,36 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.DirectX.Direct3D;
-using TgcViewer;
-using System.Drawing;
 using Microsoft.DirectX;
+using TgcViewer;
+using TgcViewer.Utils.Shaders;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
 {
     class Picture
     {
-        Texture texture;
-        CustomVertex.TransformedTextured[] vertices;
-        Vector2 position;
-        float width;
-        float height;
-        bool mustUpdate;
-        Character character;
+        protected Texture texture;
+        protected CustomVertex.TransformedTextured[] vertices;
+        protected Vector2 position;
+        protected float width;
+        protected float height;
+        protected bool mustUpdate;
 
-        public Picture(Character character, string path)
+        public Picture(string path)
         {
             this.texture = TextureLoader.FromFile(GuiController.Instance.D3dDevice, path);
+            this.Technique = "DIFFUSE_MAP";
             this.information = TextureLoader.ImageInformationFromFile(path);
             this.Width = information.Width;
             this.Height = information.Height;
-            vertices =  new CustomVertex.TransformedTextured[4];
+            this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "picture.fx");
+            vertices = new CustomVertex.TransformedTextured[4];
             mustUpdate = true;
-            this.character = character;
-            Effect = character.Effect;
-            Technique = "CHARACTER_PICTURE";
-            
+         
         }
 
+        public virtual void render()
+        {
+            Device device = GuiController.Instance.D3dDevice;
+            if (mustUpdate) update();
+            Effect.SetValue("texDiffuseMap", texture);
+            Effect.Technique = Technique;
+            Effect.Begin(0);
+            Effect.BeginPass(0);
+            device.VertexFormat = CustomVertex.TransformedTextured.Format;
+            device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
+            Effect.EndPass();
+            Effect.End();
+
+        }
         private void update()
         {
 
@@ -48,34 +60,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
             mustUpdate = false;
         }
 
-        public void render()
-        {
-            Device device = GuiController.Instance.D3dDevice;
-            string technique = Technique;
-            if (mustUpdate) update();
-            if (character.isDead()) technique = technique + "_DEAD"; 
-            else if (character.Selected) technique = technique + "_SELECTED";
-            Effect.SetValue("texDiffuseMap", texture);
-            Effect.Technique = technique;
-            Effect.Begin(0);
-            Effect.BeginPass(0);
-            device.VertexFormat = CustomVertex.TransformedTextured.Format;
-            device.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2, vertices);
-            Effect.EndPass();
-            Effect.End();
-
-        }
-
         public void dispose()
         {
             this.texture.Dispose();
         }
+
         private ImageInformation information { get; set; }
         public Effect Effect{ get; set; }
         public string Technique { get; set; }
         public Vector2 Position { get { return this.position; } set { this.position = value; mustUpdate = true; } }
         public float Width { get { return this.width; } set { this.width = value; mustUpdate = true; } }
         public float Height { get { return this.height; } set { this.height= value; mustUpdate = true; } }
-
     }
 }
