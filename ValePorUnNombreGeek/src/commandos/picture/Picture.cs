@@ -9,13 +9,13 @@ using TgcViewer.Utils.Shaders;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 using TgcViewer.Utils.TgcSceneLoader;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class Picture
     {
-        protected Texture texture;
-        private Texture g_Mask;
-        private Texture g_Frame;
+        protected Texture texDiffuseMap;
+        protected Texture g_Mask;
+        protected Texture g_Frame;
 
         protected MyVertex.TransformedDoubleTextured[] vertices;
         public MyVertex.TransformedDoubleTextured[] Vertices { get; set; }
@@ -24,8 +24,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
         protected float height;
         protected bool mustUpdate;
 
-        private ImageInformation information { get; set; }
+        public bool Enable { get; set; }
         public Effect Effect { get; set; }
+        public string FrameTechnique { get; set; }
         public string Technique { get; set; }
         public Vector2 Position { get { return this.position; } set { this.position = value; mustUpdate = true; } }
         public float Width { get { return this.width; } set { this.width = value; mustUpdate = true; } }
@@ -36,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
 
         public Picture(string path)
         {
-            this.information = TextureLoader.ImageInformationFromFile(path);
+            ImageInformation information = TextureLoader.ImageInformationFromFile(path);
 
             this.init(TextureLoader.FromFile(GuiController.Instance.D3dDevice, path), information.Width, information.Height);
         }
@@ -51,15 +52,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
             this.init(texture, width, height);
         }
 
-        protected void init(Texture texture, float width, float height)
+        protected virtual void init(Texture texture, float width, float height)
         {
             this.MaskEnable = false;
             this.FrameEnable = false;
-            this.texture = texture;
+            this.texDiffuseMap = texture;
             this.Technique = "DIFFUSE_MAP";
+            this.FrameTechnique = "FRAME";
             this.Width = width;
             this.Height = height;
             this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "picture.fx");
+            this.Enable = true;
            
             mustUpdate = true;
 
@@ -79,6 +82,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
 
         public virtual void render()
         {
+            if (!Enable) return;
+
             Device device = GuiController.Instance.D3dDevice;
             bool alphaBlendEnable = device.RenderState.AlphaBlendEnable;
             device.RenderState.AlphaBlendEnable = AlphaBlendEnable||MaskEnable;
@@ -93,7 +98,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
 
             } else Effect.SetValue("mask_enable", false);
 
-            Effect.SetValue("texDiffuseMap", texture);
+            Effect.SetValue("texDiffuseMap", texDiffuseMap);
             Effect.Technique = Technique;
             Effect.Begin(0);
             Effect.BeginPass(0);
@@ -107,7 +112,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
             if (FrameEnable) renderFrame();
         }
 
-        private void renderFrame()
+        protected virtual void renderFrame()
         {
 
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
@@ -115,10 +120,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
             bool alphaBlendEnable = device.RenderState.AlphaBlendEnable;
             device.RenderState.AlphaBlendEnable = true;
 
-            Effect.Technique = "FRAME";
+            Effect.Technique = this.FrameTechnique;
             Effect.SetValue("g_frame", g_Frame);
-
-
+            
             texturesManager.clear(1);
 
             int passes = Effect.Begin(0);
@@ -134,7 +138,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
             device.RenderState.AlphaBlendEnable = alphaBlendEnable;
         }
 
-        private void update()
+        protected virtual void update()
         {
 
             vertices = new MyVertex.TransformedDoubleTextured[4];
@@ -152,9 +156,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
             mustUpdate = false;
         }
 
-        public void dispose()
+        public virtual void dispose()
         {
-            this.texture.Dispose();
+            this.texDiffuseMap.Dispose();
+            this.Effect.Dispose();
+            if (this.g_Frame != null) g_Frame.Dispose();
+            if (this.g_Mask != null) g_Mask.Dispose();
         }
 
        

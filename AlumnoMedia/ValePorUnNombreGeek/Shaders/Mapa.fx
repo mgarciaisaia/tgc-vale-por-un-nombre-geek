@@ -12,6 +12,7 @@ sampler2D diffuseMap = sampler_state
 };
 
 texture g_Posiciones;
+bool show_characters;
 sampler2D posiciones = sampler_state
 {
 	Texture = (g_Posiciones);
@@ -25,6 +26,7 @@ sampler2D posiciones = sampler_state
 
 
 texture g_mask;
+bool mask_enable;
 sampler2D mask = sampler_state
 {
 	Texture = (g_mask);
@@ -57,11 +59,15 @@ sampler2D frame = sampler_state
 /**************************************************************************************/
 
 float alpha(float2 maskcoord){
+	
+	float alpha;
+	if(mask_enable){
+		float4 maskColor = tex2D(mask, maskcoord);
+		alpha = 0.1*maskColor.x + 0.95*maskColor.y+0.2*maskColor.z;
+	}else alpha = 255;
 
-	float4 maskColor = tex2D(mask, maskcoord);
-	return 0.1*maskColor.x + 0.95*maskColor.y+0.2*maskColor.z;
+	return alpha;
 }
-
 
 struct PS_INPUT
 {
@@ -69,10 +75,26 @@ struct PS_INPUT
 	float2 Maskcoord : TEXCOORD1;
 };
 
+
+float4 ps_posiciones(PS_INPUT input):COLOR0
+{
+	
+	float4 color = tex2D(posiciones,  input.Mapcoord);
+	if(!show_characters) color = 0;
+	
+	return color;
+
+}
+
+
+
 //Mapita sin efectos
 float4 ps_mapa(PS_INPUT input) : COLOR0
 {      
-	float4 color = tex2D(diffuseMap, input.Mapcoord);
+	float4 color = ps_posiciones(input);
+	
+	if(color.r+color.g+color.b <0.01) color = tex2D(diffuseMap, input.Mapcoord);
+	
 	color[3] = alpha(input.Maskcoord);
 	return color;
 
@@ -83,44 +105,20 @@ float4 ps_mapa(PS_INPUT input) : COLOR0
 float4 sepia = float4(0.64, 0.55, 0.4, 1);
 float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 {    
-	float4 fvBaseColor = tex2D(diffuseMap, input.Mapcoord);
-	float luminance = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)+0.2; 
+	float4 color = ps_posiciones(input);
 	
-	float4 color = luminance*sepia;
+	if(color.r+color.g+color.b <0.01){
+		float4 fvBaseColor = tex2D(diffuseMap, input.Mapcoord);
+		float luminance = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)+0.2; 
+	
+		color = luminance*sepia;
+	}
 	color[3] = alpha(input.Maskcoord);
 	return color;	
 	
 }
 
-//Para cuando se muestran las posiciones:
-
-float4 ps_posiciones(PS_INPUT input):COLOR0
-{
-	
-	float4 color = tex2D(posiciones,  input.Mapcoord);
-	if(color.r+color.g+color.b <0.01) color = ps_mapa(input);
-		else color[3] = alpha(input.Maskcoord);
-	
-	return color;
-
-}
-
-
-float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
-{
-	
-	float4 color = tex2D(posiciones,  input.Mapcoord);
-	if(color.r+color.g+color.b <0.01) color = ps_mapa_viejo(input);
-		else color[3] = alpha(input.Maskcoord);
-	return color;
-}
-
-
-
-
-
-
- technique MAPA
+technique MAPA
 {
    pass Pass_0
    {
@@ -137,27 +135,6 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 	  PixelShader = compile ps_2_0 ps_mapa_viejo();
    }
 }
-
- technique MAPA_POSICIONES
-{
-   pass Pass_0
-   {
-	  PixelShader = compile ps_2_0 ps_posiciones();
-   }
-}
-
-
- technique MAPA_VIEJO_POSICIONES
-{
-   pass Pass_0
-   {
-	  
-	  PixelShader = compile ps_2_0 ps_posiciones_viejo();
-   }
-}
-
-
-
 
 
 /**************************************************************************************/
