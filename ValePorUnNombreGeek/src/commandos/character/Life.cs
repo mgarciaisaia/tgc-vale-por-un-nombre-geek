@@ -1,12 +1,8 @@
- using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.DirectX.Direct3D;
-using TgcViewer.Utils.Shaders;
-using TgcViewer;
-using Microsoft.DirectX;
 using System.Drawing;
+using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
+using TgcViewer;
+using TgcViewer.Utils.Shaders;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -23,10 +19,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected Vector2 position;
         protected bool mustUpdate;
         protected string technique;
-        private CharacterPicture Picture
-        {
-            get { return this.character.Picture; }
-        }
+        public CharacterPicture Picture;
 
         public Color Color
         {
@@ -89,6 +82,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.maxPoints = maxPoints;
             this.points = maxPoints;
             this.character = character;
+            this.Picture = character.getPicture();
             this.Picture.Position = position;
             this.position = position + new Vector2(this.Picture.Width,0);
             this.Picture.Width = size.Y / this.Picture.Height * this.Picture.Width;
@@ -168,6 +162,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public void dispose()
         {
             effect.Dispose();
+            Picture.dispose();
            
         }
 

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
+using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using TgcViewer;
-using Microsoft.DirectX;
-using TgcViewer.Utils.TgcSceneLoader;
 using TgcViewer.Utils.Shaders;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer.Utils.TgcGeometry;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
+using TgcViewer.Utils.TgcSceneLoader;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
@@ -73,9 +69,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         {
             this.level = level;
             this.zoom = zoom;
-            this.Width= width;
-            this.Height= height;
-           
+              
             terrainWidth = (int)level.Terrain.getWidth();
             terrainHeight = (int)level.Terrain.getLength();
 

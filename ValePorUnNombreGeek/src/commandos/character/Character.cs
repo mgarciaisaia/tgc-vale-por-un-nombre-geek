@@ -1,14 +1,13 @@
-﻿using Microsoft.DirectX;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
-using TgcViewer.Utils.TgcGeometry;
-using System.Drawing;
+﻿using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
+using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.Shaders;
-using TgcViewer;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
+using TgcViewer.Utils.TgcGeometry;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
@@ -22,7 +21,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private Cylinder boundingCylinder;
         public static bool RenderCylinder = false;
         protected Life life;
-        public CharacterPicture Picture { get; set; }
+       
 
 
         /*******************************
@@ -36,7 +35,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "shaders.fx");
             this.Selected = false;
             this.Dead = false;
-            this.Picture = this.getPicture();
             this.SelectionColor = Color.Red;
             this.life = new Life(this, 100, new Vector2(20, 60), Color.Red, new Vector2(60, 10));
           
@@ -45,7 +43,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.boundingCylinder = new Cylinder(this.Center, boundingSize.Y, boundingSize.X);
         }
 
-        protected virtual CharacterPicture getPicture()
+        /// <summary>
+        /// Retorna un nuevo CharacterPicture.
+        /// </summary>
+        /// <returns></returns>
+        public virtual CharacterPicture getPicture()
         {
             return new CharacterPicture(this, EjemploAlumno.MediaDir + "CharacterPictures\\1.jpg");
         }
@@ -159,7 +161,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             representation.dispose();
             life.dispose();
-            Picture.dispose();
             this.boundingCylinder.dispose();
         }
 
