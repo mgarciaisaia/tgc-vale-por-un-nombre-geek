@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using Microsoft.DirectX.Direct3D;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
@@ -25,15 +26,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
 
 
-            
-            if (character.isDead())
-                this.Technique = "BLACK_WHITE";
-            else if (character.Selected)
+            if (character.Selected)
             {
                 this.Effect.SetValue("selectionColor", ColorValue.FromColor(SelectionColor));
                 this.Technique = "SELECTED";
             }
-            else this.Technique = "DIFFUSE_MAP";
+            else
+                if (character.isDead())        
+                    this.Technique = "BLACK_WHITE";                
+                else
+                    this.Technique = "DIFFUSE_MAP";
+
             
             base.render();
             
