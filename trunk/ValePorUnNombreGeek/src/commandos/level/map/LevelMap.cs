@@ -219,8 +219,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         private IEnumerable<CustomVertex.TransformedColored[]> getCharacterRectangles()
         {
             List<CustomVertex.TransformedColored[]> rectangles = new List<CustomVertex.TransformedColored[]>();
-            int width = 2;
-            int height = 2;
+            float width = zoom;
+            float height= width;
             int color;
             CustomVertex.TransformedColored[] vertices;
 
