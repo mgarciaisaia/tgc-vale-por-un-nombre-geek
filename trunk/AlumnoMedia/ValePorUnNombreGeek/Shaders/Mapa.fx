@@ -70,15 +70,8 @@ sampler2D frame = sampler_state
 struct VS_INPUT_TransformedColored
 {
    float4 Position : POSITION0;
-   float4 Color : COLOR0;
+   
 };
-
-
-//Vertex Shader
-VS_INPUT_TransformedColored vs_TransformedColored(VS_INPUT_TransformedColored input)
-{
-	return input;
-}
 
 
 float4 ps_TransformedColored(float4 Color : COLOR0) : COLOR0
@@ -91,8 +84,7 @@ technique POSICIONES
 {
 	pass Pass_0
 	{
-	  VertexShader = compile vs_2_0 vs_TransformedColored();
-	  PixelShader = compile ps_2_0 ps_TransformedColored();
+		 PixelShader = compile ps_2_0 ps_TransformedColored();
    }
 }
 
@@ -101,46 +93,12 @@ technique POSICIONES
 /**************************************************************************************/
 /* MAPA */
 /**************************************************************************************/
-struct VS_INPUT
-{
-   float4 Position : POSITION0;
-   float2 Mapcoord : TEXCOORD0;
-   float2 Maskcoord: TEXCOORD1;
-};
-
-//Output del Vertex Shader
-struct VS_OUTPUT
-{
-   float4 Position : POSITION0;
-   float2 Mapcoord : TEXCOORD0;
-   float2 Maskcoord : TEXCOORD1;
-};
-
-
-
-VS_OUTPUT vs_mapa(VS_INPUT input)
-{
-	VS_OUTPUT output;
-
-	
-	output.Position = input.Position;
-
-	
-	output.Mapcoord = input.Mapcoord;
-
-
-	output.Maskcoord = input.Maskcoord;
-
-	return output;
-}
-
 
 float alpha(float2 maskcoord){
 
 	float4 maskColor = tex2D(mask, maskcoord);
 	return 0.1*maskColor.x + 0.95*maskColor.y+0.2*maskColor.z;
 }
-
 
 
 struct PS_INPUT
@@ -205,8 +163,7 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_mapa();
-	  PixelShader = compile ps_2_0 ps_mapa();
+		 PixelShader = compile ps_2_0 ps_mapa();
    }
 }
 
@@ -215,7 +172,7 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_mapa();
+	 
 	  PixelShader = compile ps_2_0 ps_mapa_viejo();
    }
 }
@@ -224,7 +181,6 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_mapa();
 	  PixelShader = compile ps_2_0 ps_posiciones();
    }
 }
@@ -234,7 +190,7 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_mapa();
+	  
 	  PixelShader = compile ps_2_0 ps_posiciones_viejo();
    }
 }
@@ -248,20 +204,6 @@ float4 ps_posiciones_viejo(PS_INPUT input):COLOR0
 /**************************************************************************************/
 
 
-struct VS_FRAME
-{
-   float4 Position : POSITION0;
-   float2 Framecoord: TEXCOORD1;
-};
-
-
-
-VS_FRAME vs_frame(VS_FRAME input)
-{
-	return input;
-}
-
-
 float4 ps_frame(float2 framecoord:TEXCOORD1):COLOR0
 {
 	
@@ -272,7 +214,7 @@ float4 ps_frame(float2 framecoord:TEXCOORD1):COLOR0
 {
    pass Pass_0
    {
-	  VertexShader = compile vs_2_0 vs_frame();
+	  
 	  PixelShader = compile ps_2_0 ps_frame();
    }
 }
