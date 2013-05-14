@@ -15,7 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
     {
         protected Texture texture;
         private Texture g_Mask;
-        public bool MaskEnable { get; set; }
+        private Texture g_Frame;
 
         protected MyVertex.TransformedDoubleTextured[] vertices;
         public MyVertex.TransformedDoubleTextured[] Vertices { get; set; }
@@ -23,7 +23,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
         protected float width;
         protected float height;
         protected bool mustUpdate;
-        private Texture g_Frame;
+
+        private ImageInformation information { get; set; }
+        public Effect Effect { get; set; }
+        public string Technique { get; set; }
+        public Vector2 Position { get { return this.position; } set { this.position = value; mustUpdate = true; } }
+        public float Width { get { return this.width; } set { this.width = value; mustUpdate = true; } }
+        public float Height { get { return this.height; } set { this.height = value; mustUpdate = true; } }
+        public bool AlphaBlendEnable { get; set; }
+        public bool FrameEnable { get; set; }
+        public bool MaskEnable { get; set; }
 
         public Picture(string path)
         {
@@ -81,7 +90,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
             {
                 Effect.SetValue("mask_enable", true);
                 Effect.SetValue("g_mask", g_Mask);
-            }
+
+            } else Effect.SetValue("mask_enable", false);
 
             Effect.SetValue("texDiffuseMap", texture);
             Effect.Technique = Technique;
@@ -93,7 +103,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
             Effect.End();
 
             device.RenderState.AlphaBlendEnable = alphaBlendEnable;
-            if (MaskEnable) Effect.SetValue("mask_enable", false);
+           
             if (FrameEnable) renderFrame();
         }
 
@@ -147,15 +157,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
             this.texture.Dispose();
         }
 
-        private ImageInformation information { get; set; }
-        public Effect Effect{ get; set; }
-        public string Technique { get; set; }
-        public Vector2 Position { get { return this.position; } set { this.position = value; mustUpdate = true; } }
-        public float Width { get { return this.width; } set { this.width = value; mustUpdate = true; } }
-        public float Height { get { return this.height; } set { this.height= value; mustUpdate = true; } }
-
-        public bool AlphaBlendEnable { get; set; }
-
-        public bool FrameEnable { get; set; }
+       
     }
 }

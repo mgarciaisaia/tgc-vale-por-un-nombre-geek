@@ -20,11 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
         {
            
             this.character = character;
-            this.setMask(TextureLoader.FromFile(GuiController.Instance.D3dDevice, EjemploAlumno.MediaDir + "Mapa\\mask.jpg"));
-           this.setFrame(TextureLoader.FromFile(GuiController.Instance.D3dDevice, EjemploAlumno.MediaDir + "Mapa\\frame.png"));
-           
-            this.Effect = character.Effect;
-            this.Technique = "CHARACTER_PICTURE";
+       
             this.SelectionColor = Color.Red;
             
         }
@@ -34,19 +30,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.picture
         public override void render()
         {
 
-            string oldTechnique = this.Technique;         
+
             
             if (character.isDead())
-                this.Technique = this.Technique + "_DEAD";
+                this.Technique = "BLACK_WHITE";
             else if (character.Selected)
             {
                 this.Effect.SetValue("selectionColor", ColorValue.FromColor(SelectionColor));
-                this.Technique = this.Technique + "_SELECTED";
+                this.Technique = "SELECTED";
             }
+            else this.Technique = "DIFFUSE_MAP";
             
             base.render();
             
-            this.Technique = oldTechnique;
+           
 
         }
 
