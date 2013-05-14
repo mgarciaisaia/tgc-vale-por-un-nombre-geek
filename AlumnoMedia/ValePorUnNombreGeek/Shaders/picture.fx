@@ -59,6 +59,39 @@ float4 ps_DiffuseMap(PS_INPUT input) : COLOR0
 	return color;
 }
 
+
+
+
+float4 ps_luminance(PS_INPUT input): COLOR0
+{
+	float4 color = tex2D(diffuseMap, input.Texcoord);
+	color =  0.1*color.x + 0.95*color.y+0.2*color.z;
+	color[3] = alpha(input.Maskcoord);
+	return color;
+}
+
+float4 selectionColor;
+
+float4 ps_selected(PS_INPUT input):COLOR0
+{
+	float4 luminance = ps_luminance(input);
+	float4 color =  selectionColor*0.5 + luminance;
+	color[3] = alpha(input.Maskcoord);
+	
+	return color;
+}
+
+
+
+float4 ps_frame(float2 framecoord:TEXCOORD1):COLOR0
+{
+	
+	return tex2D(frame, framecoord);
+}
+
+
+
+
 technique DIFFUSE_MAP
 {
     pass p0
@@ -67,12 +100,24 @@ technique DIFFUSE_MAP
     }
 }
 
-
-float4 ps_frame(float2 framecoord:TEXCOORD1):COLOR0
+technique BLACK_WHITE
 {
-	
-	return tex2D(frame, framecoord);
+    pass p0
+    {        
+		PixelShader = compile ps_3_0  ps_luminance();
+    }
 }
+
+technique SELECTED
+{
+    pass p0
+    {        
+		PixelShader = compile ps_3_0  ps_selected();
+    }
+}
+
+
+
 
  technique FRAME
 {
