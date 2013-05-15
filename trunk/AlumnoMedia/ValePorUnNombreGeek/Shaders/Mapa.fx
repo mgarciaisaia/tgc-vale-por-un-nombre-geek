@@ -38,8 +38,6 @@ sampler2D mask = sampler_state
 	MIPFILTER = LINEAR;
 };
 
-float2x2 rotation;
-
 
 texture g_frame;
 sampler2D frame = sampler_state
@@ -57,6 +55,17 @@ sampler2D frame = sampler_state
 /**************************************************************************************/
 /* MAPA */
 /**************************************************************************************/
+
+float2 rotatedTexcoord(float2 texcoord){
+	
+	//INSERTE MAGIA AQUI
+	return texcoord;
+
+}
+float2x2 rotation;
+
+
+
 
 float alpha(float2 maskcoord){
 	
@@ -79,7 +88,7 @@ struct PS_INPUT
 float4 ps_posiciones(PS_INPUT input):COLOR0
 {
 	
-	float4 color = tex2D(posiciones,  input.Mapcoord);
+	float4 color = tex2D(posiciones,  rotatedTexcoord(input.Mapcoord));
 	if(!show_characters) color = 0;
 	
 	return color;
@@ -93,7 +102,7 @@ float4 ps_mapa(PS_INPUT input) : COLOR0
 {      
 	float4 color = ps_posiciones(input);
 	
-	if(color.r+color.g+color.b <0.01) color = tex2D(diffuseMap, input.Mapcoord);
+	if(color.r+color.g+color.b <0.01) color = tex2D(diffuseMap,  rotatedTexcoord(input.Mapcoord));
 	
 	color[3] = alpha(input.Maskcoord);
 	return color;
@@ -108,7 +117,7 @@ float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 	float4 color = ps_posiciones(input);
 	
 	if(color.r+color.g+color.b <0.01){
-		float4 fvBaseColor = tex2D(diffuseMap, input.Mapcoord);
+		float4 fvBaseColor = tex2D(diffuseMap,  rotatedTexcoord(input.Mapcoord));
 		float luminance = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)+0.2; 
 	
 		color = luminance*sepia;
