@@ -56,17 +56,8 @@ sampler2D frame = sampler_state
 /* MAPA */
 /**************************************************************************************/
 
-float2 rotatedTexcoord(float2 texcoord){
-	
-	//INSERTE MAGIA AQUI
-	return texcoord;
 
-}
-float2x2 rotation;
-
-
-
-
+//Calcula el alpha del pixel segun la mascara. (Cuanto mas negro, mas transparente)
 float alpha(float2 maskcoord){
 	
 	float alpha;
@@ -86,13 +77,13 @@ struct PS_INPUT
 
 
 float4 ps_posiciones(PS_INPUT input):COLOR0
-{
+{	
+	float4 color; 
 	
-	float4 color = tex2D(posiciones,  rotatedTexcoord(input.Mapcoord));
-	if(!show_characters) color = 0;
+	if(show_characters) color = tex2D(posiciones,  input.Mapcoord);
+		else color = 0;
 	
 	return color;
-
 }
 
 
@@ -102,12 +93,12 @@ float4 ps_mapa(PS_INPUT input) : COLOR0
 {      
 	float4 color = ps_posiciones(input);
 	
-	if(color.r+color.g+color.b <0.01) color = tex2D(diffuseMap,  rotatedTexcoord(input.Mapcoord));
+	if(color.r + color.g + color.b <0.01) color = tex2D(diffuseMap, input.Mapcoord);
 	
 	color[3] = alpha(input.Maskcoord);
-	return color;
-
 	
+	return color;
+		
 }
 
 //Tiñe el mapa 
@@ -117,12 +108,16 @@ float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 	float4 color = ps_posiciones(input);
 	
 	if(color.r+color.g+color.b <0.01){
-		float4 fvBaseColor = tex2D(diffuseMap,  rotatedTexcoord(input.Mapcoord));
+		
+		float4 fvBaseColor = tex2D(diffuseMap,  input.Mapcoord);
+		
 		float luminance = (0.1*fvBaseColor.x + 0.95*fvBaseColor.y+0.2*fvBaseColor.z)+0.2; 
 	
 		color = luminance*sepia;
 	}
+
 	color[3] = alpha(input.Maskcoord);
+
 	return color;	
 	
 }
@@ -130,8 +125,8 @@ float4 ps_mapa_viejo(PS_INPUT input) : COLOR0
 technique MAPA
 {
    pass Pass_0
-   {
-		 PixelShader = compile ps_2_0 ps_mapa();
+   {	
+		 PixelShader = compile ps_3_0 ps_mapa();
    }
 }
 
@@ -141,7 +136,7 @@ technique MAPA
    pass Pass_0
    {
 	 
-	  PixelShader = compile ps_2_0 ps_mapa_viejo();
+	  PixelShader = compile ps_3_0 ps_mapa_viejo();
    }
 }
 
