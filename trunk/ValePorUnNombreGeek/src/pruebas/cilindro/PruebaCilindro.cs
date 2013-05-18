@@ -19,7 +19,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
     {
         Cylinder myCylinder;
         Cylinder cylinder;
-        TgcBoundingSphere sphere;
         TgcBoundingBox boundingBox;
         Vector3 lastCylinderPos;
 
@@ -52,8 +51,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 
             this.myCylinder = new Cylinder(this.lastCylinderPos, 20, 10, Color.Yellow);
 
-            this.cylinder = new Cylinder(new Vector3(-30, 0, 0), 40, 15, Color.Yellow);
-            this.sphere = new TgcBoundingSphere(new Vector3(80, 0, 0), 45);
+            this.cylinder = new Cylinder(new Vector3(-100, 0, 0), 40, 40, Color.Yellow);
             this.boundingBox = new TgcBoundingBox(new Vector3(0, 0, -120), new Vector3(80, 40, -80));
 
             this.normal = new TgcArrow();
@@ -79,7 +77,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 
             this.myCylinder.render();
             this.cylinder.render();
-            this.sphere.render();
             this.boundingBox.render();
         }
 
@@ -87,7 +84,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         {
             this.myCylinder.dispose();
             this.cylinder.dispose();
-            this.sphere.dispose();
             this.boundingBox.dispose();
             this.normal.dispose();
         }

@@ -37,10 +37,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Dead = false;
             this.SelectionColor = Color.Red;
             this.life = new Life(this, 100, new Vector2(20, 60), Color.Red, new Vector2(60, 10));
-          
-          
-            Vector3 boundingSize = this.BoundingBox.calculateSize() * 0.5f;
-            this.boundingCylinder = new Cylinder(this.Center, boundingSize.Y, boundingSize.X);
+            
+            
+            Vector3 boundingSize = this.Representation.BoundingBox.calculateSize() * 0.5f;
+            this.boundingCylinder = new Cylinder(this.Representation.BoundingBox.calculateBoxCenter(), boundingSize.Y, boundingSize.X);
         }
 
         /// <summary>
@@ -303,8 +303,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public abstract float Speed {  get; }
 
-        public float Radius { get { return this.representation.Radius; } }
-        public Vector3 Center { get { return this.representation.Center; } }
+        public float Radius { get { return this.BoundingCylinder.Radius; } }
+        public Vector3 Center { get { return this.BoundingCylinder.Center; } }
 
         public Effect Effect
         {
@@ -350,7 +350,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.representation.walk();
             this.representation.move(movement * speed);
             this.Position = this.level.Terrain.getPosition(this.Position.X, this.Position.Z);
-            this.boundingCylinder.Center = this.Center;
+            this.boundingCylinder.Position = this.Position;
         }
 
 
