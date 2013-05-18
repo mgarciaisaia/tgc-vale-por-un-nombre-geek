@@ -37,6 +37,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             this.updateDraw();
         }
 
+        #region Getters
+
         public Vector3 Position
         {
             get { return this.Center - this.halfHeight; }
@@ -58,6 +60,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             get { return this.halfHeight.Y; }
             set { this.halfHeight.Y = value; }
         }
+
+        #endregion
 
         #region Draw
 
@@ -165,16 +169,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             if (absCenterToCenter.Z > (boxDimensions.Z + this.radius)) return false;
 
             //vemos si esta dentro del aabb
-            if (absCenterToCenter.X <= boxDimensions.X) goto celculateNormal;
-            if (absCenterToCenter.Z <= boxDimensions.Z) goto celculateNormal;
+            if (absCenterToCenter.X <= boxDimensions.X) goto calculateNormal;
+            if (absCenterToCenter.Z <= boxDimensions.Z) goto calculateNormal;
 
             //vemos si toca una esquina
             float cornerDistance = FastMath.Pow2(absCenterToCenter.X - boxDimensions.X) + FastMath.Pow2(absCenterToCenter.Z - boxDimensions.Z);
-            if (cornerDistance <= FastMath.Pow2(this.radius)) goto celculateNormal;
+            if (cornerDistance <= FastMath.Pow2(this.radius)) goto calculateNormal;
 
             return false;
 
-        celculateNormal:
+        calculateNormal:
             Vector2 boxDimensions2d = fromVector3(boxDimensions);
             Vector2 centerToCenter2d = fromVector3(absCenterToCenter);
 
@@ -189,23 +193,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
 
         public bool thereIsCollisionCyRay(TgcRay ray)
         {
+            //Hallo la normal del plano que corta a la mitad el cilindro
             Vector3 planeNormal = Vector3.Cross(ray.Direction, this.halfHeight);
             planeNormal = Vector3.Cross(planeNormal, this.halfHeight);
-            float planeD = Vector3.Dot(planeNormal, this.center); //usamos el centro para hallar D
-            //nos queda A*x + B*y + C*z = D
 
+            //Usamos el centro del cilindro para hallar D
+            float planeD = Vector3.Dot(planeNormal, this.center);
+
+            //Buscamos el punto de interseccion rayo-plano
             float t = planeD - Vector3.Dot(planeNormal, ray.Origin);
             t /= Vector3.Dot(planeNormal, ray.Direction);
-            //entonces origin + direction * t intersecta al plano
-
             Vector3 planeIntersection = ray.Origin + t * ray.Direction;
             
+            //Verificamos que el punto pertenezca al cilindro a lo ancho
             Vector3 distance = planeIntersection - this.Center;
             if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) > FastMath.Pow2(this.radius)) return false;
-            //pertenece al cilindro a lo ancho
 
+            //Verificamos que el punto pertenezca al cilindro a lo alto
             if (FastMath.Abs(planeIntersection.Y - this.center.Y) > this.HalfHeight) return false;
-            //pertenece al cilindro a lo alto
 
             return true;
         }
