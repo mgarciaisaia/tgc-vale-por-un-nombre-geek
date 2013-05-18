@@ -187,6 +187,29 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             return true;
         }
 
+        public bool thereIsCollisionCyRay(TgcRay ray)
+        {
+            Vector3 planeNormal = Vector3.Cross(ray.Direction, this.halfHeight);
+            planeNormal = Vector3.Cross(planeNormal, this.halfHeight);
+            float planeD = Vector3.Dot(planeNormal, this.center); //usamos el centro para hallar D
+            //nos queda A*x + B*y + C*z = D
+
+            float t = planeD - Vector3.Dot(planeNormal, ray.Origin);
+            t /= Vector3.Dot(planeNormal, ray.Direction);
+            //entonces origin + direction * t intersecta al plano
+
+            Vector3 planeIntersection = ray.Origin + t * ray.Direction;
+            
+            Vector3 distance = planeIntersection - this.Center;
+            if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) > FastMath.Pow2(this.radius)) return false;
+            //pertenece al cilindro a lo ancho
+
+            if (FastMath.Abs(planeIntersection.Y - this.center.Y) > this.HalfHeight) return false;
+            //pertenece al cilindro a lo alto
+
+            return true;
+        }
+
         private Vector2 fromVector3(Vector3 v3)
         {
             return new Vector2(v3.X, v3.Z);

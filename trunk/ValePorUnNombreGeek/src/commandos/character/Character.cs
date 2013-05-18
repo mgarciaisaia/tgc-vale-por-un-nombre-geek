@@ -91,11 +91,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return this.representation.BoundingBox; }
         }
 
+        public Cylinder BoundingCylinder
+        {
+            get { return this.boundingCylinder; }
+        }
 
         public Life Life
         {
             get { return this.life; }
         }
+
         #region Status
 
         private bool selected;
