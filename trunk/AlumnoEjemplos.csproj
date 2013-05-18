@@ -89,7 +89,7 @@
   <ItemGroup>
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\FreeCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Life.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\character\CharacterPicture.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\picture\CharacterPicture.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picture\Picture.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\EnemyRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\ICharacterRepresentation.cs" />
