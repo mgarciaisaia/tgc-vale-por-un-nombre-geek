@@ -1,8 +1,9 @@
 ﻿using System.Drawing;
 using Microsoft.DirectX.Direct3D;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture
 {
     class CharacterPicture:Picture
     {

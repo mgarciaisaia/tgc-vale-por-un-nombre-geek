@@ -3,6 +3,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using TgcViewer;
 using TgcViewer.Utils.Shaders;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
