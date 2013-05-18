@@ -35,9 +35,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.mul
         private List<Character> getCharactersInBox(TgcBox _selectionBox)
         {
             List<Character> ret = new List<Character>();
+            Vector3 n; //useless
 
             foreach (Character ch in this.selectableCharacters)
-                if (TgcCollisionUtils.testAABBAABB(_selectionBox.BoundingBox, ch.BoundingBox))
+                if (ch.BoundingCylinder.thereIsCollisionCyBB(_selectionBox.BoundingBox, out n))
                     ret.Add(ch);
 
             return ret;
