@@ -219,5 +219,59 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         {
             return new Vector2(v3.X, v3.Z);
         }
+
+
+
+
+
+        public Rectangle projectToScreen()
+        {
+            Device device = GuiController.Instance.D3dDevice;
+            Viewport viewport = device.Viewport;
+            Matrix world = device.Transform.World;
+            Matrix view = device.Transform.View;
+            Matrix proj = device.Transform.Projection;
+
+            Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center;
+            Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, this.halfHeight);
+            transversalALaCamara.Normalize();
+            transversalALaCamara *= this.radius;
+
+            //Buscamos las cuatro esquinas del clindro
+            Vector3[] projVertices = new Vector3[4];
+            projVertices[0] = this.center + this.halfHeight + transversalALaCamara;
+            projVertices[1] = this.center + this.halfHeight - transversalALaCamara;
+            projVertices[2] = this.center - this.halfHeight + transversalALaCamara;
+            projVertices[3] = this.center - this.halfHeight - transversalALaCamara;
+
+            for (int i = 0; i < projVertices.Length; i++)
+            {
+                projVertices[i] = Vector3.Project(projVertices[i], viewport, proj, view, world);
+            }
+
+            //Establecemos los puntos extremos
+            Vector2 min = new Vector2(float.MaxValue, float.MaxValue);
+            Vector2 max = new Vector2(float.MinValue, float.MinValue);
+            foreach (Vector3 v in projVertices)
+            {
+                if (v.X < min.X)
+                {
+                    min.X = v.X;
+                }
+                if (v.Y < min.Y)
+                {
+                    min.Y = v.Y;
+                }
+                if (v.X > max.X)
+                {
+                    max.X = v.X;
+                }
+                if (v.Y > max.Y)
+                {
+                    max.Y = v.Y;
+                }
+            }
+            return new Rectangle((int)min.X, (int)min.Y, (int)(max.X - min.X), (int)(max.Y - min.Y));
+        }
     }
 }
