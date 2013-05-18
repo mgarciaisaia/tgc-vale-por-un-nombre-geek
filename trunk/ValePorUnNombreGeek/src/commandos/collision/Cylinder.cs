@@ -223,6 +223,30 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
 
 
 
+        public Vector3 closestCyPointToPoint(Vector3 point)
+        {
+            Vector3 ret;
+            Vector3 distance = point - this.center;
+
+            float y = distance.Y;
+            distance.Y = 0;
+            if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) > FastMath.Pow2(this.radius))
+                ret = Vector3.Normalize(distance) * this.radius;
+            else
+                ret = distance;
+
+            if (y > this.HalfHeight)
+                ret.Y = this.HalfHeight;
+            else if (y < -this.HalfHeight)
+                ret.Y = -this.HalfHeight;
+            else
+                ret.Y = y;
+
+            ret += this.center;
+            return ret;
+        }
+
+
 
         public Rectangle projectToScreen()
         {

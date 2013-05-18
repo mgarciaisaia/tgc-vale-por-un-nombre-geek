@@ -87,8 +87,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         public bool isInsideVisionRange(Character target, Terrain terrain, List<ILevelObject> obstacles)
         {
-
-            Vector3 targetPoint = getClosestPointToVertex(target);
+            Vector3 targetPoint = target.BoundingCylinder.closestCyPointToPoint(this.Position);
 
             if (target.Representation.isCrouched())
             {
@@ -112,32 +111,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
             return false;
 
-        }
-
-      
-        /// <summary>
-        /// Calcula punto del eje Y del target que esta mas cerca del vertice del cono
-        /// </summary>
-        /// <param name="target"></param>
-        /// <returns>Punto del eje Y del personaje que esta mas cerca del vertice del cono</returns>
-        protected Vector3 getClosestPointToVertex(Character target)
-        {
-           
-            Vector3 pMin = target.BoundingBox.PMin;
-            Vector3 pMax = target.BoundingBox.PMax;
-            Vector3 center = target.BoundingBox.calculateBoxCenter();
-
-
-            if (pMin.Y < this.Position.Y && pMax.Y > this.Position.Y)
-            
-                return new Vector3(center.X, this.Position.Y, center.Z);
-            
-            else if (pMin.Y > this.Position.Y)
-            
-                return new Vector3(center.X, pMin.Y, center.Z);
-            
-            else return new Vector3(center.X, pMax.Y, center.Z);         
-            
         }
        
         /// <summary>
