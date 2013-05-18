@@ -61,6 +61,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             set { this.halfHeight.Y = value; }
         }
 
+        public float Radius
+        {
+            get { return this.radius; }
+            set { this.radius = value; }
+        }
+
         #endregion
 
         #region Draw

@@ -22,7 +22,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         Vector3 Right { get; }
         Vector3 Front { get; }
         Matrix Transform { get; }
-        //Vector3 Scale { get; set; }
         bool AutoTransformEnable { get; set; }
         float FacingAngle { get; }
 
@@ -42,14 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         Vector3 getEyeLevel();
 
-
-        float Radius { get; }
-
-        Vector3 Center { get; }
-
         bool isCrouched();
-
-
 
         string Prefix { get;}
     }

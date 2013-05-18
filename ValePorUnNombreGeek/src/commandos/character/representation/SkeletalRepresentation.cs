@@ -20,16 +20,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         public bool Selected{ get; set;}
 
-        public float Radius
-        {
-            get { return this.radius; }
-        }
-
-        public Vector3 Center
-        {
-            get { return this.BoundingBox.calculateBoxCenter(); }
-        }
-
         public SkeletalRepresentation(Vector3 position)
         {
 
@@ -41,7 +31,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.mesh.playAnimation("StandBy", true);
 
             this.Position = position;
-            this.radius = mesh.BoundingBox.calculateBoxRadius();
 
             //rotacion manual
             this.AutoTransformEnable = false;
