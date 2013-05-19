@@ -167,7 +167,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         public bool thereIsCollisionCyCy(Cylinder collider, out Vector3 n)
         {
             Vector3 distance = collider.Center - this.Center;
-            if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) <= FastMath.Pow2(this.radius + collider.radius))
+            if (GeneralMethods.optimizedPow2(distance.X) + GeneralMethods.optimizedPow2(distance.Z) <= GeneralMethods.optimizedPow2(this.radius + collider.radius))
             {
                 n = Vector3.Cross(distance, this.halfHeight);
                 n = Vector3.Cross(n, this.halfHeight);
@@ -205,8 +205,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             if (absCenterToCenter.Z <= boxDimensions.Z) goto calculateNormal;
 
             //vemos si toca una esquina
-            float cornerDistance = FastMath.Pow2(absCenterToCenter.X - boxDimensions.X) + FastMath.Pow2(absCenterToCenter.Z - boxDimensions.Z);
-            if (cornerDistance <= FastMath.Pow2(this.radius)) goto calculateNormal;
+            float cornerDistance = GeneralMethods.optimizedPow2(absCenterToCenter.X - boxDimensions.X) + GeneralMethods.optimizedPow2(absCenterToCenter.Z - boxDimensions.Z);
+            if (cornerDistance <= GeneralMethods.optimizedPow2(this.radius)) goto calculateNormal;
 
             return false;
 
@@ -242,7 +242,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             
             //Verificamos que el punto pertenezca al cilindro a lo ancho
             Vector3 distance = planeIntersection - this.Center;
-            if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) > FastMath.Pow2(this.radius)) return false;
+            if (GeneralMethods.optimizedPow2(distance.X) + GeneralMethods.optimizedPow2(distance.Z) > GeneralMethods.optimizedPow2(this.radius)) return false;
 
             //Verificamos que el punto pertenezca al cilindro a lo alto
             if (FastMath.Abs(planeIntersection.Y - this.center.Y) > this.HalfHeight) return false;
@@ -269,13 +269,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
 
             float y = distance.Y;
             distance.Y = 0;
-            if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) > FastMath.Pow2(this.radius))
+            if (GeneralMethods.optimizedPow2(distance.X) + GeneralMethods.optimizedPow2(distance.Z) > GeneralMethods.optimizedPow2(this.radius))
                 ret = Vector3.Normalize(distance) * this.radius;
             else
                 ret = distance;
 
             if (FastMath.Abs(y) > this.HalfHeight)
-                ret.Y = GeneralMethods.optimizedSign(y) * this.HalfHeight;
+                ret.Y = Math.Sign(y) * this.HalfHeight;
             else
                 ret.Y = y;
 
