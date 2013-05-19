@@ -25,14 +25,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
 
         public abstract void dispose();
 
-        public abstract TgcBoundingBox BoundingBox
-        {
-            get;
-        }
+        public abstract TgcBoundingBox BoundingBox { get; }
 
         public bool collidesWith(Character ch, out Vector3 n)
         {
             return ch.collidesWith(this.BoundingBox, out n);
+        }
+
+        public bool collidesWith(TgcBoundingBox bb)
+        {
+            TgcCollisionUtils.BoxBoxResult result = TgcCollisionUtils.classifyBoxBox(this.BoundingBox, bb);
+            return result != TgcCollisionUtils.BoxBoxResult.Afuera;
+        }
+
+        public bool collidesWith(TgcRay ray)
+        {
+            Vector3 q; //useless
+            return TgcCollisionUtils.intersectRayAABB(ray, this.BoundingBox, out q);
         }
     }
 }

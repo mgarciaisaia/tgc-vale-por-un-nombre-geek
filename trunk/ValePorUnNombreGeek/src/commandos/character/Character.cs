@@ -87,11 +87,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { this.representation.Position = value; }
         }
 
-        public TgcBoundingBox BoundingBox
-        {
-            get { return this.representation.BoundingBox; }
-        }
-
         public Cylinder BoundingCylinder
         {
             get { return this.boundingCylinder; }
@@ -237,10 +232,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                 return true;
             }
 
-            TgcCollisionUtils.BoxBoxResult result = TgcCollisionUtils.classifyBoxBox(this.marcaDePicking.BoundingBox, obj.BoundingBox);
+            //TgcCollisionUtils.BoxBoxResult result = TgcCollisionUtils.classifyBoxBox(this.marcaDePicking.BoundingBox, obj.BoundingBox);
 
             //Si la cosa con la que choqué está sobre mi objetivo.
-            if (result != TgcCollisionUtils.BoxBoxResult.Afuera)
+            //if (result != TgcCollisionUtils.BoxBoxResult.Afuera)
+            if(obj.collidesWith(this.marcaDePicking.BoundingBox))
             {
                 this.setNoTarget();
                 this.representation.standBy();
@@ -335,6 +331,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public bool collidesWith(TgcBoundingBox aabb, out Vector3 n)
         {
             return this.boundingCylinder.thereIsCollisionCyBB(aabb, out n);
+        }
+
+        public bool collidesWith(TgcBoundingBox aabb)
+        {
+            Vector3 n; //useless
+            return this.collidesWith(aabb, out n);
+        }
+
+        public bool collidesWith(TgcRay ray)
+        {
+            return this.boundingCylinder.thereIsCollisionCyRay(ray);
         }
 
         #endregion
