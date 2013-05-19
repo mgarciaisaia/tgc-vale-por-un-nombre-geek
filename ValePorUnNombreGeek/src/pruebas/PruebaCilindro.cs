@@ -9,6 +9,8 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 using TgcViewer.Utils.TgcGeometry;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 {
@@ -54,6 +56,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
             this.cylinder = new Cylinder(new Vector3(-100, 0, 0), 40, 40, Color.Yellow);
             this.boundingBox = new TgcBoundingBox(new Vector3(0, 0, -120), new Vector3(80, 40, -80));
 
+            GuiController.Instance.Modifiers.addBoolean("closestPoint", "closestPoint", false);
+
             this.normal = new TgcArrow();
             this.normal.Thickness = 2f;
             this.normal.HeadSize = new Vector2(4f, 4f);
@@ -64,6 +68,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         public override void render(float elapsedTime)
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
+            float y = GeneralMethods.optimizedSign(-1350);
 
             if (this.thereIsCollision()) this.myCylinder.Color = Color.DarkOliveGreen;
             else this.myCylinder.Color = Color.Yellow;
@@ -90,6 +95,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 
         private bool thereIsCollision()
         {
+            if ((bool)GuiController.Instance.Modifiers.getValue("closestPoint"))
+            {
+                this.normal.PEnd = myCylinder.closestCyPointToPoint(new Vector3(0, 0, 0));
+                this.normal.PStart = new Vector3(0, 0, 0);
+                this.normal.updateValues();
+                this.normal.render();
+                return false;
+            }
+
             Vector3 n;
             if (myCylinder.thereIsCollisionCyCy(this.cylinder, out n))
             {

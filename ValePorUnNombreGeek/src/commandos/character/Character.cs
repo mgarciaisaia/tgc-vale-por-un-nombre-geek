@@ -236,7 +236,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             //Si la cosa con la que choqué está sobre mi objetivo.
             //if (result != TgcCollisionUtils.BoxBoxResult.Afuera)
-            if(obj.collidesWith(this.marcaDePicking.BoundingBox))
+            if(obj.isOver(this.Target.Position))
             {
                 this.setNoTarget();
                 this.representation.standBy();
@@ -444,6 +444,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public bool isDead(){
             return this.dead;
+        }
+
+
+
+        public bool isOver(Vector3 _position)
+        {
+            return GeneralMethods.isCloseTo(this.Position, _position, 10);
         }
     }
 }

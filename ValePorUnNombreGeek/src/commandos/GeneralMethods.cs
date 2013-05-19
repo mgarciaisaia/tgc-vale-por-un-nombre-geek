@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
-    class GeneralMethods //TODO darle un mejor nombre
+    class GeneralMethods
     {
         public static Random rnd = new Random();
 
@@ -121,6 +121,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
 
 
-   
+        /// <summary>
+        /// Metodo Sign optimizado. Ni se fija si value es cero.
+        /// </summary>
+        public static float optimizedSign(float value)
+        {
+            return FastMath.Abs(value) / value;
+        }
     }
 }
