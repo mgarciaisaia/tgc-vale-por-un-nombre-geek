@@ -118,7 +118,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             foreach (Character ch in this.selectableCharacters)
             {
                 PickingRaySingleton.Instance.updateRayByMouse();
-                if(ch.BoundingCylinder.thereIsCollisionCyRay(PickingRaySingleton.Instance.Ray))
+                if(ch.collidesWith(PickingRaySingleton.Instance.Ray))
                 {
                     ch.Selected = true;
                     this.selectedCharacters.Add(ch);

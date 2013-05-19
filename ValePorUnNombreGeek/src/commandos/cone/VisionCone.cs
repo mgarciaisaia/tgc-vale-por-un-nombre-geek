@@ -168,13 +168,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
          private bool canSeeWithObstacles(Vector3 targetPoint, List<ILevelObject> obstacles)
          {
              Vector3 pt =  targetPoint-this.Position;
-             Vector3 q;
              TgcRay ray = new TgcRay(this.Position, pt);
              foreach (ILevelObject o in obstacles)
              {
                  if (objectInsideRadius(pt.Length(), o))
                  {
-                     if (TgcCollisionUtils.intersectRayAABB(ray, o.BoundingBox, out q)) return false;
+                     if (o.collidesWith(ray)) return false;
                  }
              }
              return true;

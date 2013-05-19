@@ -13,8 +13,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
     {
         Vector3 Position { get; }
         
-        TgcBoundingBox BoundingBox { get; }
-        
         Vector3 Center { get; }
 
         float Radius { get; }
@@ -28,5 +26,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
         void dispose();
 
         bool collidesWith(Character ch, out Vector3 n);
+        bool collidesWith(TgcBoundingBox bb);
+        bool collidesWith(TgcRay ray);
     }
 }
