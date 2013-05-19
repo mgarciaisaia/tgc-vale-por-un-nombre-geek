@@ -16,7 +16,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         protected TgcSkeletalMesh mesh;
         private Vector3 angleZeroVector; //rotacion manual
         private float meshFacingAngle; //hacia donde mira
-        protected float radius;
 
         public bool Selected{ get; set;}
 
