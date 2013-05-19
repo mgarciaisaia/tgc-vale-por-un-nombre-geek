@@ -68,7 +68,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         public override void render(float elapsedTime)
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
-            float y = GeneralMethods.optimizedSign(-1350);
 
             if (this.thereIsCollision()) this.myCylinder.Color = Color.DarkOliveGreen;
             else this.myCylinder.Color = Color.Yellow;

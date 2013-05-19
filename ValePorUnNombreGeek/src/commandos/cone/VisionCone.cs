@@ -30,8 +30,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             this.AutoTransformEnabled = false;
             this.AlphaBlendEnabled = true;
             this.sqRange = new float[2];
-            this.sqRange[(int)eRange.SHORT_RANGE] = FastMath.Pow2(length * 2 / 3);
-            this.sqRange[(int)eRange.LONG_RANGE] = FastMath.Pow2(length);
+            this.sqRange[(int)eRange.SHORT_RANGE] = GeneralMethods.optimizedPow2(length * 2 / 3);
+            this.sqRange[(int)eRange.LONG_RANGE] = GeneralMethods.optimizedPow2(length);
             this.cosAngle = FastMath.Cos(angle);
             this.Color1 = System.Drawing.Color.Aquamarine;
             this.Color2 = System.Drawing.Color.Aquamarine;
@@ -42,8 +42,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
            
         public override void updateValues(){
             base.updateValues();
-            this.sqRange[0] = FastMath.Pow2(length * 2 / 3);
-            this.sqRange[1] = FastMath.Pow2(length);
+            this.sqRange[0] = GeneralMethods.optimizedPow2(length * 2 / 3);
+            this.sqRange[1] = GeneralMethods.optimizedPow2(length);
             this.cosAngle = FastMath.Cos(angle);
         }
 
