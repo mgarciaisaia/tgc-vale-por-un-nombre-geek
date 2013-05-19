@@ -140,8 +140,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\UserVars.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\IQuadTree.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTreeDummie.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\pruebas\cilindro\Cylinder.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\pruebas\cilindro\PruebaCilindro.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaCilindro.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PJOptimization.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaShaders.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\StaticCamera.cs" />

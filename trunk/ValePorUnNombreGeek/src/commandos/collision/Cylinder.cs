@@ -17,9 +17,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         private Vector3 halfHeight;
         private int borderColor;
 
-        private const int END_CAPS_RESOLUTION = 30; //cantidad de lineas por cada tapa
-        private CustomVertex.PositionColored[] endCapsVertex; //vertices de las tapas
-        private CustomVertex.PositionColored[] bordersVertex; //vertices de los bordes
+        /* "Bounding Cylinder" - ValePorUnNombreGeek 2013
+         * Desarrollado para ajustarse mejor a ciertos objetos del Commandos.
+         * Basado principalmente en el paper de Michael Sünkel
+         * http://www10.informatik.uni-erlangen.de/Publications/Theses/2010/Suenkel_BA_10.pdf
+         * 
+         * Nota: dada la naturaleza del juego para el que fue desarrollado esta clase,
+         * se trata al cilindro como una superficie infinita a lo alto, sin tapas.
+         * Esto aplica para las colisiones cilindro-aabb y cilindro-cilindro.
+         * Para el resto de las funcionalidades (proyeccion en pantalla, interseccion
+         * cilindro-rayo, punto mas cercano, etc) se tienen en cuenta dichas tapas.
+         */
 
 
         public Cylinder(Vector3 _center, float _halfHeight, float _radius)
@@ -77,6 +85,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             set { this.borderColor = value.ToArgb(); this.updateDraw(); }
         }
 
+        private const int END_CAPS_RESOLUTION = 30; //cantidad de lineas por cada tapa
+        private CustomVertex.PositionColored[] endCapsVertex; //vertices de las tapas
+        private CustomVertex.PositionColored[] bordersVertex; //vertices de los bordes
+
+        /// <summary>
+        /// Actualiza la posicion de los vertices que componen las tapas.
+        /// </summary>
         private void updateDraw()
         {
             if (endCapsVertex == null)
@@ -105,6 +120,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             this.updateBordersDraw();
         }
 
+        /// <summary>
+        /// Actualiza la posicion de los cuatro vertices que componen los lados.
+        /// </summary>
         private void updateBordersDraw()
         {
             Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center;
@@ -141,6 +159,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
 
         #endregion
 
+        #region Collision
+
+        /// <summary>
+        /// Indica si existe colision con otro cilindro. En tal caso devuelve la normal de colision.
+        /// </summary>
         public bool thereIsCollisionCyCy(Cylinder collider, out Vector3 n)
         {
             Vector3 distance = collider.Center - this.Center;
@@ -158,6 +181,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             }
         }
 
+        /// <summary>
+        /// Indica si existe colision con un AABB. En tal caso devuelve la normal de colision.
+        /// </summary>
         public bool thereIsCollisionCyBB(TgcBoundingBox aabb, out Vector3 n)
         {
             n = Vector3.Empty;
@@ -197,6 +223,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             return true;
         }
 
+        /// <summary>
+        /// Indica si un rayo atraviesa el cilindro.
+        /// </summary>
         public bool thereIsCollisionCyRay(TgcRay ray)
         {
             //Hallo la normal del plano que corta a la mitad el cilindro
@@ -226,9 +255,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             return new Vector2(v3.X, v3.Z);
         }
 
+        #endregion
 
+        #region OtherGoodies
 
-
+        /// <summary>
+        /// Devuelve el punto dentro del volumen del cilindro mas cercano a determinado punto.
+        /// </summary>
         public Vector3 closestCyPointToPoint(Vector3 point)
         {
             Vector3 ret;
@@ -241,10 +274,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             else
                 ret = distance;
 
-            if (y > this.HalfHeight)
-                ret.Y = this.HalfHeight;
-            else if (y < -this.HalfHeight)
-                ret.Y = -this.HalfHeight;
+            if (FastMath.Abs(y) > this.HalfHeight)
+                ret.Y = GeneralMethods.optimizedSign(y) * this.HalfHeight;
             else
                 ret.Y = y;
 
@@ -252,8 +283,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             return ret;
         }
 
-
-
+        /// <summary>
+        /// Proyecta el cilindro como un rectangulo en pantalla.
+        /// Basado en la proyeccion de AABB del TgcViewer.
+        /// </summary>
         public Rectangle projectToScreen()
         {
             Device device = GuiController.Instance.D3dDevice;
@@ -303,5 +336,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             }
             return new Rectangle((int)min.X, (int)min.Y, (int)(max.X - min.X), (int)(max.Y - min.Y));
         }
+
+        #endregion
     }
 }
