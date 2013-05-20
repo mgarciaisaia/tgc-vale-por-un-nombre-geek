@@ -7,13 +7,13 @@ using System.Drawing;
 using Microsoft.DirectX;
 using TgcViewer.Utils.Input;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 {
     class GraphicalControlPanel
     {
-        private SpriteDrawer drawer;
-        private Sprite controlPanelSprite;
+        private Picture controlPanelSprite;
         private List<CommandButton> buttons;
 
         public GraphicalControlPanel(string path)
@@ -21,14 +21,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             int screenHeight = GuiController.Instance.D3dDevice.Viewport.Height;
             int screenWidth = GuiController.Instance.D3dDevice.Viewport.Width;
 
-            this.controlPanelSprite = new Sprite(path);
-            this.controlPanelSprite.Position = new Vector2(0, screenHeight - this.controlPanelSprite.ImageInformation.Height);
+            this.controlPanelSprite = new Picture(path);
+            this.controlPanelSprite.Position = new Vector2(0, screenHeight - this.controlPanelSprite.Height);
             this.controlPanelSprite.Width = screenWidth;
 
             buttons = new List<CommandButton>();
-
-            this.drawer = new SpriteDrawer();
-            this.drawer.addSpriteToDraw(this.controlPanelSprite);
         }
 
         private void addButton(CommandButton _button)
@@ -74,7 +71,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 
         public void render()
         {
-            this.drawer.drawSprites();
+            this.controlPanelSprite.render();
             foreach (CommandButton button in this.buttons) button.render();
         }
 
