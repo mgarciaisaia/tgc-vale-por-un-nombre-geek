@@ -34,7 +34,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         private void addButton(CommandButton _button)
         {
             this.buttons.Add(_button);
-            this.drawer.addSpriteToDraw(_button);
 
             float X = this.controlPanelSprite.Width / 10;
             foreach (CommandButton button in this.buttons)
@@ -76,6 +75,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         public void render()
         {
             this.drawer.drawSprites();
+            foreach (CommandButton button in this.buttons) button.render();
         }
 
         public void dispose()
