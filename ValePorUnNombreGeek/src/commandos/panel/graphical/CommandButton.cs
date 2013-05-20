@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands;
 using Microsoft.DirectX;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 {
-    class CommandButton : Sprite
+    class CommandButton : Picture
     {
         private Command command;
 
