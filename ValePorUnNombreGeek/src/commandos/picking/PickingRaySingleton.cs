@@ -66,7 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                             GuiController.Instance.UserVars.setValue("WorldX", position.X);
 
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             createVars();
                             GuiController.Instance.UserVars.setValue("WorldX", position.X);
