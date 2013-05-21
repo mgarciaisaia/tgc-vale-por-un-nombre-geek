@@ -14,9 +14,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 {
     class MovementPicking
     {
-        Terrain terrain;
+        ITerrain terrain;
 
-        public MovementPicking(Terrain _terrain)
+        public MovementPicking(ITerrain _terrain)
         {
             this.terrain = _terrain;
         }

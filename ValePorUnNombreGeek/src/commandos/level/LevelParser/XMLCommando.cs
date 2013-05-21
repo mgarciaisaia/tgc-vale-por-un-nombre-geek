@@ -12,7 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
 {
     class XMLCommando
     {
-        public static Commando getCommando(XmlNode commandoNode, Terrain terrain)
+        public static Commando getCommando(XmlNode commandoNode, ITerrain terrain)
         {
             
             string commandoClass;
@@ -44,7 +44,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
 
         }
 
-        private static Commando getDefault(XmlNode commandoNode, Terrain terrain)
+        private static Commando getDefault(XmlNode commandoNode, ITerrain terrain)
         {
             float[] pos = TgcViewer.Utils.TgcSceneLoader.TgcParserUtils.parseFloat2Array(commandoNode.InnerText);
 

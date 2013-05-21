@@ -74,7 +74,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             return isInsideVisionRange(target, null, null);
         }
 
-        public bool isInsideVisionRange(Character target, Terrain terrain)
+        public bool isInsideVisionRange(Character target, ITerrain terrain)
         {
 
             return isInsideVisionRange(target, terrain, null);
@@ -85,7 +85,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             return isInsideVisionRange(target, null, obstacles);
         }
 
-        public bool isInsideVisionRange(Character target, Terrain terrain, List<ILevelObject> obstacles)
+        public bool isInsideVisionRange(Character target, ITerrain terrain, List<ILevelObject> obstacles)
         {
             Vector3 targetPoint = target.BoundingCylinder.closestCyPointToPoint(this.Position);
 
@@ -145,7 +145,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
        /// <param name="terrain"></param>
        /// <param name="targetPoint"></param>
        /// <returns></returns>
-         private bool canSeeInTerrain(Terrain terrain, Vector3 targetPoint)
+         private bool canSeeInTerrain(ITerrain terrain, Vector3 targetPoint)
          {
              Vector3 origin = this.Position;
              Vector3 direction = targetPoint - this.Position;

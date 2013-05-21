@@ -15,7 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
     {
      
 
-        public static Enemy getEnemy(XmlNode enemyNode, Terrain terrain)
+        public static Enemy getEnemy(XmlNode enemyNode, ITerrain terrain)
         {
            
             XmlNode at = enemyNode.Attributes.GetNamedItem("class");
@@ -48,7 +48,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
 
         }
 
-        private static Enemy getSoldier(XmlNode enemyNode, Terrain terrain)
+        private static Enemy getSoldier(XmlNode enemyNode, ITerrain terrain)
         {
             
             List<Vector3> waitpoints = new List<Vector3>();

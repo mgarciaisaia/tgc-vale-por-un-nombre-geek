@@ -23,7 +23,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
         private Vector2 initMousePos;
         private Vector2 lastMousePos;
 
-        public Selection(List<Character> _selectableCharacters, Terrain _terrain)
+        public Selection(List<Character> _selectableCharacters, ITerrain _terrain)
         {
             this.selectableCharacters = _selectableCharacters;
             this.selectedCharacters = new List<Character>();

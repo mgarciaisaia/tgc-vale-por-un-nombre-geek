@@ -41,7 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
         /// <summary>
         /// Busca la interseccion rayo-heightmap, y devuelve true si existe.
         /// </summary>
-        public bool terrainIntersection(Terrain terrain, out Vector3 position)
+        public bool terrainIntersection(ITerrain terrain, out Vector3 position)
         {
             Vector3 aPoint;
             Vector3 foundedPoint;

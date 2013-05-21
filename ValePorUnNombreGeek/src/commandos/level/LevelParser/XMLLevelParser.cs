@@ -11,6 +11,7 @@ using TgcViewer.Utils.TgcSceneLoader;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
@@ -37,7 +38,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
 
         public Level getLevel()
         {
-            Terrain terrain = getTerrain();
+            ITerrain terrain = getTerrain();
             Level level = new Level(terrain);
             foreach (Enemy e in getEnemies(terrain)) level.add(e);
             foreach (Commando c in getCommandos(terrain)) level.add(c);
@@ -45,7 +46,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
             return level;
         }
 
-        private Terrain getTerrain()
+        private ITerrain getTerrain()
         {
             XmlNode xmlTerrain = root.GetElementsByTagName("terrain")[0];
 
@@ -54,11 +55,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
             float scaleXZ = TgcParserUtils.parseFloat(xmlTerrain.Attributes.GetNamedItem("scaleXZ").InnerText);
             float scaleY = TgcParserUtils.parseFloat(xmlTerrain.Attributes.GetNamedItem("scaleY").InnerText);
 
-            return new Terrain(heightmap, texture, scaleXZ, scaleY);
+            return new DivisibleTerrain(heightmap, texture, scaleXZ, scaleY);
         }
 
 
-        private IEnumerable<ILevelObject> getLevelObjects(Terrain terrain)
+        private IEnumerable<ILevelObject> getLevelObjects(ITerrain terrain)
         {
             List<ILevelObject> levelObjects = new List<ILevelObject>();
 
@@ -73,7 +74,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
         }
 
 
-        private IEnumerable<Commando> getCommandos(Terrain terrain)
+        private IEnumerable<Commando> getCommandos(ITerrain terrain)
         {
             List<Commando> commandos = new List<Commando>();
 
@@ -89,7 +90,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
         }
 
 
-        private IEnumerable<Enemy> getEnemies(Terrain terrain)
+        private IEnumerable<Enemy> getEnemies(ITerrain terrain)
         {
            
             List<Enemy> enemies = new List<Enemy>();

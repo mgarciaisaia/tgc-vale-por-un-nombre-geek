@@ -1,10 +1,11 @@
 ﻿using TgcViewer.Utils.Terrain;
 using Microsoft.DirectX;
 using TgcViewer;
+using Microsoft.DirectX.Direct3D;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
 {
-    class Terrain : TgcSimpleTerrain
+    class Terrain : TgcSimpleTerrain, ITerrain
     {
         float scaleXZ;
         float scaleY;
@@ -24,6 +25,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         public float ScaleY { get { return scaleY; } }
         public string TexturePath { get { return texturePath; } }
         public string HeightmapPath { get { return heightmapPath; } }
+        public Texture TerrainTexture { get; set; } //Not implemented 
         #endregion
 
         #region Initialize
