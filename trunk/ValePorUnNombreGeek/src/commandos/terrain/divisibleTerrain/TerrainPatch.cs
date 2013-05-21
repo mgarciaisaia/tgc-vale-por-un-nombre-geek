@@ -59,6 +59,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             vbTerrainPatch.Dispose();
         }
 
-       
+
+
+        public string Technique { get; set; }
+
+        public Effect Effect { get; set; }
     }
 }

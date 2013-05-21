@@ -10,12 +10,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 {
     class DefaultRenderer:IRenderer
     {
-        List<Enemy> enemies;
-        List<Commando> commandos;
-        List<ILevelObject> objects;
-        List<TerrainPatch> terrainPatches;
+        protected List<Enemy> enemies;
+        protected List<Commando> commandos;
+        protected List<ILevelObject> objects;
+        protected List<TerrainPatch> terrainPatches;
        
-        public void beginRender()
+        public virtual void beginRender()
         {
             enemies = new List<Enemy>();
             commandos = new List<Commando>();
@@ -23,32 +23,37 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             terrainPatches = new List<TerrainPatch>();
         }
 
-        public void render(commandos.objects.ILevelObject o)
+        public virtual void render(commandos.objects.ILevelObject o)
         {
             objects.Add(o);
         }
 
-        public void render(commandos.character.Commando c)
+        public virtual void render(commandos.character.Commando c)
         {
             commandos.Add(c);
         }
 
-        public void render(commandos.character.Enemy e)
+        public virtual void render(commandos.character.Enemy e)
         {
             enemies.Add(e);
         }
 
-        public void render(commandos.terrain.divisibleTerrain.TerrainPatch t)
+        public virtual void render(commandos.terrain.divisibleTerrain.TerrainPatch t)
         {
             terrainPatches.Add(t);
         }
 
-        public void endRender()
+        public virtual void endRender()
         {
             foreach (TerrainPatch p in terrainPatches) p.render();
             foreach (ILevelObject o in objects) o.render();
             foreach (Commando c in commandos) c.render();
             foreach (Enemy e in enemies) e.render();
+        }
+
+        public virtual void dispose()
+        {
+
         }
     }
 }
