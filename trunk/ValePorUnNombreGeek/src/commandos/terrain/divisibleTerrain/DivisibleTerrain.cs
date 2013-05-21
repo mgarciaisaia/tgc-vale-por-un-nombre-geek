@@ -13,7 +13,7 @@ using TgcViewer;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain
 {
 
-    public class DivisibleTerrain : IRenderObject
+    public class DivisibleTerrain : IRenderObject, ITerrain
     {
 
 
@@ -23,10 +23,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         float halfLength;
         string texturePath;
         string heightmapPath;
-        protected VertexBuffer vbTerrain;
+     
         Texture terrainTexture;
         int totalVertices;
         int[,] heightmapData;
+        List<TerrainPatch> patches;
 
         #region Getters y Setters
 
@@ -39,6 +40,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         public string TexturePath { get { return texturePath; } }
         public string HeightmapPath { get { return heightmapPath; } }
 
+        public Texture TerrainTexture { get { return terrainTexture; } }
         public Vector3 Position
         {
             get { return center; }
@@ -74,7 +76,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         /// con textura o colores por vértice de canal Alpha.
         /// Por default está deshabilitado.
         /// </summary>
-        public bool AlphaBlendEnable { get; set; }
+        protected bool alphaBlendEnable;
+        public bool AlphaBlendEnable { get { return this.alphaBlendEnable; } set { foreach (TerrainPatch p in patches)p.AlphaBlendEnable = value; } }
 
 
 
@@ -97,7 +100,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         #region Constructor
 
         public DivisibleTerrain(string pathHeightmap, string pathTextura, float scaleXZ, float scaleY)
-            : base()
+            :this()
         {
             this.loadHeightmap(pathHeightmap, scaleXZ, scaleY, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
@@ -109,8 +112,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         public DivisibleTerrain()
         {
             Enabled = true;
-            AlphaBlendEnable = false;
+          
 
+           
             //Shader
             this.Effect = GuiController.Instance.Shaders.VariosShader;
             this.Technique = TgcShaders.T_POSITION_TEXTURED;
@@ -129,7 +133,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             this.center = center;
             this.scaleXZ = scaleXZ;
             this.scaleY = scaleY;
-            
+
+            this.patches = new List<TerrainPatch>();
+
+
             //cargar heightmap
             heightmapData = loadHeightMap(d3dDevice, heightmapPath);
             float width = (float)heightmapData.GetLength(0);
@@ -140,8 +147,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
             //Crear vertexBuffer
             totalVertices = 2 * 3 * (heightmapData.GetLength(0) - 1) * (heightmapData.GetLength(1) - 1);
-            vbTerrain = new VertexBuffer(typeof(CustomVertex.PositionTextured), totalVertices, d3dDevice, Usage.Dynamic | Usage.WriteOnly, CustomVertex.PositionTextured.Format, Pool.Default);
-
+       
             //Cargar vertices
             int dataIdx = 0;
             CustomVertex.PositionTextured[] data = new CustomVertex.PositionTextured[totalVertices];
@@ -181,7 +187,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             }
 
 
-            vbTerrain.SetData(data, 0, LockFlags.None);
+            this.patches.Add(new TerrainPatch(this, data));
+
+            AlphaBlendEnable = false;
 
         }
 
@@ -244,24 +252,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             if (!Enabled)
                 return;
 
-            Device d3dDevice = GuiController.Instance.D3dDevice;
-            TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
-
-            //Textura
-            Effect.SetValue("texDiffuseMap", terrainTexture);
-            texturesManager.clear(1);
-
-            GuiController.Instance.Shaders.setShaderMatrix(this.Effect, Matrix.Identity);
-            d3dDevice.VertexDeclaration = GuiController.Instance.Shaders.VdecPositionTextured;
-            Effect.Technique = this.Technique;
-            d3dDevice.SetStreamSource(0, vbTerrain, 0);
-
-            //Render con shader
-            Effect.Begin(0);
-            Effect.BeginPass(0);
-            d3dDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, totalVertices / 3);
-            Effect.EndPass();
-            Effect.End();
+            foreach (TerrainPatch patch in patches) patch.render();
 
         }
 
@@ -270,12 +261,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         /// </summary>
         public void dispose()
         {
-            if (vbTerrain != null)
-            {
-                vbTerrain.Dispose();
-            }
 
-            if (terrainTexture != null)
+            foreach (TerrainPatch patch in patches) patch.dispose();
+
+            if (terrainTexture != null) 
             {
                 terrainTexture.Dispose();
             }
@@ -401,7 +390,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         }
 
         #endregion
-      
+
+
 
     }
 }

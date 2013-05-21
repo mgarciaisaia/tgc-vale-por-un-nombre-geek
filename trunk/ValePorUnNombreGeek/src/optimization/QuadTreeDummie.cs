@@ -12,10 +12,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
     class QuadTreeDummie : AlumnoEjemplos.ValePorUnNombreGeek.src.optimization.IQuadTree
     {
         List<ILevelObject> objects;
-        Terrain terrain;
+        ITerrain terrain;
 
        
-        public QuadTreeDummie(Terrain terrain)
+        public QuadTreeDummie(ITerrain terrain)
         {
             this.terrain = terrain;
             this.objects = new List<ILevelObject>();
