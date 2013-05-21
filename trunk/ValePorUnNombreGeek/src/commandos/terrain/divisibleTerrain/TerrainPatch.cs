@@ -13,7 +13,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
     {
         protected DivisibleTerrain father;
         protected VertexBuffer vbTerrainPatch;
-        public bool AlphaBlendEnable { get; set; }
         public bool Enabled { get; set; }
         int totalVertices;
 
@@ -51,7 +50,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
         public void dispose()
         {
-            throw new NotImplementedException();
+            vbTerrainPatch.Dispose();
         }
 
        

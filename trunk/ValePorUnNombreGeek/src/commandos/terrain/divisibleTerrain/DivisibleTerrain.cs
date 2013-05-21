@@ -76,8 +76,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         /// con textura o colores por vértice de canal Alpha.
         /// Por default está deshabilitado.
         /// </summary>
-        protected bool alphaBlendEnable;
-        public bool AlphaBlendEnable { get { return this.alphaBlendEnable; } set { foreach (TerrainPatch p in patches)p.AlphaBlendEnable = value; } }
+       
+        public bool AlphaBlendEnable { get; set; }
 
 
 
@@ -112,9 +112,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         public DivisibleTerrain()
         {
             Enabled = true;
-          
-
-           
+            AlphaBlendEnable = false;
             //Shader
             this.Effect = GuiController.Instance.Shaders.VariosShader;
             this.Technique = TgcShaders.T_POSITION_TEXTURED;
@@ -145,7 +143,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             halfWidth = width / 2;
             halfLength = length / 2;
 
-            //Crear vertexBuffer
+            
             totalVertices = 2 * 3 * (heightmapData.GetLength(0) - 1) * (heightmapData.GetLength(1) - 1);
        
             //Cargar vertices
@@ -156,6 +154,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             center.Y = center.Y * scaleY;
             center.Z = center.Z * scaleXZ - (length / 2) * scaleXZ;
 
+
+            ///////
+            ////HAY QUE VER COMO MODIFICAR ESTE FOR PARA CREAR TRIANGULOS DE PORCIONES DE TERRENO.
+            //////
             for (int i = 0; i < width - 1; i++)
             {
                 for (int j = 0; j < length - 1; j++)
@@ -189,8 +191,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
             this.patches.Add(new TerrainPatch(this, data));
 
-            AlphaBlendEnable = false;
-
+         
         }
 
         /// <summary>
