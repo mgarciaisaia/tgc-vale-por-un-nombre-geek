@@ -9,7 +9,7 @@ using Microsoft.DirectX;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain
 {
-    class TerrainPatch
+    public class TerrainPatch
     {
         protected DivisibleTerrain father;
         protected VertexBuffer vbTerrainPatch;
@@ -32,7 +32,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
 
             //Textura
-            father.Effect.SetValue("texDiffuseMap", father.TerrainTexture);
+            father.Effect.SetValue("texDiffuseMap", father.Texture);
             texturesManager.clear(1);
 
             GuiController.Instance.Shaders.setShaderMatrix(father.Effect, Matrix.Identity);

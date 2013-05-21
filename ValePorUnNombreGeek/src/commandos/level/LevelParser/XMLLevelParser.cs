@@ -49,13 +49,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
         private ITerrain getTerrain()
         {
             XmlNode xmlTerrain = root.GetElementsByTagName("terrain")[0];
-
-            String heightmap = mediaDir + xmlTerrain.Attributes.GetNamedItem("heightmap").InnerText;
-            String texture = mediaDir + xmlTerrain.Attributes.GetNamedItem("texture").InnerText;
-            float scaleXZ = TgcParserUtils.parseFloat(xmlTerrain.Attributes.GetNamedItem("scaleXZ").InnerText);
-            float scaleY = TgcParserUtils.parseFloat(xmlTerrain.Attributes.GetNamedItem("scaleY").InnerText);
-
-            return new DivisibleTerrain(heightmap, texture, scaleXZ, scaleY);
+            return XMLTerrain.getTerrain(xmlTerrain, mediaDir);
         }
 
 
