@@ -131,6 +131,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         }
         #endregion
 
+        const float MAX_ELAPSED_TIME = 0.5f;
+
         /// <summary>
         /// Método que se llama cada vez que hay que refrescar la pantalla.
         /// Escribir aquí todo el código referido al renderizado.
@@ -139,6 +141,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
+            if (elapsedTime > MAX_ELAPSED_TIME)
+            {
+                GuiController.Instance.Logger.log("Ignoramos un retardo de " + elapsedTime + " s");
+                return;
+            }
             string selectedPath = (string)GuiController.Instance.Modifiers["Level"];
             
             checkLoadLevel(selectedPath);
