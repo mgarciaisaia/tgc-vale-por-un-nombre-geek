@@ -16,12 +16,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
 
         #region Getters
 
-        public float getHalfWidth() { return halfWidth; }
-        public float getHalfLength() { return halfLength; }
+        public float HalfWidth { get { return halfWidth; } }
+        public float HalfLength { get { return halfLength; } }
         public float getWidth() { return halfWidth*2; }
         public float getLength() { return halfLength*2; }
-        public float getScaleXZ() { return scaleXZ; }
-        public float getScaleY() { return scaleY; }
+        public float ScaleXZ { get { return scaleXZ; } }
+        public float ScaleY { get { return scaleY; } }
         public string TexturePath { get { return texturePath; } }
         public string HeightmapPath { get { return heightmapPath; } }
         #endregion

@@ -25,7 +25,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         private void setWaterLevel(float _waterLevel)
         {
             Vector3 waterPosition = new Vector3(this.Position.X, this.Position.Y + _waterLevel, this.Position.Z);
-            this.water = TgcBox.fromSize(waterPosition, new Vector3(this.getWidth() * this.getScaleXZ(), 50 * this.getScaleY(), this.getLength() * this.getScaleXZ()), Color.LightSlateGray);
+            this.water = TgcBox.fromSize(waterPosition, new Vector3(this.getWidth() * this.ScaleXZ, 50 * this.ScaleY, this.getLength() * this.ScaleXZ), Color.LightSlateGray);
             this.water.AlphaBlendEnable = true;
             this.water.Color = Color.FromArgb(150, Color.Aqua);
         }
