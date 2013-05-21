@@ -11,5 +11,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         void add(ILevelObject obstacle);
         void render(TgcFrustum frustum, List<Commando> commandos, List<Enemy> enemies);
         IRenderer Renderer { get; set; }
+        void dispose();
     }
 }

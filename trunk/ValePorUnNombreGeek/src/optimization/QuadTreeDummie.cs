@@ -45,6 +45,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
             
         }
 
+        public void dispose()
+        {
+            this.Renderer.dispose();
+
+        }
+
 
     }
 }

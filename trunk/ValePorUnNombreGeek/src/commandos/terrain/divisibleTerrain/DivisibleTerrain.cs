@@ -83,7 +83,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         /// <summary>
         /// Shader del mesh
         /// </summary>
-        public Effect Effect { get; set; }
+        Effect effect;
+        public Effect Effect { get { return this.effect; } set { this.effect = value; foreach (TerrainPatch p in patches) p.Effect = value; } }
 
 
 
@@ -91,7 +92,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         /// Technique que se va a utilizar en el effect.
         /// Cada vez que se llama a render() se carga este Technique (pisando lo que el shader ya tenia seteado)
         /// </summary>
-        public string Technique { get; set; }
+        string technique;
+        public string Technique { get { return this.technique; } set { this.technique = value; foreach(TerrainPatch p in patches) p.Technique=value;} }
 
 
         #endregion
@@ -111,8 +113,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             Enabled = true;
             AlphaBlendEnable = false;
             //Shader
-            this.Effect = GuiController.Instance.Shaders.VariosShader;
-            this.Technique = TgcShaders.T_POSITION_TEXTURED;
+            this.effect = GuiController.Instance.Shaders.VariosShader;
+            this.technique = TgcShaders.T_POSITION_TEXTURED;
         }
 
         /// <summary>

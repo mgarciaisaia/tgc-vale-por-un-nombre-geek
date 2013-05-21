@@ -67,7 +67,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
                 aspectRatio, near_plane, far_plane);
 
             float K = 300;
-            GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(80, 120, 0));
+            GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(80, 120, -210));
             GuiController.Instance.Modifiers.addVertex3f("LightLookAt", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(0, 0, 0));
         }
 
@@ -151,7 +151,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 
 
             if (shadow) technique = "SHADOW_MAP";
-            else technique = "DIFFUSE_MAP_SHADOWS";
+            else technique = "SHADOWS";
                 
             
 

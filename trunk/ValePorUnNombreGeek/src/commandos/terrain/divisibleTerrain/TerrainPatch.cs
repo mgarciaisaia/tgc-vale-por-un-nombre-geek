@@ -17,6 +17,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         public bool Enabled { get; set; }
         int totalVertices;
         public TgcBoundingBox BoundingBox { get; set; }
+        public DivisibleTerrain Father { get { return this.father; } }
+        
+
 
         public TerrainPatch(DivisibleTerrain father, CustomVertex.PositionTextured[] data, TgcBoundingBox bb)
         {
@@ -24,7 +27,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             totalVertices = data.Length;
             this.BoundingBox = bb;
             this.vbTerrainPatch  = new VertexBuffer(typeof(CustomVertex.PositionTextured), data.Length, GuiController.Instance.D3dDevice, Usage.Dynamic | Usage.WriteOnly, CustomVertex.PositionTextured.Format, Pool.Default);
-            
+            this.Effect = father.Effect;
+            this.Technique = father.Technique;
             vbTerrainPatch.SetData(data, 0, LockFlags.None);
 
             
@@ -36,20 +40,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
 
             //Textura
-            father.Effect.SetValue("texDiffuseMap", father.Texture);
+            Effect.SetValue("texDiffuseMap", father.Texture);
             texturesManager.clear(1);
 
-            GuiController.Instance.Shaders.setShaderMatrix(father.Effect, Matrix.Identity);
+            GuiController.Instance.Shaders.setShaderMatrix(Effect, Matrix.Identity);
             d3dDevice.VertexDeclaration = GuiController.Instance.Shaders.VdecPositionTextured;
-            father.Effect.Technique = father.Technique;
+            Effect.Technique = Technique;
             d3dDevice.SetStreamSource(0, vbTerrainPatch, 0);
 
             //Render con shader
-            father.Effect.Begin(0);
-            father.Effect.BeginPass(0);
+            Effect.Begin(0);
+            Effect.BeginPass(0);
             d3dDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, totalVertices / 3);
-            father.Effect.EndPass();
-            father.Effect.End();
+            Effect.EndPass();
+            Effect.End();
 
             BoundingBox.render();
         }
