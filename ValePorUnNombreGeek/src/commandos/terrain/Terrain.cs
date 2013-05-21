@@ -23,12 +23,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             string mediaDir = EjemploAlumno.MediaDir + "Heightmaps\\";
             pathHeightmap = mediaDir  + "heightmap.jpg";
             pathTextura = mediaDir + "TerrainTexture5.jpg";
-            this.heightmapPath = pathHeightmap;
+          
             
             //Cargar heightmap
             this.loadHeightmap(pathHeightmap, 20f, 2f, new Vector3(0, 0, 0));
             this.loadTexture(pathTextura);
-            this.texturePath = pathTextura;
+            
         }
 
         public void loadHeightmap(string heightmapPath, float scaleXZ, float scaleY, Vector3 center)
