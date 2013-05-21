@@ -62,7 +62,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
 
         private Vector3 center;
-        private int CUTS_COUNT=4;
+        private int CUTS_COUNT=2;
         /// <summary>
         /// Centro del terreno
         /// </summary>
@@ -147,27 +147,28 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             
             totalVertices = 2 * 3 * (heightmapData.GetLength(0) - 1) * (heightmapData.GetLength(1) - 1);
        
-            //Cargar vertices
-            int dataIdx = 0;
-            CustomVertex.PositionTextured[] data = new CustomVertex.PositionTextured[totalVertices];
+          
+           
 
             center.X = center.X * scaleXZ - (width / 2) * scaleXZ;
             center.Y = center.Y * scaleY;
             center.Z = center.Z * scaleXZ - (length / 2) * scaleXZ;
 
-
+           
             
             int patchWidth = (int)Math.Floor(width / CUTS_COUNT);
             int patchLength = (int)Math.Floor(length / CUTS_COUNT);
+            int totalPatchVertices = 2 * 3 * (patchWidth - 1) * (patchLength - 1);
 
             for (int h = 0; h < CUTS_COUNT; h++)
             {
                 for (int v = 0; v < CUTS_COUNT; v++)
                 {
-
+                    int dataIdx = 0;
+                    CustomVertex.PositionTextured[] data = new CustomVertex.PositionTextured[totalPatchVertices];
                     for (int i = h * patchWidth; i < (h+1)*patchWidth - 1; i++)
                     {
-                        for (int j = v * patchLength; j < (v+1)*patchLength - 1; j++)
+                        for (int j = v * patchLength; j < (v+1)*patchLength -1; j++)
                         {
                             //Vertices
                             Vector3 v1 = new Vector3(center.X + i * scaleXZ, center.Y + heightmapData[i, j] * scaleY, center.Z + j * scaleXZ);
@@ -195,8 +196,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
                         }
                     }
 
-
+                    
                     this.patches.Add(new TerrainPatch(this, data));
+                    GuiController.Instance.Modifiers.addBoolean("Parche de terreno " + (patches.Count - 1).ToString(), "Mostrar", true);
                 }
             }
         }
@@ -259,9 +261,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         {
             if (!Enabled)
                 return;
-
-            foreach (TerrainPatch patch in patches) patch.render();
-
+            for (int i=0; i<patches.Count; i++)
+            {
+                
+                bool mostrar = (bool)GuiController.Instance.Modifiers.getValue("Parche de terreno " + i.ToString());
+                if(mostrar)patches[i].render();
+            }
+            
         }
 
         /// <summary>
