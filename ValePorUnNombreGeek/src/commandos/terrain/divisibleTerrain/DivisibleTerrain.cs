@@ -37,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         public float ScaleXZ { get { return scaleXZ; } }
         public float ScaleY { get { return scaleY; } }
         public Texture Texture { get { return texture; } }
-       
+        public List<TerrainPatch> Patches { get { return patches; } }
 
         public Vector3 Position
         {

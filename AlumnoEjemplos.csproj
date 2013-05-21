@@ -162,6 +162,8 @@
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaVision2.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\renderzation\DefaultRenderer.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\renderzation\IRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TgcViewer\TgcViewer.csproj">

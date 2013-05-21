@@ -9,6 +9,7 @@ using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
@@ -20,6 +21,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         List<ILevelObject> objects;
         ITerrain terrain;
         IQuadTree quadtree;
+        public IRenderer Renderer { get { return this.quadtree.Renderer; } set { this.quadtree.Renderer = value; } }
         LevelMap map;
 
 
@@ -46,7 +48,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             objects = new List<ILevelObject>();
             this.terrain = terrain;
             this.map = new LevelMap(this, 100,100,2);
-            quadtree = new QuadTreeDummie(terrain);
+            quadtree = new QuadTreeDummie(terrain, new DefaultRenderer());
         }
 
        
