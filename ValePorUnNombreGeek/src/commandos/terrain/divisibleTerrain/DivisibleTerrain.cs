@@ -127,13 +127,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
             this.center = center;
-
-
+            this.scaleXZ = scaleXZ;
+            this.scaleY = scaleY;
+            
             //cargar heightmap
             heightmapData = loadHeightMap(d3dDevice, heightmapPath);
             float width = (float)heightmapData.GetLength(0);
             float length = (float)heightmapData.GetLength(1);
 
+            halfWidth = width / 2;
+            halfLength = length / 2;
 
             //Crear vertexBuffer
             totalVertices = 2 * 3 * (heightmapData.GetLength(0) - 1) * (heightmapData.GetLength(1) - 1);
