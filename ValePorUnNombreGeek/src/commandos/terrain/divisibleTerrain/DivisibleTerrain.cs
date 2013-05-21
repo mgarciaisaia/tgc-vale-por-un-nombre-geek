@@ -62,6 +62,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
 
         private Vector3 center;
+        private int CUTS_COUNT=4;
         /// <summary>
         /// Centro del terreno
         /// </summary>
@@ -155,43 +156,49 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             center.Z = center.Z * scaleXZ - (length / 2) * scaleXZ;
 
 
-            ///////
-            ////HAY QUE VER COMO MODIFICAR ESTE FOR PARA CREAR TRIANGULOS DE PORCIONES DE TERRENO.
-            //////
-            for (int i = 0; i < width - 1; i++)
+            
+            int patchWidth = (int)Math.Floor(width / CUTS_COUNT);
+            int patchLength = (int)Math.Floor(length / CUTS_COUNT);
+
+            for (int h = 0; h < CUTS_COUNT; h++)
             {
-                for (int j = 0; j < length - 1; j++)
+                for (int v = 0; v < CUTS_COUNT; v++)
                 {
-                    //Vertices
-                    Vector3 v1 = new Vector3(center.X + i * scaleXZ, center.Y + heightmapData[i, j] * scaleY, center.Z + j * scaleXZ);
-                    Vector3 v2 = new Vector3(center.X + i * scaleXZ, center.Y + heightmapData[i, j + 1] * scaleY, center.Z + (j + 1) * scaleXZ);
-                    Vector3 v3 = new Vector3(center.X + (i + 1) * scaleXZ, center.Y + heightmapData[i + 1, j] * scaleY, center.Z + j * scaleXZ);
-                    Vector3 v4 = new Vector3(center.X + (i + 1) * scaleXZ, center.Y + heightmapData[i + 1, j + 1] * scaleY, center.Z + (j + 1) * scaleXZ);
 
-                    //Coordendas de textura
-                    Vector2 t1 = new Vector2(i / width, j / length);
-                    Vector2 t2 = new Vector2(i / width, (j + 1) / length);
-                    Vector2 t3 = new Vector2((i + 1) / width, j / length);
-                    Vector2 t4 = new Vector2((i + 1) / width, (j + 1) / length);
+                    for (int i = h * patchWidth; i < (h+1)*patchWidth - 1; i++)
+                    {
+                        for (int j = v * patchLength; j < (v+1)*patchLength - 1; j++)
+                        {
+                            //Vertices
+                            Vector3 v1 = new Vector3(center.X + i * scaleXZ, center.Y + heightmapData[i, j] * scaleY, center.Z + j * scaleXZ);
+                            Vector3 v2 = new Vector3(center.X + i * scaleXZ, center.Y + heightmapData[i, j + 1] * scaleY, center.Z + (j + 1) * scaleXZ);
+                            Vector3 v3 = new Vector3(center.X + (i + 1) * scaleXZ, center.Y + heightmapData[i + 1, j] * scaleY, center.Z + j * scaleXZ);
+                            Vector3 v4 = new Vector3(center.X + (i + 1) * scaleXZ, center.Y + heightmapData[i + 1, j + 1] * scaleY, center.Z + (j + 1) * scaleXZ);
 
-                    //Cargar triangulo 1
-                    data[dataIdx] = new CustomVertex.PositionTextured(v1, t1.X, t1.Y);
-                    data[dataIdx + 1] = new CustomVertex.PositionTextured(v2, t2.X, t2.Y);
-                    data[dataIdx + 2] = new CustomVertex.PositionTextured(v4, t4.X, t4.Y);
+                            //Coordendas de textura
+                            Vector2 t1 = new Vector2(i / width, j / length);
+                            Vector2 t2 = new Vector2(i / width, (j + 1) / length);
+                            Vector2 t3 = new Vector2((i + 1) / width, j / length);
+                            Vector2 t4 = new Vector2((i + 1) / width, (j + 1) / length);
 
-                    //Cargar triangulo 2
-                    data[dataIdx + 3] = new CustomVertex.PositionTextured(v1, t1.X, t1.Y);
-                    data[dataIdx + 4] = new CustomVertex.PositionTextured(v4, t4.X, t4.Y);
-                    data[dataIdx + 5] = new CustomVertex.PositionTextured(v3, t3.X, t3.Y);
+                            //Cargar triangulo 1
+                            data[dataIdx] = new CustomVertex.PositionTextured(v1, t1.X, t1.Y);
+                            data[dataIdx + 1] = new CustomVertex.PositionTextured(v2, t2.X, t2.Y);
+                            data[dataIdx + 2] = new CustomVertex.PositionTextured(v4, t4.X, t4.Y);
 
-                    dataIdx += 6;
+                            //Cargar triangulo 2
+                            data[dataIdx + 3] = new CustomVertex.PositionTextured(v1, t1.X, t1.Y);
+                            data[dataIdx + 4] = new CustomVertex.PositionTextured(v4, t4.X, t4.Y);
+                            data[dataIdx + 5] = new CustomVertex.PositionTextured(v3, t3.X, t3.Y);
+
+                            dataIdx += 6;
+                        }
+                    }
+
+
+                    this.patches.Add(new TerrainPatch(this, data));
                 }
             }
-
-
-            this.patches.Add(new TerrainPatch(this, data));
-
-         
         }
 
         /// <summary>
