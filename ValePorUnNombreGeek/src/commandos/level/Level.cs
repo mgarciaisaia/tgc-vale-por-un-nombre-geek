@@ -113,6 +113,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
             map.dispose();
             terrain.dispose();
+            quadtree.dispose();
         }
 
 

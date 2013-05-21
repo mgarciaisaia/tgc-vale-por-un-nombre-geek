@@ -96,8 +96,16 @@ SKINNING_INPUT fillSkinningInput(float4 Position, float3 Normal, float3 Tangent,
 }
 
 
+
+
+
+
+
+
 /**************************************************************************************/
-/* DIFFUSE MAP */
+/**************************************************************************************/
+/* SHADERS DIFFUSE MAP */
+/**************************************************************************************/
 /**************************************************************************************/
 
 //Textura para DiffuseMap
@@ -252,6 +260,9 @@ float4 ps_Night( float2 Texcoord: TEXCOORD0, float4 Color:COLOR0) : COLOR0
 }
 
 
+
+
+
 /**************************************************************************************/
 /* Techniques DIFFUSE MAP */
 /**************************************************************************************/
@@ -314,9 +325,44 @@ technique SKELETAL_NIGHT_SELECTED
    }
 
 }
+
+
+
+
+
+						/*
+
+
+									Psyduck
+         
+											// //  //
+								 __    ____||_//  //
+							   _/__--~~        ~~~-_
+							  /  /___        ___    \
+							 /  /(  +)      ( + )    |
+							/  |  ~~~    __  ~~~   _/\/|
+						   |    \  ___.-~  ~-.___  \   / 
+							\    \(     ` '      ~~)|   \
+							 \     )              / |    \
+							  \/   /              \ |    |
+							  /   |               | |    |
+							 |    /               |  \__/
+							 |    \_            _/      |    ___
+							 \      ~----...---~       /_.-~~ _/
+							  \_                      |    _-~ 
+								\                    /  _-~ 
+								 ~-.__             _/--~
+								_.-~  ~~~-----~~~~~
+							   ~-.-. _-~     /_ ._ \   Amw
+									~       ~  ~  ~-
+						*/
+
 /**************************************************************************************/
-/* SHADOW MAP */
 /**************************************************************************************/
+/*                      SHADERS PARA CREAR EL SHADOW MAP
+/**************************************************************************************/
+/**************************************************************************************/
+
 
 
 #define SMAP_SIZE 1024
@@ -344,13 +390,43 @@ sampler_state
 
 
 
-//Aca irian los shaders.
+
+
+void VertShadow( float4 Pos : POSITION,
+                 float3 Normal : NORMAL,
+                 out float4 oPos : POSITION,
+                 out float2 Depth : TEXCOORD0 )
+{
+	// transformacion estandard 
+    oPos = mul( Pos, matWorld);					// uso el del mesh
+    oPos = mul( oPos, g_mViewLightProj );		// pero visto desde la pos. de la luz
+    
+    // devuelvo: profundidad = z/w 
+    Depth.xy = oPos.zw;
+}
+
+void PixShadow( float2 Depth : TEXCOORD0,out float4 Color : COLOR )
+{
+    Color = Depth.x/Depth.y;
+
+}
 
 
 
 /**************************************************************************************/
 /* Techniques SHADOW MAP */
 /**************************************************************************************/
+
+
+technique SHADOW_MAP
+{
+    pass p0
+    {
+        VertexShader = compile vs_3_0 VertShadow();
+        PixelShader = compile ps_3_0 PixShadow();
+    }
+}
+
 
 technique SKELETAL_SHADOW_MAP
 {
@@ -361,11 +437,104 @@ technique SKELETAL_SHADOW_MAP
     }
 }
 
+technique SKELETAL_SHADOW_MAP_SELECTED
+{
+    pass p0
+    { //Remplazar por shaders correspondientes
+        VertexShader = compile vs_3_0 vs_Skeletal_DiffuseMap();
+		PixelShader = compile ps_3_0 ps_DiffuseMap();
+    }
+}
+
+
 
 /**************************************************************************************/
-/* Techniques DIFFUSE MAP WITH SHADOWS */
 /**************************************************************************************/
-technique SKELETAL_DIFFUSE_MAP_SHADOWS
+/*              SHADERS PARA RENDERIZAR CON LA SOMBRAS DEL SHADOW MAP
+/**************************************************************************************/
+/**************************************************************************************/
+
+void VertScene( float4 iPos : POSITION,
+                float2 iTex : TEXCOORD0,
+                float3 iNormal : NORMAL,
+				out float4 oPos : POSITION,                
+                out float2 Tex : TEXCOORD0,
+				out float4 vPos : TEXCOORD1,
+                out float3 vNormal : TEXCOORD2,
+                out float4 vPosLight : TEXCOORD3 
+                )
+{
+    // transformo al screen space
+    oPos = mul( iPos, matWorldViewProj );
+        
+	// propago coordenadas de textura 
+    Tex = iTex;
+    
+	// propago la normal
+    vNormal = mul( iNormal, (float3x3)matWorldView );
+    
+    // propago la posicion del vertice en World space
+    vPos = mul( iPos, matWorld);
+    // propago la posicion del vertice en el espacio de proyeccion de la luz
+    vPosLight = mul( vPos, g_mViewLightProj );
+	
+}
+
+
+
+float4 PixScene(	float2 Tex : TEXCOORD0,
+					float4 vPos : TEXCOORD1,
+					float3 vNormal : TEXCOORD2,
+					float4 vPosLight : TEXCOORD3
+					):COLOR
+{
+    float3 vLight = normalize( float3( vPos - g_vLightPos ) );
+	float cono = dot( vLight, g_vLightDir);
+	float4 K = 0.0;
+	if( cono > 0.7)
+    {
+    
+    	// coordenada de textura CT
+        float2 CT = 0.5 * vPosLight.xy / vPosLight.w + float2( 0.5, 0.5 );
+        CT.y = 1.0f - CT.y;
+
+		// sin ningun aa. conviene con smap size >= 512 
+		float I = (tex2D( g_samShadow, CT) + EPSILON < vPosLight.z / vPosLight.w)? 0.0f: 1.0f;  
+		
+				
+	    if( cono < 0.8)
+			I*= 1-(0.8-cono)*10;
+		
+		K = I;
+    }     
+		
+	float4 color_base = tex2D( diffuseMap, Tex);
+	color_base.rgb *= 0.5 + 0.5*K;
+	return color_base;	
+}	
+
+
+
+
+
+/**************************************************************************************/
+/* Techniques SHADOWS */
+/**************************************************************************************/
+
+
+
+technique SHADOWS
+{
+    pass p0
+    {
+        VertexShader = compile vs_3_0 VertScene();
+        PixelShader = compile ps_3_0 PixScene();
+    }
+}
+
+
+
+technique SKELETAL_SHADOWS
 {
     pass p0
     {//Remplazar por shaders correspondientes
@@ -374,10 +543,10 @@ technique SKELETAL_DIFFUSE_MAP_SHADOWS
     }
 }
 
-technique SKELETAL_DIFFUSE_MAP_SHADOWS_SELECTED
+technique SKELETAL_SHADOWS_SELECTED
 {
     pass p0
-    {//Remplazar por shaders correspondientes
+    {
         VertexShader = compile vs_3_0 vs_Skeletal_DiffuseMap();
 		PixelShader = compile ps_3_0 ps_DiffuseMap_Selected();
     }

@@ -16,6 +16,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 using Microsoft.DirectX.Direct3D;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -128,6 +129,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Seleccion multiple
             selection = new Selection(level.Characters, level.Terrain);
+
+            level.Renderer = new ShadowRenderer();
         }
         #endregion
 
