@@ -56,7 +56,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         /// <summary>
         /// Indica si la malla esta habilitada para ser renderizada
         /// </summary>
-        public bool Enabled { get; set; }
+        bool enabled;
+        public bool Enabled { get { return enabled; } set { this.enabled = value; foreach (TerrainPatch p in patches) p.Enabled = value; } }
 
 
         protected Vector3 center;
@@ -75,8 +76,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         /// con textura o colores por vértice de canal Alpha.
         /// Por default está deshabilitado.
         /// </summary>
-       
-        public bool AlphaBlendEnable { get; set; }
+        bool alphaBlendEnable;
+        public bool AlphaBlendEnable { get { return alphaBlendEnable; } set { this.alphaBlendEnable = value; foreach (TerrainPatch p in patches) p.AlphaBlendEnable = value; } }
 
 
 
@@ -110,8 +111,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
         public DivisibleTerrain()
         {
-            Enabled = true;
-            AlphaBlendEnable = false;
+            enabled = true;
+            alphaBlendEnable = false;
             //Shader
             this.effect = GuiController.Instance.Shaders.VariosShader;
             this.technique = TgcShaders.T_POSITION_TEXTURED;
