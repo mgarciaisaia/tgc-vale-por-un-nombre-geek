@@ -32,7 +32,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         bool heightmapCoordsToXYZ(Vector2 coords, out Vector3 XYZ);
         bool xzToHeightmapCoords(float x, float z, out Vector2 coords);
         Vector3 getPosition(float x, float z);
-        bool getPosition(float x, float z, Vector3 ret);
+        bool getPosition(float x, float z, out Vector3 ret);
         
        
         bool positionAllowed(Vector3 coords);
