@@ -66,10 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
                 Matrix.PerspectiveFovLH(Geometry.DegreeToRadian(45.0f),
                 aspectRatio, near_plane, far_plane);
 
-            float K = 300;
-            GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(80, 120, -210));
-            GuiController.Instance.Modifiers.addVertex3f("LightLookAt", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(0, 0, 0));
-        }
+           }
 
      
              
@@ -82,8 +79,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             Control panel3d = GuiController.Instance.Panel3d;
             float aspectRatio = (float)panel3d.Width / (float)panel3d.Height;
 
-            g_LightPos = (Vector3)GuiController.Instance.Modifiers["LightLookFrom"];
-            g_LightDir = (Vector3)GuiController.Instance.Modifiers["LightLookAt"] - g_LightPos;
+            try
+            {
+                g_LightPos = (Vector3)GuiController.Instance.Modifiers["LightLookFrom"];
+                g_LightDir = (Vector3)GuiController.Instance.Modifiers["LightLookAt"] - g_LightPos;
+            }
+            catch (Exception)
+            {
+
+                float K = 300;
+                GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(80, 120, -210));
+                GuiController.Instance.Modifiers.addVertex3f("LightLookAt", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(0, 0, 0));
+                           
+                g_LightPos = (Vector3)GuiController.Instance.Modifiers["LightLookFrom"];
+                g_LightDir = (Vector3)GuiController.Instance.Modifiers["LightLookAt"] - g_LightPos; 
+            }
             g_LightDir.Normalize();
 
             // Shadow maps:
