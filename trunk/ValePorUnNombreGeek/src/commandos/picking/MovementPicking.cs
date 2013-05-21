@@ -39,7 +39,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
             {
                 PickingRaySingleton.Instance.updateRayByMouse();
                 if(PickingRaySingleton.Instance.terrainIntersection(this.terrain, out p) &&
-                    terrain.positionAvailableForCharacter(p)) return true;
+                    terrain.positionAllowed(p)) return true;
                 else return false;
             }
 

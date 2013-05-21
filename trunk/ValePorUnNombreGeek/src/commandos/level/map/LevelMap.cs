@@ -64,7 +64,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         public bool ShowCharacters { get; set; }
         public bool FollowCamera { get; set; }
        
-        public LevelMap(Level level, float width, float height, float zoom):base(loadDiffuseMap(level), width, height)
+        public LevelMap(Level level, float width, float height, float zoom):base(level.Terrain.Texture, width, height)
         {
             this.level = level;
             this.zoom = zoom;
@@ -83,20 +83,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         
         }
 
-        private static Texture loadDiffuseMap(Level level)
-        {
-            Device d3dDevice = GuiController.Instance.D3dDevice;
-            Bitmap bitmap;
-            Texture texture;
-
-            //Hay que rotar la textura porque por alguna razon TgcSimpleTerrain la rota.
-            bitmap = (Bitmap)Bitmap.FromFile(level.Terrain.TexturePath);
-            bitmap.RotateFlip(RotateFlipType.Rotate90FlipX);
-            texture = Texture.FromBitmap(d3dDevice, bitmap, Usage.None, Pool.Managed);
-            bitmap.Dispose();
-
-            return texture;
-        }
 
         #region update
         /// <summary>

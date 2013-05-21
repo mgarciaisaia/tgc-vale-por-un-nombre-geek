@@ -50,7 +50,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
             base.render();
         }
 
-        public override bool positionAvailableForCharacter(Vector3 coords)
+        public override bool positionAllowed(Vector3 coords)
         {
             if (coords.Y >= this.waterLevel) return true; else return false;
         }

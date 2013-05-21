@@ -13,21 +13,20 @@ using TgcViewer;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain
 {
 
-    public class DivisibleTerrain : IRenderObject, ITerrain
+    public class DivisibleTerrain : ITerrain
     {
 
 
-        float scaleXZ;
-        float scaleY;
-        float halfWidth; //Se usa mas la mitad que el total
-        float halfLength;
-        string texturePath;
-        string heightmapPath;
-     
-        Texture terrainTexture;
-        int totalVertices;
-        int[,] heightmapData;
-        List<TerrainPatch> patches;
+        protected float scaleXZ;
+        protected float scaleY;
+        protected float halfWidth; 
+        protected float halfLength;
+    
+
+        protected Texture texture;
+        protected int totalVertices;
+        protected int[,] heightmapData;
+        protected List<TerrainPatch> patches;
 
         #region Getters y Setters
 
@@ -37,10 +36,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         public float getLength() { return halfLength * 2; }
         public float ScaleXZ { get { return scaleXZ; } }
         public float ScaleY { get { return scaleY; } }
-        public string TexturePath { get { return texturePath; } }
-        public string HeightmapPath { get { return heightmapPath; } }
+        public Texture Texture { get { return texture; } }
 
-        public Texture TerrainTexture { get { return terrainTexture; } }
         public Vector3 Position
         {
             get { return center; }
@@ -61,8 +58,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         public bool Enabled { get; set; }
 
 
-        private Vector3 center;
-        private int CUTS_COUNT=2;
+        protected Vector3 center;
+        protected Vector2 FORMAT;
         /// <summary>
         /// Centro del terreno
         /// </summary>
@@ -100,13 +97,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
         #region Constructor
 
-        public DivisibleTerrain(string pathHeightmap, string pathTextura, float scaleXZ, float scaleY)
+        public DivisibleTerrain(string pathHeightmap, string pathTextura, float scaleXZ, float scaleY, Vector2 FORMAT)
             :this()
         {
-            this.loadHeightmap(pathHeightmap, scaleXZ, scaleY, new Vector3(0, 0, 0));
+            this.loadHeightmap(pathHeightmap, scaleXZ, scaleY, new Vector3(0, 0, 0), FORMAT);
             this.loadTexture(pathTextura);
-            this.texturePath = pathTextura;
-            this.heightmapPath = pathHeightmap;
         }
 
 
@@ -126,7 +121,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         /// <param name="scaleXZ">Escala para los ejes X y Z</param>
         /// <param name="scaleY">Escala para el eje Y</param>
         /// <param name="center">Centro de la malla del terreno</param>
-        public void loadHeightmap(string heightmapPath, float scaleXZ, float scaleY, Vector3 center)
+
+        
+        public void loadHeightmap(string heightmapPath, float scaleXZ, float scaleY, Vector3 center, Vector2 FORMAT)
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
             this.center = center;
@@ -156,13 +153,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
            
             
-            int patchWidth = (int)Math.Floor(width / CUTS_COUNT);
-            int patchLength = (int)Math.Floor(length / CUTS_COUNT);
+            int patchWidth = (int)Math.Floor(width / FORMAT.Y);
+            int patchLength = (int)Math.Floor(length / FORMAT.X);
             int totalPatchVertices = 2 * 3 * patchWidth * patchLength;
 
-            for (int h = 0; h < CUTS_COUNT; h++)
+            for (int h = 0; h < FORMAT.Y; h++)
             {
-                for (int v = 0; v < CUTS_COUNT; v++)
+                for (int v = 0; v < FORMAT.X; v++)
                 {
                     int dataIdx = 0;
                     CustomVertex.PositionTextured[] data = new CustomVertex.PositionTextured[totalPatchVertices];
@@ -209,9 +206,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         public void loadTexture(string path)
         {
             //Dispose textura anterior, si habia
-            if (terrainTexture != null && !terrainTexture.Disposed)
+            if (texture != null && !texture.Disposed)
             {
-                terrainTexture.Dispose();
+                texture.Dispose();
             }
 
             Device d3dDevice = GuiController.Instance.D3dDevice;
@@ -219,7 +216,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             //Rotar e invertir textura
             Bitmap b = (Bitmap)Bitmap.FromFile(path);
             b.RotateFlip(RotateFlipType.Rotate90FlipX);
-            terrainTexture = Texture.FromBitmap(d3dDevice, b, Usage.None, Pool.Managed);
+            texture = Texture.FromBitmap(d3dDevice, b, Usage.None, Pool.Managed);
         }
 
 
@@ -278,9 +275,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
             foreach (TerrainPatch patch in patches) patch.dispose();
 
-            if (terrainTexture != null) 
+            if (texture != null) 
             {
-                terrainTexture.Dispose();
+                texture.Dispose();
             }
         }
         #endregion
@@ -398,7 +395,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         /// Se utiliza para saber si una posicion es valida para mover por picking al personaje.
         /// Nota: en un terreno sin agua este metodo siempre devuelve true.
         /// </summary>
-        public virtual bool positionAvailableForCharacter(Vector3 coords)
+        public virtual bool positionAllowed(Vector3 coords)
         {
             return true;
         }
