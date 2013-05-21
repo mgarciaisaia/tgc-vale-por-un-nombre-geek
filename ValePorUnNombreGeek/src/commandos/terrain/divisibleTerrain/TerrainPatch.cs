@@ -10,7 +10,7 @@ using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain
 {
-    public class TerrainPatch
+    public class TerrainPatch: IRenderObject
     {
         protected DivisibleTerrain father;
         protected VertexBuffer vbTerrainPatch;
@@ -18,6 +18,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         int totalVertices;
         public TgcBoundingBox BoundingBox { get; set; }
         public DivisibleTerrain Father { get { return this.father; } }
+
+
+        public bool AlphaBlendEnable { get; set; }
+        public Effect Effect { get; set; }
+        public string Technique { get; set; }
         
 
 
@@ -29,6 +34,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             this.vbTerrainPatch  = new VertexBuffer(typeof(CustomVertex.PositionTextured), data.Length, GuiController.Instance.D3dDevice, Usage.Dynamic | Usage.WriteOnly, CustomVertex.PositionTextured.Format, Pool.Default);
             this.Effect = father.Effect;
             this.Technique = father.Technique;
+            this.Enabled = father.Enabled;
             vbTerrainPatch.SetData(data, 0, LockFlags.None);
 
             
@@ -36,7 +42,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
         public void render()
         {
+            if (!Enabled) return;
             Device d3dDevice = GuiController.Instance.D3dDevice;
+            bool alphaBlendEnable = d3dDevice.RenderState.AlphaBlendEnable;
+            d3dDevice.RenderState.AlphaBlendEnable = AlphaBlendEnable;
             TgcTexture.Manager texturesManager = GuiController.Instance.TexturesManager;
 
             //Textura
@@ -44,10 +53,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             texturesManager.clear(1);
 
             GuiController.Instance.Shaders.setShaderMatrix(Effect, Matrix.Identity);
+            
             d3dDevice.VertexDeclaration = GuiController.Instance.Shaders.VdecPositionTextured;
             Effect.Technique = Technique;
             d3dDevice.SetStreamSource(0, vbTerrainPatch, 0);
-
+            
             //Render con shader
             Effect.Begin(0);
             Effect.BeginPass(0);
@@ -56,6 +66,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             Effect.End();
 
             BoundingBox.render();
+
+            d3dDevice.RenderState.AlphaBlendEnable = alphaBlendEnable;
         }
 
         public void dispose()
@@ -65,8 +77,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
 
 
-        public string Technique { get; set; }
 
-        public Effect Effect { get; set; }
     }
 }
