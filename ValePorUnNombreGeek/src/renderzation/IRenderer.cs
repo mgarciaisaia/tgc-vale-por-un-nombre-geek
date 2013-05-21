@@ -16,5 +16,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
         void render(Enemy e);
         void render(TerrainPatch t);
         void endRender();
+        void dispose();
     }
 }
