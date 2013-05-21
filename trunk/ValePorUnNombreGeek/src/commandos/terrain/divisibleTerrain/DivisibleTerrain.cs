@@ -158,7 +158,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             
             int patchWidth = (int)Math.Floor(width / CUTS_COUNT);
             int patchLength = (int)Math.Floor(length / CUTS_COUNT);
-            int totalPatchVertices = 2 * 3 * (patchWidth - 1) * (patchLength - 1);
+            int totalPatchVertices = 2 * 3 * patchWidth * patchLength;
 
             for (int h = 0; h < CUTS_COUNT; h++)
             {
@@ -166,9 +166,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
                 {
                     int dataIdx = 0;
                     CustomVertex.PositionTextured[] data = new CustomVertex.PositionTextured[totalPatchVertices];
-                    for (int i = h * patchWidth; i < (h+1)*patchWidth - 1; i++)
+                    for (int i = h * patchWidth; i < (h+1)*patchWidth && i < width -1 ; i++)
                     {
-                        for (int j = v * patchLength; j < (v+1)*patchLength -1; j++)
+                        for (int j = v * patchLength; j < (v+1)*patchLength && j < length-1 ; j++)
                         {
                             //Vertices
                             Vector3 v1 = new Vector3(center.X + i * scaleXZ, center.Y + heightmapData[i, j] * scaleY, center.Z + j * scaleXZ);
