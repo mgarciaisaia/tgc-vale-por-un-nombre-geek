@@ -37,6 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         public float ScaleXZ { get { return scaleXZ; } }
         public float ScaleY { get { return scaleY; } }
         public Texture Texture { get { return texture; } }
+       
 
         public Vector3 Position
         {
@@ -164,6 +165,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
                 {
                     int dataIdx = 0;
                     CustomVertex.PositionTextured[] data = new CustomVertex.PositionTextured[totalPatchVertices];
+                    float maxY = 0;
                     for (int i = h * patchWidth; i < (h+1)*patchWidth && i < width -1 ; i++)
                     {
                         for (int j = v * patchLength; j < (v+1)*patchLength && j < length-1 ; j++)
@@ -174,6 +176,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
                             Vector3 v3 = new Vector3(center.X + (i + 1) * scaleXZ, center.Y + heightmapData[i + 1, j] * scaleY, center.Z + j * scaleXZ);
                             Vector3 v4 = new Vector3(center.X + (i + 1) * scaleXZ, center.Y + heightmapData[i + 1, j + 1] * scaleY, center.Z + (j + 1) * scaleXZ);
 
+                            if (center.Y + heightmapData[i, j] * scaleY > maxY) maxY = center.Y + heightmapData[i, j] * scaleY;
+                            
                             //Coordendas de textura
                             Vector2 t1 = new Vector2(i / width, j / length);
                             Vector2 t2 = new Vector2(i / width, (j + 1) / length);
@@ -193,9 +197,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
                             dataIdx += 6;
                         }
                     }
-
+                    Vector3 pMin = new Vector3(center.X + h*patchWidth*scaleXZ, center.Y, center.Z + v*patchLength*ScaleXZ);
+                    Vector3 pMax = new Vector3(center.X + (h + 1) * patchWidth * scaleXZ, maxY, center.Z + (v + 1) * patchLength * scaleXZ);
                     
-                    this.patches.Add(new TerrainPatch(this, data));
+                    this.patches.Add(new TerrainPatch(this, data, new TgcBoundingBox(pMin, pMax)));
                     GuiController.Instance.Modifiers.addBoolean("Parche de terreno " + (patches.Count - 1).ToString(), "Mostrar", true);
                 }
             }
@@ -263,7 +268,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             {
                 
                 bool mostrar = (bool)GuiController.Instance.Modifiers.getValue("Parche de terreno " + i.ToString());
-                if(mostrar)patches[i].render();
+                if (mostrar)
+                {
+                    patches[i].render();
+                   
+                }
             }
             
         }
