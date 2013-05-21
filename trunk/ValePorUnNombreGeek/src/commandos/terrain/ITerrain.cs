@@ -2,10 +2,13 @@
 using Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.TgcSceneLoader;
 using Microsoft.DirectX;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
+using System.Collections.Generic;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
 {
     interface ITerrain : IRenderObject
     {
+        List<TerrainPatch> Patches { get; }
 
         void loadHeightmap(string heightmapPath, float scaleXZ, float scaleY, Vector3 center, Vector2 FORMAT);
         void loadTexture(string path);
