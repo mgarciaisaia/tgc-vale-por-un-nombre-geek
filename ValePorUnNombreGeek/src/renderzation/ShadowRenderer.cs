@@ -87,8 +87,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             catch (Exception)
             {
 
-                float K = 300;
-                GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(80, 120, -210));
+                float K = 900;
+                GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K ,-K ,-K), new Vector3(K, K, K), new Vector3(80, 200, -210));
                 GuiController.Instance.Modifiers.addVertex3f("LightLookAt", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(0, 0, 0));
                            
                 g_LightPos = (Vector3)GuiController.Instance.Modifiers["LightLookFrom"];
@@ -99,10 +99,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             // Shadow maps:
             device.EndScene();      // termino el thread anterior
 
-            GuiController.Instance.RotCamera.CameraCenter = new Vector3(0, 0, 0);
-            GuiController.Instance.RotCamera.CameraDistance = 100;
-            GuiController.Instance.RotCamera.RotationSpeed = 2f;
-            GuiController.Instance.CurrentCamera.updateCamera();
+           
             device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
 
             //Genero el shadow map
