@@ -13,6 +13,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using TgcViewer.Utils;
 using TgcViewer.Utils.TgcGeometry;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 {
@@ -30,6 +31,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
         float far_plane = 1500f;
         Matrix projection;
         TgcArrow arrow;
+
+        public Vector3 LightLookFrom { get { return g_LightPos; } set { g_LightPos = value; updateLightDir(); updateArrow(); } }
+
+        private void updateLightDir()
+        {
+            g_LightDir = lightLookAt - g_LightPos; 
+            g_LightDir.Normalize();
+        }
+
+        private void updateArrow()
+        {
+            arrow.PStart = g_LightPos;
+            arrow.PEnd = g_LightPos + g_LightDir * 300f;
+            arrow.updateValues();
+        }
+
+        private Vector3 lightLookAt;
+        public Vector3 LightLookAt { get { return lightLookAt; } set { lightLookAt = value; updateLightDir(); updateArrow(); } }
         
         public ShadowRenderer():base()
         {
@@ -74,7 +93,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             arrow.BodyColor = Color.Blue;
 
 
-           }
+         
+
+
+          }
 
         public override void render(TerrainPatch t)
         {
@@ -91,25 +113,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             Control panel3d = GuiController.Instance.Panel3d;
             float aspectRatio = (float)panel3d.Width / (float)panel3d.Height;
 
-            try
-            {
-                g_LightPos = (Vector3)GuiController.Instance.Modifiers["LightLookFrom"];
-                g_LightDir = (Vector3)GuiController.Instance.Modifiers["LightLookAt"] - g_LightPos;
-            }
-            catch (Exception)
-            {
-
-                float K = 900;
-                GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K , -K ,-K), new Vector3(K, 2*K, K), new Vector3(80, K, -210));
-                GuiController.Instance.Modifiers.addVertex3f("LightLookAt", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(0, 0, 0));
-                           
-                g_LightPos = (Vector3)GuiController.Instance.Modifiers["LightLookFrom"];
-                g_LightDir = (Vector3)GuiController.Instance.Modifiers["LightLookAt"] - g_LightPos; 
-            }
-            g_LightDir.Normalize();
-            arrow.PStart = g_LightPos;
-            arrow.PEnd = g_LightPos + g_LightDir * 300f;
-            arrow.updateValues();
+                 
             // Shadow maps:
             device.EndScene();      // termino el thread anterior
 

@@ -161,16 +161,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             GuiController.Instance.Modifiers.addBoolean("showCylinder", "Ver cilindros", false);
             Modifiers.Instance.bind("showCylinder", typeof(Character), "RenderCylinder");
 
-           
+
+
+            GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
+            Modifiers.Instance.bind("Sombras", this, "Sombras");
+
+            float K = 900;
+            GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K, -K, -K), new Vector3(K, 2 * K, K), new Vector3(80, K, -210));
+            Modifiers.Instance.bind("LightLookFrom", shadowRenderer, "LightLookFrom");
+            
+            GuiController.Instance.Modifiers.addVertex3f("LightLookAt", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(0, 0, 0));
+            Modifiers.Instance.bind("LightLookAt", shadowRenderer, "LightLookAt");
+          
             for (int i = 0; i < level.Terrain.Patches.GetLength(0); i++) for (int j = 0; j < level.Terrain.Patches.GetLength(1); j++)
                 {
                     GuiController.Instance.Modifiers.addBoolean("TerrainPatch[" + i + "," + j + "]", "Mostrar", true);
                     Modifiers.Instance.bind("TerrainPatch[" + i + "," + j + "]", level.Terrain.Patches[i, j], "Enabled");
                 }
 
-
-            GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
-            Modifiers.Instance.bind("Sombras", this, "Sombras");
         }
         #endregion
 
