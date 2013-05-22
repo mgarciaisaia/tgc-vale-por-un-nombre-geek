@@ -16,7 +16,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             GuiController.Instance.Modifiers.addBoolean("showCylinder", "Ver cilindros", false);
             GuiController.Instance.Modifiers.addBoolean("Mapa", "ShowCharacters", true);
             GuiController.Instance.Modifiers.addFloat("Zoom", 0.5f, 5, 2);
-           
+            GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
 
         }
 
@@ -42,5 +42,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         public float zoomMapa { get { return (float)GuiController.Instance.Modifiers.getValue("Zoom"); } }
 
         public bool showCharacters { get { return (bool)GuiController.Instance.Modifiers.getValue("Mapa"); } }
+
+        public bool sombras { get { return (bool)GuiController.Instance.Modifiers.getValue("Sombras"); } }
     }
 }

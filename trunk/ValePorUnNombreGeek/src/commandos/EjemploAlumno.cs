@@ -79,24 +79,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void init()
         {
-             string initialLevel = EjemploAlumno.SrcDir + "\\niveles\\default-level.xml";
-            
-            GuiController.Instance.Modifiers.addFile("Level", initialLevel, "-level.xml|*-level.xml");
+
             //Crear SkyBox
             sky = new Sky();
-            this.level = null;
-            loadLevel(initialLevel);
-
-            GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
-            LevelMap map = level.Map;
-            map.setMask( TextureLoader.FromFile(GuiController.Instance.D3dDevice,EjemploAlumno.MediaDir + "Mapa\\mask.jpg"));
-            map.setFrame( TextureLoader.FromFile(GuiController.Instance.D3dDevice,EjemploAlumno.MediaDir + "Mapa\\frame.png"));
-            map.Width = 2 * level.Map.Height;
-            map.Height = 1.5f * level.Map.Height;
-            map.Position = new Vector2(GuiController.Instance.Panel3d.Width/2 - level.Map.Width/2, GuiController.Instance.Panel3d.Height- level.Map.Height);
-         
-
-            UserVars.initialize();
+           
+            loadLevel(EjemploAlumno.SrcDir + "\\niveles\\default-level.xml");
+                 
             
             //Panel de control in game
             controlPanel = new GraphicalControlPanel(EjemploAlumno.MediaDir + "Sprites\\panel2.jpg");
@@ -110,20 +98,39 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         }
 
         #region LoadLevel
-        private void checkLoadLevel(string selectedPath)
+        private void checkLoadLevel()
         {
+            string selectedPath = (string)GuiController.Instance.Modifiers["Level"];
             if (selectedPath != currentLevel) loadLevel(selectedPath);
         }
 
         private void loadLevel(string newLevel)
         {
             if (level != null) level.dispose();
-            
+
+            GuiController.Instance.Modifiers.clear();
+            GuiController.Instance.UserVars.clearVars();
+
             currentLevel = newLevel;
 
             XMLLevelParser levelParser = new XMLLevelParser(newLevel, EjemploAlumno.MediaDir);
             level = levelParser.getLevel();
-            
+
+         
+
+            LevelMap map = level.Map;
+            map.setMask(TextureLoader.FromFile(GuiController.Instance.D3dDevice, EjemploAlumno.MediaDir + "Mapa\\mask.jpg"));
+            map.setFrame(TextureLoader.FromFile(GuiController.Instance.D3dDevice, EjemploAlumno.MediaDir + "Mapa\\frame.png"));
+            map.Width = 2 * level.Map.Height;
+            map.Height = 1.5f * level.Map.Height;
+            map.Position = new Vector2(GuiController.Instance.Panel3d.Width / 2 - level.Map.Width / 2, GuiController.Instance.Panel3d.Height - level.Map.Height);
+
+
+            UserVars.initialize();
+            GuiController.Instance.Modifiers.addFile("Level", currentLevel, "-level.xml|*-level.xml");
+
+
+
             //Movimiento por picking
             picking = new MovementPicking(level.Terrain);
                
@@ -155,15 +162,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
                 GuiController.Instance.Logger.log("Ignoramos un retardo de " + elapsedTime + " s");
                 return;
             }*/
-            string selectedPath = (string)GuiController.Instance.Modifiers["Level"];
-            
-            checkLoadLevel(selectedPath);
 
-        
+                 
+            checkLoadLevel();        
 
             Character.RenderCylinder = UserVars.Instance.renderCollisionNormal;
             
-            if ((bool)GuiController.Instance.Modifiers.getValue("Sombras")) level.Renderer = shadowRenderer;
+            if (UserVars.Instance.sombras) level.Renderer = shadowRenderer;
                 else level.Renderer = defaultRenderer;
          
             level.render(elapsedTime);
