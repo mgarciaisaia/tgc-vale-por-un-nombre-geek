@@ -106,8 +106,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);*/
 
-            defaultRenderer = level.Renderer;
-            shadowRenderer = new ShadowRenderer();
          
         }
 
@@ -136,7 +134,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             //Seleccion multiple
             selection = new Selection(level.Characters, level.Terrain);
 
-            
+            defaultRenderer = level.Renderer;
+            shadowRenderer = new ShadowRenderer();
+         
         }
         #endregion
 
