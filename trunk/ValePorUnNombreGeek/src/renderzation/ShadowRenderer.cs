@@ -164,20 +164,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             else technique = "SHADOWS";
                 
             
-
             foreach (TerrainPatch p in terrainPatches)
             {
-                //TODO: hacer que el terrain patch use su technique y effect en vez de la del padre. Y que el padre se las setee si se lo setean.
                 p.Effect = effect;
                 p.Technique = technique;
                 p.render();
             }
+
             foreach (ILevelObject o in objects)
             {
                 o.Effect = effect;
                 o.Technique = technique;
                 o.render();
             }
+
             foreach (Commando c in commandos)
             {
                 c.Effect = effect;

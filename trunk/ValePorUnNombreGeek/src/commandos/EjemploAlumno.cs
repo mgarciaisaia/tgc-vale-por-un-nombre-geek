@@ -33,6 +33,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         Selection selection;
         string currentLevel;
         GraphicalControlPanel controlPanel;
+        IRenderer renderer;
 
         FreeCamera camera;
 
@@ -102,7 +103,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             /*controlPanel = new TextControlPanel();
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);*/
-           
+
+            renderer = new ShadowRenderer();
+           // renderer = new DefaultRenderer();
         }
 
         #region LoadLevel
@@ -130,7 +133,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             //Seleccion multiple
             selection = new Selection(level.Characters, level.Terrain);
 
-            level.Renderer = new ShadowRenderer();
+            
         }
         #endregion
 
@@ -156,6 +159,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             sky.render();
 
             Character.RenderCylinder = UserVars.Instance.renderCollisionNormal;
+
+            level.Renderer = renderer;
             level.render(elapsedTime);
 
             if (controlPanel.mouseIsOverPanel())
