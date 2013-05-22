@@ -62,9 +62,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             float aspectRatio = (float)panel3d.Width / (float)panel3d.Height;
             g_mShadowProj = Matrix.PerspectiveFovLH(Geometry.DegreeToRadian(80),
                 aspectRatio, 50, 5000);
-            d3dDevice.Transform.Projection =
+           /* d3dDevice.Transform.Projection = 
                 Matrix.PerspectiveFovLH(Geometry.DegreeToRadian(45.0f),
-                aspectRatio, near_plane, far_plane);
+                aspectRatio, near_plane, far_plane);*/
 
            }
 
