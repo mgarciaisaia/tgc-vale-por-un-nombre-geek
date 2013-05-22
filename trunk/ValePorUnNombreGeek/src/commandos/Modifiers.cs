@@ -77,7 +77,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         #region Bindings
         /// <summary>
-        /// Enlaza el valor del modifier con el de la propiedad del objeto.
+        /// Enlaza el valor del modifier con el de la propiedad del objeto. Es unidireccional (modifier=>propiedad).
         /// </summary>
         /// <param name="varName"></param>
         /// <param name="obj"></param>
@@ -88,7 +88,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
 
         /// <summary>
-        /// Enlaza el valor del modifier con el de la propiedad de la clase.
+        /// Enlaza el valor del modifier con el de la propiedad de la clase. Es unidireccional (modifier=>propiedad).
         /// </summary>
         /// <param name="varName"></param>
         /// <param name="classType"></param>
