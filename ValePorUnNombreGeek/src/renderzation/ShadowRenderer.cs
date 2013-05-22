@@ -12,6 +12,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using TgcViewer.Utils;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 {
@@ -28,6 +29,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
         float near_plane = 2f;
         float far_plane = 1500f;
         Matrix projection;
+        TgcArrow arrow;
         
         public ShadowRenderer():base()
         {
@@ -65,7 +67,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 
             this.projection = Matrix.PerspectiveFovLH(Geometry.DegreeToRadian(45.0f),
                 aspectRatio, near_plane, far_plane);
-          
+
+            arrow = new TgcArrow();
+            arrow.Thickness = 10f;
+            arrow.HeadSize = new Vector2(20f, 20f);
+            arrow.BodyColor = Color.Blue;
+
 
            }
 
@@ -93,14 +100,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             {
 
                 float K = 900;
-                GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K ,-K ,-K), new Vector3(K, K, K), new Vector3(80, 200, -210));
+                GuiController.Instance.Modifiers.addVertex3f("LightLookFrom", new Vector3(-K , -K ,-K), new Vector3(K, 2*K, K), new Vector3(80, K, -210));
                 GuiController.Instance.Modifiers.addVertex3f("LightLookAt", new Vector3(-K, -K, -K), new Vector3(K, K, K), new Vector3(0, 0, 0));
                            
                 g_LightPos = (Vector3)GuiController.Instance.Modifiers["LightLookFrom"];
                 g_LightDir = (Vector3)GuiController.Instance.Modifiers["LightLookAt"] - g_LightPos; 
             }
             g_LightDir.Normalize();
-
+            arrow.PStart = g_LightPos;
+            arrow.PEnd = g_LightPos + g_LightDir * 300f;
+            arrow.updateValues();
             // Shadow maps:
             device.EndScene();      // termino el thread anterior
 
@@ -116,7 +125,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             RenderScene(false);
 
             GuiController.Instance.Text3d.drawText("FPS: " + HighResolutionTimer.Instance.FramesPerSecond, 0, 0, Color.Yellow);
-           
+            arrow.render();
         }
 
 
