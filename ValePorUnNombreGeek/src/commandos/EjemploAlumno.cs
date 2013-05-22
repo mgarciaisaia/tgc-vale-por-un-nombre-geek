@@ -33,8 +33,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         Selection selection;
         string currentLevel;
         GraphicalControlPanel controlPanel;
-        IRenderer renderer;
-
+        IRenderer defaultRenderer;
+        ShadowRenderer shadowRenderer;
         FreeCamera camera;
 
         #region Details
@@ -86,6 +86,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             sky = new Sky();
             this.level = null;
             loadLevel(initialLevel);
+
+            GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
             LevelMap map = level.Map;
             map.setMask( TextureLoader.FromFile(GuiController.Instance.D3dDevice,EjemploAlumno.MediaDir + "Mapa\\mask.jpg"));
             map.setFrame( TextureLoader.FromFile(GuiController.Instance.D3dDevice,EjemploAlumno.MediaDir + "Mapa\\frame.png"));
@@ -104,8 +106,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);*/
 
-            renderer = new ShadowRenderer();
-           // renderer = new DefaultRenderer();
+            defaultRenderer = level.Renderer;
+            shadowRenderer = new ShadowRenderer();
+         
         }
 
         #region LoadLevel
@@ -147,22 +150,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            if (elapsedTime > MAX_ELAPSED_TIME)
+          /*  if (elapsedTime > MAX_ELAPSED_TIME)
             {
                 GuiController.Instance.Logger.log("Ignoramos un retardo de " + elapsedTime + " s");
                 return;
-            }
+            }*/
             string selectedPath = (string)GuiController.Instance.Modifiers["Level"];
             
             checkLoadLevel(selectedPath);
 
-            sky.render();
+        
 
             Character.RenderCylinder = UserVars.Instance.renderCollisionNormal;
-
-            level.Renderer = renderer;
+            
+            if ((bool)GuiController.Instance.Modifiers.getValue("Sombras")) level.Renderer = shadowRenderer;
+                else level.Renderer = defaultRenderer;
+            sky.render();
             level.render(elapsedTime);
-
+            
             if (controlPanel.mouseIsOverPanel())
             {
                 selection.cancelSelection(); //cancelamos la seleccion si se estaba seleccionando

@@ -5,6 +5,9 @@ using System.Text;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
+using Microsoft.DirectX.Direct3D;
+using TgcViewer.Utils.Shaders;
+using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 {
@@ -14,41 +17,80 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
         protected List<Commando> commandos;
         protected List<ILevelObject> objects;
         protected List<TerrainPatch> terrainPatches;
-       
+        protected Effect effect;
+
+        public DefaultRenderer()
+        {
+            effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "shaders.fx");
+        }
+
         public virtual void beginRender()
         {
             enemies = new List<Enemy>();
             commandos = new List<Commando>();
             objects = new List<ILevelObject>();
             terrainPatches = new List<TerrainPatch>();
+
         }
 
         public virtual void render(commandos.objects.ILevelObject o)
         {
             objects.Add(o);
+            o.Effect = effect;
         }
 
         public virtual void render(commandos.character.Commando c)
         {
             commandos.Add(c);
+            c.Effect = effect;
         }
 
         public virtual void render(commandos.character.Enemy e)
         {
             enemies.Add(e);
+            e.Effect = effect;
         }
 
         public virtual void render(commandos.terrain.divisibleTerrain.TerrainPatch t)
         {
             terrainPatches.Add(t);
+            t.Effect = effect;
         }
 
         public virtual void endRender()
         {
-            foreach (TerrainPatch p in terrainPatches) p.render();
-            foreach (ILevelObject o in objects) o.render();
-            foreach (Commando c in commandos) c.render();
-            foreach (Enemy e in enemies) e.render();
+            string technique;
+
+
+            technique = "DIFFUSE_MAP";
+
+
+            foreach (TerrainPatch p in terrainPatches)
+            {
+              
+                p.Effect = GuiController.Instance.Shaders.VariosShader;
+                p.Technique = TgcShaders.T_POSITION_TEXTURED;
+                p.render();
+
+            }
+
+            foreach (ILevelObject o in objects)
+            {
+                o.Technique = technique;
+                o.render();
+            }
+
+            foreach (Commando c in commandos)
+            {
+                c.Technique = technique;
+                c.render();
+            }
+            foreach (Enemy e in enemies)
+            {
+                e.Technique = technique;
+                e.render();
+            }
+
         }
 
         public virtual void dispose()

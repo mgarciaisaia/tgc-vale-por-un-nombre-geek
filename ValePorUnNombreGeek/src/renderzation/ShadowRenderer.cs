@@ -11,6 +11,7 @@ using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
+using TgcViewer.Utils;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 {
@@ -26,12 +27,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
         Matrix g_LightView;						// matriz de view del light
         float near_plane = 2f;
         float far_plane = 1500f;
-        Effect effect;
+
         
-        public ShadowRenderer()
+        public ShadowRenderer():base()
         {
 
-            effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "shaders.fx");
 
             Device d3dDevice = GuiController.Instance.D3dDevice;
            
@@ -112,6 +112,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             // dibujo la escena pp dicha
             device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
             RenderScene(false);
+
+            GuiController.Instance.Text3d.drawText("FPS: " + HighResolutionTimer.Instance.FramesPerSecond, 0, 0, Color.Yellow);
+           
         }
 
 
@@ -166,27 +169,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             
             foreach (TerrainPatch p in terrainPatches)
             {
-                p.Effect = effect;
                 p.Technique = technique;
                 p.render();
             }
 
             foreach (ILevelObject o in objects)
             {
-                o.Effect = effect;
                 o.Technique = technique;
                 o.render();
             }
 
             foreach (Commando c in commandos)
             {
-                c.Effect = effect;
+              
                 c.Technique = technique;
                 c.render();
             }
             foreach (Enemy e in enemies)
             {
-                e.Effect = effect;
                 e.Technique = technique;
                 e.render();
             }
