@@ -20,7 +20,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected string technique;
         protected TgcBox marcaDePicking;
         private Cylinder boundingCylinder;
-        public static bool RenderCylinder = false;
+        private static bool renderCylinder;
+        public static bool RenderCylinder { get { return renderCylinder; } set { renderCylinder = value; } }
         protected Life life;
        
 

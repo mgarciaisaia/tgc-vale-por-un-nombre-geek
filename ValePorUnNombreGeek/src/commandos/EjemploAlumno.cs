@@ -68,10 +68,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         public static string MediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\";
         public static string SrcDir = GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\";
         public static string ShadersDir = MediaDir + "Shaders\\";
-       
 
+  
         #endregion
 
+
+        public bool Sombras { get { return level.Renderer == shadowRenderer; } set { if (value)level.Renderer = shadowRenderer; else level.Renderer = defaultRenderer; } }
+        public string SelectedLevel { get { return currentLevel; } set { loadLevel(value); } }
        
         /// <summary>
         /// Método que se llama una sola vez,  al principio cuando se ejecuta el ejemplo.
@@ -99,11 +102,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         }
 
         #region LoadLevel
-        private void checkLoadLevel()
-        {
-            string selectedPath = (string)GuiController.Instance.Modifiers["Level"];
-            if (selectedPath != currentLevel) loadLevel(selectedPath);
-        }
 
         private void loadLevel(string newLevel)
         {
@@ -116,8 +114,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             XMLLevelParser levelParser = new XMLLevelParser(newLevel, EjemploAlumno.MediaDir);
             level = levelParser.getLevel();
-
-         
+                    
 
             LevelMap map = level.Map;
             map.setMask(TextureLoader.FromFile(GuiController.Instance.D3dDevice, EjemploAlumno.MediaDir + "Mapa\\mask.jpg"));
@@ -126,10 +123,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             map.Height = 1.5f * level.Map.Height;
             map.Position = new Vector2(GuiController.Instance.Panel3d.Width / 2 - level.Map.Width / 2, GuiController.Instance.Panel3d.Height - level.Map.Height);
 
-
-            UserVars.initialize(level, currentLevel);
-           
-
+            setAndBindModifiers();
+            
             //Movimiento por picking
             picking = new MovementPicking(level.Terrain);
                
@@ -143,6 +138,29 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             defaultRenderer = level.Renderer;
             shadowRenderer = new ShadowRenderer();
          
+        }
+
+        private void setAndBindModifiers()
+        {
+            Modifiers.initialize();
+
+            GuiController.Instance.Modifiers.addFile("Level", currentLevel, "-level.xml|*-level.xml");
+            GuiController.Instance.Modifiers.addBoolean("Mapa", "ShowCharacters", true);
+            GuiController.Instance.Modifiers.addFloat("Zoom", 0.5f, 5, 2);
+            GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
+            GuiController.Instance.Modifiers.addBoolean("showCylinder", "Ver cilindros", false);
+
+            Modifiers.Instance.bind("Zoom", level.Map, "Zoom");
+            Modifiers.Instance.bind("Mapa", level.Map, "ShowCharacters");
+            Modifiers.Instance.bind("showCylinder", typeof(Character), "RenderCylinder");
+            Modifiers.Instance.bind("Level", this, "SelectedLevel");
+            Modifiers.Instance.bind("Sombras", this, "Sombras");
+
+            for (int i = 0; i < level.Terrain.Patches.GetLength(0); i++) for (int j = 0; j < level.Terrain.Patches.GetLength(1); j++)
+                {
+                    GuiController.Instance.Modifiers.addBoolean("TerrainPatch[" + i + "," + j + "]", "Mostrar", true);
+                    Modifiers.Instance.bind("TerrainPatch[" + i + "," + j + "]", level.Terrain.Patches[i, j], "Enabled");
+                }
         }
         #endregion
 
@@ -162,21 +180,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
                 return;
             }*/
 
+            Modifiers.Instance.update();
                  
-            checkLoadLevel();        
+                   
+         
 
-            Character.RenderCylinder = UserVars.Instance.renderCollisionNormal;
+
             
-            if (UserVars.Instance.sombras) level.Renderer = shadowRenderer;
-                else level.Renderer = defaultRenderer;
-
-
-
-            TerrainPatch[,] patches = level.Terrain.Patches;
-            for (int i = 0; i < patches.GetLength(0); i++) for (int j = 0; j < patches.GetLength(1); j++)
-            {
-                patches[i, j].Enabled = UserVars.Instance.showTerrainPatch(i, j);
-            }
 
             level.render(elapsedTime);
 
@@ -195,8 +205,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             controlPanel.render();
             level.Map.Technique = "MAPA_VIEJO";
-            level.Map.Zoom = UserVars.Instance.zoomMapa;
-            level.Map.ShowCharacters = UserVars.Instance.showCharacters;
             level.Map.render();
 
         
