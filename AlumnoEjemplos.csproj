@@ -232,7 +232,6 @@
     <None Include="ValePorUnNombreGeek\documentacion\soldier_state_diagram.state.violet" />
     <None Include="ValePorUnNombreGeek\documentacion\umlCharacter.class.violet" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
