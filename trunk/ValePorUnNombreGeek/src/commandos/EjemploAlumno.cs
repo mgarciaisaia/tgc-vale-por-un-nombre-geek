@@ -165,9 +165,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             
             if ((bool)GuiController.Instance.Modifiers.getValue("Sombras")) level.Renderer = shadowRenderer;
                 else level.Renderer = defaultRenderer;
-            sky.render();
+         
             level.render(elapsedTime);
-            
+
+            sky.render();
+
             if (controlPanel.mouseIsOverPanel())
             {
                 selection.cancelSelection(); //cancelamos la seleccion si se estaba seleccionando

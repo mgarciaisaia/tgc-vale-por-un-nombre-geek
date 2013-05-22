@@ -8,7 +8,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
 {
     interface ITerrain : IRenderObject
     {
-        List<TerrainPatch> Patches { get; }
+        TerrainPatch[,] Patches { get; }
 
         void loadHeightmap(string heightmapPath, float scaleXZ, float scaleY, Vector3 center, Vector2 FORMAT);
         void loadTexture(string path);
