@@ -37,6 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
         #endregion
 
+
         #region Initizalize
         private Modifiers()
         {

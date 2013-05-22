@@ -123,20 +123,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             map.Height = 1.5f * level.Map.Height;
             map.Position = new Vector2(GuiController.Instance.Panel3d.Width / 2 - level.Map.Width / 2, GuiController.Instance.Panel3d.Height - level.Map.Height);
 
+
+            defaultRenderer = level.Renderer;
+            shadowRenderer = new ShadowRenderer();
+
             setAndBindModifiers();
-            
+
+
             //Movimiento por picking
             picking = new MovementPicking(level.Terrain);
-               
-
+             
             //Inicializar camara
             camera = new FreeCamera(level.Terrain.getPosition(0, 150), true);
 
             //Seleccion multiple
             selection = new Selection(level.Characters, level.Terrain);
 
-            defaultRenderer = level.Renderer;
-            shadowRenderer = new ShadowRenderer();
+          
          
         }
 
@@ -145,22 +148,29 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             Modifiers.initialize();
 
             GuiController.Instance.Modifiers.addFile("Level", currentLevel, "-level.xml|*-level.xml");
-            GuiController.Instance.Modifiers.addBoolean("Mapa", "ShowCharacters", true);
-            GuiController.Instance.Modifiers.addFloat("Zoom", 0.5f, 5, 2);
-            GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
-            GuiController.Instance.Modifiers.addBoolean("showCylinder", "Ver cilindros", false);
-
-            Modifiers.Instance.bind("Zoom", level.Map, "Zoom");
-            Modifiers.Instance.bind("Mapa", level.Map, "ShowCharacters");
-            Modifiers.Instance.bind("showCylinder", typeof(Character), "RenderCylinder");
             Modifiers.Instance.bind("Level", this, "SelectedLevel");
-            Modifiers.Instance.bind("Sombras", this, "Sombras");
 
+
+            GuiController.Instance.Modifiers.addBoolean("Mapa", "ShowCharacters", true);
+            Modifiers.Instance.bind("Mapa", level.Map, "ShowCharacters");
+
+            GuiController.Instance.Modifiers.addFloat("Zoom", 0.5f, 5, 2);
+            Modifiers.Instance.bind("Zoom", level.Map, "Zoom");
+
+
+            GuiController.Instance.Modifiers.addBoolean("showCylinder", "Ver cilindros", false);
+            Modifiers.Instance.bind("showCylinder", typeof(Character), "RenderCylinder");
+
+           
             for (int i = 0; i < level.Terrain.Patches.GetLength(0); i++) for (int j = 0; j < level.Terrain.Patches.GetLength(1); j++)
                 {
                     GuiController.Instance.Modifiers.addBoolean("TerrainPatch[" + i + "," + j + "]", "Mostrar", true);
                     Modifiers.Instance.bind("TerrainPatch[" + i + "," + j + "]", level.Terrain.Patches[i, j], "Enabled");
                 }
+
+
+            GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
+            Modifiers.Instance.bind("Sombras", this, "Sombras");
         }
         #endregion
 
