@@ -415,8 +415,8 @@ struct VS_SKELETAL_INPUT_SHADOW_MAP
 	float3 Binormal : BINORMAL0;
 	float4 BlendWeights : BLENDWEIGHT;
     float4 BlendIndices : BLENDINDICES;
-	float4 Color : COLOR0; 
-	float2 Texcoord : TEXCOORD0;
+
+
 
 };
 
@@ -424,11 +424,10 @@ struct VS_SKELETAL_INPUT_SHADOW_MAP
 struct VS_SKELETAL_OUTPUT_SHADOW_MAP
 {
 	float4 Position : POSITION0;
-	float3 WorldNormal : TEXCOORD1;
+	float3 WorldNormal : NORMAL0;
     float3 WorldTangent	: TEXCOORD2;
     float3 WorldBinormal : TEXCOORD3;
-	float4 Color : COLOR0; 
-	float2 Texcoord : TEXCOORD0;
+	float2 Depth : TEXCOORD0;
 };
 
 VS_SKELETAL_OUTPUT_SHADOW_MAP VertShadow_Skeletal(VS_SKELETAL_INPUT_SHADOW_MAP input)
@@ -451,16 +450,14 @@ VS_SKELETAL_OUTPUT_SHADOW_MAP VertShadow_Skeletal(VS_SKELETAL_INPUT_SHADOW_MAP i
     output.WorldTangent	= sOut.WorldTangent;
     output.WorldBinormal = sOut.WorldBinormal;
 
-	//Enviar color directamente
-	output.Color = input.Color;
-
-	//Enviar Texcoord directamente
-	output.Texcoord = input.Texcoord;
-		
-	//Proyectar posicion 
-	output.Position = mul(sOut.Position, matWorldViewProj);
-
 	
+	// transformacion estandard 
+    output.Position = mul( sOut.Position, matWorld);					// uso el del mesh
+    output.Position = mul( output.Position, g_mViewLightProj );		// pero visto desde la pos. de la luz
+    
+    // devuelvo: profundidad = z/w 
+    output.Depth.xy = output.Position.zw;
+
 	return output;
 
 }
@@ -541,6 +538,48 @@ void VertScene( float4 iPos : POSITION,
 }
 
 
+void VertScene_Skeletal(VS_SKELETAL_INPUT input, 
+				out float4 oPos : POSITION,                
+                out float2 Tex : TEXCOORD0,
+				out float4 vPos : TEXCOORD1,
+                out float3 vNormal : TEXCOORD2,
+                out float4 vPosLight : TEXCOORD3 )
+{
+	
+	SKINNING_OUTPUT sOut = skinning(
+		fillSkinningInput(
+							input.Position, 
+							input.Normal, 
+							input.Tangent, 
+							input.Binormal,
+							input.BlendWeights,
+							input.BlendIndices
+						)
+					);
+
+
+	
+    
+	
+	//Enviar Texcoord directamente
+	Tex = input.Texcoord;
+		
+	//Proyectar posicion 
+	oPos = mul(sOut.Position, matWorldViewProj);
+
+	
+
+	// propago la posicion del vertice en World space
+    vPos = mul( sOut.Position, matWorld);
+
+	// propago la posicion del vertice en el espacio de proyeccion de la luz
+    vPosLight = mul( vPos, g_mViewLightProj );
+
+	vNormal = sOut.WorldNormal;
+	
+
+}
+
 
 float4 PixScene(	float2 Tex : TEXCOORD0,
 					float4 vPos : TEXCOORD1,
@@ -598,7 +637,7 @@ technique SKELETAL_SHADOWS
 {
     pass p0
     {
-        VertexShader = compile vs_3_0 vs_Skeletal_DiffuseMap();
+        VertexShader = compile vs_3_0 VertScene_Skeletal();
 		PixelShader = compile ps_3_0 PixScene();
     }
 }
@@ -607,7 +646,7 @@ technique SKELETAL_SHADOWS_SELECTED
 {
     pass p0
     {
-        VertexShader = compile vs_3_0 vs_Skeletal_DiffuseMap();
+        VertexShader = compile vs_3_0 VertScene_Skeletal();
 		PixelShader = compile ps_3_0 ps_DiffuseMap_Selected();
     }
 }

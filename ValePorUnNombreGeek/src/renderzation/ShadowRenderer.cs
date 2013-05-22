@@ -184,7 +184,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
                 o.Technique = technique;
                 o.render();
             }
-
+            
             foreach (Commando c in commandos)
             {
               
