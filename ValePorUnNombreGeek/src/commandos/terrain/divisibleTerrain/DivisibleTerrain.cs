@@ -26,7 +26,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         protected Texture texture;
         protected int totalVertices;
         protected int[,] heightmapData;
-        protected List<TerrainPatch> patches;
+        protected TerrainPatch[,] patches;
 
         #region Getters y Setters
 
@@ -37,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         public float ScaleXZ { get { return scaleXZ; } }
         public float ScaleY { get { return scaleY; } }
         public Texture Texture { get { return texture; } }
-        public List<TerrainPatch> Patches { get { return patches; } }
+        public TerrainPatch[,] Patches { get { return patches; } }
 
         public Vector3 Position
         {
@@ -135,7 +135,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             this.scaleXZ = scaleXZ;
             this.scaleY = scaleY;
 
-            this.patches = new List<TerrainPatch>();
+            this.patches = new TerrainPatch[(int)FORMAT.X,(int)FORMAT.Y];
 
 
             //cargar heightmap
@@ -203,7 +203,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
                     Vector3 pMin = new Vector3(center.X + h*patchWidth*scaleXZ, center.Y, center.Z + v*patchLength*ScaleXZ);
                     Vector3 pMax = new Vector3(center.X + (h + 1) * patchWidth * scaleXZ, maxY, center.Z + (v + 1) * patchLength * scaleXZ);
                     
-                    this.patches.Add(new TerrainPatch(this, data, new TgcBoundingBox(pMin, pMax)));
+                    this.patches[v,h] = new TerrainPatch(this, data, new TgcBoundingBox(pMin, pMax));
                  }
             }
         }
