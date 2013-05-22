@@ -204,8 +204,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
                     Vector3 pMax = new Vector3(center.X + (h + 1) * patchWidth * scaleXZ, maxY, center.Z + (v + 1) * patchLength * scaleXZ);
                     
                     this.patches.Add(new TerrainPatch(this, data, new TgcBoundingBox(pMin, pMax)));
-                  //  GuiController.Instance.Modifiers.addBoolean("Parche de terreno " + (patches.Count - 1).ToString(), "Mostrar", true);
-                }
+                 }
             }
         }
 
@@ -267,16 +266,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         {
             if (!Enabled)
                 return;
-            for (int i=0; i<patches.Count; i++)
-            {
-                
-               // bool mostrar = (bool)GuiController.Instance.Modifiers.getValue("Parche de terreno " + i.ToString());
-                //if (mostrar)
-               // {
-                    patches[i].render();
-                   
-               // }
-            }
+            foreach(TerrainPatch p in patches) p.render();
+          
             
         }
 
