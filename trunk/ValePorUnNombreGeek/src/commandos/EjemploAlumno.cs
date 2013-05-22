@@ -17,6 +17,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 using Microsoft.DirectX.Direct3D;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -126,10 +127,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             map.Position = new Vector2(GuiController.Instance.Panel3d.Width / 2 - level.Map.Width / 2, GuiController.Instance.Panel3d.Height - level.Map.Height);
 
 
-            UserVars.initialize();
-            GuiController.Instance.Modifiers.addFile("Level", currentLevel, "-level.xml|*-level.xml");
-
-
+            UserVars.initialize(level, currentLevel);
+           
 
             //Movimiento por picking
             picking = new MovementPicking(level.Terrain);
@@ -170,7 +169,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             
             if (UserVars.Instance.sombras) level.Renderer = shadowRenderer;
                 else level.Renderer = defaultRenderer;
-         
+
+
+
+            TerrainPatch[,] patches = level.Terrain.Patches;
+            for (int i = 0; i < patches.GetLength(0); i++) for (int j = 0; j < patches.GetLength(1); j++)
+            {
+                patches[i, j].Enabled = UserVars.Instance.showTerrainPatch(i, j);
+            }
+
             level.render(elapsedTime);
 
             sky.render();
@@ -208,7 +215,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             controlPanel.dispose();
             sky.dispose();
             level.dispose();
-          
+                   
             
         }
 

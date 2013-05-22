@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TgcViewer;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
@@ -10,19 +12,29 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
     {
         private static UserVars instance;
 
-        private UserVars()
+        private UserVars(Level level, string currentLevel)
         {
-            //singleton or something like that
-            GuiController.Instance.Modifiers.addBoolean("showCylinder", "Ver cilindros", false);
+            GuiController.Instance.Modifiers.addFile("Level", currentLevel, "-level.xml|*-level.xml");
             GuiController.Instance.Modifiers.addBoolean("Mapa", "ShowCharacters", true);
             GuiController.Instance.Modifiers.addFloat("Zoom", 0.5f, 5, 2);
             GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
+            GuiController.Instance.Modifiers.addBoolean("showCylinder", "Ver cilindros", false);
+
+         
+
+            TerrainPatch[,] patches = level.Terrain.Patches;
+
+            for (int i = 0; i < patches.GetLength(0); i++) for (int j = 0; j < patches.GetLength(1); j++)
+            {
+                    GuiController.Instance.Modifiers.addBoolean("TerrainPatch[" + i + "," + j + "]", "Mostrar", true);
+            }
+      
 
         }
 
-        public static void initialize()
+        public static void initialize(Level level, string currentLevel)
         {
-            instance = new UserVars();
+            instance = new UserVars(level, currentLevel);
         }
 
         public static UserVars Instance
@@ -44,5 +56,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         public bool showCharacters { get { return (bool)GuiController.Instance.Modifiers.getValue("Mapa"); } }
 
         public bool sombras { get { return (bool)GuiController.Instance.Modifiers.getValue("Sombras"); } }
+
+        public bool showTerrainPatch(int i, int j){
+
+            return (bool)GuiController.Instance.Modifiers.getValue("TerrainPatch[" + i + "," + j + "]");
+        }
+
+      
     }
 }
