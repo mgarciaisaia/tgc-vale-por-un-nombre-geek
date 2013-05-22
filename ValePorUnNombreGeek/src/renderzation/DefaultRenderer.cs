@@ -33,28 +33,28 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 
         }
 
-        public virtual void render(commandos.objects.ILevelObject o)
+        public virtual void render(ILevelObject o)
         {
             objects.Add(o);
             o.Effect = effect;
         }
 
-        public virtual void render(commandos.character.Commando c)
+        public virtual void render(Commando c)
         {
             commandos.Add(c);
             c.Effect = effect;
         }
 
-        public virtual void render(commandos.character.Enemy e)
+        public virtual void render(Enemy e)
         {
             enemies.Add(e);
             e.Effect = effect;
         }
 
-        public virtual void render(commandos.terrain.divisibleTerrain.TerrainPatch t)
+        public virtual void render(TerrainPatch t)
         {
             terrainPatches.Add(t);
-            t.Effect = effect;
+            t.Effect = GuiController.Instance.Shaders.VariosShader;
         }
 
         public virtual void endRender()
@@ -68,9 +68,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             foreach (TerrainPatch p in terrainPatches)
             {
               
-                p.Effect = GuiController.Instance.Shaders.VariosShader;
+               
                 p.Technique = TgcShaders.T_POSITION_TEXTURED;
-                //p.Technique = technique;
+              
                 p.render();
 
             }
