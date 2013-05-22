@@ -68,7 +68,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 
            }
 
-     
+        public override void render(TerrainPatch t)
+        {
+            base.render(t);
+            t.Effect = effect;
+        }
              
 
         public override void endRender()
