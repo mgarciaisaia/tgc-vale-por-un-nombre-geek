@@ -27,7 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
         Matrix g_LightView;						// matriz de view del light
         float near_plane = 2f;
         float far_plane = 1500f;
-
+        Matrix projection;
         
         public ShadowRenderer():base()
         {
@@ -62,9 +62,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             float aspectRatio = (float)panel3d.Width / (float)panel3d.Height;
             g_mShadowProj = Matrix.PerspectiveFovLH(Geometry.DegreeToRadian(80),
                 aspectRatio, 50, 5000);
-           /* d3dDevice.Transform.Projection = 
-                Matrix.PerspectiveFovLH(Geometry.DegreeToRadian(45.0f),
-                aspectRatio, near_plane, far_plane);*/
+
+            this.projection = Matrix.PerspectiveFovLH(Geometry.DegreeToRadian(45.0f),
+                aspectRatio, near_plane, far_plane);
+          
 
            }
 
@@ -123,6 +124,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
         public void RenderShadowMap()
         {
             Device device = GuiController.Instance.D3dDevice;
+            Matrix OldProjection = device.Transform.Projection;
+
+            device.Transform.Projection = this.projection;
 
             // Calculo la matriz de view de la luz
             effect.SetValue("g_vLightPos", new Vector4(g_LightPos.X, g_LightPos.Y, g_LightPos.Z, 1));
@@ -156,6 +160,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             // restuaro el render target y el stencil
             device.DepthStencilSurface = pOldDS;
             device.SetRenderTarget(0, pOldRT);
+            device.Transform.Projection = OldProjection;
 
         }
 
