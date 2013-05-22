@@ -215,6 +215,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             controlPanel.dispose();
             sky.dispose();
             level.dispose();
+            level = null;
                    
             
         }
