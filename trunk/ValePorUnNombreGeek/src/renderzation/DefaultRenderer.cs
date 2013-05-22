@@ -70,6 +70,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
               
                 p.Effect = GuiController.Instance.Shaders.VariosShader;
                 p.Technique = TgcShaders.T_POSITION_TEXTURED;
+                //p.Technique = technique;
                 p.render();
 
             }
