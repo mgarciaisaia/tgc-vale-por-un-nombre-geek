@@ -5,6 +5,7 @@
     texture="Heightmaps\\TerrainTexture3.jpg"
     scaleXZ="50.0"
     scaleY="4.0"
+    format="(4,4)"
     ></terrain>
 
   
