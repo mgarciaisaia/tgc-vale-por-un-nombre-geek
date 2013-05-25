@@ -48,7 +48,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             objects = new List<ILevelObject>();
             this.terrain = terrain;
             this.map = new LevelMap(this, 100,100,2);
-            quadtree = new QuadTreeDummie(terrain, new DefaultRenderer());
+            //quadtree = new QuadTreeDummie(terrain, new DefaultRenderer());
+            quadtree = new QuadTree(terrain, new DefaultRenderer());
         }
 
        

@@ -25,6 +25,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain
         float ScaleXZ { get; }
         float ScaleY { get; }
 
+        float Height { get; }
+        float Width { get; }
+
         
         float maxY { get; }
         float minY { get; }

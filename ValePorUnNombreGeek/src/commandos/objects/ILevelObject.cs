@@ -26,6 +26,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
         void dispose();
 
         bool collidesWith(Character ch, out Vector3 n);
+        bool collidesWith(TgcBoundingBox aabb);
         bool collidesWith(TgcRay ray);
 
         bool isOver(Vector3 _position);

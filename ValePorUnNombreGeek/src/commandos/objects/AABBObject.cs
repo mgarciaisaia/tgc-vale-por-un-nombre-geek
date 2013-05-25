@@ -32,6 +32,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects
             return ch.collidesWith(this.BoundingBox, out n);
         }
 
+        public bool collidesWith(TgcBoundingBox aabb)
+        {
+            return TgcCollisionUtils.testAABBAABB(aabb, this.BoundingBox);
+        }
+
         public bool collidesWith(TgcRay ray)
         {
             Vector3 q; //useless
