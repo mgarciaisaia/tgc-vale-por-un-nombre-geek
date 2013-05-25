@@ -22,7 +22,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 if (instance == null)
                 {
                     instance = new PickingRaySingleton();
-                    createVars();     
+                    //createVars();     
                     
                 }
                 return instance;
@@ -30,12 +30,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
         }
       
 
-        private static void createVars()
+        /*private static void createVars()
         {
             GuiController.Instance.UserVars.addVar("WorldX");
             GuiController.Instance.UserVars.addVar("WorldY");
             GuiController.Instance.UserVars.addVar("WorldZ");
-        }
+        }*/
 
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                         position = aPoint;
                         
                         //Si las variables no se crearon, crearlas.
-                        try
+                        /*try
                         {
                             GuiController.Instance.UserVars.setValue("WorldX", position.X);
 
@@ -72,7 +72,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                             GuiController.Instance.UserVars.setValue("WorldX", position.X);
                         }
                         GuiController.Instance.UserVars.setValue("WorldY", position.Y);
-                        GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
+                        GuiController.Instance.UserVars.setValue("WorldZ", position.Z);*/
 
                   
                         return true;

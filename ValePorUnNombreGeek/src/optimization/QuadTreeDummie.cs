@@ -14,6 +14,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
     class QuadTreeDummie : AlumnoEjemplos.ValePorUnNombreGeek.src.optimization.IQuadTree
     {
         List<ILevelObject> objects;
+        List<Commando> commandos;
+        List<Enemy> enemies;
         ITerrain terrain;
         public IRenderer Renderer { get; set; } 
 
@@ -22,15 +24,27 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         {
             this.terrain = terrain;
             this.objects = new List<ILevelObject>();
+            this.commandos = new List<Commando>();
+            this.enemies = new List<Enemy>();
             this.Renderer = renderer;
         }
 
         public void add(ILevelObject obstacle)
         {
-            objects.Add(obstacle);
+            this.objects.Add(obstacle);
         }
 
-        public void render(TgcFrustum frustum, List<Commando> commandos, List<Enemy> enemies)
+        public void add(Commando commando)
+        {
+            this.commandos.Add(commando);
+        }
+
+        public void add(Enemy enemy)
+        {
+            this.enemies.Add(enemy);
+        }
+
+        public void render(TgcFrustum frustum)
         {
 
             //El renderer se encarga de renderizarlos en el orden correcto y usar los shaders y pasadas correspondientes.
