@@ -9,7 +9,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
     interface IQuadTree
     {
         void add(ILevelObject obstacle);
-        void render(TgcFrustum frustum, List<Commando> commandos, List<Enemy> enemies);
+        void add(Commando commando);
+        void add(Enemy enemy);
+        void render(TgcFrustum frustum);
         IRenderer Renderer { get; set; }
         void dispose();
     }

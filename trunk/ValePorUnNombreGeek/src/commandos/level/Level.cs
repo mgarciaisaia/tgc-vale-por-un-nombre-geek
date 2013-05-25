@@ -61,12 +61,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             {   Commando last = commandos[commandos.IndexOf(commando) - 1];
                 commando.Life.Position = last.Life.Position + new Vector2(last.Life.Width+10, 0);
             }else commando.Life.Position = new Vector2(60, 10);
+            this.quadtree.add(commando);
         }
 
         public void add(Enemy enemy)
         {
             addCharacter(enemy);
             enemies.Add(enemy);
+            this.quadtree.add(enemy);
         }
 
      
@@ -91,7 +93,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 character.update(elapsedTime);
                 
          
-            quadtree.render(GuiController.Instance.Frustum, commandos, enemies);
+            quadtree.render(GuiController.Instance.Frustum);
             
             foreach (Commando c in this.commandos)    
                 c.Life.render();
