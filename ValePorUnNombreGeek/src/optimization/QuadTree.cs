@@ -19,7 +19,56 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         List<Commando> commandos;
         List<Enemy> enemies;
         ITerrain terrain;
+
+        private QTNode firstNode;
+        private const int DIVISIONESX = 2;
+        private const int DIVISIONESY = 2;
+        private const int GRADO = DIVISIONESX * DIVISIONESY;
+        private const int PROFUNDIDAD = 2; //debe ser > 0
+
         public IRenderer Renderer { get; set; }
+
+
+        private QTRama crearArbol(int profundidad, int grado, int divisionesx, int divisionesy, Vector3 position, Vector3 size)
+        {
+            QTRama ret = new QTRama(grado);
+            ret.setBounds(position, position + size);
+
+            Vector3 childSize = size;
+            childSize.X /= divisionesx;
+            childSize.Z /= divisionesy;
+
+            int i = 0;
+
+            for (int x = 0; x < divisionesx; x++)
+                for (int y = 0; y < divisionesy; y++)
+                {
+                    Vector3 childPos = position;
+                    childPos.X += ((float)x / divisionesx) * size.X;
+                    childPos.Z += ((float)y / divisionesy) * size.Z;
+
+                    if (profundidad == 0) //su hijo es una hoja
+                    {
+                        ret.setChild(new QTHoja(), i);
+                        ret.child(i).setBounds(childPos, childPos + childSize);
+                    }
+                    else
+                        ret.setChild(crearArbol(profundidad - 1, grado, divisionesx, divisionesy, childPos, childSize), i);
+
+                    i++;
+                }
+            return ret;
+        }
+
+        public void renderizarArbol(QTNode raiz, int profundidad, int grado)
+        {
+            raiz.BoundingBox.render();
+
+            if (profundidad > 0) //tiene hijos
+                for (int i = 0; i < grado; i++)
+                    renderizarArbol(((QTRama)raiz).child(i), profundidad - 1, grado);
+        }
+
 
 
         public QuadTree(ITerrain terrain, IRenderer renderer)
@@ -29,12 +78,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
             this.commandos = new List<Commando>();
             this.enemies = new List<Enemy>();
             this.Renderer = renderer;
+
+            float terrainHeight = this.terrain.Height;
+            float terrainWidth = this.terrain.Width;
+            Vector3 terrainPos = terrain.Position - new Vector3(terrainHeight / 2, 0, terrainWidth / 2);
+
+            firstNode = this.crearArbol(PROFUNDIDAD - 1, GRADO, DIVISIONESX, DIVISIONESY, terrainPos, new Vector3(terrainHeight, terrain.maxY, terrainWidth));
+
+            //recorremos las hojas y agregamos los objetos
+            for (int i = 0; i < GRADO; i++)
+            {
+                //TODO
+            }
         }
 
         public void add(ILevelObject obstacle)
         {
             this.objects.Add(obstacle);
-            GuiController.Instance.UserVars.addVar("obj " + obstacle.GetHashCode().ToString());
+            //GuiController.Instance.UserVars.addVar("obj " + obstacle.GetHashCode().ToString());
         }
 
         public void add(Commando commando)
@@ -58,9 +119,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
             float terrainHeight = this.terrain.Height;
             float terrainWidth = this.terrain.Width;
             Vector3 terrainPos = terrain.Position - new Vector3(terrainHeight / 2, 0, terrainWidth / 2);
+
+            this.renderizarArbol(this.firstNode, PROFUNDIDAD, GRADO);
             //const int PASADAS = 4;
 
-            TgcBoundingBox[,] sectores = new TgcBoundingBox[2,2];
+            /*TgcBoundingBox[,] sectores = new TgcBoundingBox[2,2];
 
             //for (int pasada = 0; pasada < PASADAS; pasada++)
             //{
@@ -81,20 +144,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
                                 if (obj.collidesWith(sectores[ix, iy]))
                                     objetosARenderizar.Add(obj);
                             foreach (Commando ch in this.commandos)
-                                if (ch.collidesWith(sectores[ix, iy]))
+                                if (TgcCollisionUtils.sqDistPointAABB(ch.Position, sectores[ix, iy]) == 0)
                                     commandosARenderizar.Add(ch);
                             foreach (Enemy ch in this.enemies)
-                                if (ch.collidesWith(sectores[ix, iy]))
+                                if (TgcCollisionUtils.sqDistPointAABB(ch.Position, sectores[ix, iy]) == 0)
                                     enemigosARenderizar.Add(ch);
                         }
                     }
                 }
             //}
+            */
 
             //El renderer se encarga de renderizarlos en el orden correcto y usar los shaders y pasadas correspondientes.
             this.Renderer.beginRender();
-
-            foreach (ILevelObject asd in this.objects)
+            
+            /*foreach (ILevelObject asd in this.objects)
                 GuiController.Instance.UserVars.setValue("obj " + asd.GetHashCode().ToString(), false);
             foreach (Commando asd in this.commandos)
                 GuiController.Instance.UserVars.setValue("commando " + asd.GetHashCode().ToString(), false);
@@ -115,12 +179,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
             {
                 this.Renderer.render(ch);
                 GuiController.Instance.UserVars.setValue("enemy " + ch.GetHashCode().ToString(), true);
-            }
-            //nota: separo las cosas en objetos, commandos y enemigos por que no se si haciendo
-            //una sola coleccion de ILevelObject y llamando a Renderer.render(obj) no entran
-            //todos por render(ILevelObject) en vez de render(Commando) y render(Enemy)
+            }*/
 
-            foreach (TerrainPatch p in terrain.Patches) this.Renderer.render(p); //TODO no renderizar todos los sectores
+            foreach (Enemy e in enemies) this.Renderer.render(e);
+            foreach (TerrainPatch p in terrain.Patches) this.Renderer.render(p);
+            foreach (ILevelObject o in objects) this.Renderer.render(o);
+            foreach (Commando c in commandos) this.Renderer.render(c);
 
             this.Renderer.endRender();
             
