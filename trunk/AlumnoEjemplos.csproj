@@ -140,6 +140,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\terrain\ITerrain.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\terrain\divisibleTerrain\TerrainPatch.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Modifiers.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\optimization\BackwardDiscard.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QTSector.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTree.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\IQuadTree.cs" />
