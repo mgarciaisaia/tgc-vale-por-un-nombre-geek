@@ -17,7 +17,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
     {
         List<ILevelObject> objects;
         List<Character> characters;
-        //ITerrain terrain;
         List<QTSector> sectors;
 
         public IRenderer Renderer { get; set; }
@@ -25,7 +24,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 
         public QuadTree(ITerrain terrain, IRenderer renderer)
         {
-            //this.terrain = terrain;
             this.objects = new List<ILevelObject>();
             this.characters = new List<Character>();
             this.Renderer = renderer;
@@ -50,37 +48,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 
         public void render(TgcFrustum frustum)
         {
-            List<ILevelObject> objetosARenderizar = new List<ILevelObject>();
-            //List<Character> personajesARenderizar = new List<Character>();
-
-            /*float terrainHeight = this.terrain.Height;
-            float terrainWidth = this.terrain.Width;
-            Vector3 terrainPos = terrain.Position - new Vector3(terrainHeight / 2, 0, terrainWidth / 2);*/
+            List<ILevelObject> objectsToRender = new List<ILevelObject>();
 
             //El renderer se encarga de renderizarlos en el orden correcto y usar los shaders y pasadas correspondientes.
             this.Renderer.beginRender();
+            //foreach (Character asd in this.characters)
+                //GuiController.Instance.UserVars.setValue("ch " + asd.GetHashCode().ToString(), false);
 
             foreach (QTSector sector in this.sectors)
                 if (sector.collidesWithFrustum(frustum))
                 {
-                    objetosARenderizar.AddRange(sector.Objects);
+                    objectsToRender.AddRange(sector.Objects);
                     this.Renderer.render(sector.TerrainPatch);
+                }
+            foreach (Character ch in this.characters)
+                if (TgcCollisionUtils.testPointFrustum(frustum, ch.Position))
+                {
+                    this.Renderer.render(ch);
+                    //GuiController.Instance.UserVars.setValue("ch " + ch.GetHashCode().ToString(), true);
                 }
 
             //foreach (ILevelObject asd in this.objects)
                 //GuiController.Instance.UserVars.setValue("obj " + asd.GetHashCode().ToString(), false);
-            //foreach (Character asd in this.characters)
-                //GuiController.Instance.UserVars.setValue("ch " + asd.GetHashCode().ToString(), false);
 
-            foreach (ILevelObject obj in objetosARenderizar)
+            foreach (ILevelObject obj in objectsToRender)
             {
                 this.Renderer.render(obj);
                 //GuiController.Instance.UserVars.setValue("obj " + obj.GetHashCode().ToString(), true);
-            }
-            foreach (Character ch in this.characters)//personajesARenderizar)
-            {
-                this.Renderer.render(ch);
-                //GuiController.Instance.UserVars.setValue("ch " + ch.GetHashCode().ToString(), true);
             }
 
             this.Renderer.endRender();
