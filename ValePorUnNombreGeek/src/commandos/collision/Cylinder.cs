@@ -224,6 +224,27 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         }
 
         /// <summary>
+        /// Indica si existe colision con un AABB rapidamente, perdiendo precision.
+        /// Eso se debe a que trata al cilindro como un cubo para ganar performance obviando colisiones raras.
+        /// </summary>
+        public bool fastThereIsCollisionCyBB(TgcBoundingBox aabb)
+        {
+            Vector3 boxDimensions = aabb.calculateSize() * 0.5f;
+            Vector3 boxCenter = aabb.Position + boxDimensions;
+
+            Vector3 centerToCenter = new Vector3(this.Position.X - boxCenter.X, 0, this.Position.Z - boxCenter.Z);
+            Vector3 absCenterToCenter = new Vector3();
+            absCenterToCenter.X = FastMath.Abs(centerToCenter.X);
+            absCenterToCenter.Z = FastMath.Abs(centerToCenter.Z);
+
+            //vemos si esta muy lejos
+            if (absCenterToCenter.X > (boxDimensions.X + this.radius)) return false;
+            if (absCenterToCenter.Z > (boxDimensions.Z + this.radius)) return false;
+
+            return true;
+        }
+
+        /// <summary>
         /// Indica si un rayo atraviesa el cilindro.
         /// </summary>
         public bool thereIsCollisionCyRay(TgcRay ray)

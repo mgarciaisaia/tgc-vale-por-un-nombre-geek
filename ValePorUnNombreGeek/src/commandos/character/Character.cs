@@ -336,8 +336,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public bool collidesWith(TgcBoundingBox aabb)
         {
-            Vector3 n; //useless
-            return this.collidesWith(aabb, out n);
+            //Vector3 n; //useless
+            //return this.collidesWith(aabb, out n);
+            return this.boundingCylinder.fastThereIsCollisionCyBB(aabb);
         }
 
         public bool collidesWith(TgcRay ray)
