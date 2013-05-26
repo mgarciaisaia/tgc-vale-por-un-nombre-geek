@@ -336,8 +336,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public bool collidesWith(TgcBoundingBox aabb)
         {
-            //metodo especifico que se llama desde quadtree
-            return this.boundingCylinder.fastThereIsCollisionCyBB(aabb);
+            Vector3 n; //useless
+            return this.collidesWith(aabb, out n);
         }
 
         public bool collidesWith(TgcRay ray)

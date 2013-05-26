@@ -14,8 +14,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
     class QuadTreeDummie : AlumnoEjemplos.ValePorUnNombreGeek.src.optimization.IQuadTree
     {
         List<ILevelObject> objects;
-        List<Commando> commandos;
-        List<Enemy> enemies;
+        List<Character> characters;
         ITerrain terrain;
         public IRenderer Renderer { get; set; } 
 
@@ -24,8 +23,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         {
             this.terrain = terrain;
             this.objects = new List<ILevelObject>();
-            this.commandos = new List<Commando>();
-            this.enemies = new List<Enemy>();
+            this.characters = new List<Character>();
             this.Renderer = renderer;
         }
 
@@ -34,14 +32,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
             this.objects.Add(obstacle);
         }
 
-        public void add(Commando commando)
+        public void add(Character ch)
         {
-            this.commandos.Add(commando);
-        }
-
-        public void add(Enemy enemy)
-        {
-            this.enemies.Add(enemy);
+            this.characters.Add(ch);
         }
 
         public void render(TgcFrustum frustum)
@@ -50,10 +43,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
             //El renderer se encarga de renderizarlos en el orden correcto y usar los shaders y pasadas correspondientes.
             this.Renderer.beginRender();
 
-            foreach (Enemy e in enemies) this.Renderer.render(e);
             foreach(TerrainPatch p in terrain.Patches) this.Renderer.render(p);
             foreach (ILevelObject o in objects) this.Renderer.render(o);
-            foreach (Commando c in commandos) this.Renderer.render(c);
+            foreach (Character ch in characters) this.Renderer.render(ch);
 
             this.Renderer.endRender();
             
