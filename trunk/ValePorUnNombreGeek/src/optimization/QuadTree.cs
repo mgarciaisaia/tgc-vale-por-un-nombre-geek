@@ -13,9 +13,8 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
-    class QuadTree : IQuadTree
+    class QuadTree : ICulling
     {
-        private List<Character> characters;
         private List<QTSector> sectors;
 
 
@@ -35,68 +34,39 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 
         #region Constructor
 
-        public QuadTree(ITerrain terrain, IRenderer renderer)
+        public QuadTree(ITerrain terrain)
+            : base()
         {
-            this.Renderer = renderer;
-
-            this.characters = new List<Character>();
             sectors = new List<QTSector>();
 
             foreach(TerrainPatch tp in terrain.Patches)
                 sectors.Add(new QTSector(tp));
         }
 
-        public void add(ILevelObject obstacle)
+        public void add(ILevelObject obj)
         {
             foreach (QTSector sector in this.sectors)
-                sector.addObjectIfCollides(obstacle);
+                sector.addObjectIfCollides(obj);
         }
-
-        public void add(Character ch)
-        {
-            this.characters.Add(ch);
-        }
-
-        public IRenderer Renderer { get; set; }
 
         #endregion
 
 
-        public void render(TgcFrustum frustum)
+        protected override void filterAlgorithm(TgcFrustum frustum)
         {
-            //iniciamos el renderer
-            this.Renderer.beginRender();
-
-
             //buscamos los sectores del terreno que ve la camara
-            List<ILevelObject> objectsToRender = new List<ILevelObject>();
             foreach (QTSector sector in this.sectors)
                 if (sector.collidesWithFrustum(frustum))
                 {
-                    objectsToRender.AddRange(sector.Objects);
-                    this.Renderer.render(sector.TerrainPatch);
+                    this.filteredObjects.AddRange(sector.Objects);
+                    this.filteredPatches.Add(sector.TerrainPatch);
                 }
 
-
-            //buscamos los personajes que ve la camara
-            foreach (Character ch in this.characters)
-                if (TgcCollisionUtils.testPointFrustum(frustum, ch.Position))
-                    this.Renderer.render(ch);
-
-
-            //mandamos a dibujar los objetos
-            foreach (ILevelObject obj in objectsToRender)
-                this.Renderer.render(obj);
-
-
-            //dibujamos
-            this.Renderer.endRender();
-        }
-
-
-        public void dispose()
-        {
-            this.Renderer.dispose();
+            this.filteredCharacters.AddRange(this.characters);
+            ////buscamos los personajes que ve la camara
+            //foreach (Character ch in this.characters)
+            //    if (TgcCollisionUtils.testPointFrustum(frustum, ch.Position))
+            //        this.Renderer.render(ch);
         }
     }
 }

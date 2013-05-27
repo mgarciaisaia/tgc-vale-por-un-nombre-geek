@@ -10,6 +10,7 @@ using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
@@ -19,9 +20,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         List<Enemy> enemies;
         List<Commando> commandos;
         List<ILevelObject> objects;
+        List<TerrainPatch> patches;
         ITerrain terrain;
-        IQuadTree quadtree;
-        public IRenderer Renderer { get { return this.quadtree.Renderer; } set { this.quadtree.Renderer = value; } }
+
+        BackwardDiscard backwardDiscard;
+        QuadTree quadTree;
+
+
+        public IRenderer Renderer { get; set; }
         LevelMap map;
 
 
@@ -29,6 +35,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         public List<Enemy> Enemies { get { return this.enemies; } }
         public List<Commando> Commandos { get { return this.commandos; } }
         public List<ILevelObject> Objects { get { return this.objects; } }
+        public List<TerrainPatch> Patches { get { return this.patches; } }
+
 
        
         public ITerrain Terrain{
@@ -46,11 +54,39 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             enemies = new List<Enemy>();
             commandos = new List<Commando>();
             objects = new List<ILevelObject>();
+
             this.terrain = terrain;
+
+            patches = new List<TerrainPatch>();
+            foreach (TerrainPatch tp in this.terrain.Patches)
+                patches.Add(tp);
+
             this.map = new LevelMap(this, 100,100,2);
-            //quadtree = new QuadTreeDummie(terrain, new DefaultRenderer());
-            //quadtree = new QuadTree(terrain, new DefaultRenderer());
-            quadtree = new BackwardDiscard(terrain, new DefaultRenderer());
+
+
+            //tecnicas de optimizacion
+
+            //backward discard
+            backwardDiscard = new BackwardDiscard();
+
+            backwardDiscard.objectsIn = this.objects;
+            backwardDiscard.charactersIn = this.characters;
+            backwardDiscard.patchesIn = this.patches;
+
+            //quadtree
+            quadTree = new QuadTree(this.terrain);
+
+            quadTree.objectsIn = backwardDiscard.objectsOut;
+            quadTree.charactersIn = backwardDiscard.charactersOut;
+            quadTree.patchesIn = backwardDiscard.patchesOut;
+
+
+            //renderizado
+
+            this.Renderer = new DefaultRenderer();
+            this.Renderer.objects = quadTree.objectsOut;
+            this.Renderer.characters = quadTree.charactersOut;
+            this.Renderer.patches = quadTree.patchesOut;
         }
 
        
@@ -62,21 +98,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             {   Commando last = commandos[commandos.IndexOf(commando) - 1];
                 commando.Life.Position = last.Life.Position + new Vector2(last.Life.Width+10, 0);
             }else commando.Life.Position = new Vector2(60, 10);
-            this.quadtree.add(commando);
         }
 
         public void add(Enemy enemy)
         {
             addCharacter(enemy);
             enemies.Add(enemy);
-            this.quadtree.add(enemy);
         }
 
      
         public void add(ILevelObject levelObject)
         {
             objects.Add(levelObject);
-            quadtree.add(levelObject);
+            this.quadTree.add(levelObject);
         }
 
         private void addCharacter(Character c)
@@ -87,19 +121,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
 
         public void render(float elapsedTime)
-        {
-                           
+        {  
             foreach (Character character in this.characters) 
-                
                 character.update(elapsedTime);
-                
-         
-            quadtree.render(GuiController.Instance.Frustum);
-            
+
+
+            backwardDiscard.filter(GuiController.Instance.Frustum);
+            quadTree.filter(GuiController.Instance.Frustum);
+            this.Renderer.render();
+
             foreach (Commando c in this.commandos)    
                 c.Life.render();
-            
-
         }
 
 
@@ -117,7 +149,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
             map.dispose();
             terrain.dispose();
-            quadtree.dispose();
         }
 
 
@@ -182,6 +213,5 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             return distance.LengthSq() <= radiusSum * radiusSum;
             
         }
-
     }
 }

@@ -14,13 +14,8 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
-    class BackwardDiscard : IQuadTree
+    class BackwardDiscard : ICulling
     {
-        private List<ILevelObject> objects;
-        private List<Character> characters;
-        private ITerrain terrain;
-
-
         /* BackwardDiscard
          * Optimiza el renderizado dibujando solo los objetos que esten por delante de la
          * ubicacion de la camara (es decir, delante del plano de corte de la camara).
@@ -36,35 +31,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
          * la camara sobrepasa este, no se renderiza el sector, quedando un agujero negro (xD).
          */
 
-        #region Constructor
-
-        public BackwardDiscard(ITerrain _terrain, IRenderer _renderer)
+        protected override void filterAlgorithm(TgcFrustum frustum)
         {
-            this.Renderer = _renderer;
-            this.terrain = _terrain;
-            this.objects = new List<ILevelObject>();
-            this.characters = new List<Character>();
-        }
-
-        public void add(ILevelObject obstacle)
-        {
-            this.objects.Add(obstacle);
-        }
-
-        public void add(Character ch)
-        {
-            this.characters.Add(ch);
-        }
-
-        public IRenderer Renderer { get; set; }
-
-        #endregion
-
-
-        public void render(TgcFrustum frustum)
-        {
-            this.Renderer.beginRender();
-
             TgcCamera camera = GuiController.Instance.CurrentCamera;
 
             //buscamos la direccion en la que mira la camara
@@ -81,15 +49,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
                 //vemos si esta detras de la direccion en la que mira
                 Vector3 asd = Vector3.Cross(cameraCut, chCameraPos);
                 if (asd.Y > 0)
-                    this.Renderer.render(ch);
+                    this.filteredCharacters.Add(ch);
             }
 
-            foreach (TerrainPatch p in this.terrain.Patches)
+            foreach (TerrainPatch p in this.patches)
             {
                 Vector3 tpCameraPos = p.BoundingBox.calculateBoxCenter() - camera.getPosition();
                 Vector3 asd = Vector3.Cross(cameraCut, tpCameraPos);
                 if (asd.Y > 0)
-                    this.Renderer.render(p);
+                    this.filteredPatches.Add(p);
             }
 
             foreach (ILevelObject o in this.objects)
@@ -97,16 +65,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
                 Vector3 oCameraPos = o.Center - camera.getPosition();
                 Vector3 asd = Vector3.Cross(cameraCut, oCameraPos);
                 if (asd.Y > 0)
-                    this.Renderer.render(o);
+                    this.filteredObjects.Add(o);
             }
-
-            this.Renderer.endRender();
-        }
-
-
-        public void dispose()
-        {
-            this.Renderer.dispose();
         }
     }
 }
