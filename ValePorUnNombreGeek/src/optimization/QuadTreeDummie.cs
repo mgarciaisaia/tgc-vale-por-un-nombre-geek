@@ -11,7 +11,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
-    class QuadTreeDummie : ICulling
+    class QuadTreeDummie : Culling
     {
         protected override void filterAlgorithm(TgcFrustum frustum)
         {

@@ -13,7 +13,7 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
-    class QuadTree : ICulling
+    class QuadTree : Culling
     {
         private List<QTSector> sectors;
 
@@ -26,9 +26,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
          * Por el lado de los personajes, se busca la colision punto-frustum de su posicion
          * para determinar si se renderiza o no.
          * 
-         * Resultados en mi pc 26/05/2013:
+         * Resultados en mi pc 27/05/2013:
          * Sin optimizacion - 750fps
-         * QuadTree (grilla 3x3, viendo todo el mapa) - 700fps
+         * QuadTree (grilla 3x3, viendo todo el mapa) - entre 700 y 750fps
          * QuadTree (grilla 3x3, viendo de a 2 o 3 sectores) - entre 850 y 1000fps
          */
 
@@ -56,17 +56,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         {
             //buscamos los sectores del terreno que ve la camara
             foreach (QTSector sector in this.sectors)
-                if (sector.collidesWithFrustum(frustum))
+                if (this.patches.Contains(sector.TerrainPatch) &&
+                    sector.collidesWithFrustum(frustum))
                 {
-                    this.filteredObjects.AddRange(sector.Objects);
                     this.filteredPatches.Add(sector.TerrainPatch);
+
+                    foreach(ILevelObject obj in sector.Objects)
+                        if(this.objects.Contains(obj))
+                            this.filteredObjects.Add(obj);
                 }
 
+            //por ahora esta tecnica no filtra personajes
             this.filteredCharacters.AddRange(this.characters);
-            ////buscamos los personajes que ve la camara
-            //foreach (Character ch in this.characters)
-            //    if (TgcCollisionUtils.testPointFrustum(frustum, ch.Position))
-            //        this.Renderer.render(ch);
         }
     }
 }

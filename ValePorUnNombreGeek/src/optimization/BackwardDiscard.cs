@@ -14,7 +14,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
-    class BackwardDiscard : ICulling
+    class BackwardDiscard : Culling
     {
         /* BackwardDiscard
          * Optimiza el renderizado dibujando solo los objetos que esten por delante de la

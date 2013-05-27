@@ -34,7 +34,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         Selection selection;
         string currentLevel;
         GraphicalControlPanel controlPanel;
-        IRenderer defaultRenderer;
+        Renderer defaultRenderer;
         ShadowRenderer shadowRenderer;
         FreeCamera camera;
 
