@@ -42,11 +42,26 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
                 o.render();
             }
 
-            foreach (Character c in this.characters)
+            List<Character> enemies = new List<Character>();
+            List<Character> commandos = new List<Character>();
+            foreach (Character ch in this.characters)
+                if (ch is Enemy)
+                    enemies.Add(ch);
+                else
+                    commandos.Add(ch);
+
+            foreach (Character ch in commandos)
             {
-                c.Effect = effect;
-                c.Technique = technique;
-                c.render();
+                ch.Effect = effect;
+                ch.Technique = technique;
+                ch.render();
+            }
+
+            foreach (Character ch in enemies)
+            {
+                ch.Effect = effect;
+                ch.Technique = technique;
+                ch.render();
             }
 
         }
