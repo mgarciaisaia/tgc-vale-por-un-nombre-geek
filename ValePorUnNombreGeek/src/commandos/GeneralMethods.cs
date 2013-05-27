@@ -121,6 +121,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
 
 
+
+        public static bool pointIsOverAABB(Vector3 point, TgcBoundingBox aabb)
+        {
+            if (point.X >= aabb.PMin.X && point.X <= aabb.PMax.X &&
+                point.Z >= aabb.PMin.Z && point.Z <= aabb.PMax.Z)
+                return true;
+            return false;
+        }
+
+
         /// <summary>
         /// Metodo Pow2 optimizado. Es aproximadamente 2,5 veces mas rapido que FastMath.Pow2.
         /// </summary>
