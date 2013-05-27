@@ -27,7 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         QuadTree quadTree;
 
 
-        public IRenderer Renderer { get; set; }
+        public Renderer Renderer { get; set; }
         LevelMap map;
 
 

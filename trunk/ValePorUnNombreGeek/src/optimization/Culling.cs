@@ -9,7 +9,7 @@ using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
-    abstract class ICulling
+    abstract class Culling
     {
         protected List<ILevelObject> objects;
         protected List<Character> characters;
@@ -37,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         public List<Character> charactersOut { get { return this.filteredCharacters; } }
         public List<TerrainPatch> patchesOut { get { return this.filteredPatches; } }
 
-        public ICulling()
+        public Culling()
         {
             this.filteredObjects = new List<ILevelObject>();
             this.filteredCharacters = new List<Character>();

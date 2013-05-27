@@ -8,17 +8,12 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 {
-    abstract class IRenderer
+    abstract class Renderer
     {
         public List<ILevelObject> objects { get; set; }
         public List<Character> characters { get; set; }
         public List<TerrainPatch> patches { get; set; }
 
-        //void beginRender();
-        //void render(ILevelObject o);
-        //void render(Commando c);
-        //void render(Enemy e);
-        //void render(TerrainPatch t);
         public abstract void render();
         public abstract void dispose();
     }

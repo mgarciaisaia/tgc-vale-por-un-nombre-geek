@@ -141,7 +141,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\terrain\divisibleTerrain\TerrainPatch.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Modifiers.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\BackwardDiscard.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\optimization\ICulling.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\optimization\Culling.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QTSector.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTree.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTreeDummie.cs" />
@@ -166,7 +166,7 @@
     <Compile Include="ValePorUnNombreGeek\src\pruebas\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValePorUnNombreGeek\src\renderzation\DefaultRenderer.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\renderzation\IRenderer.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\renderzation\Renderer.cs" />
     <Compile Include="ValePorUnNombreGeek\src\renderzation\ShadowRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
