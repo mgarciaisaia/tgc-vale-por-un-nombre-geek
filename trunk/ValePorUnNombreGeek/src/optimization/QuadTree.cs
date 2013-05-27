@@ -10,6 +10,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using Microsoft.DirectX;
 using TgcViewer;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
@@ -61,13 +62,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
                 {
                     this.filteredPatches.Add(sector.TerrainPatch);
 
+                    //buscamos los objetos del sector
                     foreach(ILevelObject obj in sector.Objects)
                         if(this.objects.Contains(obj))
                             this.filteredObjects.Add(obj);
-                }
 
-            //por ahora esta tecnica no filtra personajes
-            this.filteredCharacters.AddRange(this.characters);
+                    //buscamos los personajes sobre el sector
+                    foreach (Character ch in this.characters)
+                        if (GeneralMethods.pointIsOverAABB(ch.Position, sector.TerrainPatch.BoundingBox))
+                            this.filteredCharacters.Add(ch);
+                }
         }
     }
 }
