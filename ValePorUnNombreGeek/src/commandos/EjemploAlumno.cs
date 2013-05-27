@@ -126,6 +126,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             defaultRenderer = level.Renderer;
             shadowRenderer = new ShadowRenderer();
+            shadowRenderer.objects = level.Objects;
+            shadowRenderer.characters = level.Characters;
+            shadowRenderer.patches = level.Patches;
 
             setAndBindModifiers();
 

@@ -91,21 +91,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             arrow.Thickness = 10f;
             arrow.HeadSize = new Vector2(20f, 20f);
             arrow.BodyColor = Color.Blue;
-
-
-         
-
-
-          }
-
-        public override void render(TerrainPatch t)
-        {
-            base.render(t);
-            t.Effect = effect;
         }
-             
 
-        public override void endRender()
+
+        public override void render()
         {
             float elapsedTime = GuiController.Instance.ElapsedTime;
 
@@ -186,28 +175,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
             else technique = "SHADOWS";
                 
             
-            foreach (TerrainPatch p in terrainPatches)
+            foreach (TerrainPatch p in this.patches)
             {
+                p.Effect = effect;
                 p.Technique = technique;
                 p.render();
             }
 
-            foreach (ILevelObject o in objects)
+            foreach (ILevelObject o in this.objects)
             {
+                o.Effect = effect;
                 o.Technique = technique;
                 o.render();
             }
             
-            foreach (Commando c in commandos)
+            foreach (Character c in this.characters)
             {
-              
+                c.Effect = effect;
                 c.Technique = technique;
                 c.render();
-            }
-            foreach (Enemy e in enemies)
-            {
-                e.Technique = technique;
-                e.render();
             }
 
            
