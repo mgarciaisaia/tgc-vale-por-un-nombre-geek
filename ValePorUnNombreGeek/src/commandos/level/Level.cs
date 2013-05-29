@@ -23,7 +23,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         List<TerrainPatch> patches;
         ITerrain terrain;
 
-        BackwardDiscard backwardDiscard;
+        PlaneDiscard backwardDiscard;
         QuadTree quadTree;
 
 
@@ -67,7 +67,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             //tecnicas de optimizacion
 
             //backward discard
-            backwardDiscard = new BackwardDiscard();
+            backwardDiscard = new PlaneDiscard();
 
             backwardDiscard.objectsIn = this.objects;
             backwardDiscard.charactersIn = this.characters;
@@ -126,8 +126,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 character.update(elapsedTime);
 
 
-            backwardDiscard.filter(GuiController.Instance.Frustum);
-            quadTree.filter(GuiController.Instance.Frustum);
+            backwardDiscard.filter();
+            quadTree.filter();
             this.Renderer.render();
 
             foreach (Commando c in this.commandos)    

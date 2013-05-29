@@ -53,8 +53,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         #endregion
 
 
-        protected override void filterAlgorithm(TgcFrustum frustum)
+        protected override void filterAlgorithm()
         {
+            TgcFrustum frustum = GuiController.Instance.Frustum;
+
             //buscamos los sectores del terreno que ve la camara
             foreach (QTSector sector in this.sectors)
                 if (this.patches.Contains(sector.TerrainPatch) &&
