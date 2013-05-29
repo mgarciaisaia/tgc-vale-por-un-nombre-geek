@@ -19,15 +19,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         public List<Character> charactersIn { set { this.characters = value; } }
         public List<TerrainPatch> patchesIn { set { this.patches = value; } }
 
-        public void filter(TgcFrustum frustum)
+        public void filter()
         {
             this.filteredObjects.Clear();
             this.filteredCharacters.Clear();
             this.filteredPatches.Clear();
-            this.filterAlgorithm(frustum);
+            this.filterAlgorithm();
         }
 
-        protected abstract void filterAlgorithm(TgcFrustum frustum);
+        protected abstract void filterAlgorithm();
 
         protected List<ILevelObject> filteredObjects;
         protected List<Character> filteredCharacters;
