@@ -21,11 +21,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public override void update(float elapsedTime)
         {
+            this.killNearEnemies();
+
             if (!this.hasTarget()) return;
 
             this.goToTarget(elapsedTime);
 
+            
+
             if (this.isOnTarget()) this.setNoTarget();
+        }
+
+        private void killNearEnemies()
+        {
+            foreach(Character target in this.level.Enemies)
+            {
+                if(this.isNear(target)) {
+                    target.die();
+                }
+            }
         }
 
         public override bool OwnedByUser
