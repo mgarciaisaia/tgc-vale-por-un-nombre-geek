@@ -454,5 +454,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             return GeneralMethods.isCloseTo(this.Position, _position, 10);
         }
+
+        public bool isNear(ITargeteable target)
+        {
+            return GeneralMethods.isCloseTo(this.Position, target.Position, this.Radius * 2.5f);
+        }
     }
 }
