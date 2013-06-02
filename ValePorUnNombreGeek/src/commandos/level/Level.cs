@@ -214,7 +214,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             
         }
 
-        internal IEnumerable<Character> charactersNear(Vector3 pos)
+        internal List<Character> charactersNear(Vector3 pos)
         {
             return this.characters.FindAll(character => character.isNear(pos));
         }

@@ -21,15 +21,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public override void update(float elapsedTime)
         {
-            this.killNearEnemies();
-
             if (!this.hasTarget()) return;
 
             this.goToTarget(elapsedTime);
 
-            
+            if (this.isNearTarget())
+            {
+                this.killTarget();
+            }
 
-            if (this.isOnTarget()) this.setNoTarget();
+            if (this.isOnTarget())
+            {
+                this.setNoTarget();
+            }
+        }
+
+        private bool isNearTarget()
+        {
+            return this.isNear(this.Target);
         }
 
         public override void setPositionTarget(Vector3 pos)
@@ -43,6 +52,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                 }
             }
             base.setPositionTarget(pos);
+        }
+
+        private void killTarget()
+        {
+            foreach(Character nearEnemy in level.charactersNear(this.Position).FindAll(character => character.isEnemyOf(this))) {
+                if (nearEnemy == this.Target) {
+                    nearEnemy.die();
+                    this.setNoTarget();
+                }
+            }
         }
 
         private void killNearEnemies()
