@@ -194,6 +194,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\ArbolSelvatico2\ArbolSelvatico2-TgcScene.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\ArbolSelvatico2\Textures\tree1.png" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\CharacterPictures\1.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\bigheightmap.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\heightmap.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\Heightmap3.jpg" />
@@ -201,12 +204,19 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\TerrainTexture3.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\TerrainTexture5.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\TerrainRioTexture.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Mapa\frame.png" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Mapa\mask.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pared\pared.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Animaciones\nadar-TgcKeyFrameAnim.xml" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Animaciones\quieto-TgcKeyFrameAnim.xml" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Music\UWSDWF.mp3" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\pez-TgcKeyFrameMesh.xml" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Sound\WATER.WAV" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Pez\Textures\fish.bmp" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\Die-TgcSkeletalAnim.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\BasicHuman-TgcSkeletalMesh.xml" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_body.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Textures\EuroSoldier_head.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_bk.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_dn.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\SkyBox\lun4_ft.jpg" />
@@ -231,10 +241,14 @@
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\mapa.fx" />
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\picture.fx" />
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\shaders.fx" />
+    <None Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
     <None Include="ValePorUnNombreGeek\documentacion\Decisiones de diseño.rtf" />
     <None Include="ValePorUnNombreGeek\documentacion\diagrama_de_clases.class.violet" />
     <None Include="ValePorUnNombreGeek\documentacion\soldier_state_diagram.state.violet" />
     <None Include="ValePorUnNombreGeek\documentacion\umlCharacter.class.violet" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AlumnoMedia\ValePorUnNombreGeek\Sounds\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
