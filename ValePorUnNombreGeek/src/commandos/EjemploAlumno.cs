@@ -195,11 +195,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-          /*  if (elapsedTime > MAX_ELAPSED_TIME)
+            if (elapsedTime > MAX_ELAPSED_TIME)
             {
                 GuiController.Instance.Logger.log("Ignoramos un retardo de " + elapsedTime + " s");
                 return;
-            }*/
+            }
 
             Modifiers.Instance.update();
                  
