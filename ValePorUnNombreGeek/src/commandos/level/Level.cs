@@ -213,5 +213,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             return distance.LengthSq() <= radiusSum * radiusSum;
             
         }
+
+        internal IEnumerable<Character> charactersNear(Vector3 pos)
+        {
+            return this.characters.FindAll(character => character.isNear(pos));
+        }
     }
 }
