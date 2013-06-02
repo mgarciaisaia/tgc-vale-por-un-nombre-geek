@@ -173,7 +173,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             if (this.hasTarget())
             {
-              
+                marcaDePicking.Position = target.Position;
                 marcaDePicking.render();
             }
             return technique;
@@ -285,7 +285,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.target = null;
         }
 
-        public void setPositionTarget(Vector3 pos)
+        public virtual void setPositionTarget(Vector3 pos)
         {
             this.setTarget(new TargeteablePosition(pos));
         }
@@ -455,9 +455,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             return GeneralMethods.isCloseTo(this.Position, _position, 10);
         }
 
+        public bool isNear(Vector3 position)
+        {
+            return GeneralMethods.isCloseTo(this.Position, position, this.Radius * 2.5f);
+        }
+
         public bool isNear(ITargeteable target)
         {
-            return GeneralMethods.isCloseTo(this.Position, target.Position, this.Radius * 2.5f);
+            return this.isNear(target.Position);
+        }
+
+        internal bool isEnemyOf(Character other)
+        {
+            return other.OwnedByUser != this.OwnedByUser;
         }
     }
 }

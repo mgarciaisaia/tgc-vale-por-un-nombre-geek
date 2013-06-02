@@ -32,6 +32,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             if (this.isOnTarget()) this.setNoTarget();
         }
 
+        public override void setPositionTarget(Vector3 pos)
+        {
+            foreach (Character character in this.level.charactersNear(pos))
+            {
+                if (character.isEnemyOf(this))
+                {
+                    this.setCharacterTarget(character);
+                    return;
+                }
+            }
+            base.setPositionTarget(pos);
+        }
+
         private void killNearEnemies()
         {
             foreach(Character target in this.level.Enemies)
