@@ -38,7 +38,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         private bool isNearTarget()
         {
-            return this.isNear(this.Target);
+            return this.hasTarget() && this.isNear(this.Target);
         }
 
         public override void setPositionTarget(Vector3 pos)
