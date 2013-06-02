@@ -10,11 +10,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
     class Chasing:SoldierState
     {
         Commando commando;
-        TgcStaticSound talk;
+        TgcStaticSound shoot;
         public Chasing(Soldier _soldier, Commando commando):base(_soldier){
             this.commando = commando;
-            talk = new TgcStaticSound();
-            talk.loadSound(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek//" + "Sounds//TALK.WAV");
+            shoot = new TgcStaticSound();
+            //shoot.loadSound(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek//" + "Sounds//SHOT.WAV");
 
         }
         public override void update(float elapsedTime)
@@ -22,18 +22,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             if (this.soldier.canSee(commando))
             {
                 this.soldier.setPositionTarget(commando.Position); //pablo
-
+                commando.Life.decrement(elapsedTime * 40);
+                //shoot.play();
                 if (GeneralMethods.isCloseTo(this.soldier.Position, commando.Position, this.soldier.Radius * 2.5f))
                 {
-                    commando.Life.decrement(elapsedTime * 10);
-                    this.soldier.Representation.talk();
+                    commando.Representation.standBy();
                     
-                    talk.play();
                   
                 }
                 else
                 {
-                    //this.soldier.setCharacterTarget(commando);
                     this.soldier.goToTarget(elapsedTime);
                     
                 }
@@ -48,6 +46,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                     return;
                 }
                 this.soldier.setPreviousPositionTarget();
+                shoot.dispose();
                 this.soldier.setState(new Waiting(soldier, 0, true));
             }
         }
