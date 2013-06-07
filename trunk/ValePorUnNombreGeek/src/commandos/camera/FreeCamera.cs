@@ -7,6 +7,7 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 using TgcViewer;
 using Microsoft.DirectX.DirectInput;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 {
@@ -29,7 +30,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         public static int ANCHO_DESPLAZAMIENTO = 50;
 
         Vector3 upVector;
-        Vector3 cameraCenter;
+        public Vector3 cameraCenter;
         Vector3 nextPos;
         float cameraDistance;
         float zoomFactor;
@@ -39,6 +40,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         Matrix viewMatrix;
         float rotationSpeed;
         float panSpeed;
+        
       
 
         public FreeCamera()
@@ -46,15 +48,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
             resetValues();
         }
 
-        public FreeCamera(Vector3 center, bool enabled) : this()
+        public FreeCamera(ITerrain terrain, bool enabled) : this()
         {
-            this.CameraCenter = center;
+            this.CameraCenter = terrain.getPosition(0, 150);
+            this.Terrain = terrain;
             this.Enable = enabled;
-        }
-
-        public FreeCamera(Vector3 center, int distance, bool enabled) : this(center, enabled)
-        {
-            this.CameraDistance = distance;
         }
 
 
@@ -179,6 +177,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
                 return;
             }
 
+            // FIXME: las orig_diff_? apestan (pero funcionan)
+            float orig_diff_x = diffX;
+            float orig_diff_y = diffY;
+            float orig_diff_z = diffZ;
+
             TgcD3dInput d3dInput = GuiController.Instance.D3dInput;
             float elapsedTime = GuiController.Instance.ElapsedTime;
 
@@ -281,11 +284,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
                 desplazarConFlechas(distance);
             }
 
+            if (nextPos.Y > this.Terrain.getPosition(nextPos.X, nextPos.Z).Y + 40)
+            {
 
-            //Obtener ViewMatrix haciendo un LookAt desde la posicion final anterior al centro de la camara
-            viewMatrix = Matrix.LookAtLH(nextPos, cameraCenter, upVector);
-           
-           
+
+                //Obtener ViewMatrix haciendo un LookAt desde la posicion final anterior al centro de la camara
+                viewMatrix = Matrix.LookAtLH(nextPos, cameraCenter, upVector);
+
+            }
+            else
+            {
+                // FIXME: esto apesta (pero funciona)
+                diffX = orig_diff_x;
+                diffY = orig_diff_y;
+                diffZ = orig_diff_z;
+            }
 
         }
 
@@ -379,6 +392,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
                 //desf.Y = 0;
                 nextPos = nextPos + desf;
+                nextPos.Y = Math.Max(nextPos.Y, this.Terrain.getPosition(nextPos.X, nextPos.Z).Y);
                 cameraCenter = cameraCenter + desf;
             }
         }
@@ -435,5 +449,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         public bool desplazamientoMouse { get; set; }
 
         public bool desplazamientoFlechas { get; set; }
+
+        public ITerrain Terrain { get; set; }
     }
 }

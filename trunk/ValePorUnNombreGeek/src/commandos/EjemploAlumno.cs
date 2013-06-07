@@ -98,6 +98,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);*/
 
+            GuiController.Instance.UserVars.addVar("upVector", camera.getPosition().Y);
+            GuiController.Instance.UserVars.addVar("center", camera.CameraCenter);
          
         }
 
@@ -137,7 +139,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             picking = new MovementPicking(level.Terrain);
              
             //Inicializar camara
-            camera = new FreeCamera(level.Terrain.getPosition(0, 150), true);
+            camera = new FreeCamera(level.Terrain, true);
 
             //Seleccion multiple
             selection = new Selection(level.Characters, level.Terrain);
@@ -202,9 +204,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             }
 
             Modifiers.Instance.update();
-                 
-                   
-         
+
+
+            GuiController.Instance.UserVars.setValue("upVector", camera.getPosition().Y);
+            GuiController.Instance.UserVars.setValue("center", camera.CameraCenter);
 
 
             
