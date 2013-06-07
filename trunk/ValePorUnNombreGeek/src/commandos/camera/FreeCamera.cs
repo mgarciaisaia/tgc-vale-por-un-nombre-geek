@@ -181,6 +181,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
             float orig_diff_x = diffX;
             float orig_diff_y = diffY;
             float orig_diff_z = diffZ;
+            Vector3 orig_next_pos = nextPos;
+            Vector3 orig_camera_center = cameraCenter;
 
             TgcD3dInput d3dInput = GuiController.Instance.D3dInput;
             float elapsedTime = GuiController.Instance.ElapsedTime;
@@ -298,6 +300,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
                 diffX = orig_diff_x;
                 diffY = orig_diff_y;
                 diffZ = orig_diff_z;
+                nextPos = orig_next_pos;
+                cameraCenter = orig_camera_center;
             }
 
         }
@@ -392,7 +396,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
                 //desf.Y = 0;
                 nextPos = nextPos + desf;
-                nextPos.Y = Math.Max(nextPos.Y, this.Terrain.getPosition(nextPos.X, nextPos.Z).Y);
                 cameraCenter = cameraCenter + desf;
             }
         }

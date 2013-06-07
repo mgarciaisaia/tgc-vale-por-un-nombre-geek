@@ -97,9 +97,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             /*controlPanel = new TextControlPanel();
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);*/
-
-            GuiController.Instance.UserVars.addVar("upVector", camera.getPosition().Y);
-            GuiController.Instance.UserVars.addVar("center", camera.CameraCenter);
          
         }
 
@@ -205,9 +202,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             Modifiers.Instance.update();
 
-
-            GuiController.Instance.UserVars.setValue("upVector", camera.getPosition().Y);
-            GuiController.Instance.UserVars.setValue("center", camera.CameraCenter);
 
 
             
