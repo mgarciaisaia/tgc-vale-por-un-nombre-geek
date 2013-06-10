@@ -37,6 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         Renderer defaultRenderer;
         ShadowRenderer shadowRenderer;
         FreeCamera camera;
+        //PCamera camera;
 
         #region Details
 
@@ -137,6 +138,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
              
             //Inicializar camara
             camera = new FreeCamera(level.Terrain, true);
+            //camera = new PCamera(new Vector3(0, 0, 150), level.Terrain);
 
             //Seleccion multiple
             selection = new Selection(level.Characters, level.Terrain);

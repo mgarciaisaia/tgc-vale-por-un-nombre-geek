@@ -8,15 +8,17 @@ using TgcViewer;
 using Microsoft.DirectX.DirectInput;
 using TgcViewer.Utils.TgcGeometry;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 {
     class PCamera : TgcCamera
     {
         private const float MOVEMENT_SPEED = 600;
-        private const float BORDER_WIDTH = 50;
+        private const float BORDER_WIDTH = 80;
 
-        private const float ZOOM_SPEED = 400;
+        private const float ZOOM_SPEED = 600;
         private const float DISTANCE_MIN = 100;
         private const float DISTANCE_MAX = 1600;
 
@@ -31,32 +33,30 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
         public PCamera(Vector3 _center, ITerrain _terrain)
         {
-            this.center = _center;
             this.terrain = _terrain;
+
+            this.center = _center;
             this.ctpv = Vector3.Normalize(new Vector3(0, 2, 1));
             this.distance = (DISTANCE_MAX - DISTANCE_MIN) / 2;
+
+            this.updateCenter();
             this.updateViewMatrix();
+
             GuiController.Instance.CurrentCamera = this;
         }
 
-        public Vector3 getPosition()
-        {
-            return this.center + (this.ctpv * this.distance);
-        }
+        #region Update
 
-        public Vector3 getLookAt()
-        {
-            return this.center;
-        }
-
-        private Vector2 lastMousePos;
+        private Point lastRealMousePos;
         private bool rotating = false;
         public void updateCamera()
         {
+            if (!Mouse.isOverViewport()) return;
+
             TgcD3dInput d3dInput = GuiController.Instance.D3dInput;
             float elapsedTime = GuiController.Instance.ElapsedTime;
 
-            Vector2 mousePos = new Vector2(d3dInput.Xpos, d3dInput.Ypos);
+            Vector2 mousePos = Mouse.ViewportPosition;
             float viewportHeight = GuiController.Instance.D3dDevice.Viewport.Height;
             float viewportWidth = GuiController.Instance.D3dDevice.Viewport.Width;
 
@@ -87,46 +87,38 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
             //Rotacion
 
-            if (d3dInput.buttonDown(TgcD3dInput.MouseButtons.BUTTON_RIGHT))
+            Point realMousePos = Mouse.Position;
+
+            if (d3dInput.buttonDown(TgcD3dInput.MouseButtons.BUTTON_MIDDLE))
             {
-                if (!this.rotating)
+                if (!this.rotating) //inicia rotacion
                 {
                     this.rotating = true;
-                    this.lastMousePos = mousePos;
+                    this.lastRealMousePos = Mouse.Position;
+                    Mouse.hide();
                 }
-                else
+                else //esta rotando
                 {
-                    float dx = lastMousePos.X - mousePos.X;
-                    if (dx != 0)
-                    {
-                        dx *= FastMath.PI;
-                        dx /= viewportWidth;
+                    float dx = lastRealMousePos.X - realMousePos.X;
+                    if (dx != 0) //hay rotacion en x
+                        this.rotateCamera
+                            (new Vector3(0, -dx, 0),
+                            dx * FastMath.PI / viewportWidth);
 
-                        Vector3 rotationAxis = new Vector3(0, dx, 0);
-                        rotationAxis.Normalize();
+                    float dy = lastRealMousePos.Y - realMousePos.Y;
+                    if (dy != 0) //hay rotacion en y
+                        this.rotateCamera
+                            (Vector3.Cross(this.ctpv, new Vector3(0, -dy, 0)),
+                            dy * FastMath.PI / viewportWidth);
 
-                        Matrix transMatrix = Matrix.RotationAxis(rotationAxis, FastMath.Abs(dx));
-                        this.ctpv.TransformCoordinate(transMatrix);
-                    }
-
-                    float dy = lastMousePos.Y - mousePos.Y;
-                    if (dy != 0)
-                    {
-                        dy *= FastMath.PI;
-                        dy /= viewportHeight;
-
-                        Vector3 rotationAxis = Vector3.Cross(this.ctpv, new Vector3(0, dy, 0));
-                        rotationAxis.Normalize();
-
-                        Matrix transMatrix = Matrix.RotationAxis(rotationAxis, FastMath.Abs(dy));
-                        this.ctpv.TransformCoordinate(transMatrix);
-                    }
-
-                    this.lastMousePos = mousePos;
+                    Mouse.Position = this.lastRealMousePos; //mantenemos estatico el cursor
                 }
             }
-            else if (d3dInput.buttonUp(TgcD3dInput.MouseButtons.BUTTON_RIGHT))
+            else if (d3dInput.buttonUp(TgcD3dInput.MouseButtons.BUTTON_MIDDLE)) //finaliza rotacion
+            {
                 this.rotating = false;
+                Mouse.show();
+            }
 
 
             //Distancia
@@ -143,6 +135,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
             this.updateViewMatrix();
         }
 
+        #endregion
+
+        #region Whatever
+
         private void updateViewMatrix()
         {
             this.viewMatrix = Matrix.LookAtLH(this.getPosition(), this.getLookAt(), new Vector3(0, 1, 0));
@@ -154,9 +150,32 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
             this.center.Y /= 2f;
         }
 
+        private void rotateCamera(Vector3 rotationAxis, float angle)
+        {
+            Vector3 normalizedRotationAxis = Vector3.Normalize(rotationAxis);
+            Matrix transMatrix = Matrix.RotationAxis(normalizedRotationAxis, FastMath.Abs(angle));
+            this.ctpv.TransformCoordinate(transMatrix);
+        }
+
+        #endregion
+
+        #region TgcCameraMethods
+
+        public Vector3 getPosition()
+        {
+            return this.center + (this.ctpv * this.distance);
+        }
+
+        public Vector3 getLookAt()
+        {
+            return this.center;
+        }
+
         public void updateViewMatrix(Microsoft.DirectX.Direct3D.Device d3dDevice)
         {
             d3dDevice.Transform.View = this.viewMatrix;
         }
+
+        #endregion
     }
 }
