@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\FreeCamera.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\camera\PCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Life.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLTerrain.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picture\CharacterPicture.cs" />
