@@ -22,7 +22,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             if (this.soldier.canSee(commando))
             {
                 this.soldier.setPositionTarget(commando.Position); //pablo
-                commando.Life.decrement(elapsedTime * 40);
+                commando.Life.decrement(elapsedTime * 50);
                 //shoot.play();
                 if (GeneralMethods.isCloseTo(this.soldier.Position, commando.Position, this.soldier.Radius * 2.5f))
                 {
