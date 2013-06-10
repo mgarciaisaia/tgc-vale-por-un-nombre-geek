@@ -6,6 +6,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using System.Xml;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using Microsoft.DirectX;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
@@ -48,7 +49,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
         {
             float[] pos = TgcViewer.Utils.TgcSceneLoader.TgcParserUtils.parseFloat2Array(commandoNode.InnerText);
 
-            return new Commando(terrain.getPosition(pos[0], pos[1]));
+            Commando commando  = new Commando(terrain.getPosition(pos[0], pos[1]));
+            XmlNode pic = commandoNode.Attributes.GetNamedItem("picture");
+            if (pic != null)
+            {
+                commando.Picture = new CharacterPicture(EjemploAlumno.MediaDir + pic.InnerText);
+
+            }
+            return commando;
         }
     }
 }
