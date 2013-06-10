@@ -18,8 +18,8 @@
   </enemy>
     
  
-  <commando>(-200,200)</commando>
-  <commando>(200,200)</commando>
+  <commando picture="\\CharacterPictures\\1.jpg">(-200,200)</commando>
+  <commando picture="\\CharacterPictures\\avatar_2976.jpg">(200,200)</commando>
 
   <!--<levelObject mesh="ArbolSelvatico2\\ArbolSelvatico2-TgcScene.xml" scale="(5,5,5)"></levelObject>-->
   <levelObject class="tree" scale="(5,7,5)">(56,530)</levelObject>

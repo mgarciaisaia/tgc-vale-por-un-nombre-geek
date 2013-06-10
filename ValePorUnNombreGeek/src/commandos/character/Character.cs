@@ -23,6 +23,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         private static bool renderCylinder;
         public static bool RenderCylinder { get { return renderCylinder; } set { renderCylinder = value; } }
         protected Life life;
+        private CharacterPicture picture;
+        public CharacterPicture Picture
+        {
+            get { return picture; }
+            set { this.picture = value; picture.Character = this; if (this.Life != null)this.Life.Picture = value.Clone(); }
+        }
        
 
 
@@ -45,14 +51,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.boundingCylinder = new Cylinder(this.Representation.BoundingBox.calculateBoxCenter(), boundingSize.Y, boundingSize.X);
         }
 
-        /// <summary>
-        /// Retorna un nuevo CharacterPicture.
-        /// </summary>
-        /// <returns></returns>
-        public virtual CharacterPicture getPicture()
-        {
-            return new CharacterPicture(this, EjemploAlumno.MediaDir + "CharacterPictures\\1.jpg");
-        }
 
         //Sobreescribible para que los hijos puedan usar otra representacion
         protected virtual void loadCharacterRepresentation(Vector3 position)

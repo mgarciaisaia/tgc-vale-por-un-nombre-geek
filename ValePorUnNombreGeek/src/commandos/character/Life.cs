@@ -12,6 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected float points;
         protected float maxPoints;
         protected bool vertical;
+        protected Vector2 traslation;
         protected Character character;
         protected Effect effect;
         protected Vector2 size;
@@ -20,7 +21,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected Vector2 position;
         protected bool mustUpdate;
         protected string technique;
-        public CharacterPicture Picture;
+        protected CharacterPicture picture;
+        public CharacterPicture Picture{get{return picture;}
+            set{
+                this.picture = value;
+                this.picture.Position = position;
+                this.position = traslation + new Vector2(this.Picture.Width, 0);
+                this.picture.Width = size.Y / this.picture.Height * this.picture.Width;
+                this.picture.Height = size.Y;
+            }}
 
         public Color Color
         {
@@ -30,10 +39,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public Vector2 Position
         {
-            get { return this.Picture.Position; }
+            get {if(this.Picture!=null) return this.Picture.Position; else return this.position; }
             set
             {
-                this.Picture.Position = value; this.position = value + new Vector2(this.Picture.Width, 0); mustUpdate = true;
+                this.traslation = value;
+                if (this.Picture != null)
+                {
+                    this.Picture.Position = value; this.position = this.traslation + new Vector2(this.Picture.Width, 0);
+
+                }
+                else this.position = value;
+                mustUpdate = true;
             }
         }
 
@@ -47,7 +63,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public float Width
         {
-            get { return this.size.X + this.Picture.Width; }
+            get { return this.size.X + ((this.Picture!=null)?this.Picture.Width:0); }
             
         }
 
@@ -83,11 +99,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.maxPoints = maxPoints;
             this.points = maxPoints;
             this.character = character;
-            this.Picture = character.getPicture();
-            this.Picture.Position = position;
-            this.position = position + new Vector2(this.Picture.Width,0);
-            this.Picture.Width = size.Y / this.Picture.Height * this.Picture.Width;
-            this.Picture.Height = size.Y;
+            this.traslation = position;
+           
             this.size = size;
             this.color = color;
             this.mustUpdate = true;
@@ -147,7 +160,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             }
             effect.End();
 
-            this.Picture.render();
+            if(this.Picture!=null)this.Picture.render();
         }
 
         public void decrement(float points)
@@ -163,7 +176,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public void dispose()
         {
             effect.Dispose();
-            Picture.dispose();
+            if(this.Picture!=null)Picture.dispose();
            
         }
 

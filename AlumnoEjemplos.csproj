@@ -199,6 +199,7 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\ArbolSelvatico2\ArbolSelvatico2-TgcScene.xml" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\ArbolSelvatico2\Textures\tree1.png" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\CharacterPictures\1.jpg" />
+    <Content Include="AlumnoMedia\ValePorUnNombreGeek\CharacterPictures\avatar_2976.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\bigheightmap.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\heightmap.jpg" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Heightmaps\Heightmap3.jpg" />
