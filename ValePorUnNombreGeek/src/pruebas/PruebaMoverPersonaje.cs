@@ -10,6 +10,7 @@ using TgcViewer.Utils.TgcKeyFrameLoader;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 using TgcViewer.Utils.Sound;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaMoverPersonaje
 {
@@ -67,7 +68,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaMoverPersonaje
             TgcTexture pisoTexture = TgcTexture.createTexture(d3dDevice, GuiController.Instance.ExamplesMediaDir + "Texturas\\tierra.jpg");
             piso = TgcBox.fromSize(new Vector3(0, -60, 0), new Vector3(1000, 5, 1000), pisoTexture);
 
-            String mediaDir = EjemploAlumno.MediaDir;
+            String mediaDir = CommandosUI.Instance.MediaDir;
            
 
            //Cargar modelo con una animación Key Frame

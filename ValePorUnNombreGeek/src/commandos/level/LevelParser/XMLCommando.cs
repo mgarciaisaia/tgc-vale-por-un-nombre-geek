@@ -53,7 +53,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
             XmlNode pic = commandoNode.Attributes.GetNamedItem("picture");
             if (pic != null)
             {
-                commando.Picture = new CharacterPicture(EjemploAlumno.MediaDir + pic.InnerText);
+                commando.Picture = new CharacterPicture(CommandosUI.Instance.MediaDir + pic.InnerText);
 
             }
             return commando;

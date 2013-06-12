@@ -58,7 +58,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture
             this.FrameTechnique = "FRAME";
             this.Width = width;
             this.Height = height;
-            this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "picture.fx");
+            this.Effect = TgcShaders.loadEffect(CommandosUI.Instance.ShadersDir + "picture.fx");
             this.Enable = true;
            
            

@@ -6,6 +6,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 using TgcViewer;
 using Microsoft.DirectX;
 using Microsoft.DirectX.DirectInput;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
@@ -27,14 +28,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             }
         }
 
-
-        public ICamera Camera { get; set; }
+        #region Viewport
 
         public int ViewportHeight { get { return GuiController.Instance.D3dDevice.Viewport.Height; } }
         public int ViewportWidth { get { return GuiController.Instance.D3dDevice.Viewport.Width; } }
         public Vector2 MousePosition { get { return Mouse.ViewportPosition; } }
 
-        public float ElapsedTime { get { return GuiController.Instance.ElapsedTime; } }
+        #endregion
+
+        #region Keyboard
 
         public bool keyDown(Key key)
         {
@@ -50,6 +52,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         {
             return GuiController.Instance.D3dInput.keyPressed(key);
         }
+
+        #endregion
+
+        #region Mouse
 
         public bool mouseDown(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons button)
         {
@@ -68,8 +74,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         public float DeltaWheelPos { get { return GuiController.Instance.D3dInput.WheelPos; } }
 
+        #endregion
 
+        public ICamera Camera { get; set; }
+        public TgcFrustum CameraFrustum { get { return GuiController.Instance.Frustum; } }
 
         public Microsoft.DirectX.Direct3D.Device d3dDevice { get { return GuiController.Instance.D3dDevice; } }
+
+        public float ElapsedTime { get { return GuiController.Instance.ElapsedTime; } }
+
+        public void log(string text)
+        {
+            GuiController.Instance.Logger.log(text); //TODO usar en el commandos
+        }
+
+        public string MediaDir { get { return GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\"; } }
+        public string SrcDir { get { return GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\"; } }
+        public string ShadersDir { get { return GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\Shaders\\"; } }
     }
 }

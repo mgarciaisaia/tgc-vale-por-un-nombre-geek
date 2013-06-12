@@ -40,7 +40,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             this.loadCharacterRepresentation(_position);
             this.technique = representation.Technique;
-            this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "shaders.fx");
+            this.Effect = TgcShaders.loadEffect(CommandosUI.Instance.ShadersDir + "shaders.fx");
             this.Selected = false;
             this.Dead = false;
             this.SelectionColor = Color.Red;

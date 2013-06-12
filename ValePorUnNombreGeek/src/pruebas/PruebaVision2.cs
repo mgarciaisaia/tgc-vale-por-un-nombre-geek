@@ -60,7 +60,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 
 
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
-            String mediaDir = EjemploAlumno.MediaDir;
+            String mediaDir = CommandosUI.Instance.MediaDir;
             Terrain terrain = new Terrain(
                 mediaDir+"Heightmaps\\"+"HeightmapParedes.jpg",
                 mediaDir + "Heightmaps\\"+"TexturaParedes.jpg",

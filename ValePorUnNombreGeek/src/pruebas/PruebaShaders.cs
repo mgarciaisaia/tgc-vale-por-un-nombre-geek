@@ -14,6 +14,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using System.Windows.Forms;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 {
@@ -62,8 +63,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             skeletal = new SkeletalRepresentation(terrain.getPosition(477, 129));
             tree = new Tree(terrain.getPosition(420, 129), new Vector3(5,7,5),new Vector3(0,0,0));
             wall = new Wall(terrain.getPosition(200, 337), new Vector3(500,100,50));
-  
-            effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "shaders.fx");
+
+            effect = TgcShaders.loadEffect(CommandosUI.Instance.ShadersDir + "shaders.fx");
             skeletal.Effect = effect;
             terrain.Effect = effect;
             wall.Effect = effect;

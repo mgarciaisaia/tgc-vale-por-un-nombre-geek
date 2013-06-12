@@ -11,6 +11,7 @@ using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.EscenarioRio
 {
@@ -52,7 +53,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.EscenarioRio
         public override void init()
         {
 
-            String mediaDir = EjemploAlumno.MediaDir;
+            String mediaDir = CommandosUI.Instance.MediaDir;
 
             pathHeightmap = mediaDir + "Heightmaps\\" + "HeightmapRio.jpg";
 
