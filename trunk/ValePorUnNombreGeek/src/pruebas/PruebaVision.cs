@@ -57,7 +57,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
             String mediaDir = GuiController.Instance.AlumnoEjemplosMediaDir;
             nivel = new Level(
-                new Terrain(EjemploAlumno.MediaDir + "Heightmaps\\HeightmapPlano.jpg",
+                new Terrain(CommandosUI.Instance.MediaDir + "Heightmaps\\HeightmapPlano.jpg",
                     GuiController.Instance.ExamplesMediaDir + "Texturas\\tierra.jpg",
                     10f,
                     1f

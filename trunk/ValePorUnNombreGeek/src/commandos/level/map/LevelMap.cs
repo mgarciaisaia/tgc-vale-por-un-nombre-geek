@@ -75,7 +75,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
             createPositionsTexture(level);
 
             this.position = new Vector2(CommandosUI.Instance.ViewportWidth - this.width - 10, 10);
-            this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "mapa.fx");
+            this.Effect = TgcShaders.loadEffect(CommandosUI.Instance.ShadersDir + "mapa.fx");
             this.Technique = "MAPA";
             this.ShowCharacters = true;
             this.FollowCamera = true;

@@ -9,7 +9,6 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using Microsoft.DirectX;
-using TgcViewer;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
@@ -55,7 +54,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 
         protected override void filterAlgorithm()
         {
-            TgcFrustum frustum = GuiController.Instance.Frustum;
+            TgcFrustum frustum = CommandosUI.Instance.CameraFrustum;
+
+            //if (CommandosUI.Instance.Camera.Distance > 1000)
+            //{
+            //    //como la camara esta lejos del terreno, no optimizamos nada por que es muy costoso
+            //    this.filteredPatches.AddRange(this.patches);
+            //    this.filteredObjects.AddRange(this.objects);
+            //    this.filteredCharacters.AddRange(this.characters);
+            //    CommandosUI.Instance.log("lejos!" + CommandosUI.Instance.ElapsedTime.ToString());
+            //    return;
+            //}
 
             //buscamos los sectores del terreno que ve la camara
             foreach (QTSector sector in this.sectors)

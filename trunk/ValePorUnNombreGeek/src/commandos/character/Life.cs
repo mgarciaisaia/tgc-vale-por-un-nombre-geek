@@ -104,7 +104,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.size = size;
             this.color = color;
             this.mustUpdate = true;
-            this.effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "life.fx");
+            this.effect = TgcShaders.loadEffect(CommandosUI.Instance.ShadersDir + "life.fx");
             this.technique = "COLOR";
             
         }

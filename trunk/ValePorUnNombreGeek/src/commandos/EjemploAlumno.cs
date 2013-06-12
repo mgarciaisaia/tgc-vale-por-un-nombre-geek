@@ -64,10 +64,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             return "Implementación del Commandos";
         }
 
-        public static string MediaDir = GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek\\";
-        public static string SrcDir = GuiController.Instance.AlumnoEjemplosDir + "ValePorUnNombreGeek\\";
-        public static string ShadersDir = MediaDir + "Shaders\\";
-
   
         #endregion
 
@@ -85,13 +81,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             //SkyBox
             sky = new Sky();
 
-            loadLevel(EjemploAlumno.SrcDir + "\\niveles\\default-level.xml");
+            loadLevel(CommandosUI.Instance.SrcDir + "\\niveles\\default-level.xml");
             
             
             //Panel de control in game
-            controlPanel = new GraphicalControlPanel(EjemploAlumno.MediaDir + "Sprites\\panel2.jpg");
-            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), EjemploAlumno.MediaDir + "Sprites\\emptyp.png");
-            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), EjemploAlumno.MediaDir + "Sprites\\cancelp.png");
+            controlPanel = new GraphicalControlPanel(CommandosUI.Instance.MediaDir + "Sprites\\panel2.jpg");
+            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\emptyp.png");
+            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\cancelp.png");
             /*controlPanel = new TextControlPanel();
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);*/
@@ -109,16 +105,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             currentLevel = newLevel;
 
-            XMLLevelParser levelParser = new XMLLevelParser(newLevel, EjemploAlumno.MediaDir);
+            XMLLevelParser levelParser = new XMLLevelParser(newLevel, CommandosUI.Instance.MediaDir);
             level = levelParser.getLevel();
 
 
             LevelMap map = level.Map;
-            map.setMask(TextureLoader.FromFile(GuiController.Instance.D3dDevice, EjemploAlumno.MediaDir + "Mapa\\mask.jpg"));
-            map.setFrame(TextureLoader.FromFile(GuiController.Instance.D3dDevice, EjemploAlumno.MediaDir + "Mapa\\frame.png"));
+            map.setMask(TextureLoader.FromFile(CommandosUI.Instance.d3dDevice, CommandosUI.Instance.MediaDir + "Mapa\\mask.jpg"));
+            map.setFrame(TextureLoader.FromFile(CommandosUI.Instance.d3dDevice, CommandosUI.Instance.MediaDir + "Mapa\\frame.png"));
             map.Width = 2 * level.Map.Height;
             map.Height = 1.5f * level.Map.Height;
-            map.Position = new Vector2(GuiController.Instance.Panel3d.Width / 2 - level.Map.Width / 2, GuiController.Instance.Panel3d.Height - level.Map.Height);
+            map.Position = new Vector2(CommandosUI.Instance.ViewportWidth / 2 - level.Map.Width / 2, CommandosUI.Instance.ViewportHeight - level.Map.Height);
 
 
             defaultRenderer = level.Renderer;

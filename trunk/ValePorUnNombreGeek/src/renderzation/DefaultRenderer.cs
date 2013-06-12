@@ -8,6 +8,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.Shaders;
 using TgcViewer;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 {
@@ -17,7 +18,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
 
         public DefaultRenderer()
         {
-            effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "shaders.fx");
+            effect = TgcShaders.loadEffect(CommandosUI.Instance.ShadersDir + "shaders.fx");
         }
 
         public override void render()
