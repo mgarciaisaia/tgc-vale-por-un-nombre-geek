@@ -36,7 +36,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         GraphicalControlPanel controlPanel;
         Renderer defaultRenderer;
         ShadowRenderer shadowRenderer;
-        ICamera camera;
 
         #region Details
 
@@ -138,8 +137,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             selection = new Selection(level.Characters, level.Terrain);
              
             //Inicializar camara
-            //camera = new FreeCamera(level.Terrain, true);
-            //camera = new PCamera(new Vector3(0, 0, 150), level.Terrain);
             CommandosUI.Instance.Camera = new PCamera(new Vector3(0, 0, 150), level.Terrain);
         }
 

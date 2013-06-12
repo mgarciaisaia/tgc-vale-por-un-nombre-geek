@@ -46,7 +46,8 @@ namespace Examples
                 getAnimations());
 
             this.mesh.playAnimation("StandBy", true);
-            //new FreeCamera(new Vector3(0, 0, 0), true);
+
+            new StandardCamera();
         }
         protected virtual string[] getAnimations()
         {

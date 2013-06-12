@@ -53,7 +53,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
         Selection selection;
         MovementPicking picking;
        
-        FreeCamera camera;
         float previousAngle;
         Level nivel;
         public override void init()
@@ -99,9 +98,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
 
 
             previousAngle = 0;
-           
-            camera = new FreeCamera();
-            camera.Enable = true;
+
+            new StandardCamera();
 
         }
 

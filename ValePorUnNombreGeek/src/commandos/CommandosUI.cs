@@ -13,10 +13,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
     {
         private static CommandosUI instance;
 
-        private ICamera camera;
-
         private CommandosUI()
         {
+            this.Camera = new TgcCameraAdapter(GuiController.Instance.CurrentCamera);
             //singleton
         }
 
@@ -29,18 +28,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
 
 
-        public ICamera Camera {
-            get
-            {
-                if (this.camera == null)
-                    this.camera = new TgcCameraAdapter(GuiController.Instance.CurrentCamera);
-                return this.camera;
-            }
-            set
-            {
-                this.camera = value;
-            }
-        }
+        public ICamera Camera { get; set; }
 
         public int ViewportHeight { get { return GuiController.Instance.D3dDevice.Viewport.Height; } }
         public int ViewportWidth { get { return GuiController.Instance.D3dDevice.Viewport.Width; } }
