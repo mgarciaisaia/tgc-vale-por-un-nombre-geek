@@ -18,8 +18,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 
         public GraphicalControlPanel(string path)
         {
-            int screenHeight = GuiController.Instance.D3dDevice.Viewport.Height;
-            int screenWidth = GuiController.Instance.D3dDevice.Viewport.Width;
+            int screenHeight = CommandosUI.Instance.ViewportHeight;
+            int screenWidth = CommandosUI.Instance.ViewportWidth;
 
             this.controlPanelSprite = new Picture(path);
             this.controlPanelSprite.Position = new Vector2(0, screenHeight - this.controlPanelSprite.Height);
@@ -85,7 +85,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         /// </summary>
         public bool mouseIsOverPanel()
         {
-            return GuiController.Instance.D3dInput.Ypos > this.controlPanelSprite.Position.Y;
+            return CommandosUI.Instance.MousePosition.Y > this.controlPanelSprite.Position.Y;
         }
 
         /// <summary>
@@ -93,12 +93,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         /// </summary>
         public void update()
         {
-            float mouseX = GuiController.Instance.D3dInput.Xpos;
-            float mouseY = GuiController.Instance.D3dInput.Ypos;
+            Vector2 mousePos = CommandosUI.Instance.MousePosition;
+            float mouseX = mousePos.X;
+            float mouseY = mousePos.Y;
             CommandButton button;
             if (this.commandUnderMouse(mouseX, mouseY, out button))
             {
-                if (GuiController.Instance.D3dInput.buttonPressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
+                if (CommandosUI.Instance.mousePressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
                     button.click();
                 else
                 {

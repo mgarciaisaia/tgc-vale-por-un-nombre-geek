@@ -11,6 +11,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 using TgcViewer.Utils.TgcGeometry;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
+using TgcViewer.Utils.Input;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 {
@@ -45,7 +46,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
 
-            FreeCamera camera = new FreeCamera();
+
+            TgcRotationalCamera camera = new TgcRotationalCamera();
             camera.Enable = true;
 
             this.lastCylinderPos = new Vector3(0, 0, 0);

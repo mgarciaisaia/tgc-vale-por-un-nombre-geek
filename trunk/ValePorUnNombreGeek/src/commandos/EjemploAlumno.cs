@@ -36,8 +36,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         GraphicalControlPanel controlPanel;
         Renderer defaultRenderer;
         ShadowRenderer shadowRenderer;
-        FreeCamera camera;
-        //PCamera camera;
+        ICamera camera;
 
         #region Details
 
@@ -84,12 +83,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void init()
         {
-
-            //Crear SkyBox
+            //SkyBox
             sky = new Sky();
-           
+
             loadLevel(EjemploAlumno.SrcDir + "\\niveles\\default-level.xml");
-                 
+            
             
             //Panel de control in game
             controlPanel = new GraphicalControlPanel(EjemploAlumno.MediaDir + "Sprites\\panel2.jpg");
@@ -114,7 +112,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             XMLLevelParser levelParser = new XMLLevelParser(newLevel, EjemploAlumno.MediaDir);
             level = levelParser.getLevel();
-                    
+
 
             LevelMap map = level.Map;
             map.setMask(TextureLoader.FromFile(GuiController.Instance.D3dDevice, EjemploAlumno.MediaDir + "Mapa\\mask.jpg"));
@@ -135,16 +133,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             //Movimiento por picking
             picking = new MovementPicking(level.Terrain);
-             
-            //Inicializar camara
-            camera = new FreeCamera(level.Terrain, true);
-            //camera = new PCamera(new Vector3(0, 0, 150), level.Terrain);
 
             //Seleccion multiple
             selection = new Selection(level.Characters, level.Terrain);
-
-          
-         
+             
+            //Inicializar camara
+            //camera = new FreeCamera(level.Terrain, true);
+            //camera = new PCamera(new Vector3(0, 0, 150), level.Terrain);
+            CommandosUI.Instance.Camera = new PCamera(new Vector3(0, 0, 150), level.Terrain);
         }
 
         private void setAndBindModifiers()

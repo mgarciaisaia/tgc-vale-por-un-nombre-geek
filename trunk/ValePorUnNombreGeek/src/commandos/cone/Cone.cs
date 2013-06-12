@@ -147,7 +147,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
         /// </summary>
         private void crearTriangulos()
         {
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            Device d3dDevice = CommandosUI.Instance.d3dDevice;
             cantVertices = triangles * 3;
 
           
@@ -213,7 +213,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         public virtual void renderWireframe()
         {
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            Device d3dDevice = CommandosUI.Instance.d3dDevice;
             d3dDevice.RenderState.FillMode = FillMode.WireFrame;
             this.render();
             d3dDevice.RenderState.FillMode = FillMode.Solid;
@@ -224,7 +224,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         public virtual void render()
         {
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            Device d3dDevice = CommandosUI.Instance.d3dDevice;
 
             if(!Enabled) return;
             if (mustUpdate) updateValues();

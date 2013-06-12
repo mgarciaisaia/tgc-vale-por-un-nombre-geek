@@ -13,14 +13,19 @@ using System.Drawing;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 {
-    class PCamera : TgcCamera
+    class PCamera : ICamera
     {
         private const float MOVEMENT_SPEED = 600;
         private const float BORDER_WIDTH = 80;
 
         private const float ZOOM_SPEED = 600;
-        private const float DISTANCE_MIN = 100;
+        private const float DISTANCE_MIN = 200;
         private const float DISTANCE_MAX = 1600;
+
+        private const int ANGLE_MIN = 45;
+        private const int ANGLE_MAX = 80;
+        private float ANGLE_SIN_MIN = FastMath.Sin((180 / ANGLE_MIN) * FastMath.PI);
+        private float ANGLE_SIN_MAX = FastMath.Sin((180 / ANGLE_MAX) * FastMath.PI);
 
         private Vector3 center;
         private Vector3 ctpv; //'Center to Position' Versor
@@ -53,12 +58,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         {
             if (!Mouse.isOverViewport()) return;
 
-            TgcD3dInput d3dInput = GuiController.Instance.D3dInput;
-            float elapsedTime = GuiController.Instance.ElapsedTime;
+            var ui = CommandosUI.Instance;
+            float elapsedTime = ui.ElapsedTime;
 
-            Vector2 mousePos = Mouse.ViewportPosition;
-            float viewportHeight = GuiController.Instance.D3dDevice.Viewport.Height;
-            float viewportWidth = GuiController.Instance.D3dDevice.Viewport.Width;
+            Vector2 mousePos = ui.MousePosition;
+            float viewportHeight = ui.ViewportHeight;
+            float viewportWidth = ui.ViewportWidth;
 
 
             //Desplazamiento
@@ -66,30 +71,40 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
             Vector3 desplazamientoLateral = Vector3.Normalize(Vector3.Cross(this.ctpv, new Vector3(0, 1, 0)));
             Vector3 desplazamientoFrontal = Vector3.Normalize(Vector3.Cross(desplazamientoLateral, new Vector3(0, 1, 0)));
 
-            if (d3dInput.keyDown(Key.RightArrow))
-                this.center += desplazamientoLateral * MOVEMENT_SPEED * elapsedTime;
-            if (d3dInput.keyDown(Key.LeftArrow))
-                this.center -= desplazamientoLateral * MOVEMENT_SPEED * elapsedTime;
-            if (d3dInput.keyDown(Key.UpArrow))
-                this.center += desplazamientoFrontal * MOVEMENT_SPEED * elapsedTime;
-            if (d3dInput.keyDown(Key.DownArrow))
-                this.center -= desplazamientoFrontal * MOVEMENT_SPEED * elapsedTime;
+            if (ui.keyDown(Key.RightArrow))
+                this.moveCenter(desplazamientoLateral, 1, elapsedTime);
+            if (ui.keyDown(Key.LeftArrow))
+                this.moveCenter(-desplazamientoLateral, 1, elapsedTime);
+            if (ui.keyDown(Key.UpArrow))
+                this.moveCenter(desplazamientoFrontal, 1, elapsedTime);
+            if (ui.keyDown(Key.DownArrow))
+                this.moveCenter(-desplazamientoFrontal, 1, elapsedTime);
 
             if (mousePos.X > viewportWidth - BORDER_WIDTH) //derecha
-                this.center += desplazamientoLateral * MOVEMENT_SPEED * elapsedTime;
+                this.moveCenter(desplazamientoLateral, 1, elapsedTime);
             if (mousePos.X < BORDER_WIDTH) //izquierda
-                this.center -= desplazamientoLateral * MOVEMENT_SPEED * elapsedTime;
+                this.moveCenter(-desplazamientoLateral, 1, elapsedTime);
             if (mousePos.Y < BORDER_WIDTH) //arriba
-                this.center += desplazamientoFrontal * MOVEMENT_SPEED * elapsedTime;
+                this.moveCenter(desplazamientoFrontal, 1, elapsedTime);
             if (mousePos.Y > viewportHeight - BORDER_WIDTH) //abajo
-                this.center -= desplazamientoFrontal * MOVEMENT_SPEED * elapsedTime;
+                this.moveCenter(-desplazamientoFrontal, 1, elapsedTime);
+
+
+            //Distancia
+
+            if (ui.keyDown(Key.Z)) this.zoomOut(1, elapsedTime);
+            if (ui.keyDown(Key.A)) this.zoomIn(1, elapsedTime);
+
+            float wheel = ui.DeltaWheelPos;
+            if (wheel < 0) this.zoomOut(-wheel * 100, elapsedTime);
+            if (wheel > 0) this.zoomIn(wheel * 100, elapsedTime);
 
 
             //Rotacion
 
             Point realMousePos = Mouse.Position;
 
-            if (d3dInput.buttonDown(TgcD3dInput.MouseButtons.BUTTON_MIDDLE))
+            if (ui.mouseDown(TgcD3dInput.MouseButtons.BUTTON_MIDDLE))
             {
                 if (!this.rotating) //inicia rotacion
                 {
@@ -107,26 +122,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
                     float dy = lastRealMousePos.Y - realMousePos.Y;
                     if (dy != 0) //hay rotacion en y
+                    {
+                        //if (dy > 0 && this.ctpv.Y < ANGLE_SIN_MIN) this.ctpv.Y = ANGLE_SIN_MIN;
+                        //else
                         this.rotateCamera
                             (Vector3.Cross(this.ctpv, new Vector3(0, -dy, 0)),
-                            dy * FastMath.PI / viewportWidth);
+                            dy * FastMath.PI / viewportHeight);
+                    }
 
                     Mouse.Position = this.lastRealMousePos; //mantenemos estatico el cursor
                 }
             }
-            else if (d3dInput.buttonUp(TgcD3dInput.MouseButtons.BUTTON_MIDDLE)) //finaliza rotacion
+            else if (ui.mouseUp(TgcD3dInput.MouseButtons.BUTTON_MIDDLE)) //finaliza rotacion
             {
-                this.rotating = false;
                 Mouse.show();
+                this.rotating = false;
             }
-
-
-            //Distancia
-
-            if (d3dInput.keyDown(Key.Z) && this.distance < DISTANCE_MAX)
-                this.distance += ZOOM_SPEED * elapsedTime;
-            if (d3dInput.keyDown(Key.A) && this.distance > DISTANCE_MIN)
-                this.distance -= ZOOM_SPEED * elapsedTime;
 
 
             //Actualizacion de la matriz de transformacion
@@ -157,6 +168,28 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
             this.ctpv.TransformCoordinate(transMatrix);
         }
 
+        private void checkCameraAngle()
+        {
+            //TODO
+        }
+
+        private void moveCenter(Vector3 direction, float speed, float elapsedTime)
+        {
+            this.center += direction * MOVEMENT_SPEED * speed * elapsedTime;
+        }
+
+        private void zoomIn(float speed, float elapsedTime)
+        {
+            this.distance -= ZOOM_SPEED * speed * elapsedTime;
+            if (this.distance < DISTANCE_MIN) this.distance = DISTANCE_MIN;
+        }
+
+        private void zoomOut(float speed, float elapsedTime)
+        {
+            this.distance += ZOOM_SPEED * speed * elapsedTime;
+            if (this.distance > DISTANCE_MAX) this.distance = DISTANCE_MAX;
+        }
+
         #endregion
 
         #region TgcCameraMethods
@@ -174,6 +207,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         public void updateViewMatrix(Microsoft.DirectX.Direct3D.Device d3dDevice)
         {
             d3dDevice.Transform.View = this.viewMatrix;
+        }
+
+        #endregion
+
+        #region ICameraMethods
+
+        public float Distance
+        {
+            get { return this.distance; }
+        }
+
+        public Vector3 Direction
+        {
+            get { return -this.ctpv; }
         }
 
         #endregion
