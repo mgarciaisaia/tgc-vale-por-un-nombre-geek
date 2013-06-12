@@ -90,6 +90,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\ICamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\FreeCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\PCamera.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\camera\StandardCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\TgcCameraAdapter.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Life.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\CommandosUI.cs" />
@@ -153,7 +154,6 @@
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaCilindro.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PJOptimization.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaShaders.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\pruebas\StaticCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\EjemploAlumno.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\GeneralMethods.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Character.cs" />

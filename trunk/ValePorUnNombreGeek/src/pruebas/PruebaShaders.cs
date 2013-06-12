@@ -71,8 +71,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 
             GuiController.Instance.Modifiers.addFloat("timeSpeed", 0.01f, 0.5f, 0.25f);
 
-            FreeCamera camera = new FreeCamera();
-            camera.Enable = true;
+            new StandardCamera();
+
             //initShadows(d3dDevice);
 
         }

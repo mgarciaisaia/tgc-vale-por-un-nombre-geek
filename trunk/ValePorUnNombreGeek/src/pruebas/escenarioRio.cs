@@ -67,7 +67,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.EscenarioRio
          
 
             rio = TgcBox.fromSize(terrain.Position, new Vector3(terrain.getWidth() * terrain.ScaleXZ, 50*terrain.ScaleY, terrain.getLength() * terrain.ScaleXZ),Color.LightSlateGray);
-            camera = new FreeCamera();
+            camera = new FreeCamera(terrain, true);
             camera.Enable=true;
          
         
