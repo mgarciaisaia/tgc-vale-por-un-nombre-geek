@@ -125,7 +125,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         /// </summary>
         private void updateBordersDraw()
         {
-            Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center;
+            Vector3 cameraSeen = CommandosUI.Instance.Camera.getPosition() - this.center;
             Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, this.halfHeight);
             transversalALaCamara.Normalize();
             transversalALaCamara *= this.radius;
@@ -145,7 +145,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
 
         public void render()
         {
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            Device d3dDevice = CommandosUI.Instance.d3dDevice;
             this.updateBordersDraw();
             d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, endCapsVertex.Length / 2, endCapsVertex);
             d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, bordersVertex.Length / 2, bordersVertex);
@@ -310,13 +310,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         /// </summary>
         public Rectangle projectToScreen()
         {
-            Device device = GuiController.Instance.D3dDevice;
+            Device device = CommandosUI.Instance.d3dDevice;
             Viewport viewport = device.Viewport;
             Matrix world = device.Transform.World;
             Matrix view = device.Transform.View;
             Matrix proj = device.Transform.Projection;
 
-            Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center;
+            Vector3 cameraSeen = CommandosUI.Instance.Camera.getPosition() - this.center;
             Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, this.halfHeight);
             transversalALaCamara.Normalize();
             transversalALaCamara *= this.radius;

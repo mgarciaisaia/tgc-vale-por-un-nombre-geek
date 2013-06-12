@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using System.Drawing;
-using Microsoft.DirectX;
-using TgcViewer.Utils.Input;
-using TgcViewer;
 using Microsoft.DirectX.Direct3D;
+using Microsoft.DirectX;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rectangle
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.methods
 {
     class ScreenProjection : SelectionMethod
     {
@@ -54,7 +52,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
 
         private void renderRectangle()
         {
-            Microsoft.DirectX.Direct3D.Device d3dDevice = GuiController.Instance.D3dDevice;
+            Microsoft.DirectX.Direct3D.Device d3dDevice = CommandosUI.Instance.d3dDevice;
 
             bool alphaBlendEnabled = d3dDevice.RenderState.AlphaBlendEnable;
             d3dDevice.RenderState.AlphaBlendEnable = true;
@@ -72,10 +70,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         private Vector2 initMousePos;
         public virtual bool canBeginSelection()
         {
-            TgcD3dInput input = GuiController.Instance.D3dInput;
-
-            this.initMousePos = new Vector2(input.Xpos, input.Ypos);
-
+            this.initMousePos = CommandosUI.Instance.MousePosition;
             return true;
         }
 
@@ -83,9 +78,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rec
         protected Vector2 min, max;
         public virtual void updateSelection()
         {
-            TgcD3dInput input = GuiController.Instance.D3dInput;
-
-            Vector2 lastMousePos = new Vector2(input.Xpos, input.Ypos);
+            Vector2 lastMousePos = CommandosUI.Instance.MousePosition;
 
             min = Vector2.Minimize(this.initMousePos, lastMousePos);
             max = Vector2.Maximize(this.initMousePos, lastMousePos);

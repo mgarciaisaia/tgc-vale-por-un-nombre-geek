@@ -11,18 +11,18 @@ using System.Collections;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.multiple
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.methods
 {
     class BoxSelection : SelectionMethod
     {
         private List<Character> selectableCharacters;
-        private Terrain terrain;
+        private ITerrain terrain;
         private TgcBox selectionBox;
 
         private const float SELECTION_BOX_HEIGHT = 75;
 
 
-        public BoxSelection(Terrain _terrain, List<Character> _selectableCharacters)
+        public BoxSelection(ITerrain _terrain, List<Character> _selectableCharacters)
         {
             this.selectableCharacters = _selectableCharacters;
             this.terrain = _terrain;

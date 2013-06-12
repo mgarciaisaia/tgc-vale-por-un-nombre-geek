@@ -87,9 +87,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ValePorUnNombreGeek\src\commandos\camera\ICamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\FreeCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\PCamera.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\camera\TgcCameraAdapter.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Life.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\CommandosUI.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLTerrain.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Mouse.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picture\CharacterPicture.cs" />
@@ -133,7 +136,6 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\PickingRay.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\BoxSelection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\PickingRaySingleton.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\WorldProjection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\Selection.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\SelectionMethod.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picking\selection\methods\ScreenProjection.cs" />

@@ -130,7 +130,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public void render()
         {
 
-            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
+            Microsoft.DirectX.Direct3D.Device device = CommandosUI.Instance.d3dDevice;
             string technique;
             if (mustUpdate) createBar(); 
 

@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TgcViewer.Utils.Input;
-using TgcViewer;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.rectangle;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.multiple;
-using Microsoft.DirectX.DirectInput;
 using Microsoft.DirectX;
-using TgcViewer.Utils.TgcGeometry;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
+using TgcViewer.Utils.Input;
+using Microsoft.DirectX.DirectInput;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.methods;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
 {
@@ -47,27 +44,27 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
         /// </summary>
         public void update()
         {
-            TgcD3dInput input = GuiController.Instance.D3dInput;
+            var ui = CommandosUI.Instance;
 
-            if (!this.selecting && input.buttonDown(TgcD3dInput.MouseButtons.BUTTON_LEFT))
+            if (!this.selecting && ui.mouseDown(TgcD3dInput.MouseButtons.BUTTON_LEFT))
             { //arranca a seleccionar
                 if (this.selectionMethod.canBeginSelection())
                 {
                     this.selectionMethod.updateSelection();
-                    this.lastMousePos = new Vector2(input.Xpos, input.Ypos);
-                    this.initMousePos = new Vector2(input.Xpos, input.Ypos);
+                    this.lastMousePos = ui.MousePosition;
+                    this.initMousePos = ui.MousePosition;
                     this.selecting = true;
                 }
             }
-            else if (this.selecting && input.buttonUp(TgcD3dInput.MouseButtons.BUTTON_LEFT))
+            else if (this.selecting && ui.mouseUp(TgcD3dInput.MouseButtons.BUTTON_LEFT))
             { //termina de seleccionar
-                if (!input.keyDown(Key.LeftShift))
+                if (!ui.keyDown(Key.LeftShift))
                 {
                     foreach (Character ch in this.selectedCharacters) ch.Selected = false;
                     this.selectedCharacters.Clear();
                 }
 
-                Vector2 actualMousePos = new Vector2(input.Xpos, input.Ypos);
+                Vector2 actualMousePos = ui.MousePosition;
 
                 if (GeneralMethods.isCloseTo(actualMousePos, this.initMousePos, 1))
                 { //seleccion simple
@@ -84,7 +81,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             }
             else if (this.selecting)
             { //esta seleccionando
-                Vector2 actualMousePos = new Vector2(input.Xpos, input.Ypos);
+                Vector2 actualMousePos = ui.MousePosition;
                 if(!GeneralMethods.isCloseTo(actualMousePos, this.lastMousePos, 1))
                 {
                     this.lastMousePos = actualMousePos;

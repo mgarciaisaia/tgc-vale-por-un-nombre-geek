@@ -20,7 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands
         
         public void checkForPressedKey()
         {
-            if (GuiController.Instance.D3dInput.keyPressed(this.key))
+            if (CommandosUI.Instance.keyPressed(this.key))
                 this.command.execute();
         }
     }

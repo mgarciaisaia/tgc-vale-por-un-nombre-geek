@@ -74,7 +74,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
             createPositionsTexture(level);
 
-            this.position = new Vector2(GuiController.Instance.Panel3d.Width-this.width-10,10);
+            this.position = new Vector2(CommandosUI.Instance.ViewportWidth - this.width - 10, 10);
             this.Effect = TgcShaders.loadEffect(EjemploAlumno.ShadersDir + "mapa.fx");
             this.Technique = "MAPA";
             this.ShowCharacters = true;
@@ -118,8 +118,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         /// <param name="center"></param>
         private void updateTextureCoords()
         {
-            if (FollowCamera) viewCenter = GuiController.Instance.CurrentCamera.getLookAt();
-                    
+            if (FollowCamera) viewCenter = CommandosUI.Instance.Camera.getLookAt();
+            
             if(!mustUpdateTextureCoords && viewCenter.Equals(previousViewCenter)) return;
 
             Vector2 centerCoords;
@@ -187,7 +187,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
 
         private void createPositionsTexture(Level level)
         {
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            Device d3dDevice = CommandosUI.Instance.d3dDevice;
 
             //Textura auxiliar para renderizar las posiciones de los personajes
             g_Posiciones = new Texture(d3dDevice, terrainWidth, terrainHeight, 1, Usage.RenderTarget, Format.X8R8G8B8, Pool.Default);
@@ -242,7 +242,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map
         {
             if (!ShowCharacters) return;
 
-            Microsoft.DirectX.Direct3D.Device device = GuiController.Instance.D3dDevice;
+            Microsoft.DirectX.Direct3D.Device device = CommandosUI.Instance.d3dDevice;
            
                       
             //Renderizo posiciones de personajes sobre una textura
