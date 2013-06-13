@@ -11,11 +11,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class Mouse
     {
-        public static Vector2 ViewportPosition
-        {
-            get { return new Vector2(GuiController.Instance.D3dInput.Xpos, GuiController.Instance.D3dInput.Ypos); }
-        }
-
         public static Point Position
         {
             get { return Cursor.Position; }

@@ -151,6 +151,7 @@
     <Compile Include="ValePorUnNombreGeek\src\optimization\QTSector.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTree.cs" />
     <Compile Include="ValePorUnNombreGeek\src\optimization\QuadTreeDummie.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebasRendimiento.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaCilindro.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PJOptimization.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaShaders.cs" />

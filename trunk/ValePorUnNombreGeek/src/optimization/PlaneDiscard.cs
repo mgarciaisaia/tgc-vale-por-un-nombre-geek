@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TgcViewer.Utils.TgcGeometry;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using Microsoft.DirectX;
-using TgcViewer;
-using TgcViewer.Utils.Input;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
@@ -31,10 +29,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 
         protected override void filterAlgorithm()
         {
-            TgcCamera camera = GuiController.Instance.CurrentCamera;
+            ICamera camera = CommandosUI.Instance.Camera;
+
             //buscamos el plano de la camara
-            Vector3 n = camera.getLookAt() - camera.getPosition();
+            Vector3 n = camera.Direction;
             float d = Vector3.Dot(n, camera.getPosition());
+
+            ////datos de la camara
+            //float tpOffsetX = n.X / FastMath.Abs(n.X);
+            //float tpOffsetZ = n.Z / FastMath.Abs(n.Z);
+
 
             //filtramos todo lo que este detras de el
             foreach (Character ch in this.characters)
@@ -44,6 +48,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
             foreach (TerrainPatch p in this.patches)
                 if (pointIsInFrontOfPlane(p.BoundingBox.calculateBoxCenter(), n, d))
                     this.filteredPatches.Add(p);
+
+            //foreach (TerrainPatch tp in this.patches)
+            //{
+            //    //primero movemos el centro "lo mas adelante posible respecto de la camara"
+            //    Vector3 tpCenter = tp.BoundingBox.calculateBoxCenter();
+            //    Vector3 tpSize = tp.BoundingBox.calculateSize() * 0.5f;
+            //    Vector3 tpOffset = new Vector3(tpOffsetX * tpSize.X, 0, tpOffsetZ * tpSize.Z);
+
+            //    if (pointIsInFrontOfPlane(tpCenter + tpOffset, n, d))
+            //        this.filteredPatches.Add(tp);
+            //}
 
             foreach (ILevelObject o in this.objects)
                 if (pointIsInFrontOfPlane(o.Center, n, d))
