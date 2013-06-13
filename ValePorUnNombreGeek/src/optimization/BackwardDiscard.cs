@@ -9,6 +9,8 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using TgcViewer.Utils.TgcGeometry;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
@@ -36,8 +38,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 
         protected override void filterAlgorithm()
         {
-            TgcCamera camera = GuiController.Instance.CurrentCamera;
-            Vector3 cameraSeen = camera.getLookAt() - camera.getPosition();
+            ICamera camera = CommandosUI.Instance.Camera;
+            Vector3 cameraPos = camera.getPosition();
+            Vector3 cameraSeen = camera.Direction;
 
             Vector3 cameraCut = Vector3.Cross(cameraSeen, new Vector3(0, 1, 0));
 
@@ -53,20 +56,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
                 Vector3 tpSize = tp.BoundingBox.calculateSize() * 0.5f;
                 Vector3 tpOffset = new Vector3(tpOffsetX * tpSize.X, 0, tpOffsetZ * tpSize.Z);
 
-                if (isInFrontOfCamera(tpCenter + tpOffset, camera.getPosition(), cameraCut))
+                if (pointIsInFrontOfCamera(tpCenter + tpOffset, camera.getPosition(), cameraCut))
                     this.filteredPatches.Add(tp);
             }
 
             foreach (ILevelObject obj in this.objects)
-                if (isInFrontOfCamera(obj.Center, camera.getPosition(), cameraCut))
+                if (pointIsInFrontOfCamera(obj.Center, camera.getPosition(), cameraCut))
                     this.filteredObjects.Add(obj);
 
             foreach (Character ch in this.characters)
-                if (isInFrontOfCamera(ch.Center, camera.getPosition(), cameraCut))
+                if (pointIsInFrontOfCamera(ch.Center, camera.getPosition(), cameraCut))
                     this.filteredCharacters.Add(ch);
         }
 
-        private bool isInFrontOfCamera(Vector3 point, Vector3 cameraPos, Vector3 cameraCut)
+        private bool pointIsInFrontOfCamera(Vector3 point, Vector3 cameraPos, Vector3 cameraCut)
         {
             return Vector3.Cross(cameraCut, point - cameraPos).Y > 0;
         }

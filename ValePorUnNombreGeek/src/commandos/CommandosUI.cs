@@ -7,6 +7,7 @@ using TgcViewer;
 using Microsoft.DirectX;
 using Microsoft.DirectX.DirectInput;
 using TgcViewer.Utils.TgcGeometry;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
@@ -30,9 +31,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         #region Viewport
 
+        //public GraphicalControlPanel panel { get; set; }
+
+        public Vector2 MousePosition { get { return new Vector2(GuiController.Instance.D3dInput.Xpos, GuiController.Instance.D3dInput.Ypos); } }
+
+        //public int ScreeHeight { get { return GuiController.Instance.D3dDevice.Viewport.Height; } }
+        //public int ScreenWidth { get { return GuiController.Instance.D3dDevice.Viewport.Width; } }
+        //public bool mouseIsOverScreen()
+        //{
+        //    return Mouse.isOverViewport();
+        //}
+
         public int ViewportHeight { get { return GuiController.Instance.D3dDevice.Viewport.Height; } }
         public int ViewportWidth { get { return GuiController.Instance.D3dDevice.Viewport.Width; } }
-        public Vector2 MousePosition { get { return Mouse.ViewportPosition; } }
+        //public bool mouseIsOverViewport()
+        //{
+        //    return this.mouseIsOverScreen() && !this.panel.mouseIsOverPanel();
+        //}
 
         #endregion
 
