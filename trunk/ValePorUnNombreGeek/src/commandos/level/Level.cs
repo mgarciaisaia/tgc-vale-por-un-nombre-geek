@@ -23,6 +23,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         List<TerrainPatch> patches;
         ITerrain terrain;
 
+        //BackwardDiscard backwardDiscard;
         PlaneDiscard backwardDiscard;
         QuadTree quadTree;
 
@@ -68,15 +69,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
             //backward discard
             backwardDiscard = new PlaneDiscard();
+            //backwardDiscard = new BackwardDiscard();
 
-            backwardDiscard.objectsIn = this.objects;
             backwardDiscard.charactersIn = this.characters;
             backwardDiscard.patchesIn = this.patches;
 
             //quadtree
             quadTree = new QuadTree(this.terrain);
 
-            quadTree.objectsIn = backwardDiscard.objectsOut;
+            quadTree.objectsIn = this.objects;
             quadTree.charactersIn = backwardDiscard.charactersOut;
             quadTree.patchesIn = backwardDiscard.patchesOut;
 
