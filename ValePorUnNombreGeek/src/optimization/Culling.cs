@@ -13,6 +13,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
     {
         public Culling()
         {
+            this.objects = new List<ILevelObject>();
+            this.characters = new List<Character>();
+            this.patches = new List<TerrainPatch>();
             this.filteredObjects = new List<ILevelObject>();
             this.filteredCharacters = new List<Character>();
             this.filteredPatches = new List<TerrainPatch>();

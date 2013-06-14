@@ -157,22 +157,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         {
             Vector3 normalizedRotationAxis = Vector3.Normalize(rotationAxis);
             Matrix transMatrix = Matrix.RotationAxis(normalizedRotationAxis, FastMath.Abs(angle));
-
-            //Vector3 newCtpv = this.ctpv;
-            //newCtpv.TransformCoordinate(transMatrix);
-
-
-            //Vector3 maxAngleChecker = -this.ctpv;
-
-
-
-            //this.ctpv = newCtpv;
             this.ctpv.TransformCoordinate(transMatrix);
-        }
-
-        private void checkCameraAngle()
-        {
-            //TODO
         }
 
         private void moveCenter(Vector3 direction, float speed, float elapsedTime)

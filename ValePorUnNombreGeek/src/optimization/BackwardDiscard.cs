@@ -44,21 +44,37 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 
             Vector3 cameraCut = Vector3.Cross(cameraSeen, new Vector3(0, 1, 0));
 
-
-            float tpOffsetX = cameraSeen.X / FastMath.Abs(cameraSeen.X);
-            float tpOffsetZ = cameraSeen.Z / FastMath.Abs(cameraSeen.Z);
-
+            float signX;
+            if (cameraSeen.X != 0) signX = cameraSeen.X / FastMath.Abs(cameraSeen.X); else signX = 0;
+            float signZ;
+            if (cameraSeen.Z != 0) signZ = cameraSeen.Z / FastMath.Abs(cameraSeen.Z); else signZ = 0;
 
             foreach (TerrainPatch tp in this.patches)
             {
                 //primero movemos el centro "lo mas adelante posible respecto de la camara"
                 Vector3 tpCenter = tp.BoundingBox.calculateBoxCenter();
                 Vector3 tpSize = tp.BoundingBox.calculateSize() * 0.5f;
-                Vector3 tpOffset = new Vector3(tpOffsetX * tpSize.X, 0, tpOffsetZ * tpSize.Z);
+                Vector3 tpOffset = new Vector3(signX * tpSize.X, 0, signZ * tpSize.Z);
 
+                //checkeamos que ese punto este por deltante de la camara
                 if (pointIsInFrontOfCamera(tpCenter + tpOffset, camera.getPosition(), cameraCut))
                     this.filteredPatches.Add(tp);
             }
+
+            //float tpOffsetX = cameraSeen.X / FastMath.Abs(cameraSeen.X);
+            //float tpOffsetZ = cameraSeen.Z / FastMath.Abs(cameraSeen.Z);
+
+
+            //foreach (TerrainPatch tp in this.patches)
+            //{
+            //    //primero movemos el centro "lo mas adelante posible respecto de la camara"
+            //    Vector3 tpCenter = tp.BoundingBox.calculateBoxCenter();
+            //    Vector3 tpSize = tp.BoundingBox.calculateSize() * 0.5f;
+            //    Vector3 tpOffset = new Vector3(tpOffsetX * tpSize.X, 0, tpOffsetZ * tpSize.Z);
+
+            //    if (pointIsInFrontOfCamera(tpCenter + tpOffset, camera.getPosition(), cameraCut))
+            //        this.filteredPatches.Add(tp);
+            //}
 
             foreach (ILevelObject obj in this.objects)
                 if (pointIsInFrontOfCamera(obj.Center, camera.getPosition(), cameraCut))
