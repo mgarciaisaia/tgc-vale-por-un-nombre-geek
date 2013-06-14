@@ -36,7 +36,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
          * Nota: esta tecnica de optimizacion no se debe usar junto con PlaneDiscard.
          */
 
-        protected override void filterAlgorithm()
+        protected override void fillAlgorithm()
         {
             ICamera camera = CommandosUI.Instance.Camera;
             Vector3 cameraPos = camera.getPosition();

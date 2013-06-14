@@ -11,6 +11,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
     abstract class Culling
     {
+        public Culling()
+        {
+            this.filteredObjects = new List<ILevelObject>();
+            this.filteredCharacters = new List<Character>();
+            this.filteredPatches = new List<TerrainPatch>();
+        }
+
         protected List<ILevelObject> objects;
         protected List<Character> characters;
         protected List<TerrainPatch> patches;
@@ -19,15 +26,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         public List<Character> charactersIn { set { this.characters = value; } }
         public List<TerrainPatch> patchesIn { set { this.patches = value; } }
 
-        public void filter()
+        /// <summary>
+        /// Agrega los elementos que se deben renderizar a las listas de salida
+        /// </summary>
+        public void fillOutputs()
         {
             this.filteredObjects.Clear();
             this.filteredCharacters.Clear();
             this.filteredPatches.Clear();
-            this.filterAlgorithm();
+            this.fillAlgorithm();
         }
 
-        protected abstract void filterAlgorithm();
+        /// <summary>
+        /// Logica para seleccionar los elementos de salida
+        /// </summary>
+        protected abstract void fillAlgorithm();
 
         protected List<ILevelObject> filteredObjects;
         protected List<Character> filteredCharacters;
@@ -36,12 +49,5 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         public List<ILevelObject> objectsOut { get { return this.filteredObjects; } }
         public List<Character> charactersOut { get { return this.filteredCharacters; } }
         public List<TerrainPatch> patchesOut { get { return this.filteredPatches; } }
-
-        public Culling()
-        {
-            this.filteredObjects = new List<ILevelObject>();
-            this.filteredCharacters = new List<Character>();
-            this.filteredPatches = new List<TerrainPatch>();
-        }
     }
 }

@@ -108,20 +108,39 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
         #region SingleSelection
 
         /// <summary>
-        /// Selecciona un personaje utilizando el picking ray
+        /// Selecciona un unico personaje utilizando el picking ray
         /// </summary>
         private void selectCharacterByRay()
         {
+            List<Character> candidateCharacters = new List<Character>();
+            PickingRaySingleton.Instance.updateRayByMouse();
+
+            //buscamos los personajes que colisionan con el rayo
             foreach (Character ch in this.selectableCharacters)
+                if (ch.collidesWith(PickingRaySingleton.Instance.Ray))
+                    candidateCharacters.Add(ch);
+
+            //si hicieron click en la nada...
+            if (candidateCharacters.Count == 0) return;
+
+            //buscamos el personaje mas cercano a la camara
+            Character closestCharacter = candidateCharacters[0];
+            float closestDistance = (CommandosUI.Instance.Camera.getPosition() - closestCharacter.Position).LengthSq();
+
+            for (int i = 1; i < candidateCharacters.Count; i++)
             {
-                PickingRaySingleton.Instance.updateRayByMouse();
-                if(ch.collidesWith(PickingRaySingleton.Instance.Ray))
+                Character ch = candidateCharacters[i];
+
+                float distance = (CommandosUI.Instance.Camera.getPosition() - ch.Position).LengthSq();
+                if (distance < closestDistance)
                 {
-                    ch.Selected = true;
-                    this.selectedCharacters.Add(ch);
-                    break;
+                    closestCharacter = ch;
+                    closestDistance = distance;
                 }
             }
+
+            closestCharacter.Selected = true;
+            this.selectedCharacters.Add(closestCharacter);
         }
 
         #endregion

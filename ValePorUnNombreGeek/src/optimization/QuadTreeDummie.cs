@@ -13,7 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
 {
     class QuadTreeDummie : Culling
     {
-        protected override void filterAlgorithm()
+        protected override void fillAlgorithm()
         {
             this.filteredObjects.AddRange(this.objects);
             this.filteredCharacters.AddRange(this.characters);
