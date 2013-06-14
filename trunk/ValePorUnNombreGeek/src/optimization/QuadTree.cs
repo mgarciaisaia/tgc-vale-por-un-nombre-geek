@@ -52,7 +52,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
         #endregion
 
 
-        protected override void filterAlgorithm()
+        protected override void fillAlgorithm()
         {
             TgcFrustum frustum = CommandosUI.Instance.CameraFrustum;
 

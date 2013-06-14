@@ -126,8 +126,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 character.update(elapsedTime);
 
 
-            backwardDiscard.filter();
-            quadTree.filter();
+            backwardDiscard.fillOutputs();
+            quadTree.fillOutputs();
             this.Renderer.render();
 
             foreach (Commando c in this.commandos)    

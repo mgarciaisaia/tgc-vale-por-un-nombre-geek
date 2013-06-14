@@ -27,7 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
          * Nota: esta tecnica de optimizacion no se debe usar junto con BackwardDiscard.
          */
 
-        protected override void filterAlgorithm()
+        protected override void fillAlgorithm()
         {
             ICamera camera = CommandosUI.Instance.Camera;
 

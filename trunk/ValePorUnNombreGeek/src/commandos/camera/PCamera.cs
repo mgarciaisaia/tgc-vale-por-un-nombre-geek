@@ -22,10 +22,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         private const float DISTANCE_MIN = 200;
         private const float DISTANCE_MAX = 1600;
 
-        private const int ANGLE_MIN = 45;
+        private const int ANGLE_MIN = 20;
         private const int ANGLE_MAX = 80;
-        private float ANGLE_SIN_MIN = FastMath.Sin((180 / ANGLE_MIN) * FastMath.PI);
-        private float ANGLE_SIN_MAX = FastMath.Sin((180 / ANGLE_MAX) * FastMath.PI);
+        //private float ANGLE_SIN_MIN = FastMath.Sin((180 / ANGLE_MIN) * FastMath.PI);
+        //private float ANGLE_SIN_MAX = FastMath.Sin((180 / ANGLE_MAX) * FastMath.PI);
 
         private Vector3 center;
         private Vector3 ctpv; //'Center to Position' Versor
@@ -40,11 +40,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         {
             this.terrain = _terrain;
 
-            this.center = _center;
+            this.setCenter(this.terrain.getPosition(_center.X, _center.Z));
             this.ctpv = Vector3.Normalize(new Vector3(0, 2, 1));
             this.distance = (DISTANCE_MAX - DISTANCE_MIN) / 2;
 
-            this.updateCenter();
             this.updateViewMatrix();
 
             GuiController.Instance.CurrentCamera = this;
@@ -142,7 +141,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
             //Actualizacion de la matriz de transformacion
 
-            this.updateCenter();
             this.updateViewMatrix();
         }
 
@@ -155,16 +153,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
             this.viewMatrix = Matrix.LookAtLH(this.getPosition(), this.getLookAt(), new Vector3(0, 1, 0));
         }
 
-        private void updateCenter()
-        {
-            this.center = terrain.getPosition(this.center.X, this.center.Z);
-            this.center.Y /= 2f;
-        }
-
         private void rotateCamera(Vector3 rotationAxis, float angle)
         {
             Vector3 normalizedRotationAxis = Vector3.Normalize(rotationAxis);
             Matrix transMatrix = Matrix.RotationAxis(normalizedRotationAxis, FastMath.Abs(angle));
+
+            //Vector3 newCtpv = this.ctpv;
+            //newCtpv.TransformCoordinate(transMatrix);
+
+
+            //Vector3 maxAngleChecker = -this.ctpv;
+
+
+
+            //this.ctpv = newCtpv;
             this.ctpv.TransformCoordinate(transMatrix);
         }
 
@@ -175,7 +177,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
         private void moveCenter(Vector3 direction, float speed, float elapsedTime)
         {
-            this.center += direction * MOVEMENT_SPEED * speed * elapsedTime;
+            Vector3 newCenter = this.center + direction * MOVEMENT_SPEED * speed * elapsedTime;
+
+            if (this.terrain.getPosition(newCenter.X, newCenter.Z, out newCenter))
+                this.setCenter(newCenter);
+        }
+
+        private void setCenter(Vector3 _center)
+        {
+            this.center = _center;
+            this.center.Y /= 2f;
         }
 
         private void zoomIn(float speed, float elapsedTime)
