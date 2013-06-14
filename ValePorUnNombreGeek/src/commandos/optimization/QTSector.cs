@@ -6,7 +6,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using TgcViewer.Utils.TgcGeometry;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization
 {
     class QTSector
     {

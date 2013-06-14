@@ -9,7 +9,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization
 {
     class QuadTreeDummie : Culling
     {

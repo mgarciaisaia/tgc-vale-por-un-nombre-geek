@@ -4,13 +4,13 @@ using TgcViewer.Utils.TgcSceneLoader;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.optimization;
 using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
