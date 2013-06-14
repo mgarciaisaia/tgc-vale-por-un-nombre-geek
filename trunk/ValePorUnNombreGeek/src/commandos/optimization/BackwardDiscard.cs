@@ -12,7 +12,7 @@ using TgcViewer.Utils.TgcGeometry;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization
 {
     class BackwardDiscard : Culling
     {
@@ -28,10 +28,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
          * Sin optimizacion - 750fps
          * BackwardDiscard (grilla 3x3, viendo todo el mapa) - 750fps
          * BackwardDiscard (grilla 3x3, viendo de a 2 o 3 sectores) - entre 900 y 1100fps
-         * 
-         * Problemas conocidos:
-         * -Cuando inicia el juego no dibuja ningun sector del terreno hasta que se rote
-         * la camara al menos minimamente.
          * 
          * Nota: esta tecnica de optimizacion no se debe usar junto con PlaneDiscard.
          */
@@ -60,21 +56,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
                 if (pointIsInFrontOfCamera(tpCenter + tpOffset, camera.getPosition(), cameraCut))
                     this.filteredPatches.Add(tp);
             }
-
-            //float tpOffsetX = cameraSeen.X / FastMath.Abs(cameraSeen.X);
-            //float tpOffsetZ = cameraSeen.Z / FastMath.Abs(cameraSeen.Z);
-
-
-            //foreach (TerrainPatch tp in this.patches)
-            //{
-            //    //primero movemos el centro "lo mas adelante posible respecto de la camara"
-            //    Vector3 tpCenter = tp.BoundingBox.calculateBoxCenter();
-            //    Vector3 tpSize = tp.BoundingBox.calculateSize() * 0.5f;
-            //    Vector3 tpOffset = new Vector3(tpOffsetX * tpSize.X, 0, tpOffsetZ * tpSize.Z);
-
-            //    if (pointIsInFrontOfCamera(tpCenter + tpOffset, camera.getPosition(), cameraCut))
-            //        this.filteredPatches.Add(tp);
-            //}
 
             foreach (ILevelObject obj in this.objects)
                 if (pointIsInFrontOfCamera(obj.Center, camera.getPosition(), cameraCut))

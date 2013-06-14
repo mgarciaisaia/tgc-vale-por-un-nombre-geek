@@ -11,7 +11,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization
 {
     class QuadTree : Culling
     {

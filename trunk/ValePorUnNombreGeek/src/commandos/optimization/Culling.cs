@@ -7,7 +7,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using TgcViewer.Utils.TgcGeometry;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.optimization
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization
 {
     abstract class Culling
     {
