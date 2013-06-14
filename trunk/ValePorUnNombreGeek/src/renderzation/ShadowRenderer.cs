@@ -31,6 +31,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
         float far_plane = 1500f;
         Matrix projection;
         TgcArrow arrow;
+        float gameTime = 0;
+        const float DAY_LENGTH = 3 * 60; // 3 minutos
 
         public Vector3 LightLookFrom { get { return g_LightPos; } set { g_LightPos = value; updateLightDir(); updateArrow(); } }
 
@@ -94,9 +96,29 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation
         }
 
 
+        private const float DAY_LENGTH_80 = 1 / (DAY_LENGTH * 0.8f);
+        private const float HALF_DAY_PERC = 0.5f / 0.8f;
+        private Vector3 sun_position = new Vector3();
+
         public override void render()
         {
-            float elapsedTime = GuiController.Instance.ElapsedTime;
+            gameTime = (gameTime + GuiController.Instance.ElapsedTime) % DAY_LENGTH; // gameTime desde que empezo el ultimo ciclo/dia
+            float time_percentual = (gameTime * DAY_LENGTH_80) - HALF_DAY_PERC;
+
+            if (FastMath.Abs(time_percentual) < 0.5f)
+            {
+                sun_position.Y = 3600 - (15200 * time_percentual * time_percentual);
+                sun_position.X = (time_percentual * 10000);
+                sun_position.Z = sun_position.X;
+            }
+            else
+            {
+                sun_position.X = -5000;
+                sun_position.Y = -100;
+                sun_position.Z = -5000;
+            }
+
+            this.LightLookFrom = sun_position;
 
             Device device = GuiController.Instance.D3dDevice;
             Control panel3d = GuiController.Instance.Panel3d;
