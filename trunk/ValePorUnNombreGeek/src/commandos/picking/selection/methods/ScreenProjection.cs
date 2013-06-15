@@ -70,7 +70,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.met
         private Vector2 initMousePos;
         public virtual bool canBeginSelection()
         {
-            this.initMousePos = CommandosUI.Instance.MousePosition;
+            this.initMousePos = CommandosUI.Instance.ViewportMousePos;
             return true;
         }
 
@@ -78,7 +78,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.met
         protected Vector2 min, max;
         public virtual void updateSelection()
         {
-            Vector2 lastMousePos = CommandosUI.Instance.MousePosition;
+            Vector2 lastMousePos = CommandosUI.Instance.ViewportMousePos;
 
             min = Vector2.Minimize(this.initMousePos, lastMousePos);
             max = Vector2.Maximize(this.initMousePos, lastMousePos);

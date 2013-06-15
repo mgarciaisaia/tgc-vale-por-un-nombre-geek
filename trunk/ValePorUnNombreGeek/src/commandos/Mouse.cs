@@ -17,17 +17,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
             set { Cursor.Position = value; }
         }
 
-        public static bool isOverViewport()
+        public static bool isOverScreen()
         {
-            Point viewportPos = GuiController.Instance.Panel3d.PointToScreen(new Point(0, 0));
-            int viewportHeight = GuiController.Instance.Panel3d.Height;
-            int viewportWidth = GuiController.Instance.Panel3d.Width;
+            Point screenPos = GuiController.Instance.Panel3d.PointToScreen(new Point(0, 0));
+            int screenHeight = GuiController.Instance.Panel3d.Height;
+            int screenWidth = GuiController.Instance.Panel3d.Width;
 
             return
-                Mouse.Position.X > viewportPos.X &&
-                Mouse.Position.X < viewportPos.X + viewportWidth &&
-                Mouse.Position.Y > viewportPos.Y &&
-                Mouse.Position.Y < viewportPos.Y + viewportHeight;
+                Mouse.Position.X > screenPos.X &&
+                Mouse.Position.X < screenPos.X + screenWidth &&
+                Mouse.Position.Y > screenPos.Y &&
+                Mouse.Position.Y < screenPos.Y + screenHeight;
         }
 
         public static void show()

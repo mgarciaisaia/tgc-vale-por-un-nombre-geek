@@ -1,27 +1,34 @@
 {\rtf1\ansi\ansicpg1252\deff0\deflang3082{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang10\f0\fs22 A continuaci\'f3n destacamos las decisiones de dise\'f1o y las caracter\'edsticas m\'e1s importantes que aplican conceptos de la materia\par
+{\*\generator Msftedit 5.41.21.2509;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang10\f0\fs22 A continuaci\'f3n destacamos las caracter\'edsticas m\'e1s importantes que desarrollamos y aplican conceptos de la materia.\par
 \par
-\b PickingRay \b0\i Intersecci\'f3n con HeightMap\ul\i0\par
+\b PickingRay\par
+\b0\i Intersecci\'f3n con HeightMap\ul\i0\par
 \ulnone Para hallar la intersecci\'f3n entre el Picking Ray y el HeightMap, simplemente buscamos el punto del rayo que coincide con un punto  de la malla del terreno.\par
 Este proceso es relativamente f\'e1cil gracias a una funci\'f3n del HeightMap que nos devuelve valores de Y dados un par X, Z. Hallar la intersecci\'f3n se reduce entonces a fuerza bruta: variamos los valores de X y Z en la ecucaci\'f3n del rayo y encontramos el valor para el cual (X,Y,Z) coincide para ambos elementos.\par
 Sin embargo esto trae problemas de rendimiento que se notan a simple vista: buscar valores para (X,Y,Z) desde el origen del rayo recorriendo su verctor direcci\'f3n resulta poco performante. Esto se debe a que el origen se encuenta donde est\'e1 la c\'e1mara, y el punto intersecci\'f3n est\'e1 ubicado generalmente al nivel Y=0 del terreno. Es decir que estamos recorriendo la recta desde la c\'e1mara hasta el plano m\'e1s bajo del HeightMap, y esto requiere una gran cantidad de ciclos. Para solucionar esto lo que hacemos es recorrer la recta en el sentido contrario, es decir, desde el plano m\'e1s bajo del HeightMap hacia "la pantalla". Y dado que, como ya mencionamos, el punto de intersecci\'f3n suele ubicarse m\'e1s pr\'f3ximo a ese plano m\'e1s bajo, la cantidad de ciclos que salvamos es abismal.\par
 \par
 \b Movimiento por picking\b0\par
 Utilizando el principio anteriormente mencionado para hallar la intersecci\'f3n PickingRay-HeightMap, implementar movimiento por picking se reduce solamente a desarrollar la l\'f3gica del personaje para dirigirse a ese punto intersecci\'f3n.\par
-\b Cilindro como volumen simplificado de personaje\par
+\b\par
+Cilindro como volumen simplificado de personaje\par
 \b0 Para representar mejor el volumen de cada personaje de manera simplificada evitando el uso de BoundingBox, se desarrollo la clase BoundingCylinder. Sus ventajas, desventajas, y detalles de implementaci\'f3n se explicar\'e1n m\'e1s adelante.\par
-\b Selecci\'f3n m\'faltiple\b0\par
+\b\par
+Selecci\'f3n m\'faltiple\b0\par
 \i Selecci\'f3n m\'faltiple utilizando TgcBox\i0\par
 Utilizando el Picking Ray, y hallando la intersecci\'f3n de este con el HeightMap, es f\'e1cil encontrar los puntos m\'e1ximos y m\'ednimos de la TgcBox que tiene inicio en el punto donde el usuario hizo click, y varia su tama\'f1o para ajustarse a la posicion actual del mouse. Luego, la selecci\'f3n de personajes se resuelve buscando colisiones entre sus cilindros y esta caja (como se explicar\'e1 m\'e1s adelante).\par
 \i Selecci\'f3n m\'faltiple utilizando un rect\'e1ngulo proyectado en pantalla\i0\par
 Utilizando las coordenadas del mouse es simple dibujar un rect\'e1ngulo cuyos puntos m\'ednimo y m\'e1ximo son la posici\'f3n inicial del mouse antes de presionar el bot\'f3n izquierdo, y la \'faltima posici\'f3n, respectivamente. Para dibujar el rect\'e1ngulo simplemente definimos los cuatro v\'e9rtices que formaran los dos tri\'e1ngulos necesarios para pintar el \'e1rea, aplicando transparencia.\par
 Cuando el bot\'f3n es soltado, la selecci\'f3n de personajes se realiza proyectando el cilindro de cada uno en pantalla (como se explicara m\'e1s adelante), formando rect\'e1ngulos. Filtrar los que estan dentro del \'e1rea de selecci\'f3n se reduce, finalmente, a encontrar una intersecci\'f3n entre estos y el rect\'e1ngulo que dibujamos con el mouse.\par
-\b Selecci\'f3n simple utilizando PickingRay\b0\par
+\b\par
+Selecci\'f3n simple utilizando PickingRay\b0\par
 La selecci\'f3n simple se utiliza cuando el usuario hace un click en un solo punto de la pantalla, sin desplazar el mouse. Por ende, no se puede generar un rect\'e1ngulo o proyectar una TgcBox.\par
 Es por eso que optamos por utilizar el PickingRay y buscar el personaje cuyo cilindro intersecta a este (proceso que se explicar\'e1 m\'e1s adelante).\par
-\b Cilindro\b0\par
-\par
-\b Cono de vision\par
+\b\par
+BoundingCylinder\b0\par
+Dada la naturaleza del juego, donde los objetos y personajes se colocan y desplazan sobre el terreno (HeightMap) como si fuera un plano, y solo colisionan lateralmente, resultaba conveniente el desarrollo de un nuevo volumen simplificado que permita una mejora de rendimiento en el c\'e1lculo de colisiones.\par
+Es por esto que decidimos que el cilindro era la mejor opci\'f3n. En nuestro caso,\par
+\b\par
+Cono de vision\par
 \b0\i Geometr\'eda\par
 \i0 El cono se define por un v\'e9rtice V, un largo L, un \'e1ngulo  A y una cantidad de tri\'e1ngulos T.  A partir de L y A se calcula el radio de la circunferencia que se encuentra a distancia L del cono. Se crea una circunferencia con T puntos y luego se crean los tri\'e1ngulos (formados por el v\'e9rtice y dos puntos de la circunferencia).  Ver clase Cone.cs \par
 Dado que la visi\'f3n de los enemigos del juego deber\'eda ser m\'e1s acotada a lo alto que a lo ancho, desarrollamos un cono de visi\'f3n achatado partiendo del reci\'e9n mencionado. Al generar la circunferencia se reposicionan los puntos que exceden la altura m\'e1xima.\par
@@ -28418,8 +28425,6 @@ ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 ffffffffffffffffffffffffffffffffffffffff000000040000002701ffff030000000000
 }\par
-\pard\sa200\sl276\slmult1 Cuanto mayor sea el \'e1ngulo, menor ser\'e1 el coseno. Por lo que el punto estar\'e1 dentro del cono s\'ed y s\'f3lo s\'ed el coseno es mayor al coseno del \'e1ngulo de apertura del cono. \i\par
-\i0\par
-\par
+\pard\sa200\sl276\slmult1 Cuanto mayor sea el \'e1ngulo, menor ser\'e1 el coseno. Por lo que el punto estar\'e1 dentro del cono s\'ed y s\'f3lo s\'ed el coseno es mayor al coseno del \'e1ngulo de apertura del cono.\par
 }
  

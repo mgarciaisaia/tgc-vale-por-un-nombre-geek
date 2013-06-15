@@ -51,8 +51,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
                 if (this.selectionMethod.canBeginSelection())
                 {
                     this.selectionMethod.updateSelection();
-                    this.lastMousePos = ui.MousePosition;
-                    this.initMousePos = ui.MousePosition;
+                    this.lastMousePos = ui.ViewportMousePos;
+                    this.initMousePos = ui.ViewportMousePos;
                     this.selecting = true;
                 }
             }
@@ -64,7 +64,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
                     this.selectedCharacters.Clear();
                 }
 
-                Vector2 actualMousePos = ui.MousePosition;
+                Vector2 actualMousePos = ui.ViewportMousePos;
 
                 if (GeneralMethods.isCloseTo(actualMousePos, this.initMousePos, 1))
                 { //seleccion simple
@@ -81,7 +81,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             }
             else if (this.selecting)
             { //esta seleccionando
-                Vector2 actualMousePos = ui.MousePosition;
+                Vector2 actualMousePos = ui.ViewportMousePos;
                 if(!GeneralMethods.isCloseTo(actualMousePos, this.lastMousePos, 1))
                 {
                     this.lastMousePos = actualMousePos;
