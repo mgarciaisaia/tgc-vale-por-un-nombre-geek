@@ -18,8 +18,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 
         public GraphicalControlPanel(string path)
         {
-            int screenHeight = CommandosUI.Instance.ViewportHeight;
-            int screenWidth = CommandosUI.Instance.ViewportWidth;
+            int screenHeight = CommandosUI.Instance.ScreenHeight;
+            int screenWidth = CommandosUI.Instance.ScreenWidth;
 
             this.controlPanelSprite = new Picture(path);
             this.controlPanelSprite.Position = new Vector2(0, screenHeight - this.controlPanelSprite.Height);
@@ -40,11 +40,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             _button.Position = pos;
         }
 
+        /// <summary>
+        /// Agrega un boton al panel
+        /// </summary>
         public void addCommand(Command _command, string _picPath)
         {
             this.addButton(new CommandButton(_command, _picPath));
         }
 
+        /// <summary>
+        /// Indica si el mouse esta sobre determinado boton
+        /// </summary>
         private bool mouseIsOverCommand(float mouseX, float mouseY, CommandButton command)
         {
             float spriteX = command.Position.X;
@@ -56,6 +62,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
                 && mouseY > spriteY && mouseY < spriteY + spriteHeight;
         }
 
+        /// <summary>
+        /// Inidica si hay un boton bajo el mouse, y si es asi, lo devuelve
+        /// </summary>
         private bool commandUnderMouse(float mouseX, float mouseY, out CommandButton ret)
         {
             foreach (CommandButton button in this.buttons)
@@ -68,6 +77,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             ret = null;
             return false;
         }
+
+        public int Height { get { return (int)this.controlPanelSprite.Height; } }
+        public int Width { get { return (int)this.controlPanelSprite.Width; } }
 
         public void render()
         {
@@ -85,7 +97,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         /// </summary>
         public bool mouseIsOverPanel()
         {
-            return CommandosUI.Instance.MousePosition.Y > this.controlPanelSprite.Position.Y;
+            return CommandosUI.Instance.ScreenMousePos.Y > this.controlPanelSprite.Position.Y;
         }
 
         /// <summary>
@@ -93,7 +105,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         /// </summary>
         public void update()
         {
-            Vector2 mousePos = CommandosUI.Instance.MousePosition;
+            Vector2 mousePos = CommandosUI.Instance.ScreenMousePos;
             float mouseX = mousePos.X;
             float mouseY = mousePos.Y;
             CommandButton button;

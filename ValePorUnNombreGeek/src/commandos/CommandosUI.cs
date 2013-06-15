@@ -31,23 +31,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         #region Viewport
 
-        //public GraphicalControlPanel panel { get; set; }
+        public Vector2 ScreenMousePos { get { return new Vector2(GuiController.Instance.D3dInput.Xpos, GuiController.Instance.D3dInput.Ypos); } }
+        public int ScreenHeight { get { return GuiController.Instance.D3dDevice.Viewport.Height; } }
+        public int ScreenWidth { get { return GuiController.Instance.D3dDevice.Viewport.Width; } }
+        public bool mouseIsOverScreen()
+        {
+            return Mouse.isOverScreen();
+        }
 
-        public Vector2 MousePosition { get { return new Vector2(GuiController.Instance.D3dInput.Xpos, GuiController.Instance.D3dInput.Ypos); } }
+        public GraphicalControlPanel Panel { get; set; }
 
-        //public int ScreeHeight { get { return GuiController.Instance.D3dDevice.Viewport.Height; } }
-        //public int ScreenWidth { get { return GuiController.Instance.D3dDevice.Viewport.Width; } }
-        //public bool mouseIsOverScreen()
-        //{
-        //    return Mouse.isOverViewport();
-        //}
-
-        public int ViewportHeight { get { return GuiController.Instance.D3dDevice.Viewport.Height; } }
-        public int ViewportWidth { get { return GuiController.Instance.D3dDevice.Viewport.Width; } }
-        //public bool mouseIsOverViewport()
-        //{
-        //    return this.mouseIsOverScreen() && !this.panel.mouseIsOverPanel();
-        //}
+        public Vector2 ViewportMousePos { get { return this.ScreenMousePos; } }
+        public int ViewportHeight { get { return this.ScreenHeight - this.Panel.Height; } }
+        public int ViewportWidth { get { return this.ScreenWidth; } }
+        public bool mouseIsOverViewport()
+        {
+            return this.mouseIsOverScreen() && !this.Panel.mouseIsOverPanel();
+        }
 
         #endregion
 

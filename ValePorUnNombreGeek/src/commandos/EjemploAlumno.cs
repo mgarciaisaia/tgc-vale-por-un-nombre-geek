@@ -88,10 +88,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             controlPanel = new GraphicalControlPanel(CommandosUI.Instance.MediaDir + "Sprites\\panel2.jpg");
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\emptyp.png");
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\cancelp.png");
-            /*controlPanel = new TextControlPanel();
-            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), Key.D1);
-            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), Key.D2);*/
-         
+            CommandosUI.Instance.Panel = controlPanel;
         }
 
         #region LoadLevel
@@ -114,7 +111,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             map.setFrame(TextureLoader.FromFile(CommandosUI.Instance.d3dDevice, CommandosUI.Instance.MediaDir + "Mapa\\frame.png"));
             map.Width = 2 * level.Map.Height;
             map.Height = 1.5f * level.Map.Height;
-            map.Position = new Vector2(CommandosUI.Instance.ViewportWidth / 2 - level.Map.Width / 2, CommandosUI.Instance.ViewportHeight - level.Map.Height);
+            map.Position = new Vector2(CommandosUI.Instance.ScreenWidth / 2 - level.Map.Width / 2, CommandosUI.Instance.ScreenHeight - level.Map.Height);
 
 
             defaultRenderer = level.Renderer;

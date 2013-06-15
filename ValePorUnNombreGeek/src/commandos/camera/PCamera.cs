@@ -16,7 +16,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
     class PCamera : ICamera
     {
         private const float MOVEMENT_SPEED = 600;
-        private const float BORDER_WIDTH = 80;
+        private const float BORDER_WIDTH = 40;
 
         private const float ZOOM_SPEED = 600;
         private const float DISTANCE_MIN = 200;
@@ -55,12 +55,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         private bool rotating = false;
         public void updateCamera()
         {
-            if (!Mouse.isOverViewport()) return;
+            if (!CommandosUI.Instance.mouseIsOverViewport()) return;
 
             var ui = CommandosUI.Instance;
             float elapsedTime = ui.ElapsedTime;
 
-            Vector2 mousePos = ui.MousePosition;
+            Vector2 mousePos = ui.ViewportMousePos;
             float viewportHeight = ui.ViewportHeight;
             float viewportWidth = ui.ViewportWidth;
 
