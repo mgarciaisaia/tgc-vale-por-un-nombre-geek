@@ -16,8 +16,8 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 using Microsoft.DirectX.Direct3D;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.renderization;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek

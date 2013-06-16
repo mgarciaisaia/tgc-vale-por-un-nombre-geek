@@ -6,7 +6,6 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer.Utils.TgcGeometry;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
