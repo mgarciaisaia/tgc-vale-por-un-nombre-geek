@@ -171,9 +171,9 @@
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaVision2.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\renderzation\DefaultRenderer.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\renderzation\Renderer.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\renderzation\ShadowRenderer.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\renderization\DefaultRenderer.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\renderization\Renderer.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\renderization\ShadowRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TgcViewer\TgcViewer.csproj">

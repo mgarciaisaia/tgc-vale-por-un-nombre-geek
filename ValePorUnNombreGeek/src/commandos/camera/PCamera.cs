@@ -24,6 +24,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
         private const int ANGLE_MIN = 20;
         private const int ANGLE_MAX = 80;
+        private Vector3 maxAngleChecker;
+        private Vector3 minAngleChecker;
         //private float ANGLE_SIN_MIN = FastMath.Sin((180 / ANGLE_MIN) * FastMath.PI);
         //private float ANGLE_SIN_MAX = FastMath.Sin((180 / ANGLE_MAX) * FastMath.PI);
 
@@ -42,6 +44,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
             this.setCenter(this.terrain.getPosition(_center.X, _center.Z));
             this.ctpv = Vector3.Normalize(new Vector3(0, 2, 1));
+
+            //this.maxAngleChecker = new Vector3(0, FastMath.Sin(ANGLE_MAX), FastMath.Cos(ANGLE_MAX));
+            //sin t = y / l
+            //cos t = x / l
+
             this.distance = (DISTANCE_MAX - DISTANCE_MIN) / 2;
 
             this.updateViewMatrix();

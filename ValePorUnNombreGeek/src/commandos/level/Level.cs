@@ -8,9 +8,9 @@ using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
 using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.renderzation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.renderization;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 {
