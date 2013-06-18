@@ -42,7 +42,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         public GraphicalControlPanel Panel { get; set; }
 
         public Vector2 ViewportMousePos { get { return this.ScreenMousePos; } }
-        public int ViewportHeight { get { return this.ScreenHeight; } }
+        public int ViewportHeight { get { return this.ScreenHeight - this.Panel.Height; } }
         public int ViewportWidth { get { return this.ScreenWidth; } }
         public bool mouseIsOverViewport()
         {
