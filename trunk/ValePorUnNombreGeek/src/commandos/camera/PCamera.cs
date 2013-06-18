@@ -145,6 +145,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
                 this.rotating = false;
             }
 
+            // Reubico la camara sobre el heightmap si esta debajo
+            Vector3 position = this.getPosition();
+            Vector3 terrainPosition = terrain.getPosition(position.X, position.Z);
+            if (position.Y < terrainPosition.Y + 40)
+            {
+                this.ctpv.Y = (terrainPosition.Y + 40 - this.center.Y) / this.distance;
+                this.ctpv.Normalize();
+            }
 
             //Actualizacion de la matriz de transformacion
 
