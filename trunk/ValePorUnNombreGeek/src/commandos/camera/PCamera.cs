@@ -148,9 +148,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
             // Reubico la camara sobre el heightmap si esta debajo
             Vector3 position = this.getPosition();
             Vector3 terrainPosition = terrain.getPosition(position.X, position.Z);
-            if (position.Y < terrainPosition.Y + 40)
+            float minCamHeight = FastMath.Max( terrainPosition.Y + 40, this.center.Y + 10);
+            if (position.Y < minCamHeight)
             {
-                this.ctpv.Y = (terrainPosition.Y + 40 - this.center.Y) / this.distance;
+                this.ctpv.Y = (minCamHeight - this.center.Y) / this.distance;
                 this.ctpv.Normalize();
             }
 
