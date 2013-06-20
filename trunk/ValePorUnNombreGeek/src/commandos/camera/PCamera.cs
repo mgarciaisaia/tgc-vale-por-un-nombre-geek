@@ -63,6 +63,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         public void updateCamera()
         {
             if (!CommandosUI.Instance.mouseIsOverViewport()) return;
+            Vector3 ctpv_old = new Vector3(this.ctpv.X, this.ctpv.Y, this.ctpv.Z);
 
             var ui = CommandosUI.Instance;
             float elapsedTime = ui.ElapsedTime;
@@ -155,6 +156,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
                 this.ctpv.Normalize();
             }
 
+            // Evito ver perpendicularmente al piso
+            if (GeneralMethods.optimizedPow2(this.ctpv.X) + GeneralMethods.optimizedPow2(this.ctpv.Z) < 0.1 * 0.1)
+            {
+                this.ctpv = ctpv_old;
+            }
+
             //Actualizacion de la matriz de transformacion
 
             this.updateViewMatrix();
@@ -187,7 +194,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         private void setCenter(Vector3 _center)
         {
             this.center = _center;
-            this.center.Y /= 2f;
         }
 
         private void zoomIn(float speed, float elapsedTime)
