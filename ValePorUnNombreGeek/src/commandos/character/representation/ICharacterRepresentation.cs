@@ -11,7 +11,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         void die();
         void standBy();
         void walk();
-        void crouch();
+        void switchCrouch();
         bool Selected { get; set; }
 
         void move(Vector3 direction);

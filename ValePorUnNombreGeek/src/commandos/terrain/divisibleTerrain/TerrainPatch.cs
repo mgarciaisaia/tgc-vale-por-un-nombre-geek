@@ -35,6 +35,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             this.Effect = father.Effect;
             this.Technique = father.Technique;
             this.Enabled = father.Enabled;
+            this.RenderBB = false;
             vbTerrainPatch.SetData(data, 0, LockFlags.None);
 
             
@@ -65,7 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             Effect.EndPass();
             Effect.End();
 
-            BoundingBox.render();
+            if(RenderBB)BoundingBox.render();
 
             d3dDevice.RenderState.AlphaBlendEnable = alphaBlendEnable;
         }
@@ -78,5 +79,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
 
 
 
+
+        public bool RenderBB { get; set; }
     }
 }

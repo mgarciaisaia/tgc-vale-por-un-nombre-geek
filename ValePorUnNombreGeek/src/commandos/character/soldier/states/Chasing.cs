@@ -14,7 +14,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
         public Chasing(Soldier _soldier, Commando commando):base(_soldier){
             this.commando = commando;
             shoot = new TgcStaticSound();
-            //shoot.loadSound(GuiController.Instance.AlumnoEjemplosMediaDir + "ValePorUnNombreGeek//" + "Sounds//SHOT.WAV");
+            //shoot.loadSound(CommandosUI.Instance.MediaDir + "ValePorUnNombreGeek//" + "Sounds//SHOT.WAV");
 
         }
         public override void update(float elapsedTime)
@@ -25,21 +25,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
                 commando.Life.decrement(elapsedTime * 50);
                 //shoot.play();
                 if (GeneralMethods.isCloseTo(this.soldier.Position, commando.Position, this.soldier.Radius * 2.5f))
-                {
-                    commando.Representation.standBy();
-                    
-                  
-                }
+                    this.soldier.standBy();
                 else
-                {
                     this.soldier.goToTarget(elapsedTime);
-                    
-                }
 
             }
             else
             {
-                //if (soldier.canSeeACommando(out commando)) return;
                 if (soldier.hasTarget() && !commando.isDead()) //pablo
                 {
                     this.soldier.goToTarget(elapsedTime);

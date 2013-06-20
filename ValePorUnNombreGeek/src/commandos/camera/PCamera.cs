@@ -24,10 +24,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
         private const int ANGLE_MIN = 20;
         private const int ANGLE_MAX = 80;
-        private Vector3 maxAngleChecker;
-        private Vector3 minAngleChecker;
-        //private float ANGLE_SIN_MIN = FastMath.Sin((180 / ANGLE_MIN) * FastMath.PI);
-        //private float ANGLE_SIN_MAX = FastMath.Sin((180 / ANGLE_MAX) * FastMath.PI);
 
         private Vector3 center;
         private Vector3 ctpv; //'Center to Position' Versor
@@ -45,10 +41,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
             this.setCenter(this.terrain.getPosition(_center.X, _center.Z));
             this.ctpv = Vector3.Normalize(new Vector3(0, 2, 1));
 
-            //this.maxAngleChecker = new Vector3(0, FastMath.Sin(ANGLE_MAX), FastMath.Cos(ANGLE_MAX));
-            //sin t = y / l
-            //cos t = x / l
-
             this.distance = (DISTANCE_MAX - DISTANCE_MIN) / 2;
 
             this.updateViewMatrix();
@@ -62,15 +54,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
         private bool rotating = false;
         public void updateCamera()
         {
-            if (!CommandosUI.Instance.mouseIsOverViewport()) return;
+            if (!CommandosUI.Instance.mouseIsOverScreen()) return;
             Vector3 ctpv_old = new Vector3(this.ctpv.X, this.ctpv.Y, this.ctpv.Z);
 
             var ui = CommandosUI.Instance;
             float elapsedTime = ui.ElapsedTime;
 
-            Vector2 mousePos = ui.ViewportMousePos;
-            float viewportHeight = ui.ViewportHeight;
-            float viewportWidth = ui.ViewportWidth;
+            Vector2 mousePos = ui.ScreenMousePos;
+            float viewportHeight = ui.ScreenHeight;
+            float viewportWidth = ui.ScreenWidth;
 
 
             //Desplazamiento
@@ -87,14 +79,21 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
             if (ui.keyDown(Key.DownArrow))
                 this.moveCenter(-desplazamientoFrontal, 1, elapsedTime);
 
-            if (mousePos.X > viewportWidth - BORDER_WIDTH) //derecha
-                this.moveCenter(desplazamientoLateral, 1, elapsedTime);
-            if (mousePos.X < BORDER_WIDTH) //izquierda
-                this.moveCenter(-desplazamientoLateral, 1, elapsedTime);
-            if (mousePos.Y < BORDER_WIDTH) //arriba
-                this.moveCenter(desplazamientoFrontal, 1, elapsedTime);
-            if (mousePos.Y > viewportHeight - BORDER_WIDTH) //abajo
-                this.moveCenter(-desplazamientoFrontal, 1, elapsedTime);
+            if (mousePos.Y > viewportHeight / 3 && mousePos.Y < viewportHeight * 2 / 3)
+            {
+                if (mousePos.X > viewportWidth - BORDER_WIDTH) //derecha
+                    this.moveCenter(desplazamientoLateral, 1, elapsedTime);
+                if (mousePos.X < BORDER_WIDTH) //izquierda
+                    this.moveCenter(-desplazamientoLateral, 1, elapsedTime);
+            }
+
+            if (mousePos.X > viewportWidth / 3 && mousePos.X < viewportWidth * 2 / 3)
+            {
+                if (mousePos.Y < BORDER_WIDTH) //arriba
+                    this.moveCenter(desplazamientoFrontal, 1, elapsedTime);
+                if (mousePos.Y > viewportHeight - BORDER_WIDTH) //abajo
+                    this.moveCenter(-desplazamientoFrontal, 1, elapsedTime);
+            }
 
 
             //Distancia
@@ -129,13 +128,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
                     float dy = lastRealMousePos.Y - realMousePos.Y;
                     if (dy != 0) //hay rotacion en y
-                    {
-                        //if (dy > 0 && this.ctpv.Y < ANGLE_SIN_MIN) this.ctpv.Y = ANGLE_SIN_MIN;
-                        //else
                         this.rotateCamera
                             (Vector3.Cross(this.ctpv, new Vector3(0, -dy, 0)),
                             dy * FastMath.PI / viewportHeight);
-                    }
 
                     Mouse.Position = this.lastRealMousePos; //mantenemos estatico el cursor
                 }

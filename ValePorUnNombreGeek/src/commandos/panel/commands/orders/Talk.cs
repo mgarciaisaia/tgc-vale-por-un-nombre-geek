@@ -23,7 +23,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands.orders
         {
             foreach (Commando ch in this.getCommandos())
             {
-                ch.Representation.talk(); //TODO no deberia comunicarse con representation
+                ch.switchCrouch(); //TODO no deberia comunicarse con representation
             }
         }
     }

@@ -55,15 +55,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization
         {
             TgcFrustum frustum = CommandosUI.Instance.CameraFrustum;
 
-            //if (CommandosUI.Instance.Camera.Distance > 1000)
-            //{
-            //    //como la camara esta lejos del terreno, no optimizamos nada por que es muy costoso
-            //    this.filteredPatches.AddRange(this.patches);
-            //    this.filteredObjects.AddRange(this.objects);
-            //    this.filteredCharacters.AddRange(this.characters);
-            //    CommandosUI.Instance.log("lejos!" + CommandosUI.Instance.ElapsedTime.ToString());
-            //    return;
-            //}
+            if (CommandosUI.Instance.Camera.Distance > 1000)
+            {
+                //como la camara esta lejos del terreno, no optimizamos nada por que es muy costoso
+                this.filteredPatches.AddRange(this.patches);
+                this.filteredObjects.AddRange(this.objects);
+                this.filteredCharacters.AddRange(this.characters);
+                return;
+            }
 
             //buscamos los sectores del terreno que ve la camara
             foreach (QTSector sector in this.sectors)

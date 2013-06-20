@@ -5,7 +5,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
     class Commando : Character
     {
         private const float WALK_SPEED = 150;
-        private float speed;
+       
 
         
         public Commando(Vector3 _position)
@@ -16,10 +16,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
 
 
-        public override float Speed
-        {
-            get { return this.speed; }
-        }
+        
 
         public override void update(float elapsedTime)
         {
@@ -93,6 +90,5 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Representation.walk();
             this.speed = WALK_SPEED;
         }
-        
     }
 }
