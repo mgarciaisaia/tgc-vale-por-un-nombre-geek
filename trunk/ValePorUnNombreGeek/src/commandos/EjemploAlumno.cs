@@ -116,9 +116,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             defaultRenderer = level.Renderer;
             shadowRenderer = new ShadowRenderer();
-            shadowRenderer.objects = level.Objects;
-            shadowRenderer.characters = level.Characters;
-            shadowRenderer.patches = level.Patches;
 
             setAndBindModifiers();
 
@@ -155,6 +152,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
             Modifiers.Instance.bind("Sombras", this, "Sombras");
+
+            GuiController.Instance.Modifiers.addBoolean("QuadTree", "Mostrar", false);
+            Modifiers.Instance.bind("QuadTree", level.Terrain, "RenderPatchesBB");
           
             for (int i = 0; i < level.Terrain.Patches.GetLength(0); i++) for (int j = 0; j < level.Terrain.Patches.GetLength(1); j++)
                 {

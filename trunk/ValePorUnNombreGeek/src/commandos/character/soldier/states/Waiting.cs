@@ -12,7 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             : base(_soldier, _timeOnWaitpoint)
         {
             this.waitingTime = 0;
-            this.soldier.Representation.standBy();
+            this.soldier.standBy();
             this.maxWaitingTime = GeneralMethods.random(1, 3);
         }
         public Waiting(Soldier _soldier, float _timeOnWaitpoint, bool _alert)

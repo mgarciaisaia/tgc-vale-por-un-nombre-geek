@@ -27,8 +27,52 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         PlaneDiscard backwardDiscard;
         QuadTree quadTree;
 
+        protected Renderer renderer;
+        public Renderer Renderer {
+            get { return renderer; }
+            set
+            {
+                if (value != null && renderer != null)
+                {
+                    value.characters = renderer.characters;
+                    value.objects = renderer.objects;
+                    value.patches = renderer.patches;
+                }
+                renderer = value;
+            } 
+        }
+        protected bool cullingEnabled = true;
+        public bool CullingEnabled
+        {
 
-        public Renderer Renderer { get; set; }
+            get { return cullingEnabled; }
+
+            set
+            {
+                cullingEnabled = value;
+
+                if (cullingEnabled)
+                {
+                    this.Renderer.objects = quadTree.objectsOut;
+                    this.Renderer.characters = quadTree.charactersOut;
+                    this.Renderer.patches = quadTree.patchesOut;
+
+                }
+                else
+                {
+                    this.Renderer.objects = this.objects;
+                    this.Renderer.characters = this.characters;
+                    this.Renderer.patches = this.patches;
+
+                }
+
+
+                
+            }
+
+        }
+
+
         LevelMap map;
 
 

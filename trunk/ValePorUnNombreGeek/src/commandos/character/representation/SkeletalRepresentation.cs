@@ -16,7 +16,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         protected TgcSkeletalMesh mesh;
         private Vector3 angleZeroVector; //rotacion manual
         private float meshFacingAngle; //hacia donde mira
-
+        private bool moving = true;
         public bool Selected{ get; set;}
 
         public SkeletalRepresentation(Vector3 position)
@@ -50,7 +50,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
                     exMediaDir + "Walk-TgcSkeletalAnim.xml",
                     exMediaDir + "Talk-TgcSkeletalAnim.xml",
                     exMediaDir + "StandBy-TgcSkeletalAnim.xml",
-                    exMediaDir + "Jump-TgcSkeletalAnim.xml",
+                    //exMediaDir + "Jump-TgcSkeletalAnim.xml",
                     myMediaDir + "Die-TgcSkeletalAnim.xml",
                     exMediaDir + "CrouchWalk-TgcSkeletalAnim.xml"
                 };
@@ -59,7 +59,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         public void render()
         {
-            this.mesh.animateAndRender();
+            if (this.isCrouched() && !moving) 
+                this.mesh.render();
+            else this.mesh.animateAndRender();
         }
 
 
@@ -72,7 +74,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         public void standBy()
         {
-            this.playAnimation("StandBy", true);
+            this.moving = false;
+            if (!this.isCrouched()) this.playAnimation("StandBy", true);
+                
+            
         }
 
         public void talk()
@@ -87,13 +92,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         public void walk()
         {
-            this.playAnimation("Walk", true);
+            this.moving = true;
+            if(!this.isCrouched()) this.playAnimation("Walk", true);
         }
 
-        public void crouch()
+        public void switchCrouch()
         {
-            this.playAnimation("CrouchWalk", true);
-
+            if (this.isCrouched()) this.playAnimation("StandBy", true);
+            else
+            {
+                if (this.mesh.CurrentAnimation.Name.Equals("StandBy")) this.moving = false;
+                this.playAnimation("CrouchWalk", true);
+            }
         }
 
         private void playAnimation(string p, bool p_2)

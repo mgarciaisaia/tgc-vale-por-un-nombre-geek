@@ -9,7 +9,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
    
     class Enemy : Character
     {
-        protected WideVisionCone vision;
+        protected VisionCone vision;
         
         private const float DEFAULT_VISION_RADIUS = 400;
         private const float DEFAULT_VISION_ANGLE = 30;
@@ -28,11 +28,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public float VisionRadius { get { return vision.Length; } set { vision.Length = value; } }
 
 
-        /// <summary>
+       /* /// <summary>
         /// Maxima altura de vision.
         /// </summary>
         public float VisionMaxHeight { get { return vision.MaxHeight; } set { vision.MaxHeight = value; } }
-
+*/
 
         /// <summary>
         /// Renderizado de cono
@@ -58,10 +58,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
 
-        public override float Speed
-        {
-            get { return 100; }
-        }
+        
 
         protected override void loadCharacterRepresentation(Vector3 position)
         {
@@ -71,7 +68,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         private void createVisionCone(float radius, float angle )
         {
-            this.vision = new WideVisionCone(this.representation, radius, angle, 50);
+           // this.vision = new WideVisionCone(this.representation, radius, angle, 50);
+            this.vision = new WideVisionCone(this.representation, radius, angle);
         }
 
        

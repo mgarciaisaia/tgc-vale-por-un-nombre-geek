@@ -27,6 +27,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
         protected int totalVertices;
         protected int[,] heightmapData;
         protected TerrainPatch[,] patches;
+        
 
         #region Getters y Setters
 
@@ -55,7 +56,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerr
             get { return heightmapData; }
         }
 
+        protected bool renderPatchesBB = false;
+        public bool RenderPatchesBB
+        {
+            get { return renderPatchesBB; }
+            set
+            {
+                renderPatchesBB = value;
+                foreach (TerrainPatch p in patches) p.RenderBB = value;
+            }
 
+        }
         /// <summary>
         /// Indica si la malla esta habilitada para ser renderizada
         /// </summary>

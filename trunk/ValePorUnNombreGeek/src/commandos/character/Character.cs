@@ -15,6 +15,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 {
     abstract class Character : ITargeteable, ILevelObject
     {
+        public const float DEFAULT_SPEED = 150;
         protected ICharacterRepresentation representation;
         protected Level level;
         protected string technique;
@@ -29,7 +30,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return picture; }
             set { this.picture = value; picture.Character = this; if (this.Life != null)this.Life.Picture = value.Clone(); }
         }
-       
+        protected float speed;
+        public float Speed{ get{
+                if (this.representation.isCrouched()) return speed / 2;
+                else return speed;
+            }
+        }
 
 
         /*******************************
@@ -45,7 +51,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.Dead = false;
             this.SelectionColor = Color.Red;
             this.life = new Life(this, 100, new Vector2(20, 60), Color.Red, new Vector2(60, 10));
-            
+            this.speed = DEFAULT_SPEED;
             
             Vector3 boundingSize = this.Representation.BoundingBox.calculateSize() * 0.5f;
             this.boundingCylinder = new Cylinder(this.Representation.BoundingBox.calculateBoxCenter(), boundingSize.Y, boundingSize.X);
@@ -110,7 +116,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             get { return this.dead; }
             set {
-                if (value == true)
+                if (value)
                 {
                     this.Selected = false;
                     this.representation.die();
@@ -238,7 +244,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             if(obj.isOver(this.Target.Position))
             {
                 this.setNoTarget();
-                this.representation.standBy();
+                this.standBy();
                 return true;
             }
 
@@ -249,7 +255,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public virtual bool manageSteepTerrain()
         {
             this.setNoTarget();
-            this.representation.standBy();
+            this.standBy();
             return true;
         }
 
@@ -279,7 +285,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public void setNoTarget()
         {
-            this.representation.standBy();
+            this.standBy();
             this.target = null;
         }
 
@@ -296,8 +302,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         #endregion
 
         public abstract bool OwnedByUser { get; }
-
-        public abstract float Speed {  get; }
 
         public float Radius { get { return this.BoundingCylinder.Radius; } }
         public Vector3 Center { get { return this.BoundingCylinder.Center; } }
@@ -466,6 +470,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         internal bool isEnemyOf(Character other)
         {
             return other.OwnedByUser != this.OwnedByUser;
+        }
+
+        public void standBy()
+        {
+            if (!this.dead)
+                this.Representation.standBy();
+        }
+
+        public void switchCrouch()
+        {
+            if (!this.dead)
+                this.Representation.switchCrouch();
         }
     }
 }

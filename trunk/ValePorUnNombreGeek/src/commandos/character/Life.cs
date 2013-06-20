@@ -165,11 +165,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public void decrement(float points)
         {
-            this.points -= points;
-            if (this.points <= 0)
+            if (this.points > 0)
             {
-                this.points = 0;
-                this.character.die();
+                this.points -= points;
+                if (this.points <= 0)
+                {
+                    this.points = 0;
+                    this.character.die();
+                }
             }
         }
 
