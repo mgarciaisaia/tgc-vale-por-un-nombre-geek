@@ -21,7 +21,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         public void click()
         {
             this.selectionRef.deselectIfNotShift();
-            this.selectionRef.addSelectedCharacter(this.ch);
+            this.selectionRef.selectCharacter(this.ch);
         }
 
         public Microsoft.DirectX.Vector2 Position

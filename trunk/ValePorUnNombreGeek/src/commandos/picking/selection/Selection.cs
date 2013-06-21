@@ -64,6 +64,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             this.selectedCharacters.Add(ch);
         }
 
+        /// <summary>
+        /// Agrega o quita un personaje a la seleccion, dependiendo de si ya estaba seleccionado
+        /// </summary>
+        public void selectCharacter(Character ch)
+        {
+            if (ch.Selected)
+            {
+                ch.Selected = false;
+                this.selectedCharacters.Remove(ch);
+            }
+            else
+            {
+                ch.Selected = true;
+                this.selectedCharacters.Add(ch);
+            }
+        }
+
         #region Update
 
         /// <summary>
@@ -161,7 +178,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
                 }
             }
 
-            this.addSelectedCharacter(closestCharacter);
+            this.selectCharacter(closestCharacter);
         }
 
         #endregion
