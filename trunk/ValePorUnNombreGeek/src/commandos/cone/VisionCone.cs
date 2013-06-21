@@ -87,6 +87,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
 
         public bool isInsideVisionRange(Character target, ITerrain terrain, List<ILevelObject> obstacles)
         {
+            if (target.isDead())
+            {
+                changeColor(false);
+                return false;
+            }
+
             Vector3 targetPoint = target.BoundingCylinder.closestCyPointToPoint(this.Position);
 
             if (target.Representation.isCrouched())
