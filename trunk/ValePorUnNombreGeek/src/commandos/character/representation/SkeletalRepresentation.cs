@@ -8,6 +8,8 @@ using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX.Direct3D;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
+using TgcViewer.Utils.Sound;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.representation.sound;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation
 {
@@ -18,6 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         private float meshFacingAngle; //hacia donde mira
         private bool moving = true;
         public bool Selected{ get; set;}
+        protected CommandoSound sounds;
 
         public SkeletalRepresentation(Vector3 position)
         {
@@ -26,6 +29,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             this.mesh = skeletalLoader.loadMeshAndAnimationsFromFile(
                 getMesh(),
                 getAnimations());
+
+            sounds = CommandoSound.commando();
 
             this.mesh.playAnimation("StandBy", true);
 
@@ -68,32 +73,52 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         public void dispose()
         {
             this.mesh.dispose();
+            this.sounds.dispose();
         }
 
         #region Animations
 
         public void standBy()
         {
+            this.stopMove();
+
+            sounds.done();
+        }
+
+        private void stopMove()
+        {
             this.moving = false;
             if (!this.isCrouched()) this.playAnimation("StandBy", true);
-                
-            
+        }
+
+        public void abortAction()
+        {
+            this.stopMove();
+            sounds.error();
         }
 
         public void talk()
         {
             this.playAnimation("Talk", true);
+            sounds.ok();
+        }
+
+        public void getShot()
+        {
+            sounds.shot();
         }
 
         public void die()
         {
             this.playAnimation("Die", false);
+            sounds.shot();
         }
 
         public void walk()
         {
             this.moving = true;
             if(!this.isCrouched()) this.playAnimation("Walk", true);
+            sounds.ok();
         }
 
         public void switchCrouch()
@@ -104,6 +129,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
                 if (this.mesh.CurrentAnimation.Name.Equals("StandBy")) this.moving = false;
                 this.playAnimation("CrouchWalk", true);
             }
+            sounds.ok();
         }
 
         private void playAnimation(string p, bool p_2)

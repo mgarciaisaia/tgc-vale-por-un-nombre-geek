@@ -12,6 +12,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         void standBy();
         void walk();
         void switchCrouch();
+        void getShot();
         bool Selected { get; set; }
 
         void move(Vector3 direction);
@@ -44,5 +45,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         bool isCrouched();
 
         string Prefix { get;}
+
+        void abortAction();
     }
 }

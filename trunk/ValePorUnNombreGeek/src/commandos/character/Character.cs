@@ -80,12 +80,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             get { return this.representation; }
         }
 
-        /*public Level Level
-        {
-            get { return this.level; }
-            set { this.level = value; }
-        }*/
-
         public Vector3 Position
         {
             get { return this.representation.Position; }
@@ -116,18 +110,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             get { return this.dead; }
             set {
-                if (value)
-                {
-                    this.Selected = false;
-                    this.representation.die();
-                }
                 this.dead = value;
             }
         }
 
         public void die()
         {
+            if (this.Dead) return;
+            this.Selected = false;
             this.Dead = true;
+            this.representation.die();
         }
 
         public bool Enabled //Solo se renderiza si esta en true. Sirve para las optimizaciones
@@ -202,7 +194,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             if (!this.hasTarget() || this.Dead) return;
             if (GeneralMethods.isCloseTo(this.Position, target.Position, 1)) //pablo
             {
-                this.setNoTarget();
+                this.targetReached();
                 return;
             }
 
@@ -243,8 +235,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             //if (result != TgcCollisionUtils.BoxBoxResult.Afuera)
             if(obj.isOver(this.Target.Position))
             {
-                this.setNoTarget();
-                this.standBy();
+                this.targetReached();
                 return true;
             }
 
@@ -252,11 +243,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
           
         }
 
-        public virtual bool manageSteepTerrain()
+        protected void targetReached()
         {
             this.setNoTarget();
             this.standBy();
-            return true;
+        }
+
+        // Cancela el movimiento empinado
+        public virtual void abortMove()
+        {
+            this.setNoTarget();
+            this.abortAction();
         }
 
         protected virtual void collisionedTarget(){
@@ -265,7 +262,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         internal bool isOnTarget()
         {
-            if (this.target == null) return true;
+            if (this.target == null) return false;
 
             return GeneralMethods.isCloseTo(this.representation.Position, this.target.Position, 1);
         }
@@ -281,11 +278,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             //marcamos hacia donde vamos
             marcaDePicking = TgcBox.fromSize(new Vector3(30, 10, 30), Color.Red);
             marcaDePicking.Position = this.target.Position;
+            //iniciamos la animacion de movimiento
+            this.representation.walk();
         }
 
         public void setNoTarget()
         {
-            this.standBy();
             this.target = null;
         }
 
@@ -359,7 +357,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public void doMovement(Vector3 movement, float speed)
         {
-            this.representation.walk();
             this.representation.move(movement * speed);
             this.Position = this.level.Terrain.getPosition(this.Position.X, this.Position.Z);
             this.boundingCylinder.Position = this.Position;
@@ -386,7 +383,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
                */
                 if (realMovement == direction)
                 {
-                    this.manageSteepTerrain();
+                    this.abortMove();
                     return;
                 }
             }
@@ -476,6 +473,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             if (!this.dead)
                 this.Representation.standBy();
+        }
+
+        public void abortAction()
+        {
+            if (!this.dead)
+                this.Representation.abortAction();
         }
 
         public void switchCrouch()

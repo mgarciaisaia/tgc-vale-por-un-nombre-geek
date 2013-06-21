@@ -93,6 +93,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\StandardCamera.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\camera\TgcCameraAdapter.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Life.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\sound\CommandoSound.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\CommandosUI.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLTerrain.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Mouse.cs" />

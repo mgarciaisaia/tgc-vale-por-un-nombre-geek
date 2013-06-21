@@ -5,7 +5,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
     class Commando : Character
     {
         private const float WALK_SPEED = 150;
-       
 
         
         public Commando(Vector3 _position)
@@ -15,7 +14,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         }
 
 
-
+        public void getShot(float damage)
+        {
+            this.Life.decrement(damage);
+            this.Representation.getShot();
+        }
         
 
         public override void update(float elapsedTime)
@@ -31,7 +34,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
             if (this.isOnTarget())
             {
-                this.setNoTarget();
+                this.targetReached();
             }
         }
 
@@ -42,6 +45,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public override void setPositionTarget(Vector3 pos)
         {
+            if (this.Dead)
+            {
+                return;
+            }
             foreach (Character character in this.level.charactersNear(pos))
             {
                 if (character.isEnemyOf(this))
@@ -58,7 +65,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             foreach(Character nearEnemy in level.charactersNear(this.Position).FindAll(character => character.isEnemyOf(this))) {
                 if (nearEnemy == this.Target) {
                     nearEnemy.die();
-                    this.setNoTarget();
+                    this.targetReached();
                 }
             }
         }
