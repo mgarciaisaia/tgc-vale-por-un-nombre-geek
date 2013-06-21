@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using TgcViewer;
 using Microsoft.DirectX;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.representation.sound;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation
 {
@@ -13,7 +14,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
         public EnemyRepresentation(Vector3 position)
             : base(position)
         {
-
+            this.sounds = CommandoSound.soldier();
         }
 
         protected override string getMesh()
