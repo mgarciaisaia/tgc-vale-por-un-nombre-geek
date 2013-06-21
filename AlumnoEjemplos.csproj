@@ -95,8 +95,10 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Life.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\sound\CommandoSound.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\CommandosUI.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLTerrain.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\parser\XMLTerrain.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\Mouse.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\panel\graphical\IButton.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\panel\graphical\SelectionButton.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picture\CharacterPicture.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picture\Picture.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\EnemyRepresentation.cs" />
@@ -105,9 +107,9 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Commando.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\Chasing.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\collision\Cylinder.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLCommando.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLEnemy.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLLevelObject.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\parser\XMLCommando.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\parser\XMLEnemy.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\parser\XMLLevelObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\map\LevelMap.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\picture\MyVertex.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\ILevelObject.cs" />
@@ -121,7 +123,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\VisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\WideVisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\Level.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\level\levelParser\XMLLevelParser.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\parser\XMLLevelParser.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\MeshObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\AABBObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\Tree.cs" />

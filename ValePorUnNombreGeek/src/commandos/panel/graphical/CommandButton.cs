@@ -8,7 +8,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 {
-    class CommandButton : Picture
+    class CommandButton : Picture, IButton
     {
         private Command command;
 

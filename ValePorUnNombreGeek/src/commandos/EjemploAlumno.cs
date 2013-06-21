@@ -89,6 +89,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\emptyp.png");
             controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\cancelp.png");
             CommandosUI.Instance.Panel = controlPanel;
+
+            foreach (Commando c in level.Commandos)
+                controlPanel.addSelectionButton(c, selection);
         }
 
         #region LoadLevel
@@ -185,6 +188,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
 
 
+
+            controlPanel.render();
             
 
             level.render(elapsedTime);
@@ -202,7 +207,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
                 selection.update(); //IMPORTANTE: selection.update SE LLAMA DESPUES de renderizar los personajes
             }
 
-            controlPanel.render();
             level.Map.Technique = "MAPA_VIEJO";
             level.Map.render();
 
