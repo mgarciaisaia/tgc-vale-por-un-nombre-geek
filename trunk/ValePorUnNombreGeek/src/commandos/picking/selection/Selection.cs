@@ -37,6 +37,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             this.selecting = false;
         }
 
+        /// <summary>
+        /// Quita de la seleccion todos los personajes
+        /// </summary>
+        public void deselectAllCharacters()
+        {
+            foreach (Character ch in this.selectedCharacters) ch.Selected = false;
+            this.selectedCharacters.Clear();
+        }
+
+        /// <summary>
+        /// Si no se esta presionando la tecla Shift, quita de la seleccion todos los personajes
+        /// </summary>
+        public void deselectIfNotShift()
+        {
+            if (!CommandosUI.Instance.keyDown(Key.LeftShift))
+                this.deselectAllCharacters();
+        }
+
+        /// <summary>
+        /// Agrega un personaje a la seleccion
+        /// </summary>
+        public void addSelectedCharacter(Character ch)
+        {
+            ch.Selected = true;
+            this.selectedCharacters.Add(ch);
+        }
+
         #region Update
 
         /// <summary>
@@ -58,11 +85,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             }
             else if (this.selecting && ui.mouseUp(TgcD3dInput.MouseButtons.BUTTON_LEFT))
             { //termina de seleccionar
-                if (!ui.keyDown(Key.LeftShift))
-                {
-                    foreach (Character ch in this.selectedCharacters) ch.Selected = false;
-                    this.selectedCharacters.Clear();
-                }
+                this.deselectIfNotShift();
 
                 Vector2 actualMousePos = ui.ViewportMousePos;
 
@@ -73,8 +96,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
                 else
                 { //seleccion multiple
                     List<Character> newSelectedCharacters = this.selectionMethod.endAndRetSelection();
-                    foreach (Character ch in newSelectedCharacters) ch.Selected = true;
-                    this.selectedCharacters.AddRange(newSelectedCharacters);
+                    foreach (Character ch in newSelectedCharacters) this.addSelectedCharacter(ch);
                 }
 
                 this.selecting = false;
@@ -139,8 +161,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
                 }
             }
 
-            closestCharacter.Selected = true;
-            this.selectedCharacters.Add(closestCharacter);
+            this.addSelectedCharacter(closestCharacter);
         }
 
         #endregion

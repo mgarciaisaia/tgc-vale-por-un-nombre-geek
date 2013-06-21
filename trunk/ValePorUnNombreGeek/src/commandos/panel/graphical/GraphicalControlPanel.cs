@@ -8,13 +8,15 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.Input;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picture;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 {
     class GraphicalControlPanel
     {
         private Picture controlPanelSprite;
-        private List<CommandButton> buttons;
+        private List<IButton> buttons;
 
         public GraphicalControlPanel(string path)
         {
@@ -22,18 +24,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             int screenWidth = CommandosUI.Instance.ScreenWidth;
 
             this.controlPanelSprite = new Picture(path);
-            this.controlPanelSprite.Position = new Vector2(0, screenHeight - this.controlPanelSprite.Height);
+            //this.controlPanelSprite.Position = new Vector2(0, screenHeight - this.controlPanelSprite.Height);
+            this.controlPanelSprite.Position = new Vector2(0, 0);
             this.controlPanelSprite.Width = screenWidth;
 
-            buttons = new List<CommandButton>();
+            buttons = new List<IButton>();
         }
 
-        private void addButton(CommandButton _button)
+        private void addButton(IButton _button)
         {
             this.buttons.Add(_button);
 
             float X = this.controlPanelSprite.Width / 10;
-            foreach (CommandButton button in this.buttons)
+            foreach (IButton button in this.buttons)
                 X = Math.Max(X, (int)button.Position.X + button.Width + 5);
 
             Vector2 pos = new Vector2(X, this.controlPanelSprite.Position.Y + this.controlPanelSprite.Height / 2 - _button.Height / 2);
@@ -49,9 +52,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         }
 
         /// <summary>
+        /// Agrega un boton de seleccion de personaje al panel
+        /// </summary>
+        public void addSelectionButton(Character ch, Selection selection)
+        {
+            this.buttons.Add(new SelectionButton(ch, selection));
+        }
+
+        /// <summary>
         /// Indica si el mouse esta sobre determinado boton
         /// </summary>
-        private bool mouseIsOverCommand(float mouseX, float mouseY, CommandButton command)
+        private bool mouseIsOverCommand(float mouseX, float mouseY, IButton command)
         {
             float spriteX = command.Position.X;
             float spriteY = command.Position.Y;
@@ -65,9 +76,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         /// <summary>
         /// Inidica si hay un boton bajo el mouse, y si es asi, lo devuelve
         /// </summary>
-        private bool commandUnderMouse(float mouseX, float mouseY, out CommandButton ret)
+        private bool commandUnderMouse(float mouseX, float mouseY, out IButton ret)
         {
-            foreach (CommandButton button in this.buttons)
+            foreach (IButton button in this.buttons)
                 if (this.mouseIsOverCommand(mouseX, mouseY, button))
                 {
                     ret = button;
@@ -84,7 +95,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         public void render()
         {
             this.controlPanelSprite.render();
-            foreach (CommandButton button in this.buttons) button.render();
+            foreach (IButton button in this.buttons) button.render();
         }
 
         public void dispose()
@@ -97,7 +108,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         /// </summary>
         public bool mouseIsOverPanel()
         {
-            return CommandosUI.Instance.ScreenMousePos.Y > this.controlPanelSprite.Position.Y;
+            //return CommandosUI.Instance.ScreenMousePos.Y > this.controlPanelSprite.Position.Y;
+            return CommandosUI.Instance.ScreenMousePos.Y < this.controlPanelSprite.Height;
         }
 
         /// <summary>
@@ -108,7 +120,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
             Vector2 mousePos = CommandosUI.Instance.ScreenMousePos;
             float mouseX = mousePos.X;
             float mouseY = mousePos.Y;
-            CommandButton button;
+            IButton button;
             if (this.commandUnderMouse(mouseX, mouseY, out button))
             {
                 if (CommandosUI.Instance.mousePressed(TgcViewer.Utils.Input.TgcD3dInput.MouseButtons.BUTTON_LEFT))
