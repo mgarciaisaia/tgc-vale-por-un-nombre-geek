@@ -19,6 +19,8 @@ using Microsoft.DirectX.Direct3D;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.renderization;
 using TgcViewer.Utils.Sound;
+using TgcViewer.Utils;
+using System.Drawing;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -215,6 +217,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             level.Map.Technique = "MAPA_VIEJO";
             level.Map.render();
 
+            GuiController.Instance.Text3d.drawText("FPS: " + HighResolutionTimer.Instance.FramesPerSecond, 0, 0, Color.Yellow);
+          
         
           
         }

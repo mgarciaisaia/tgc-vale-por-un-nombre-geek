@@ -139,7 +139,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.renderization
             device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
             RenderScene(false);
 
-            GuiController.Instance.Text3d.drawText("FPS: " + HighResolutionTimer.Instance.FramesPerSecond, 0, 0, Color.Yellow);
             arrow.render();
         }
 
