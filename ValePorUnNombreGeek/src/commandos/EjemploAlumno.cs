@@ -85,8 +85,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             
             //Panel de control in game
             controlPanel = new GraphicalControlPanel(CommandosUI.Instance.MediaDir + "Sprites\\panel2.jpg");
-            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\emptyp.png");
-            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\cancelp.png");
+            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\crouch.png");
+            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\cancel.png");
             CommandosUI.Instance.Panel = controlPanel;
 
             foreach (Commando c in level.Commandos)
