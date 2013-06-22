@@ -55,7 +55,8 @@ float alpha(float2 maskcoord){
 float4 ps_DiffuseMap(PS_INPUT input) : COLOR0
 {      
 	float4 color = tex2D(diffuseMap, input.Texcoord);
-	color[3] = alpha(input.Maskcoord);
+	float alphaX = alpha(input.Maskcoord);
+	if(alphaX<255) color[3]=alphaX;
 	return color;
 }
 
@@ -66,7 +67,8 @@ float4 ps_luminance(PS_INPUT input): COLOR0
 {
 	float4 color = tex2D(diffuseMap, input.Texcoord);
 	color =  0.1*color.x + 0.95*color.y+0.2*color.z;
-	color[3] = alpha(input.Maskcoord);
+	float alphaX = alpha(input.Maskcoord);
+	if(alphaX<255) color[3]=alphaX;
 	return color;
 }
 
@@ -76,7 +78,8 @@ float4 ps_selected(PS_INPUT input):COLOR0
 {
 	float4 luminance = ps_luminance(input);
 	float4 color =  selectionColor*0.5 + luminance;
-	color[3] = alpha(input.Maskcoord);
+	float alphaX = alpha(input.Maskcoord);
+	if(alphaX<255) color[3]=alphaX;
 	
 	return color;
 }
