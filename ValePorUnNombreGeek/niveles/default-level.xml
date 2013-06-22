@@ -10,7 +10,7 @@
   
   
     
-  <enemy class="soldier">
+  <enemy>
 
       <waitpoint>(460,620)</waitpoint>
       <waitpoint>(-560,600)</waitpoint>
