@@ -35,22 +35,72 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
         /// </summary>
         public bool terrainIntersection(ITerrain terrain, out Vector3 position)
         {
+            if (this.Ray.Direction.Y == 0)
+            {
+                //parche para evitar un ciclo infinito
+                position = Vector3.Empty;
+                return false;
+            }
+
+            if (this.Ray.Direction.Y >= 0)
+                //hizo click en un sector del terreno mas alto que la camara
+                return this.skyToGroundAlgorithm(terrain, out position);
+            else
+                //hizo click en un sector del terreno mas bajo que la camara
+                return this.groundToSkyAlgorithm(terrain, out position);
+        }
+
+
+        private bool skyToGroundAlgorithm(ITerrain terrain, out Vector3 position)
+        {
             Vector3 aPoint;
             Vector3 terrainPoint;
-            float t0 = (terrain.Position.Y - this.Ray.Origin.Y) / this.Ray.Direction.Y;
-            float t = t0;
-           
+            float t = 0;
+
             while (true)
             {
                 aPoint = this.Ray.Origin + t * this.Ray.Direction;
 
                 if (terrain.getPosition(aPoint.X, aPoint.Z, out terrainPoint))
+                {
                     if (GeneralMethods.isCloseTo(aPoint.Y, terrainPoint.Y, 1))
                     {
                         //encontramos el punto de interseccion
                         position = aPoint;
                         return true;
                     }
+                }
+                else if (aPoint.Y >= terrain.maxY || aPoint.Y < terrain.minY)
+                {
+                    //ya nos fuimos o muy arriba o muy abajo
+                    position = Vector3.Empty;
+                    return false;
+                }
+
+                t++;
+            }
+        }
+
+
+        private bool groundToSkyAlgorithm(ITerrain terrain, out Vector3 position)
+        {
+            Vector3 aPoint;
+            Vector3 terrainPoint;
+            float t = (terrain.Position.Y - this.Ray.Origin.Y) / this.Ray.Direction.Y;
+
+            while (true)
+            {
+                aPoint = this.Ray.Origin + t * this.Ray.Direction;
+
+                if (terrain.getPosition(aPoint.X, aPoint.Z, out terrainPoint))
+                {
+                    if (GeneralMethods.isCloseTo(aPoint.Y, terrainPoint.Y, 1))
+                    {
+                        //encontramos el punto de interseccion
+                        position = aPoint;
+                        return true;
+                    }
+                }
                 else if (aPoint.Y >= terrain.maxY || aPoint.Y < terrain.minY)
                 {
                     //ya nos fuimos o muy arriba o muy abajo
@@ -61,65 +111,5 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 t--;
             }
         }
-
-
-        //public bool skyToGroundAlgorithm(ITerrain terrain, out Vector3 position)
-        //{
-        //    Vector3 aPoint;
-        //    Vector3 terrainPoint;
-        //    float t0 = (terrain.Position.Y - this.Ray.Origin.Y) / this.Ray.Direction.Y;
-        //    float t = t0;
-
-        //    while (true)
-        //    {
-        //        aPoint = this.Ray.Origin + t * this.Ray.Direction;
-
-        //        if (terrain.getPosition(aPoint.X, aPoint.Z, out terrainPoint))
-        //            if (GeneralMethods.isCloseTo(aPoint.Y, terrainPoint.Y, 1))
-        //            {
-        //                //encontramos el punto de interseccion
-        //                position = aPoint;
-        //                return true;
-        //            }
-        //            else if (aPoint.Y >= terrain.maxY || aPoint.Y < terrain.minY)
-        //            {
-        //                //ya nos fuimos o muy arriba o muy abajo
-        //                position = Vector3.Empty;
-        //                return false;
-        //            }
-
-        //        t--;
-        //    }
-        //}
-
-
-        //public bool groundToSkyAlgorithm(ITerrain terrain, out Vector3 position)
-        //{
-        //    Vector3 aPoint;
-        //    Vector3 terrainPoint;
-        //    float t0 = (terrain.Position.Y - this.Ray.Origin.Y) / this.Ray.Direction.Y;
-        //    float t = t0;
-
-        //    while (true)
-        //    {
-        //        aPoint = this.Ray.Origin + t * this.Ray.Direction;
-
-        //        if (terrain.getPosition(aPoint.X, aPoint.Z, out terrainPoint))
-        //            if (GeneralMethods.isCloseTo(aPoint.Y, terrainPoint.Y, 1))
-        //            {
-        //                //encontramos el punto de interseccion
-        //                position = aPoint;
-        //                return true;
-        //            }
-        //            else if (aPoint.Y >= terrain.maxY || aPoint.Y < terrain.minY)
-        //            {
-        //                //ya nos fuimos o muy arriba o muy abajo
-        //                position = Vector3.Empty;
-        //                return false;
-        //            }
-
-        //        t--;
-        //    }
-        //}
     }
 }
