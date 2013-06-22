@@ -371,16 +371,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             //Cuando se pueda hacer que no se traben, se quita character.OwnedByUser
             if (this.OwnedByUser && this.terrenoMuyEmpinado(previousPosition, direction * speed))
             {
-                /*//Busco movimientos alternativos
-                foreach (Vector3 alt in getAlternativeMovements(direction))
-                {
-                    if (!terrenoMuyEmpinado(previousPosition, alt*speed))
-                    {
-                        realMovement = alt;
-                        break;
-                    }
-                }
-               */
                 if (realMovement == direction)
                 {
                     this.abortMove();
