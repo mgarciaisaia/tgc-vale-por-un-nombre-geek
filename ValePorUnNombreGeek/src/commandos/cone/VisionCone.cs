@@ -30,7 +30,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
             this.AutoTransformEnabled = false;
             this.AlphaBlendEnabled = true;
             this.sqRange = new float[2];
-            this.sqRange[(int)eRange.SHORT_RANGE] = GeneralMethods.optimizedPow2(length * 2 / 3);
+            this.sqRange[(int)eRange.SHORT_RANGE] = GeneralMethods.optimizedPow2(length * 1 / 2);
             this.sqRange[(int)eRange.LONG_RANGE] = GeneralMethods.optimizedPow2(length);
             this.cosAngle = FastMath.Cos(angle);
             this.Color1 = System.Drawing.Color.Aquamarine;
