@@ -154,7 +154,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             if (commandos.Count > 1)
             {
                 Commando last = commandos[commandos.IndexOf(commando) - 1];
-                commando.Life.Position = last.Life.Position + new Vector2(commando.Life.Width + 10, 0);
+                commando.Life.Position = last.Life.Position + new Vector2(commando.Life.Width + 5, 0);
             }
             else commando.Life.Position = new Vector2(commando.Life.Width + 10, 2);
         }
@@ -186,9 +186,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             foreach (Character character in this.characters) 
                 character.update(elapsedTime);
 
-
-            planeDiscard.fillOutputs();
-            regularGrid.fillOutputs();
+            if (CullingEnabled)
+            {
+                planeDiscard.fillOutputs();
+                regularGrid.fillOutputs();
+            }
             this.Renderer.render();
 
             foreach (Commando c in this.commandos)    

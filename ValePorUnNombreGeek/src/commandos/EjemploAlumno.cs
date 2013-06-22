@@ -97,6 +97,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         {
             Music = true;
             GuiController.Instance.Mp3Player.FileName = p;
+            
         }
 
         #region LoadLevel
@@ -119,7 +120,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             map.setFrame(TextureLoader.FromFile(CommandosUI.Instance.d3dDevice, CommandosUI.Instance.MediaDir + "Mapa\\frame.png"));
             map.Width = 2 * level.Map.Height;
             map.Height = 1.5f * level.Map.Height;
-            map.Position = new Vector2(CommandosUI.Instance.ScreenWidth / 2 - level.Map.Width / 2, CommandosUI.Instance.ScreenHeight - level.Map.Height);
+            map.Position = new Vector2(CommandosUI.Instance.ScreenWidth - level.Map.Width , 0);
 
 
             defaultRenderer = level.Renderer;
@@ -163,6 +164,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
             Modifiers.Instance.bind("Sombras", this, "Sombras");
 
+            GuiController.Instance.Modifiers.addBoolean("Culling", "Activado", false);
+            Modifiers.Instance.bind("Culling", level, "CullingEnabled");
+
             GuiController.Instance.Modifiers.addBoolean("Grilla", "Mostrar", false);
             Modifiers.Instance.bind("Grilla", level.Terrain, "RenderPatchesBB");
           
@@ -187,7 +191,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         {
             if (elapsedTime > MAX_ELAPSED_TIME)
             {
-                GuiController.Instance.Logger.log("Ignoramos un retardo de " + elapsedTime + " s");
+                //GuiController.Instance.Logger.log("Ignoramos un retardo de " + elapsedTime + " s");
                 return;
             }
 
