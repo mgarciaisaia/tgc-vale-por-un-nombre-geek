@@ -18,6 +18,7 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 using Microsoft.DirectX.Direct3D;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.renderization;
+using TgcViewer.Utils.Sound;
 
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek
@@ -34,6 +35,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         GraphicalControlPanel controlPanel;
         Renderer defaultRenderer;
         ShadowRenderer shadowRenderer;
+        public bool Music { get; set; }
 
         #region Details
 
@@ -77,7 +79,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         public override void init()
         {
             loadLevel(CommandosUI.Instance.SrcDir + "\\niveles\\default-level.xml");
-            
+            loadMusic(CommandosUI.Instance.MediaDir+"\\Music\\music.mp3");
             
             //Panel de control in game
             controlPanel = new GraphicalControlPanel(CommandosUI.Instance.MediaDir + "Sprites\\panel2.jpg");
@@ -87,6 +89,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             foreach (Commando c in level.Commandos)
                 controlPanel.addSelectionButton(c, selection);
+        }
+
+        private void loadMusic(string p)
+        {
+            Music = true;
+            GuiController.Instance.Mp3Player.FileName = p;
         }
 
         #region LoadLevel
@@ -142,6 +150,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             GuiController.Instance.Modifiers.addFloat("Zoom", 0.5f, 5, 2);
             Modifiers.Instance.bind("Zoom", level.Map, "Zoom");
 
+            GuiController.Instance.Modifiers.addBoolean("Musica", "Reproducir", true);
+            Modifiers.Instance.bind("Musica", this, "Music");
 
             GuiController.Instance.Modifiers.addBoolean("Cilindros", "Ver cilindros", false);
             Modifiers.Instance.bind("Cilindros", typeof(Character), "RenderCylinder");
@@ -181,7 +191,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             Modifiers.Instance.update();
 
-
+            playMusic();
 
 
             controlPanel.render();
@@ -207,6 +217,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
         
           
+        }
+
+        private void playMusic()
+        {
+           
+       
+            TgcMp3Player player = GuiController.Instance.Mp3Player;
+            TgcMp3Player.States currentState = player.getStatus();
+            if (Music)
+            {
+                if (currentState == TgcMp3Player.States.Open)
+                
+
+                    player.play(true);
+                else if (currentState == TgcMp3Player.States.Paused)
+                
+                    //Resumir la ejecución del MP3
+                    player.resume();
+                
+            }
+            else if (currentState == TgcMp3Player.States.Playing)
+            {
+                //Pausar el MP3
+                player.pause();
+            }
+          
+
         }
 
       
