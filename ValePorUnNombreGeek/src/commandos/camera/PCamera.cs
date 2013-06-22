@@ -89,9 +89,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera
 
             if (mousePos.X > viewportWidth / 3 && mousePos.X < viewportWidth * 2 / 3)
             {
-                if (mousePos.Y < BORDER_WIDTH) //arriba
+                if (mousePos.Y < BORDER_WIDTH/4) //arriba
                     this.moveCenter(desplazamientoFrontal, 1, elapsedTime);
-                if (mousePos.Y > viewportHeight - BORDER_WIDTH) //abajo
+                if (mousePos.Y > viewportHeight - BORDER_WIDTH/2) //abajo
                     this.moveCenter(-desplazamientoFrontal, 1, elapsedTime);
             }
 
