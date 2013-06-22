@@ -151,8 +151,8 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\BackwardDiscard.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\PlaneDiscard.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\Culling.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\QTSector.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\QuadTree.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\GridCell.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\RegularGrid.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\QuadTreeDummie.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebasRendimiento.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaCilindro.cs" />

@@ -23,9 +23,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         List<TerrainPatch> patches;
         ITerrain terrain;
 
-        //BackwardDiscard backwardDiscard;
-        PlaneDiscard backwardDiscard;
-        QuadTree quadTree;
+        PlaneDiscard planeDiscard;
+        RegularGrid regularGrid;
 
         protected Renderer renderer;
         public Renderer Renderer {
@@ -53,9 +52,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
                 if (cullingEnabled)
                 {
-                    this.Renderer.objects = quadTree.objectsOut;
-                    this.Renderer.characters = quadTree.charactersOut;
-                    this.Renderer.patches = quadTree.patchesOut;
+                    this.Renderer.objects = regularGrid.objectsOut;
+                    this.Renderer.characters = regularGrid.charactersOut;
+                    this.Renderer.patches = regularGrid.patchesOut;
 
                 }
                 else
@@ -111,27 +110,26 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
             //tecnicas de optimizacion
 
-            //backward discard
-            backwardDiscard = new PlaneDiscard();
-            //backwardDiscard = new BackwardDiscard();
+            //plane discard
+            planeDiscard = new PlaneDiscard();
 
-            backwardDiscard.charactersIn = this.characters;
-            backwardDiscard.patchesIn = this.patches;
+            planeDiscard.charactersIn = this.characters;
+            planeDiscard.patchesIn = this.patches;
 
-            //quadtree
-            quadTree = new QuadTree(this.terrain);
+            //regular grid
+            regularGrid = new RegularGrid(this.terrain);
 
-            quadTree.objectsIn = this.objects;
-            quadTree.charactersIn = backwardDiscard.charactersOut;
-            quadTree.patchesIn = backwardDiscard.patchesOut;
+            regularGrid.objectsIn = this.objects;
+            regularGrid.charactersIn = planeDiscard.charactersOut;
+            regularGrid.patchesIn = planeDiscard.patchesOut;
 
 
             //renderizado
 
             this.Renderer = new DefaultRenderer();
-            this.Renderer.objects = quadTree.objectsOut;
-            this.Renderer.characters = quadTree.charactersOut;
-            this.Renderer.patches = quadTree.patchesOut;
+            this.Renderer.objects = regularGrid.objectsOut;
+            this.Renderer.characters = regularGrid.charactersOut;
+            this.Renderer.patches = regularGrid.patchesOut;
         }
 
        
@@ -157,7 +155,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         public void add(ILevelObject levelObject)
         {
             objects.Add(levelObject);
-            this.quadTree.add(levelObject);
+            this.regularGrid.add(levelObject);
         }
 
         private void addCharacter(Character c)
@@ -173,8 +171,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
                 character.update(elapsedTime);
 
 
-            backwardDiscard.fillOutputs();
-            quadTree.fillOutputs();
+            planeDiscard.fillOutputs();
+            regularGrid.fillOutputs();
             this.Renderer.render();
 
             foreach (Commando c in this.commandos)    
