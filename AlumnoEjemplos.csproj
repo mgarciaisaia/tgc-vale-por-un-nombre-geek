@@ -123,7 +123,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\VisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\WideVisionCone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\Level.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\commandos\level\parser\XMLLevelParser.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\commandos\level\parser\XMLLevelBuilder.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\MeshObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\AABBObject.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\objects\Tree.cs" />
