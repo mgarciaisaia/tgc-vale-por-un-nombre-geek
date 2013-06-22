@@ -35,9 +35,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         {
             this.buttons.Add(_button);
 
-            float X = this.controlPanelSprite.Width / 10;
+            float X = this.controlPanelSprite.Width*8/10;
             foreach (IButton button in this.buttons)
-                X = Math.Max(X, (int)button.Position.X + button.Width + 5);
+                X = Math.Max(X, (int)button.Position.X + button.Width + 20);
 
             Vector2 pos = new Vector2(X, this.controlPanelSprite.Position.Y + this.controlPanelSprite.Height / 2 - _button.Height / 2);
             _button.Position = pos;
