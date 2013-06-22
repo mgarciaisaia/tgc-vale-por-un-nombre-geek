@@ -11,10 +11,9 @@
     ></terrain>
   
   <!-- class es opcional, si no se pone nada, usa clase Commando -->
-  <commando class="tipoComando">(X,Z)</commando>
+  <commando picture="pathDelAvatar">(X,Z)</commando>
  
-  <!-- class es obligatorio. Por ahora la unica disponible es "soldier"-->
-  <enemy class="soldier">
+  <enemy>
     <!--La clase soldier tiene de 1 a N waitpoints-->
     <waitpoint>(X,Z)</waitpoint>
     <waitpoint>(X,Z)</waitpoint>

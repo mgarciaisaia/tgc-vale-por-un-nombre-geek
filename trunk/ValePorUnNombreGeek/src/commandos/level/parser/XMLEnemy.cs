@@ -18,7 +18,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser
         public static Enemy getEnemy(XmlNode enemyNode, ITerrain terrain)
         {
            
-            XmlNode at = enemyNode.Attributes.GetNamedItem("class");
             string enemyClass;
 
             enemyClass = getClass(enemyNode);
