@@ -42,7 +42,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
 
         public void render()
         {
-            //nothing to do. el renderizado de la vida corre por cuenta del nivel.
+            this.ch.Life.render();
         }
     }
 }

@@ -193,8 +193,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             }
             this.Renderer.render();
 
-            foreach (Commando c in this.commandos)    
-                c.Life.render();
+         
         }
 
 

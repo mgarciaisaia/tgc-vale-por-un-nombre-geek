@@ -200,12 +200,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             playMusic();
 
 
-            controlPanel.render();
             
 
             level.render(elapsedTime);
 
 
+            controlPanel.render();
 
             if (controlPanel.mouseIsOverPanel())
             {
