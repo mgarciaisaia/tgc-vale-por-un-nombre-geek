@@ -148,16 +148,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             Modifiers.Instance.bind("Zoom", level.Map, "Zoom");
 
 
-            GuiController.Instance.Modifiers.addBoolean("showCylinder", "Ver cilindros", false);
-            Modifiers.Instance.bind("showCylinder", typeof(Character), "RenderCylinder");
+            GuiController.Instance.Modifiers.addBoolean("Cilindros", "Ver cilindros", false);
+            Modifiers.Instance.bind("Cilindros", typeof(Character), "RenderCylinder");
 
 
 
             GuiController.Instance.Modifiers.addBoolean("Sombras", "Activar", false);
             Modifiers.Instance.bind("Sombras", this, "Sombras");
 
-            GuiController.Instance.Modifiers.addBoolean("QuadTree", "Mostrar", false);
-            Modifiers.Instance.bind("QuadTree", level.Terrain, "RenderPatchesBB");
+            GuiController.Instance.Modifiers.addBoolean("Grilla", "Mostrar", false);
+            Modifiers.Instance.bind("Grilla", level.Terrain, "RenderPatchesBB");
           
             for (int i = 0; i < level.Terrain.Patches.GetLength(0); i++) for (int j = 0; j < level.Terrain.Patches.GetLength(1); j++)
                 {

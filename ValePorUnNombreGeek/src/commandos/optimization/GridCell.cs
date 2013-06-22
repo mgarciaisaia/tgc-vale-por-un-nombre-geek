@@ -8,12 +8,12 @@ using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization
 {
-    class QTSector
+    class GridCell
     {
         private TerrainPatch tp;
         private List<ILevelObject> objs;
 
-        public QTSector(TerrainPatch _tp)
+        public GridCell(TerrainPatch _tp)
         {
             this.tp = _tp;
             this.objs = new List<ILevelObject>();

@@ -12,12 +12,12 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization
 {
-    class QuadTree : Culling
+    class RegularGrid : Culling
     {
-        private List<QTSector> sectors;
+        private List<GridCell> sectors;
 
 
-        /* QuadTree
+        /* RegularGrid
          * Optimiza el renderizado dibujando solo los sectores del terreno que colisionan
          * con el frustum de la camara.
          * Si hablamos de los objetos, cada uno esta relacionado a un sector, de manera
@@ -27,24 +27,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization
          * 
          * Resultados en mi pc 27/05/2013:
          * Sin optimizacion - 750fps
-         * QuadTree (grilla 3x3, viendo todo el mapa) - entre 700 y 750fps
-         * QuadTree (grilla 3x3, viendo de a 2 o 3 sectores) - entre 850 y 1000fps
+         * RegularGrid (grilla 3x3, viendo todo el mapa) - entre 700 y 750fps
+         * RegularGrid (grilla 3x3, viendo de a 2 o 3 sectores) - entre 850 y 1000fps
          */
 
         #region Constructor
 
-        public QuadTree(ITerrain terrain)
+        public RegularGrid(ITerrain terrain)
             : base()
         {
-            sectors = new List<QTSector>();
+            sectors = new List<GridCell>();
 
             foreach(TerrainPatch tp in terrain.Patches)
-                sectors.Add(new QTSector(tp));
+                sectors.Add(new GridCell(tp));
         }
 
         public void add(ILevelObject obj)
         {
-            foreach (QTSector sector in this.sectors)
+            foreach (GridCell sector in this.sectors)
                 sector.addObjectIfCollides(obj);
         }
 
@@ -65,7 +65,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.optimization
             }
 
             //buscamos los sectores del terreno que ve la camara
-            foreach (QTSector sector in this.sectors)
+            foreach (GridCell sector in this.sectors)
                 if (this.patches.Contains(sector.TerrainPatch) &&
                     sector.collidesWithFrustum(frustum))
                 {
