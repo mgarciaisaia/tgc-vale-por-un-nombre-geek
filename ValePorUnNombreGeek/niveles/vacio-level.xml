@@ -8,9 +8,9 @@
    texture="pathTextura"
    scaleXZ="float"
    scaleY="float"
+   format="(3,3)"
     ></terrain>
   
-  <!-- class es opcional, si no se pone nada, usa clase Commando -->
   <commando picture="pathDelAvatar">(X,Z)</commando>
  
   <enemy>
