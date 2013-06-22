@@ -21,9 +21,9 @@
   </enemy>
   
   
-  <!--class es opcional. La default es meshObject. Disponibles: "tree", "meshObject"-->
-  <!--scale es opcional, default (1,1,1)-->
-  <!--rotation es opcional, default (0,0,0)-->
+  <!--class es opcional. La default es meshObject. Disponibles: "tree", y "wall", "meshObject"-->
+  <!--scale es opcional, default (1,1,1). En wall se llama size y es obligatorio.-->
+  <!--rotation es opcional, default (0,0,0). Las paredes no se rotan.-->
   <levelObject mesh="pathDelTgcScene.xml" scale="(sX,sY,sZ)" rotation="(radian, radian, radian)">(X,Z)</levelObject>
   <levelObject scale="(sX,sY,sZ)" rotation="(radian, radian, radian)" class="tree">(X,Z)</levelObject>
 
