@@ -27,8 +27,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
     /// </summary>
     public class EjemploAlumno : TgcExample
     {
-        Sky sky;
-       
         Level level;
         MovementPicking picking;
         Selection selection;
@@ -78,9 +76,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void init()
         {
-            //SkyBox
-            sky = new Sky();
-
             loadLevel(CommandosUI.Instance.SrcDir + "\\niveles\\default-level.xml");
             
             
@@ -194,7 +189,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             level.render(elapsedTime);
 
-            sky.render();
+
 
             if (controlPanel.mouseIsOverPanel())
             {
@@ -222,13 +217,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void close()
         {
-            
             controlPanel.dispose();
-            sky.dispose();
             level.dispose();
             level = null;
-                   
-            
         }
 
     }

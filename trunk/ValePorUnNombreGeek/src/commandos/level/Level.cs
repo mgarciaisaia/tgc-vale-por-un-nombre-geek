@@ -22,6 +22,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
         List<ILevelObject> objects;
         List<TerrainPatch> patches;
         ITerrain terrain;
+        Sky sky;
 
         PlaneDiscard planeDiscard;
         RegularGrid regularGrid;
@@ -99,7 +100,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
             commandos = new List<Commando>();
             objects = new List<ILevelObject>();
 
+
             this.terrain = terrain;
+
+            Vector3 skySize = new Vector3(
+                this.terrain.Width,
+                3 * (this.terrain.maxY - this.terrain.minY),
+                this.terrain.Height);
+            skySize *= 3;
+
+            this.sky = new Sky(
+                this.terrain.Center,
+                skySize);
+
+
 
             patches = new List<TerrainPatch>();
             foreach (TerrainPatch tp in this.terrain.Patches)
@@ -166,7 +180,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
 
         public void render(float elapsedTime)
-        {  
+        {
+            sky.render();
+
             foreach (Character character in this.characters) 
                 character.update(elapsedTime);
 
@@ -194,6 +210,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
             map.dispose();
             terrain.dispose();
+            sky.dispose();
         }
 
 

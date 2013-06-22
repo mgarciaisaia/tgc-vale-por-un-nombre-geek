@@ -10,10 +10,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 {
     class Sky : TgcSkyBox
     {
-        public Sky() : base()
+        public Sky(Vector3 _center, Vector3 _size) : base()
         {
-            this.Center = new Vector3(0, 0, 0);
-            this.Size = new Vector3(7000, 7000, 7000);
+            this.Center = _center;
+            this.Size = _size;
             string texturesPath = CommandosUI.Instance.MediaDir + "SkyBox\\";
 
             this.setFaceTexture(TgcSkyBox.SkyFaces.Up, texturesPath + "lun4_up.jpg");
