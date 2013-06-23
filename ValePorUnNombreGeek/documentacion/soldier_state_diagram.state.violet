@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.7.0_21" class="java.beans.XMLDecoder">
+<java version="1.7.0_25" class="java.beans.XMLDecoder">
  <object class="com.horstmann.violet.StateDiagramGraph">
   <void method="addNode">
    <object class="com.horstmann.violet.CircularStateNode" id="CircularInitialStateNode0"/>
@@ -152,7 +152,7 @@
   <void method="connect">
    <object class="com.horstmann.violet.StateTransitionEdge">
     <void property="label">
-     <string>look at new position</string>
+     <string>look to new position</string>
     </void>
    </object>
    <object idref="StateNode0"/>
@@ -179,7 +179,7 @@
   <void method="connect">
    <object class="com.horstmann.violet.StateTransitionEdge">
     <void property="label">
-     <string>looking at next waitpoint</string>
+     <string>looking to next waitpoint</string>
     </void>
    </object>
    <object idref="StateNode2"/>
