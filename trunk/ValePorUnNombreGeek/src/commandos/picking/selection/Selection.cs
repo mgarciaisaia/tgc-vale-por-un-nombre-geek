@@ -8,11 +8,13 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using TgcViewer.Utils.Input;
 using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.methods;
+using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
 {
     class Selection
     {
+        private List<SelectionMethod> selectionMethods;
         private SelectionMethod selectionMethod;
         private List<Character> selectableCharacters;
         private List<Character> selectedCharacters;
@@ -25,8 +27,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
             this.selectableCharacters = _selectableCharacters;
             this.selectedCharacters = new List<Character>();
             this.selecting = false;
-            //this.selectionMethod = new BoxSelection(_terrain, this.selectableCharacters);
-            this.selectionMethod = new ScreenProjection(this.selectableCharacters);
+
+            this.selectionMethods = new List<SelectionMethod>();
+            this.selectionMethods.Add(new ScreenProjection(this.selectableCharacters));
+            this.selectionMethods.Add(new BoxSelection(_terrain, this.selectableCharacters));
+            GuiController.Instance.Modifiers.addInterval("Seleccion", this.selectionMethods.ToArray(), 0);
         }
 
         /// <summary>
@@ -89,6 +94,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection
         public void update()
         {
             var ui = CommandosUI.Instance;
+
+            this.selectionMethod = (SelectionMethod)GuiController.Instance.Modifiers.getValue("Seleccion");
 
             if (!this.selecting && ui.mouseDown(TgcD3dInput.MouseButtons.BUTTON_LEFT))
             { //arranca a seleccionar
