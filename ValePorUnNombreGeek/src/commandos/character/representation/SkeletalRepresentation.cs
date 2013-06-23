@@ -123,10 +123,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
 
         public void switchCrouch()
         {
-            if (this.isCrouched()) this.playAnimation("StandBy", true);
+            if (this.isCrouched())
+            {
+                if (moving) this.playAnimation("Walk", true); else this.playAnimation("StandBy", true);
+            
+            }
             else
             {
-                if (this.mesh.CurrentAnimation.Name.Equals("StandBy")) this.moving = false;
                 this.playAnimation("CrouchWalk", true);
             }
             sounds.ok();
