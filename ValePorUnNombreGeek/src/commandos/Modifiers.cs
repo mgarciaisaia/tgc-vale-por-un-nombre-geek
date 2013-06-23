@@ -115,8 +115,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         }
         #endregion
 
-      
 
-      
+
+
+
+        public static void clear()
+        {
+            if (instance != null) instance=null;
+        }
     }
 }

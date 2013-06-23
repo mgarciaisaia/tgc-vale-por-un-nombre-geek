@@ -22,5 +22,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         {
             this.command.execute();
         }
+
+        
     }
 }

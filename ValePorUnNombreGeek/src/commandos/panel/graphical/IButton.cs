@@ -13,5 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         float Width { get; }
         void click();
         void render();
+
+        void dispose();
     }
 }

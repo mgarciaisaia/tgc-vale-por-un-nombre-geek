@@ -101,6 +101,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         public void dispose()
         {
             this.controlPanelSprite.dispose();
+            foreach (IButton b in buttons) b.dispose();
         }
 
         /// <summary>
