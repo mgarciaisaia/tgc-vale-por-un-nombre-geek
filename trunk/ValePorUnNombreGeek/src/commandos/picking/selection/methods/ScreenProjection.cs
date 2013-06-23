@@ -33,6 +33,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.met
             return ret;
         }
 
+        public override string ToString()
+        {
+            return "ScreenProjection";
+        }
+
         #region RectangleRendering
 
         CustomVertex.TransformedColored[] vertices;
