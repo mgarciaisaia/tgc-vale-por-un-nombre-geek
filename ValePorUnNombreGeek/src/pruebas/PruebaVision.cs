@@ -83,11 +83,23 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             //GuiController.Instance.RotCamera.targetObject(enemigo.BoundingBox);
             GuiController.Instance.RotCamera.CameraDistance = 200;
             GuiController.Instance.Modifiers.addVertex3f("posicionTarget", new Vector3(-100, -100, -100), new Vector3(100, 100, 100), new Vector3(0, 0, -20));
-          
+
+            Modifiers.initialize();
+            GuiController.Instance.Modifiers.addBoolean("Agachado", "Sí", false);
+            Modifiers.Instance.bind("Agachado", this, "Crouch");
         }
 
+        private bool crouch=false;
+        public bool Crouch
+        {
+            get { return crouch; }
+            set
+            {
+                pj.switchCrouch();
+                crouch = value;
 
-
+            }
+        }
       
 
 
@@ -108,8 +120,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
            float alturaPared = (float)GuiController.Instance.Modifiers.getValue("AlturaPared");
           
            if (alturaPared != pared.Size.Y) pared.Size = new Vector3(pared.Size.X, alturaPared, pared.Size.Z);
-          
-              
+
+           Modifiers.Instance.update();
            
            nivel.render(elapsedTime);
            enemigo.canSee(pj);
