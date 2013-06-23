@@ -157,7 +157,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public virtual void dispose()
         {
-            representation.dispose();
+            representation.dispose(); 
+            if (picture != null) picture.dispose();
             life.dispose();
             this.boundingCylinder.dispose();
         }

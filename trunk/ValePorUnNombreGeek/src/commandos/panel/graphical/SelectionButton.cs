@@ -44,5 +44,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical
         {
             this.ch.Life.render();
         }
+
+        public void dispose()
+        {
+            //Nada, el character libera su vida.
+        }
     }
 }

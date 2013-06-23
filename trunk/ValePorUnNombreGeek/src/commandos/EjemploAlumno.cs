@@ -83,14 +83,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             loadLevel(CommandosUI.Instance.SrcDir + "\\niveles\\default-level.xml");
             loadMusic(CommandosUI.Instance.MediaDir+"\\Music\\music.mp3");
             
-            //Panel de control in game
-            controlPanel = new GraphicalControlPanel(CommandosUI.Instance.MediaDir + "Sprites\\panel2.jpg");
-            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\crouch.png");
-            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\cancel.png");
-            CommandosUI.Instance.Panel = controlPanel;
-
-            foreach (Commando c in level.Commandos)
-                controlPanel.addSelectionButton(c, selection);
+         
         }
 
         private void loadMusic(string p)
@@ -104,7 +97,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
         private void loadLevel(string newLevel)
         {
-            if (level != null) level.dispose();
+            disposeAll();
 
             GuiController.Instance.Modifiers.clear();
             GuiController.Instance.UserVars.clearVars();
@@ -137,6 +130,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
              
             //Inicializar camara
             CommandosUI.Instance.Camera = new PCamera(new Vector3(0, 0, 150), level.Terrain);
+
+
+            //Panel de control in game
+            controlPanel = new GraphicalControlPanel(CommandosUI.Instance.MediaDir + "Sprites\\panel2.jpg");
+            controlPanel.addCommand(new Talk(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\crouch.png");
+            controlPanel.addCommand(new StandBy(selection.getSelectedCharacters()), CommandosUI.Instance.MediaDir + "Sprites\\cancel.png");
+            CommandosUI.Instance.Panel = controlPanel;
+
+            foreach (Commando c in level.Commandos)
+                controlPanel.addSelectionButton(c, selection);
         }
 
         private void setAndBindModifiers()
@@ -262,9 +265,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// </summary>
         public override void close()
         {
-            controlPanel.dispose();
-            level.dispose();
+            disposeAll();
+        }
+
+        private void disposeAll()
+        {
+            if(controlPanel!=null) controlPanel.dispose();
+            if(level!=null)level.dispose();
+            Modifiers.clear();
             level = null;
+            controlPanel = null;
         }
 
     }
