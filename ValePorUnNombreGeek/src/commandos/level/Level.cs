@@ -105,7 +105,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level
 
             Vector3 skySize = new Vector3(
                 this.terrain.Width,
-                3 * (this.terrain.maxY - this.terrain.minY),
+                5 * (this.terrain.maxY - this.terrain.minY),
                 this.terrain.Height);
             skySize *= 3;
 

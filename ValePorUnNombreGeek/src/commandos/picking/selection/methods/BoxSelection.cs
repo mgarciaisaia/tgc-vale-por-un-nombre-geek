@@ -44,6 +44,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection.met
             return ret;
         }
 
+        public override string ToString()
+        {
+            return "AABoxSelection";
+        }
+
         #region Update
 
         private Vector3 initTerrainPoint;
