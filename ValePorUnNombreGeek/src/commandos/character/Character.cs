@@ -475,11 +475,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public void switchCrouch()
         {
             if (!this.dead)
+            {
                 this.Representation.switchCrouch();
-
-            this.boundingCylinder.dispose();
-            Vector3 boundingSize = this.Representation.BoundingBox.calculateSize() * 0.5f;
-            this.boundingCylinder = new Cylinder(this.Representation.BoundingBox.calculateBoxCenter(), boundingSize.Y, boundingSize.X);
+            }
         }
     }
 }

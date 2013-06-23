@@ -6,9 +6,9 @@ using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands.orders
 {
-    class Talk : CommandoOrder
+    class SwitchCrouch : CommandoOrder
     {
-        public Talk(List<Character> _characters)
+        public SwitchCrouch(List<Character> _characters)
             : base(_characters)
         {
             //nothing to do
@@ -16,14 +16,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands.orders
 
         public override string description
         {
-            get { return "Hablar"; }
+            get { return "Agarcharse/Pararse"; }
         }
 
         public override void execute()
         {
             foreach (Commando ch in this.getCommandos())
             {
-                ch.switchCrouch(); //TODO no deberia comunicarse con representation
+                ch.switchCrouch();
             }
         }
     }
