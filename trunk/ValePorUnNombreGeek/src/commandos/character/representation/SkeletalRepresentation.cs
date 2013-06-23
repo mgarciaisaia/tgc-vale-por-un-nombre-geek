@@ -135,11 +135,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             sounds.ok();
         }
 
-        private void playAnimation(string p, bool p_2)
+        private void playAnimation(string animationName, bool playLoop)
         {
-            if (!this.mesh.CurrentAnimation.Name.Equals(p))
+            if (!this.mesh.CurrentAnimation.Name.Equals(animationName))
             {
-               this.mesh.playAnimation(p, p_2);
+               this.mesh.playAnimation(animationName, playLoop);
             }
         }
 
