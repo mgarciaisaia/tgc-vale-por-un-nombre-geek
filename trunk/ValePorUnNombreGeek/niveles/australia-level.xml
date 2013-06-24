@@ -2,7 +2,7 @@
   
   <terrain 
     heightmap="Heightmaps\\australia.png" 
-    texture="Heightmaps\\TerrainTexture5.jpg"
+    texture="Heightmaps\\australiaTextura2.jpg"
     scaleXZ="6.0"
     scaleY="1.0"
     format="(6,6)"
