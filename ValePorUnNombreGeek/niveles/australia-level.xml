@@ -1,0 +1,30 @@
+<level>
+  
+  <terrain 
+    heightmap="Heightmaps\\australia.png" 
+    texture="Heightmaps\\TerrainTexture5.jpg"
+    scaleXZ="6.0"
+    scaleY="1.0"
+    format="(6,6)"
+    ></terrain>
+  
+  
+    
+  <enemy class="soldier">
+
+      <waitpoint>(460,620)</waitpoint>
+      <waitpoint>(-560,600)</waitpoint>
+      <waitpoint>(-800,-260)</waitpoint>
+  </enemy>
+    
+ 
+  <commando picture="\\CharacterPictures\\Daniela.jpg">(-200,200)</commando>
+  <commando picture="\\CharacterPictures\\Pablo.jpg">(200,200)</commando>
+  <commando picture="\\CharacterPictures\\Matias.jpg">(200,-200)</commando>
+
+  <levelObject mesh="ArbolSelvatico2\\ArbolSelvatico2-TgcScene.xml" scale="(4,4,4)">(50,50)</levelObject>
+  <levelObject class="tree" scale="(5,7,5)">(56,530)</levelObject>
+  <levelObject class="wall" size="(500,60,50)">(200,700)</levelObject>
+  <!--<levelObject class="wall" size="(50,20,250)">(400,550)</levelObject>-->
+
+</level>
