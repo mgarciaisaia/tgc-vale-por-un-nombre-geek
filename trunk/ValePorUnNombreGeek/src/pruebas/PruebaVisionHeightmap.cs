@@ -68,8 +68,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
                 0.4f);
 
             nivel = new Level(terrain);
-            nivel.add(new Commando(terrain.getPosition(200, 200)));
+           
 
+            Commando commando = new Commando(terrain.getPosition(200, 200));
+            nivel.add(commando);
+            commando.Life.Infinite = true;
 
 
            

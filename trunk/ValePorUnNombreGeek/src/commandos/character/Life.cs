@@ -100,7 +100,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.points = maxPoints;
             this.character = character;
             this.traslation = position;
-           
+            Infinite = false;
             this.size = size;
             this.color = color;
             this.mustUpdate = true;
@@ -165,7 +165,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
 
         public void decrement(float points)
         {
-            if (this.points > 0)
+            if (this.points > 0 && !Infinite)
             {
                 this.points -= points;
                 if (this.points <= 0)
@@ -193,5 +193,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             }
 
         }
+
+        public bool Infinite { get; set; }
     }
 }
