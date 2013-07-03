@@ -23,7 +23,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
     /// <summary>
     /// Prueba de vision
     /// </summary>
-    public class PruebaVision2 : TgcExample
+    public class PruebaVisionHeightmap : TgcExample
     {
 
         public override string getCategory()
@@ -36,7 +36,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
         /// </summary>
         public override string getName()
         {
-            return "Prueba de vision2";
+            return "Prueba vision Heightmap";
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
         /// </summary>
         public override string getDescription()
         {
-            return "Prueba de vision";
+            return "Prueba de vision del soldado a traves del terreno";
         }
 
         
