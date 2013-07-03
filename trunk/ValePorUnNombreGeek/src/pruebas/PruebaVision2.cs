@@ -100,7 +100,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             previousAngle = 0;
 
             new StandardCamera();
-
+            nivel.CullingEnabled = false;
         }
 
 
