@@ -155,7 +155,6 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\RegularGrid.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebasRendimiento.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaCilindro.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\pruebas\PJOptimization.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaShaders.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\EjemploAlumno.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\GeneralMethods.cs" />
