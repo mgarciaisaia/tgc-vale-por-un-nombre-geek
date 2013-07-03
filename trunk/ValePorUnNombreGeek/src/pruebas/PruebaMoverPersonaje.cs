@@ -44,7 +44,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaMoverPersonaje
         /// </summary>
         public override string getName()
         {
-            return "VPNG:PruebaMoverPersonaje";
+            return "VPUNG:PruebaMoverPersonaje";
         }
 
         /// <summary>
