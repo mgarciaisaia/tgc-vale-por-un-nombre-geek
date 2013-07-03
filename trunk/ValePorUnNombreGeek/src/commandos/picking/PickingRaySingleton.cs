@@ -21,14 +21,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 if (instance == null)
                 {
                     instance = new PickingRaySingleton();
-                    //createVars();     
+                    createVars();     
                     
                 }
                 return instance;
             }
         }
 
-
+        private static void createVars()		
+        {		
+            GuiController.Instance.UserVars.addVar("WorldX");		
+            GuiController.Instance.UserVars.addVar("WorldY");		
+            GuiController.Instance.UserVars.addVar("WorldZ");		
+        }
 
         /// <summary>
         /// Busca la interseccion rayo-heightmap, y devuelve true si existe.
@@ -67,6 +72,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                     {
                         //encontramos el punto de interseccion
                         position = aPoint;
+
+                        try		
+	                        {		
+	                            GuiController.Instance.UserVars.setValue("WorldX", position.X);		
+			
+	                        }		
+	                        catch (Exception)		
+	                        {		
+	                            createVars();		
+	                            GuiController.Instance.UserVars.setValue("WorldX", position.X);		
+	                        }		
+	                        GuiController.Instance.UserVars.setValue("WorldY", position.Y);		
+	                        GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
+
                         return true;
                     }
                 }
@@ -98,6 +117,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                     {
                         //encontramos el punto de interseccion
                         position = aPoint;
+
+                        try
+                        {
+                            GuiController.Instance.UserVars.setValue("WorldX", position.X);
+
+                        }
+                        catch (Exception)
+                        {
+                            createVars();
+                            GuiController.Instance.UserVars.setValue("WorldX", position.X);
+                        }
+                        GuiController.Instance.UserVars.setValue("WorldY", position.Y);
+                        GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
+
                         return true;
                     }
                 }
