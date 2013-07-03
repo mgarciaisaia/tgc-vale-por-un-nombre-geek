@@ -52,7 +52,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
         Enemy enemigo;
         Selection selection;
         MovementPicking picking;
-       
+        Commando commando;
         float previousAngle;
         Level nivel;
         public override void init()
@@ -70,7 +70,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             nivel = new Level(terrain);
            
 
-            Commando commando = new Commando(terrain.getPosition(200, 200));
+            commando = new Commando(terrain.getPosition(200, 200));
             nivel.add(commando);
             commando.Life.Infinite = true;
 
@@ -82,7 +82,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             //terrain.heightmapCoordsToXYZ(new Vector2(10, 37), out waitpoints[2]);
 
             
-            enemigo = new Soldier(new Vector3(0,0,0));
+            enemigo = new Enemy(new Vector3(0,0,0));
             nivel.add(enemigo);
             
 
@@ -127,6 +127,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
             enemigo.Position = pos;
             previousAngle = angle;
             nivel.render(elapsedTime);
+            enemigo.canSee(commando);
             enemigo.VisionCone.render();
 
 
