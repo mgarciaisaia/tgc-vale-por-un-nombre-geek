@@ -21,18 +21,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                 if (instance == null)
                 {
                     instance = new PickingRaySingleton();
-                    createVars();     
-                    
+                    createVars();
+
                 }
                 return instance;
             }
         }
 
-        private static void createVars()		
-        {		
-            GuiController.Instance.UserVars.addVar("WorldX");		
-            GuiController.Instance.UserVars.addVar("WorldY");		
-            GuiController.Instance.UserVars.addVar("WorldZ");		
+        private static void createVars()
+        {
+            GuiController.Instance.UserVars.addVar("WorldX");
+            GuiController.Instance.UserVars.addVar("WorldY");
+            GuiController.Instance.UserVars.addVar("WorldZ");
         }
 
         /// <summary>
@@ -40,6 +40,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
         /// </summary>
         public bool terrainIntersection(ITerrain terrain, out Vector3 position)
         {
+            bool result;
+
             if (this.Ray.Direction.Y == 0)
             {
                 //parche para evitar un ciclo infinito
@@ -49,10 +51,25 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
 
             if (this.Ray.Direction.Y >= 0)
                 //hizo click en un sector del terreno mas alto que la camara
-                return this.skyToGroundAlgorithm(terrain, out position);
+                result = this.skyToGroundAlgorithm(terrain, out position);
             else
                 //hizo click en un sector del terreno mas bajo que la camara
-                return this.groundToSkyAlgorithm(terrain, out position);
+                result = this.groundToSkyAlgorithm(terrain, out position);
+
+            try
+            {
+                GuiController.Instance.UserVars.setValue("WorldX", position.X);
+
+            }
+            catch (Exception)
+            {
+                createVars();
+                GuiController.Instance.UserVars.setValue("WorldX", position.X);
+            }
+            GuiController.Instance.UserVars.setValue("WorldY", position.Y);
+            GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
+
+            return result;
         }
 
 
@@ -72,19 +89,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                     {
                         //encontramos el punto de interseccion
                         position = aPoint;
-
-                        try		
-	                        {		
-	                            GuiController.Instance.UserVars.setValue("WorldX", position.X);		
-			
-	                        }		
-	                        catch (Exception)		
-	                        {		
-	                            createVars();		
-	                            GuiController.Instance.UserVars.setValue("WorldX", position.X);		
-	                        }		
-	                        GuiController.Instance.UserVars.setValue("WorldY", position.Y);		
-	                        GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
 
                         return true;
                     }
@@ -118,18 +122,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking
                         //encontramos el punto de interseccion
                         position = aPoint;
 
-                        try
-                        {
-                            GuiController.Instance.UserVars.setValue("WorldX", position.X);
 
-                        }
-                        catch (Exception)
-                        {
-                            createVars();
-                            GuiController.Instance.UserVars.setValue("WorldX", position.X);
-                        }
-                        GuiController.Instance.UserVars.setValue("WorldY", position.Y);
-                        GuiController.Instance.UserVars.setValue("WorldZ", position.Z);
 
                         return true;
                     }
