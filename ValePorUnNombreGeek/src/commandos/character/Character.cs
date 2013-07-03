@@ -55,6 +55,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             
             Vector3 boundingSize = this.Representation.BoundingBox.calculateSize() * 0.5f;
             this.boundingCylinder = new Cylinder(this.Representation.BoundingBox.calculateBoxCenter(), boundingSize.Y, boundingSize.X);
+        
         }
 
 
@@ -83,7 +84,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         public Vector3 Position
         {
             get { return this.representation.Position; }
-            set { this.representation.Position = value; }
+            set { this.representation.Position = value; this.boundingCylinder.Position = value; }
         }
 
         public Cylinder BoundingCylinder
@@ -360,7 +361,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         {
             this.representation.move(movement * speed);
             this.Position = this.level.Terrain.getPosition(this.Position.X, this.Position.Z);
-            this.boundingCylinder.Position = this.Position;
+            
         }
 
 
@@ -477,6 +478,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             if (!this.dead)
             {
                 this.Representation.switchCrouch();
+                Vector3 boundingSize = this.Representation.BoundingBox.calculateSize() * 0.5f;
+                this.boundingCylinder = new Cylinder(this.Representation.BoundingBox.calculateBoxCenter(), boundingSize.Y, boundingSize.X);
             }
         }
     }

@@ -3,20 +3,15 @@ using Microsoft.DirectX;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.picking.selection;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
 using TgcViewer;
-using Microsoft.DirectX.DirectInput;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.commands.orders;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.text;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.panel.graphical;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.levelParser;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level.map;
 using Microsoft.DirectX.Direct3D;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.terrain.divisibleTerrain;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.renderization;
 using TgcViewer.Utils.Sound;
 using TgcViewer.Utils;
@@ -192,12 +187,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
         /// <param name="elapsedTime">Tiempo en segundos transcurridos desde el último frame</param>
         public override void render(float elapsedTime)
         {
-            if (elapsedTime > MAX_ELAPSED_TIME)
-            {
-                //GuiController.Instance.Logger.log("Ignoramos un retardo de " + elapsedTime + " s");
-                return;
-            }
-
+          
             Modifiers.Instance.update();
 
             playMusic();
