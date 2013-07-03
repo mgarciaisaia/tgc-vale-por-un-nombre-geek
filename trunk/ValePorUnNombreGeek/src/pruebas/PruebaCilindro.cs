@@ -46,7 +46,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
 
-
             CommandosUI.Instance.Camera = new TgcCameraAdapter(new StandardCamera());
 
             this.lastCylinderPos = new Vector3(0, 0, 0);
