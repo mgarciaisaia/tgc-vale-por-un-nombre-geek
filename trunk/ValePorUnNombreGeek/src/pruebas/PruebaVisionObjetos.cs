@@ -34,7 +34,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
         /// </summary>
         public override string getName()
         {
-            return "Prueba vision Objetos";
+            return "VPNG:Prueba vision Objetos";
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaVision
         /// </summary>
         public override string getDescription()
         {
-            return "Prueba de vision del soldado a traves de objetos";
+            return "ValePorUnNombreGeek. Prueba de vision del soldado a traves de objetos";
         }
 
        

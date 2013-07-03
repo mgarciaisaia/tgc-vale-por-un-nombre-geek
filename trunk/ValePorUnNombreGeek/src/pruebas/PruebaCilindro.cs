@@ -34,12 +34,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 
         public override string getName()
         {
-            return "Prueba colision cilindros";
+            return "VPNG:Prueba colision cilindros";
         }
 
         public override string getDescription()
         {
-            return "Ejemplo en Blanco. Ideal para copiar y pegar cuando queres empezar a hacer tu propio ejemplo.";
+            return "ValePorUnNombreGeek. Prueba de colisión cilindro-cilindro y cilindro-AABB";
         }
 
         public override void init()

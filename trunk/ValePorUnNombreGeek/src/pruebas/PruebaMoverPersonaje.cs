@@ -44,7 +44,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaMoverPersonaje
         /// </summary>
         public override string getName()
         {
-            return "PruebaMoverPersonaje";
+            return "VPNG:PruebaMoverPersonaje";
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.PruebaMoverPersonaje
         /// </summary>
         public override string getDescription()
         {
-            return "Mover personaje animado  Consotroles: ASDWQE";
+            return "ValePorUnNombreGeek. Mover personaje animado Controles: ASDWQE";
         }
 
         public override void init()

@@ -25,12 +25,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 
         public override string getName()
         {
-            return "Cono VertexBuffer";
+            return "VPNG:Cono";
         }
 
         public override string getDescription()
         {
-            return "Prueba de graficado de cono";
+            return "ValePorUnNombreGeek. Prueba de cono editable.";
         }
 
         Cone cono;
