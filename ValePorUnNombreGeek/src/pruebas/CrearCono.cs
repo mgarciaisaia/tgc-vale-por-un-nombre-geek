@@ -41,7 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
             //Modifiers
             GuiController.Instance.Modifiers.addFloat("Length", 0, 10, 5);
             GuiController.Instance.Modifiers.addFloat("Angle", 0, 90, 30);
-            GuiController.Instance.Modifiers.addInt("Triangles", 4, 100, 6);
+            GuiController.Instance.Modifiers.addInt("Triangles", 0, 100, 6);
 
         }
 
@@ -50,7 +50,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
         {
             cono.Length = (float)GuiController.Instance.Modifiers.getValue("Length");
             cono.Angle = FastMath.ToRad((float)GuiController.Instance.Modifiers.getValue("Angle"));
-           cono.Triangles = (int)GuiController.Instance.Modifiers.getValue("Triangles");
+            int triangles = (int)GuiController.Instance.Modifiers.getValue("Triangles");
+            if (triangles == 0)
+                triangles = 6;
+            cono.Triangles = triangles;
            
             cono.render();
 

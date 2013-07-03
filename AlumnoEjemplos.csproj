@@ -166,7 +166,6 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\cone\Cone.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\terrain\TerrainWithWater.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\CrearCono.cs" />
-    <Compile Include="ValePorUnNombreGeek\src\pruebas\escenarioRio.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaVisionObjetos.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaMoverPersonaje.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaVisionHeightmap.cs" />
