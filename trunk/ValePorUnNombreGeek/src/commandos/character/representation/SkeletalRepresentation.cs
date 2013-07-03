@@ -33,6 +33,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRe
             sounds = CommandoSound.commando();
 
             this.mesh.playAnimation("StandBy", true);
+            this.moving = false;
 
             this.Position = position;
 
