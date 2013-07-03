@@ -16,7 +16,13 @@
       <waitpoint>(-560,600)</waitpoint>
       <waitpoint>(-800,-260)</waitpoint>
   </enemy>
-    
+
+  <enemy class="soldier">
+
+    <waitpoint>(95,-1997)</waitpoint>
+    <waitpoint>(430,-593)</waitpoint>
+    <waitpoint>(-800,-260)</waitpoint>
+  </enemy>
  
   <commando picture="\\CharacterPictures\\Daniela.jpg">(-200,200)</commando>
   <commando picture="\\CharacterPictures\\Pablo.jpg">(200,200)</commando>

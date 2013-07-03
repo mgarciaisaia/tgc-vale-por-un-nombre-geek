@@ -236,6 +236,7 @@
     <Content Include="ValePorUnNombreGeek\niveles\another-level.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="ValePorUnNombreGeek\niveles\australia-level.xml" />
     <Content Include="ValePorUnNombreGeek\niveles\default-level.xml">
       <SubType>Designer</SubType>
     </Content>
