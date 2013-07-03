@@ -41,12 +41,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         #region Initizalize
         private Modifiers()
         {
-            modifierBindings = new List<Binding>();      
+            modifierBindings = new List<Binding>();
+            Updating = false;
         }
 
         public static void initialize()
         {
+            
             instance = new Modifiers();
+           
         }
 
         public static Modifiers Instance
@@ -104,14 +107,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
         /// </summary>
         public void update()
         {
+            Updating = true;
 
             foreach (Binding b in modifierBindings)
             {
+                if (!Updating) {break; }
                 object value = GuiController.Instance.Modifiers.getValue(b.varName);
                 if (!value.Equals(b.property.GetValue(b.obj, null))) b.property.SetValue(b.obj, value, null);
-
+                
             }
-
+            Updating = false;
         }
         #endregion
 
@@ -121,7 +126,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos
 
         public static void clear()
         {
-            if (instance != null) instance=null;
+            if (instance != null) { instance.Updating = false; instance = null; };
         }
+
+
+        public bool Updating { get; set; }
     }
 }
