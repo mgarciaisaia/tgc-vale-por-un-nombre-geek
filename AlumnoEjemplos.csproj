@@ -231,8 +231,6 @@
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\cancelp.png" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\emptyp.png" />
     <Content Include="AlumnoMedia\ValePorUnNombreGeek\Sprites\Barrita.jpg" />
-    <Content Include="ValePorUnNombreGeek\documentacion\com.horstmann.violet-0.21.1.jar" />
-    <Content Include="ValePorUnNombreGeek\documentacion\umlCharacter.png" />
     <Content Include="ValePorUnNombreGeek\niveles\another-level.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -240,7 +238,9 @@
     <Content Include="ValePorUnNombreGeek\niveles\default-level.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="ValePorUnNombreGeek\niveles\vacio-level.xml" />
+    <Content Include="ValePorUnNombreGeek\niveles\vacio-level.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\life.fx" />
@@ -248,10 +248,6 @@
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\picture.fx" />
     <None Include="AlumnoMedia\ValePorUnNombreGeek\Shaders\shaders.fx" />
     <None Include="AlumnoMedia\ValePorUnNombreGeek\SkeletalAnimations\BasicHuman\Animations\BasicHuman_Die.max" />
-    <None Include="ValePorUnNombreGeek\documentacion\Decisiones de diseño.rtf" />
-    <None Include="ValePorUnNombreGeek\documentacion\diagrama_de_clases.class.violet" />
-    <None Include="ValePorUnNombreGeek\documentacion\soldier_state_diagram.state.violet" />
-    <None Include="ValePorUnNombreGeek\documentacion\umlCharacter.class.violet" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AlumnoMedia\ValePorUnNombreGeek\Sounds\" />
