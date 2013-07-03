@@ -20,7 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.soldier.sta
             {
                 this.soldier.setPositionTarget(commando.Position); //pablo
                 commando.getShot(elapsedTime * 50);
-                if (GeneralMethods.isCloseTo(this.soldier.Position, commando.Position, this.soldier.Radius * 2.5f))
+                if (GeneralMethods.isCloseTo(this.soldier.Position, commando.Position, (this.soldier.Radius+commando.Radius)*1.5f))
                     this.soldier.standBy();
                 else
                     this.soldier.goToTarget(elapsedTime);
