@@ -114,9 +114,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             defaultRenderer = level.Renderer;
             shadowRenderer = new ShadowRenderer();
 
-            setAndBindModifiers();
-
-
+    
             //Movimiento por picking
             picking = new MovementPicking(level.Terrain);
 
@@ -135,6 +133,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
 
             foreach (Commando c in level.Commandos)
                 controlPanel.addSelectionButton(c, selection);
+
+            setAndBindModifiers();
+
+
         }
 
         private void setAndBindModifiers()
