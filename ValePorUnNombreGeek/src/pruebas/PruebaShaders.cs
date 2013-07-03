@@ -29,7 +29,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 
         public override string getName()
         {
-            return "VPNG:PruebaShaders";
+            return "VPUNG:PruebaShaders";
         }
 
         public override string getDescription()

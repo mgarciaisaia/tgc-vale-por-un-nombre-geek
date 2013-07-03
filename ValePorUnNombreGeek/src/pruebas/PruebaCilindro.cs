@@ -34,7 +34,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
 
         public override string getName()
         {
-            return "VPNG:Prueba colision cilindros";
+            return "VPUNG:Prueba colision cilindros";
         }
 
         public override string getDescription()

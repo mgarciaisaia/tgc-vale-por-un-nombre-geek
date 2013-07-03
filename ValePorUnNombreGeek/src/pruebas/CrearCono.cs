@@ -25,7 +25,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 
         public override string getName()
         {
-            return "VPNG:Cono";
+            return "VPUNG:Cono";
         }
 
         public override string getDescription()
