@@ -29,12 +29,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas
 
         public override string getName()
         {
-            return "PruebaShaders";
+            return "VPNG:PruebaShaders";
         }
 
         public override string getDescription()
         {
-            return "Pruebas con HLSL.";
+            return "ValePorUnNombreGeek. Pruebas con HLSL.";
         }
 
         SkeletalRepresentation skeletal;

@@ -25,12 +25,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.pruebas
 
         public override string getName()
         {
-            return "PruebasRendimiento";
+            return "VPNG:PruebasRendimiento";
         }
 
         public override string getDescription()
         {
-            return "Ejemplo en Blanco. Ideal para copiar y pegar cuando queres empezar a hacer tu propio ejemplo.";
+            return "ValePorUnNombreGeek. Comparacion de FastMath.Pow2 con valor*valor.";
         }
 
         public override void init()
