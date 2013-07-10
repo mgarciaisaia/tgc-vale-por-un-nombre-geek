@@ -216,7 +216,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek
             level.Map.Technique = "MAPA_VIEJO";
             level.Map.render();
 
-            GuiController.Instance.Text3d.drawText("FPS: " + HighResolutionTimer.Instance.FramesPerSecond, 0, 0, Color.Yellow);
+            GuiController.Instance.Text3d.drawText(HighResolutionTimer.Instance.FramesPerSecond + " FPS", 0, 0, Color.Violet);
           
         
           
