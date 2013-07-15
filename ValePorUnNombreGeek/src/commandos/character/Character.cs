@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.level;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;

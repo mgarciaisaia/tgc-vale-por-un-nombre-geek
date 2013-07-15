@@ -8,7 +8,7 @@ using Microsoft.DirectX.Direct3D;
 using TgcViewer.Utils.TgcGeometry;
 using TgcViewer;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 {
     class Cylinder
     {
@@ -125,7 +125,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         /// </summary>
         private void updateBordersDraw()
         {
-            Vector3 cameraSeen = CommandosUI.Instance.Camera.getPosition() - this.center;
+            Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center;
             Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, this.halfHeight);
             transversalALaCamara.Normalize();
             transversalALaCamara *= this.radius;
@@ -145,7 +145,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
 
         public void render()
         {
-            Device d3dDevice = CommandosUI.Instance.d3dDevice;
+            Device d3dDevice = GuiController.Instance.D3dDevice;
             this.updateBordersDraw();
             d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, endCapsVertex.Length / 2, endCapsVertex);
             d3dDevice.DrawUserPrimitives(PrimitiveType.LineList, bordersVertex.Length / 2, bordersVertex);
@@ -167,7 +167,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         public bool thereIsCollisionCyCy(Cylinder collider, out Vector3 n)
         {
             Vector3 distance = collider.Center - this.Center;
-            if (GeneralMethods.optimizedPow2(distance.X) + GeneralMethods.optimizedPow2(distance.Z) <= GeneralMethods.optimizedPow2(this.radius + collider.radius))
+            if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) <= FastMath.Pow2(this.radius + collider.radius))
             {
                 n = Vector3.Cross(distance, this.halfHeight);
                 n = Vector3.Cross(n, this.halfHeight);
@@ -205,8 +205,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             if (absCenterToCenter.Z <= boxDimensions.Z) goto calculateNormal;
 
             //vemos si toca una esquina
-            float cornerDistance = GeneralMethods.optimizedPow2(absCenterToCenter.X - boxDimensions.X) + GeneralMethods.optimizedPow2(absCenterToCenter.Z - boxDimensions.Z);
-            if (cornerDistance <= GeneralMethods.optimizedPow2(this.radius)) goto calculateNormal;
+            float cornerDistance = FastMath.Pow2(absCenterToCenter.X - boxDimensions.X) + FastMath.Pow2(absCenterToCenter.Z - boxDimensions.Z);
+            if (cornerDistance <= FastMath.Pow2(this.radius)) goto calculateNormal;
 
             return false;
 
@@ -263,7 +263,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
             
             //Verificamos que el punto pertenezca al cilindro a lo ancho
             Vector3 distance = planeIntersection - this.Center;
-            if (GeneralMethods.optimizedPow2(distance.X) + GeneralMethods.optimizedPow2(distance.Z) > GeneralMethods.optimizedPow2(this.radius)) return false;
+            if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) > FastMath.Pow2(this.radius)) return false;
 
             //Verificamos que el punto pertenezca al cilindro a lo alto
             if (FastMath.Abs(planeIntersection.Y - this.center.Y) > this.HalfHeight) return false;
@@ -290,7 +290,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
 
             float y = distance.Y;
             distance.Y = 0;
-            if (GeneralMethods.optimizedPow2(distance.X) + GeneralMethods.optimizedPow2(distance.Z) > GeneralMethods.optimizedPow2(this.radius))
+            if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) > FastMath.Pow2(this.radius))
                 ret = Vector3.Normalize(distance) * this.radius;
             else
                 ret = distance;
@@ -310,13 +310,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision
         /// </summary>
         public Rectangle projectToScreen()
         {
-            Device device = CommandosUI.Instance.d3dDevice;
+            Device device = GuiController.Instance.D3dDevice;
             Viewport viewport = device.Viewport;
             Matrix world = device.Transform.World;
             Matrix view = device.Transform.View;
             Matrix proj = device.Transform.Projection;
 
-            Vector3 cameraSeen = CommandosUI.Instance.Camera.getPosition() - this.center;
+            Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center;
             Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, this.halfHeight);
             transversalALaCamara.Normalize();
             transversalALaCamara *= this.radius;
