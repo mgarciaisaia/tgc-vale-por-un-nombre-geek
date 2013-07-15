@@ -2,7 +2,7 @@
 using Microsoft.DirectX;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX.Direct3D;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder;
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation
 {
     interface ICharacterRepresentation

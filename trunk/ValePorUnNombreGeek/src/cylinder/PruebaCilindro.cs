@@ -9,11 +9,10 @@ using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.camera;
 using TgcViewer.Utils.TgcGeometry;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos;
 using TgcViewer.Utils.Input;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.pruebas.cilindro
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 {
     /// <summary>
     /// Ejemplo en Blanco. Ideal para copiar y pegar cuando queres empezar a hacer tu propio ejemplo.

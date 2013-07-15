@@ -7,7 +7,7 @@ using Microsoft.DirectX;
 using TgcViewer;
 using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX.Direct3D;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.collision;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder;
 using TgcViewer.Utils.Sound;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.representation.sound;
 

@@ -1,6 +1,6 @@
 ﻿using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
-using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.vision;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character.characterRepresentation;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.target;
 

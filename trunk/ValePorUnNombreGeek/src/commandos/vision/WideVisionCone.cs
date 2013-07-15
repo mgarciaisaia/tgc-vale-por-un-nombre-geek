@@ -3,7 +3,7 @@ using TgcViewer.Utils.TgcGeometry;
 using Microsoft.DirectX;
 using System.Drawing;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.vision
 {
     class WideVisionCone:VisionCone
     {

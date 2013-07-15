@@ -7,8 +7,9 @@ using System;
 using TgcViewer.Utils.TgcSceneLoader;
 using System.Collections.Generic;
 using AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.objects;
+using AlumnoEjemplos.ValePorUnNombreGeek.src.cone;
 
-namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.cone
+namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.vision
 {
     class VisionCone : Cone
     {
