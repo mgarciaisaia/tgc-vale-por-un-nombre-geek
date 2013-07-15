@@ -1,0 +1,30 @@
+﻿<!--Formato de un archivo de nivel-->
+<level>
+
+   
+  <!--El terrain es el unico item obligatorio del level.-->
+  <terrain
+   heightmap="pathHeightmap"
+   texture="pathTextura"
+   scaleXZ="float"
+   scaleY="float"
+   format="(3,3)"
+    ></terrain>
+  
+  <commando picture="pathDelAvatar">(X,Z)</commando>
+ 
+  <enemy>
+    <!--La clase soldier tiene de 1 a N waitpoints-->
+    <waitpoint>(X,Z)</waitpoint>
+    <waitpoint>(X,Z)</waitpoint>
+    <waitpoint>(X,Z)</waitpoint>
+  </enemy>
+  
+  
+  <!--class es opcional. La default es meshObject. Disponibles: "tree", y "wall", "meshObject"-->
+  <!--scale es opcional, default (1,1,1). En wall se llama size y es obligatorio.-->
+  <!--rotation es opcional, default (0,0,0). Las paredes no se rotan.-->
+  <levelObject mesh="pathDelTgcScene.xml" scale="(sX,sY,sZ)" rotation="(radian, radian, radian)">(X,Z)</levelObject>
+  <levelObject scale="(sX,sY,sZ)" rotation="(radian, radian, radian)" class="tree">(X,Z)</levelObject>
+
+</level>  
