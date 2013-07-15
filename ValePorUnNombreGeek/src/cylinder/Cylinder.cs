@@ -162,6 +162,26 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         #region Collision
 
         /// <summary>
+        /// Indica si existe colision con una esfera. En tal caso devuelve la normal de colision.
+        /// </summary>
+        public bool thereIsCollisionCySp(TgcBoundingSphere collider, out Vector3 n)
+        {
+            Vector3 distance = collider.Center - this.Center;
+            if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) <= FastMath.Pow2(this.radius + collider.Radius))
+            {
+                n = Vector3.Cross(distance, this.halfHeight);
+                n = Vector3.Cross(n, this.halfHeight);
+                n.Normalize();
+                return true;
+            }
+            else
+            {
+                n = Vector3.Empty;
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Indica si existe colision con otro cilindro. En tal caso devuelve la normal de colision.
         /// </summary>
         public bool thereIsCollisionCyCy(Cylinder collider, out Vector3 n)

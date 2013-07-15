@@ -19,12 +19,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
     /// </summary>
     public class PruebaCilindro : TgcExample
     {
-        Cylinder myCylinder;
-        Cylinder cylinder;
-        TgcBoundingBox boundingBox;
-        Vector3 lastCylinderPos;
+        Cylinder userCylinder;
+        //Vector3 lastPos;
 
-        TgcArrow normal;
+        TgcBoundingSphere staticSphere;
+        Cylinder staticCylinder;
+        TgcBoundingBox staticAABB;
+
+        TgcArrow colisionNormal;
+
 
         public override string getCategory()
         {
@@ -38,7 +41,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
         public override string getDescription()
         {
-            return "ValePorUnNombreGeek. Prueba de colisión cilindro-cilindro y cilindro-AABB";
+            return "ValePorUnNombreGeek. Prueba de colisión cilindro-esfera, cilindro-cilindro y cilindro-AABB. Usar las flechitas del teclado para moverse.";
         }
 
         public override void init()
@@ -47,76 +50,77 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
             CommandosUI.Instance.Camera = new TgcCameraAdapter(new StandardCamera());
 
-            this.lastCylinderPos = new Vector3(0, 0, 0);
-            GuiController.Instance.Modifiers.addVertex3f("posicion", new Vector3(-200, -50, -200), new Vector3(200, 50, 200), this.lastCylinderPos);
+            //this.lastPos = new Vector3(0, 0, 0);
+            //GuiController.Instance.Modifiers.addVertex3f("posicion", new Vector3(-200, 0, -200), new Vector3(200, 0, 200), this.lastPos);
 
-            this.myCylinder = new Cylinder(this.lastCylinderPos, 20, 10, Color.Yellow);
+            this.userCylinder = new Cylinder(CommandosUI.Instance.Camera.getLookAt(), 40, 20, Color.Yellow);
 
-            this.cylinder = new Cylinder(new Vector3(-100, 0, 0), 40, 40, Color.Yellow);
-            this.boundingBox = new TgcBoundingBox(new Vector3(0, 0, -120), new Vector3(80, 40, -80));
+            this.staticSphere = new TgcBoundingSphere(new Vector3(200, 0, -200), 40);
+            this.staticCylinder = new Cylinder(new Vector3(-100, 0, 0), 40, 40, Color.Yellow);
+            this.staticAABB = new TgcBoundingBox(new Vector3(0, -40, -200), new Vector3(80, 40, -120));
 
-            GuiController.Instance.Modifiers.addBoolean("closestPoint", "closestPoint", false);
+            //GuiController.Instance.Modifiers.addBoolean("closestPoint", "closestPoint", false);
 
-            this.normal = new TgcArrow();
-            this.normal.Thickness = 2f;
-            this.normal.HeadSize = new Vector2(4f, 4f);
-            this.normal.Enabled = true;
+            this.colisionNormal = new TgcArrow();
+            this.colisionNormal.Thickness = 2f;
+            this.colisionNormal.HeadSize = new Vector2(4f, 4f);
+            this.colisionNormal.Enabled = true;
         }
 
 
         public override void render(float elapsedTime)
         {
-            Device d3dDevice = GuiController.Instance.D3dDevice;
+            Device d3dDevice = CommandosUI.Instance.d3dDevice;
 
-            if (this.thereIsCollision()) this.myCylinder.Color = Color.DarkOliveGreen;
-            else this.myCylinder.Color = Color.Yellow;
+            Vector3 cameraPos = CommandosUI.Instance.Camera.getLookAt();
+            this.userCylinder.Position = new Vector3(cameraPos.X, -40, cameraPos.Z);
 
-            Vector3 newCylinderPos = (Vector3)GuiController.Instance.Modifiers.getValue("posicion");
-            if(this.lastCylinderPos != newCylinderPos)
-            {
-                this.lastCylinderPos = newCylinderPos;
-                this.myCylinder.Position = newCylinderPos;
-            }
+            if (this.thereIsCollision()) this.userCylinder.Color = Color.DarkOliveGreen;
+            else this.userCylinder.Color = Color.Yellow;
 
-            this.myCylinder.render();
-            this.cylinder.render();
-            this.boundingBox.render();
+            //Vector3 newCylinderPos = (Vector3)GuiController.Instance.Modifiers.getValue("posicion");
+            //if(this.lastPos != newCylinderPos)
+            //{
+            //    this.lastPos = newCylinderPos;
+            //    this.userCylinder.Position = newCylinderPos;
+            //}
+
+            this.userCylinder.render();
+
+            this.staticSphere.render();
+            this.staticCylinder.render();
+            this.staticAABB.render();
         }
 
         public override void close()
         {
-            this.myCylinder.dispose();
-            this.cylinder.dispose();
-            this.boundingBox.dispose();
-            this.normal.dispose();
+            this.userCylinder.dispose();
+            this.staticSphere.dispose();
+            this.staticCylinder.dispose();
+            this.staticAABB.dispose();
+            this.colisionNormal.dispose();
         }
 
         private bool thereIsCollision()
         {
-            if ((bool)GuiController.Instance.Modifiers.getValue("closestPoint"))
-            {
-                this.normal.PEnd = myCylinder.closestCyPointToPoint(new Vector3(0, 0, 0));
-                this.normal.PStart = new Vector3(0, 0, 0);
-                this.normal.updateValues();
-                this.normal.render();
-                return false;
-            }
+            //if ((bool)GuiController.Instance.Modifiers.getValue("closestPoint"))
+            //{
+            //    this.colisionNormal.PEnd = userCylinder.closestCyPointToPoint(new Vector3(0, 0, 0));
+            //    this.colisionNormal.PStart = new Vector3(0, 0, 0);
+            //    this.colisionNormal.updateValues();
+            //    this.colisionNormal.render();
+            //    return false;
+            //}
 
             Vector3 n;
-            if (myCylinder.thereIsCollisionCyCy(this.cylinder, out n))
+            if (userCylinder.thereIsCollisionCySp(this.staticSphere, out n) ||
+                userCylinder.thereIsCollisionCyCy(this.staticCylinder, out n) ||
+                userCylinder.thereIsCollisionCyBB(this.staticAABB, out n))
             {
-                this.normal.PStart = this.myCylinder.Position;
-                this.normal.PEnd = n * 50 + this.myCylinder.Position;
-                this.normal.updateValues();
-                this.normal.render();
-                return true;
-            }
-            if (myCylinder.thereIsCollisionCyBB(this.boundingBox, out n))
-            {
-                this.normal.PStart = this.myCylinder.Position;
-                this.normal.PEnd = n * 50 + this.myCylinder.Position;
-                this.normal.updateValues();
-                this.normal.render();
+                this.colisionNormal.PStart = this.userCylinder.Position;
+                this.colisionNormal.PEnd = n * 50 + this.userCylinder.Position;
+                this.colisionNormal.updateValues();
+                this.colisionNormal.render();
                 return true;
             }
             return false;
