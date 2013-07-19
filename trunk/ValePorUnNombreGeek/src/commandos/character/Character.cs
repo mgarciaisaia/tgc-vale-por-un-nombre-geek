@@ -20,7 +20,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
         protected Level level;
         protected string technique;
         protected TgcBox marcaDePicking;
-        private Cylinder boundingCylinder;
+        private BoundingCylinder boundingCylinder;
         private static bool renderCylinder;
         public static bool RenderCylinder { get { return renderCylinder; } set { renderCylinder = value; } }
         protected Life life;
@@ -54,7 +54,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             this.speed = DEFAULT_SPEED;
             
             Vector3 boundingSize = this.Representation.BoundingBox.calculateSize() * 0.5f;
-            this.boundingCylinder = new Cylinder(this.Representation.BoundingBox.calculateBoxCenter(), boundingSize.Y, boundingSize.X);
+            this.boundingCylinder = new BoundingCylinder(this.Representation.BoundingBox.calculateBoxCenter(), boundingSize.Y, boundingSize.X);
         
         }
 
@@ -87,7 +87,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             set { this.representation.Position = value; this.boundingCylinder.Position = value; }
         }
 
-        public Cylinder BoundingCylinder
+        public BoundingCylinder BoundingCylinder
         {
             get { return this.boundingCylinder; }
         }
@@ -326,7 +326,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             return ch.collidesWith(this.boundingCylinder, out n);
         }
 
-        public bool collidesWith(Cylinder cyl, out Vector3 n)
+        public bool collidesWith(BoundingCylinder cyl, out Vector3 n)
         {
             return this.boundingCylinder.thereIsCollisionCyCy(cyl, out n);
         }
@@ -479,7 +479,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.commandos.character
             {
                 this.Representation.switchCrouch();
                 Vector3 boundingSize = this.Representation.BoundingBox.calculateSize() * 0.5f;
-                this.boundingCylinder = new Cylinder(this.Representation.BoundingBox.calculateBoxCenter(), boundingSize.Y, boundingSize.X);
+                this.boundingCylinder = new BoundingCylinder(this.Representation.BoundingBox.calculateBoxCenter(), boundingSize.Y, boundingSize.X);
             }
         }
     }
