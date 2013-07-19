@@ -58,6 +58,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             get { return this.center; }
             set
             {
+                if (value == this.center) return;
                 this.center = value;
                 this.updateDraw();
             }
