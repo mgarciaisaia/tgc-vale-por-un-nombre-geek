@@ -153,6 +153,8 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\Culling.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\GridCell.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\optimization\RegularGrid.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\cylinder\Cylinder.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\cylinder\PruebaTgcCylinder.cs" />
     <Compile Include="ValePorUnNombreGeek\src\cylinder\PruebaCilindro.cs" />
     <Compile Include="ValePorUnNombreGeek\src\pruebas\PruebaShaders.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\EjemploAlumno.cs" />
