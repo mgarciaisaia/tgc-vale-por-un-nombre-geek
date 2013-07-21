@@ -19,11 +19,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
     /// </summary>
     public class PruebaCilindro : TgcExample
     {
-        BoundingCylinder userCylinder;
+        CommandosCylinder userCylinder;
         //Vector3 lastPos;
 
         TgcBoundingSphere staticSphere;
-        BoundingCylinder staticCylinder;
+        CommandosCylinder staticCylinder;
         TgcBoundingBox staticAABB;
 
         TgcArrow colisionNormal;
@@ -53,10 +53,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             //this.lastPos = new Vector3(0, 0, 0);
             //GuiController.Instance.Modifiers.addVertex3f("posicion", new Vector3(-200, 0, -200), new Vector3(200, 0, 200), this.lastPos);
 
-            this.userCylinder = new BoundingCylinder(CommandosUI.Instance.Camera.getLookAt(), 40, 20, Color.Yellow);
+            this.userCylinder = new CommandosCylinder(CommandosUI.Instance.Camera.getLookAt(), 40, 20, Color.Yellow);
 
             this.staticSphere = new TgcBoundingSphere(new Vector3(200, 0, -200), 40);
-            this.staticCylinder = new BoundingCylinder(new Vector3(-100, 0, 0), 40, 40, Color.Yellow);
+            this.staticCylinder = new CommandosCylinder(new Vector3(-100, 0, 0), 40, 40, Color.Yellow);
             this.staticAABB = new TgcBoundingBox(new Vector3(0, -40, -200), new Vector3(80, 40, -120));
 
             //GuiController.Instance.Modifiers.addBoolean("closestPoint", "closestPoint", false);
