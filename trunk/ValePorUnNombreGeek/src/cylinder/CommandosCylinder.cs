@@ -10,7 +10,7 @@ using TgcViewer;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 {
-    class BoundingCylinder
+    class CommandosCylinder
     {
         private Vector3 center;
         private float radius;
@@ -30,13 +30,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
          */
 
 
-        public BoundingCylinder(Vector3 _center, float _halfHeight, float _radius)
+        public CommandosCylinder(Vector3 _center, float _halfHeight, float _radius)
             : this(_center, _halfHeight, _radius, Color.Yellow)
         {
             //nothing to do
         }
 
-        public BoundingCylinder(Vector3 _center, float _halfHeight, float _radius, Color _color)
+        public CommandosCylinder(Vector3 _center, float _halfHeight, float _radius, Color _color)
         {
             this.radius = _radius;
             this.halfHeight = new Vector3(0, _halfHeight, 0);
@@ -197,7 +197,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         /// <summary>
         /// Indica si existe colision con otro cilindro. En tal caso devuelve la normal de colision.
         /// </summary>
-        public bool thereIsCollisionCyCy(BoundingCylinder collider, out Vector3 n)
+        public bool thereIsCollisionCyCy(CommandosCylinder collider, out Vector3 n)
         {
             Vector3 distance = collider.Center - this.Center;
             if (FastMath.Pow2(distance.X) + FastMath.Pow2(distance.Z) <= FastMath.Pow2(this.radius + collider.radius))

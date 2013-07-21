@@ -13,7 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 {
     class Cylinder : IRenderObject, ITransformObject
     {
-        private const int END_CAPS_RESOLUTION = 45;
+        private const int END_CAPS_RESOLUTION = 6000;
 
         private Vector3 center;
         private Vector3 halfHeight;
@@ -34,7 +34,8 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             this.radius = _radius;
             this.halfHeight = _halfHeight;
 
-            this.color = Color.Red.ToArgb();
+            //this.color = Color.Red.ToArgb();
+            this.color = Color.FromArgb(150, Color.Red).ToArgb();
             this.transform = Matrix.Identity;
 
             this.initialize();
@@ -49,7 +50,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             //cara lateral: un vertice por cada vertice de cada tapa, mas dos para cerrarla
             this.sideTrianglesVertex = new CustomVertex.PositionColored[2 * capsResolution + 2];
 
-            //tapas: dos vertices por cada vertice de cada tapa, mas uno central
+            //tapas: dos vertices por cada vertice de cada tapa, mas uno en el centro
             this.capsTrianglesVertex = new CustomVertex.PositionColored[capsResolution * 3 * 2];
 
             this.updateDraw();
@@ -68,11 +69,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
             for (int i = 0; i < capsResolution; i++)
             {
-                int tmpColor = i * 255 / capsResolution; //TODO quitar esto
-
                 //vertices de las tapas
-                this.topCapsVertex[i] = new CustomVertex.PositionColored(this.center + this.halfHeight + n, tmpColor);
-                this.bottomCapsVertex[i] = new CustomVertex.PositionColored(this.center - this.halfHeight + n, tmpColor);
+                this.topCapsVertex[i] = new CustomVertex.PositionColored(this.center + this.halfHeight + n, this.color);
+                this.bottomCapsVertex[i] = new CustomVertex.PositionColored(this.center - this.halfHeight + n, this.color);
 
                 //triangulos de la cara lateral (strip)
                 this.sideTrianglesVertex[2 * i] = this.topCapsVertex[i];
@@ -91,23 +90,38 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
                 n.TransformNormal(rotationMatrix);
             }
 
+            //cerramos la cara lateral
             this.sideTrianglesVertex[2 * capsResolution] = this.topCapsVertex[0];
             this.sideTrianglesVertex[2 * capsResolution + 1] = this.bottomCapsVertex[0];
 
+            //cerramos la tapa superior
             this.capsTrianglesVertex[0] = this.topCapsVertex[capsResolution - 1];
+
+            //Cerramos la tapa inferior
             this.capsTrianglesVertex[3 * capsResolution] = this.bottomCapsVertex[capsResolution - 1];
         }
 
         public void render()
         {
             Device d3dDevice = GuiController.Instance.D3dDevice;
+
+            if (this.AlphaBlendEnable)
+            {
+                d3dDevice.RenderState.AlphaBlendEnable = true;
+                d3dDevice.RenderState.AlphaTestEnable = true;
+            }
+            //TODO renderizar primero la tapa mas cercana a la camara
+
             int capsResolution = this.topCapsVertex.Length;
 
-            d3dDevice.DrawUserPrimitives(PrimitiveType.LineStrip, capsResolution - 1, this.topCapsVertex);
-            d3dDevice.DrawUserPrimitives(PrimitiveType.LineStrip, capsResolution - 1, this.bottomCapsVertex);
+            //d3dDevice.DrawUserPrimitives(PrimitiveType.LineStrip, capsResolution - 1, this.topCapsVertex);
+            //d3dDevice.DrawUserPrimitives(PrimitiveType.LineStrip, capsResolution - 1, this.bottomCapsVertex);
 
             d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2 * capsResolution, this.sideTrianglesVertex);
             d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleList, 2 * capsResolution, this.capsTrianglesVertex);
+
+            d3dDevice.RenderState.AlphaTestEnable = false;
+            d3dDevice.RenderState.AlphaBlendEnable = false;
         }
 
         public void dispose()
@@ -118,25 +132,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             this.capsTrianglesVertex = null;
         }
 
-        public bool AlphaBlendEnable { get; set; } //TODO
+        public bool AlphaBlendEnable { get; set; }
+
+        public bool AutoTransformEnable { get; set; }
 
         public Matrix Transform
         {
             get
             {
                 return this.transform;
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public bool AutoTransformEnable
-        {
-            get
-            {
-                throw new NotImplementedException();
             }
             set
             {
