@@ -13,7 +13,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 {
     class Cylinder : IRenderObject, ITransformObject
     {
-        private const int END_CAPS_RESOLUTION = 6000;
+        private const int END_CAPS_RESOLUTION = 30;
 
         private Vector3 center;
         private Vector3 halfHeight;
@@ -22,11 +22,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
         private Matrix transform;
 
-        private CustomVertex.PositionColored[] topCapsVertex; //line strip
-        private CustomVertex.PositionColored[] bottomCapsVertex; //line strip
+        private BoundingCylinder boundingCylinder;
 
-        private CustomVertex.PositionColored[] sideTrianglesVertex; //triangle strip
-        private CustomVertex.PositionColored[] capsTrianglesVertex; //triangle list
+        private CustomVertex.PositionColored[] topCapsVertices; //line strip
+        private CustomVertex.PositionColored[] bottomCapsVertices; //line strip
+
+        private CustomVertex.PositionColored[] sideTrianglesVertices; //triangle strip
+        private CustomVertex.PositionColored[] capsTrianglesVertices; //triangle list
 
         public Cylinder(Vector3 _center, float _radius, Vector3 _halfHeight)
         {
@@ -38,20 +40,22 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             this.color = Color.FromArgb(150, Color.Red).ToArgb();
             this.transform = Matrix.Identity;
 
+            this.boundingCylinder = new BoundingCylinder(this.center, this.radius, this.halfHeight);
+
             this.initialize();
         }
 
         private void initialize()
         {
             int capsResolution = END_CAPS_RESOLUTION;
-            this.topCapsVertex = new CustomVertex.PositionColored[capsResolution];
-            this.bottomCapsVertex = new CustomVertex.PositionColored[capsResolution];
+            this.topCapsVertices = new CustomVertex.PositionColored[capsResolution];
+            this.bottomCapsVertices = new CustomVertex.PositionColored[capsResolution];
 
             //cara lateral: un vertice por cada vertice de cada tapa, mas dos para cerrarla
-            this.sideTrianglesVertex = new CustomVertex.PositionColored[2 * capsResolution + 2];
+            this.sideTrianglesVertices = new CustomVertex.PositionColored[2 * capsResolution + 2];
 
             //tapas: dos vertices por cada vertice de cada tapa, mas uno en el centro
-            this.capsTrianglesVertex = new CustomVertex.PositionColored[capsResolution * 3 * 2];
+            this.capsTrianglesVertices = new CustomVertex.PositionColored[capsResolution * 3 * 2];
 
             this.updateDraw();
         }
@@ -62,7 +66,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             n.Normalize();
             n *= this.radius;
 
-            int capsResolution = this.topCapsVertex.Length;
+            int capsResolution = this.topCapsVertices.Length;
 
             float angleStep = FastMath.TWO_PI / (float)capsResolution;
             Matrix rotationMatrix = Matrix.RotationAxis(this.halfHeight, angleStep);
@@ -70,35 +74,35 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             for (int i = 0; i < capsResolution; i++)
             {
                 //vertices de las tapas
-                this.topCapsVertex[i] = new CustomVertex.PositionColored(this.center + this.halfHeight + n, this.color);
-                this.bottomCapsVertex[i] = new CustomVertex.PositionColored(this.center - this.halfHeight + n, this.color);
+                this.topCapsVertices[i] = new CustomVertex.PositionColored(this.center + this.halfHeight + n, this.color);
+                this.bottomCapsVertices[i] = new CustomVertex.PositionColored(this.center - this.halfHeight + n, this.color);
 
                 //triangulos de la cara lateral (strip)
-                this.sideTrianglesVertex[2 * i] = this.topCapsVertex[i];
-                this.sideTrianglesVertex[2 * i + 1] = this.bottomCapsVertex[i];
+                this.sideTrianglesVertices[2 * i] = this.topCapsVertices[i];
+                this.sideTrianglesVertices[2 * i + 1] = this.bottomCapsVertices[i];
 
                 //triangulos de la tapa superior (list)
-                if (i > 0) this.capsTrianglesVertex[3 * i] = this.topCapsVertex[i - 1];
-                this.capsTrianglesVertex[3 * i + 1] = this.topCapsVertex[i];
-                this.capsTrianglesVertex[3 * i + 2] = new CustomVertex.PositionColored(this.center + this.halfHeight, Color.White.ToArgb());
+                if (i > 0) this.capsTrianglesVertices[3 * i] = this.topCapsVertices[i - 1];
+                this.capsTrianglesVertices[3 * i + 1] = this.topCapsVertices[i];
+                this.capsTrianglesVertices[3 * i + 2] = new CustomVertex.PositionColored(this.center + this.halfHeight, Color.White.ToArgb());
 
                 //triangulos de la tapa inferior (list)
-                if (i > 0) this.capsTrianglesVertex[3 * i + 3 * capsResolution] = this.bottomCapsVertex[i - 1];
-                this.capsTrianglesVertex[3 * i + 1 + 3 * capsResolution] = this.bottomCapsVertex[i];
-                this.capsTrianglesVertex[3 * i + 2 + 3 * capsResolution] = new CustomVertex.PositionColored(this.center - this.halfHeight, Color.White.ToArgb());
+                if (i > 0) this.capsTrianglesVertices[3 * i + 3 * capsResolution] = this.bottomCapsVertices[i - 1];
+                this.capsTrianglesVertices[3 * i + 1 + 3 * capsResolution] = this.bottomCapsVertices[i];
+                this.capsTrianglesVertices[3 * i + 2 + 3 * capsResolution] = new CustomVertex.PositionColored(this.center - this.halfHeight, Color.White.ToArgb());
 
                 n.TransformNormal(rotationMatrix);
             }
 
             //cerramos la cara lateral
-            this.sideTrianglesVertex[2 * capsResolution] = this.topCapsVertex[0];
-            this.sideTrianglesVertex[2 * capsResolution + 1] = this.bottomCapsVertex[0];
+            this.sideTrianglesVertices[2 * capsResolution] = this.topCapsVertices[0];
+            this.sideTrianglesVertices[2 * capsResolution + 1] = this.bottomCapsVertices[0];
 
             //cerramos la tapa superior
-            this.capsTrianglesVertex[0] = this.topCapsVertex[capsResolution - 1];
+            this.capsTrianglesVertices[0] = this.topCapsVertices[capsResolution - 1];
 
             //Cerramos la tapa inferior
-            this.capsTrianglesVertex[3 * capsResolution] = this.bottomCapsVertex[capsResolution - 1];
+            this.capsTrianglesVertices[3 * capsResolution] = this.bottomCapsVertices[capsResolution - 1];
         }
 
         public void render()
@@ -110,15 +114,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
                 d3dDevice.RenderState.AlphaBlendEnable = true;
                 d3dDevice.RenderState.AlphaTestEnable = true;
             }
-            //TODO renderizar primero la tapa mas cercana a la camara
 
-            int capsResolution = this.topCapsVertex.Length;
+            int capsResolution = this.topCapsVertices.Length;
 
-            //d3dDevice.DrawUserPrimitives(PrimitiveType.LineStrip, capsResolution - 1, this.topCapsVertex);
-            //d3dDevice.DrawUserPrimitives(PrimitiveType.LineStrip, capsResolution - 1, this.bottomCapsVertex);
-
-            d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2 * capsResolution, this.sideTrianglesVertex);
-            d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleList, 2 * capsResolution, this.capsTrianglesVertex);
+            d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2 * capsResolution, this.sideTrianglesVertices);
+            d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleList, 2 * capsResolution, this.capsTrianglesVertices);
 
             d3dDevice.RenderState.AlphaTestEnable = false;
             d3dDevice.RenderState.AlphaBlendEnable = false;
@@ -126,11 +126,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
         public void dispose()
         {
-            this.topCapsVertex = null;
-            this.bottomCapsVertex = null;
-            this.sideTrianglesVertex = null;
-            this.capsTrianglesVertex = null;
+            this.topCapsVertices = null;
+            this.bottomCapsVertices = null;
+            this.sideTrianglesVertices = null;
+            this.capsTrianglesVertices = null;
         }
+
+        public BoundingCylinder BoundingCylinder { get { return this.boundingCylinder; } }
 
         public bool AlphaBlendEnable { get; set; }
 
