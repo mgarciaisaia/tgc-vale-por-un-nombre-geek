@@ -37,13 +37,17 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             cylinder = new Cylinder(new Vector3(0, 0, 0), 5, new Vector3(5, 5, 0));
             //Device d3dDevice = GuiController.Instance.D3dDevice;
             cylinder.AlphaBlendEnable = true;
+
+            GuiController.Instance.Modifiers.addBoolean("showBC", "showBC", false);
         }
 
 
         public override void render(float elapsedTime)
         {
-            //Device d3dDevice = GuiController.Instance.D3dDevice;
-            cylinder.render();
+            if ((bool)GuiController.Instance.Modifiers.getValue("showBC"))
+                cylinder.BoundingCylinder.render();
+            else
+                cylinder.render();
         }
 
         public override void close()

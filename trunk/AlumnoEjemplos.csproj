@@ -106,6 +106,7 @@
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\representation\SkeletalRepresentation.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\Commando.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\character\soldier\states\Chasing.cs" />
+    <Compile Include="ValePorUnNombreGeek\src\cylinder\BoundingCylinder.cs" />
     <Compile Include="ValePorUnNombreGeek\src\cylinder\CommandosCylinder.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\parser\XMLCommando.cs" />
     <Compile Include="ValePorUnNombreGeek\src\commandos\level\parser\XMLEnemy.cs" />
