@@ -158,16 +158,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             set { this.rotation = value; }
         }
 
-        public Vector3 Scale
+        public Vector3 Scale //TODO revisar
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return new Vector3(1, 1, 1); }
+            set { ; }
         }
 
         public void move(Vector3 v)
