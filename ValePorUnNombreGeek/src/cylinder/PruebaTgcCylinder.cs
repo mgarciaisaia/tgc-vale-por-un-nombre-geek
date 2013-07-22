@@ -7,6 +7,7 @@ using Microsoft.DirectX.Direct3D;
 using System.Drawing;
 using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
+using TgcViewer.Utils.TgcGeometry;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 {
@@ -39,19 +40,30 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             cylinder.rotateZ(12);
             cylinder.Position = new Vector3(0, 3, 0);
             cylinder.updateValues();
-            //cylinder = new BoundingCylinder(new Vector3(0, 0, 0), 5, new Vector3(10, 10, 0));
-            //cylinder.AlphaBlendEnable = true;
 
             GuiController.Instance.Modifiers.addBoolean("boundingCylinder", "boundingCylinder", false);
-            GuiController.Instance.Modifiers.addColor("color", Color.DarkKhaki);
+            GuiController.Instance.Modifiers.addColor("color", Color.DarkGoldenrod);
+
+            GuiController.Instance.Modifiers.addVertex3f("position", new Vector3(-20, -20, -20), new Vector3(20, 20, 20), new Vector3(0, 0, 0));
+            float angle = FastMath.TWO_PI;
+            GuiController.Instance.Modifiers.addVertex3f("rotation", new Vector3(-angle, -angle, -angle), new Vector3(angle, angle, angle), new Vector3(0, 0, 0));
         }
 
 
         public override void render(float elapsedTime)
         {
-            //cylinder.Color = (Color)GuiController.Instance.Modifiers.getValue("color");
+            TgcModifiers modifiers = GuiController.Instance.Modifiers;
+            Vector3 position = (Vector3)modifiers.getValue("position");
+            Vector3 rotation = (Vector3)modifiers.getValue("rotation");
 
-            if ((bool)GuiController.Instance.Modifiers.getValue("boundingCylinder"))
+            cylinder.Position = position;
+            cylinder.Rotation = rotation;
+
+            cylinder.Color = (Color)modifiers.getValue("color");
+
+            cylinder.updateValues();
+
+            if ((bool)modifiers.getValue("boundingCylinder"))
                 cylinder.BoundingCylinder.render();
             else
                 cylinder.render();
