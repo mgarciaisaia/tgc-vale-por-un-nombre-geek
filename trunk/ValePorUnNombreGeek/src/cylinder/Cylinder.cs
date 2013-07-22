@@ -18,14 +18,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         private float halfLength;
         private float radius;
         private int color;
-
         private BoundingCylinder boundingCylinder;
+
 
         private CustomVertex.PositionColored[] topCapsVertices; //line strip
         private CustomVertex.PositionColored[] bottomCapsVertices; //line strip
 
         private CustomVertex.PositionColored[] sideTrianglesVertices; //triangle strip
         private CustomVertex.PositionColored[] capsTrianglesVertices; //triangle list
+
 
         public Cylinder(Vector3 _center, float _radius, float _halfLength)
         {
@@ -141,9 +142,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             set { this.color = value.ToArgb(); }
         }
 
-        public BoundingCylinder BoundingCylinder { get { return this.boundingCylinder; } }
-
         public bool AlphaBlendEnable { get; set; }
+
+        #region Transformation
 
         public bool AutoTransformEnable {
             get { return this.BoundingCylinder.AutoTransformEnable; }
@@ -168,7 +169,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             set { this.BoundingCylinder.Rotation = value; }
         }
 
-        public Vector3 Scale //TODO revisar
+        public Vector3 Scale
         {
             get { return this.BoundingCylinder.Scale; }
             set { this.BoundingCylinder.Scale = value; }
@@ -208,6 +209,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         {
             this.BoundingCylinder.rotateZ(angle);
         }
+
+        #endregion
+
+        public BoundingCylinder BoundingCylinder { get { return this.boundingCylinder; } }
 
         public void updateValues()
         {

@@ -37,7 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         public void updateValues()
         {
             this.halfHeight = new Vector3(0, this.halfLength, 0);
-            Matrix rotationMatrix = Matrix.RotationYawPitchRoll(this.rotation.X, this.rotation.Y, this.rotation.Z);
+            Matrix rotationMatrix = Matrix.RotationYawPitchRoll(this.rotation.Y, this.rotation.X, this.rotation.Z);
             this.halfHeight.TransformNormal(rotationMatrix);
         }
 
@@ -134,7 +134,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             get
             {
                 if (this.AutoTransformEnable)
-                    return Matrix.RotationYawPitchRoll(this.rotation.X, this.rotation.Y, this.rotation.Z) * Matrix.Translation(this.center);
+                    return Matrix.RotationYawPitchRoll(this.rotation.Y, this.rotation.X, this.rotation.Z) * Matrix.Translation(this.center);
                 else
                     return this.transform;
             }
@@ -158,7 +158,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             set { this.rotation = value; }
         }
 
-        public Vector3 Scale //TODO revisar
+        public Vector3 Scale //TODO
         {
             get { return new Vector3(1, 1, 1); }
             set { ; }
@@ -166,22 +166,26 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
         public void move(Vector3 v)
         {
-            throw new NotImplementedException();
+            this.move(v.X, v.Y, v.Z);
         }
 
         public void move(float x, float y, float z)
         {
-            throw new NotImplementedException();
+            this.center.X += x;
+            this.center.Y += y;
+            this.center.Z += z;
         }
 
-        public void moveOrientedY(float movement)
+        public void moveOrientedY(float movement) //TODO
         {
             throw new NotImplementedException();
         }
 
         public void getPosition(Vector3 pos)
         {
-            throw new NotImplementedException();
+            pos.X = this.center.X;
+            pos.Y = this.center.Y;
+            pos.Z = this.center.Z;
         }
 
         public void rotateX(float angle)
