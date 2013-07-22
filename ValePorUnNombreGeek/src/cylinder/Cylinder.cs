@@ -17,10 +17,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
         private Vector3 center;
         private Vector3 halfHeight;
+        private float halfLength;
         private float radius;
         private int color;
-
-        private Matrix transform;
 
         private BoundingCylinder boundingCylinder;
 
@@ -30,17 +29,15 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         private CustomVertex.PositionColored[] sideTrianglesVertices; //triangle strip
         private CustomVertex.PositionColored[] capsTrianglesVertices; //triangle list
 
-        public Cylinder(Vector3 _center, float _radius, Vector3 _halfHeight)
+        public Cylinder(Vector3 _center, float _radius, float _halfLength)
         {
             this.center = _center;
             this.radius = _radius;
-            this.halfHeight = _halfHeight;
+            this.halfLength = _halfLength;
+            this.boundingCylinder = new BoundingCylinder(this.center, this.radius, this.halfLength);
 
             //this.color = Color.Red.ToArgb();
             this.color = Color.FromArgb(150, Color.Red).ToArgb();
-            this.transform = Matrix.Identity;
-
-            this.boundingCylinder = new BoundingCylinder(this.center, this.radius, this.halfHeight);
 
             this.initialize();
         }
@@ -57,6 +54,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             //tapas: dos vertices por cada vertice de cada tapa, mas uno en el centro
             this.capsTrianglesVertices = new CustomVertex.PositionColored[capsResolution * 3 * 2];
 
+            this.updateValues();
             this.updateDraw();
         }
 
@@ -130,98 +128,111 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             this.bottomCapsVertices = null;
             this.sideTrianglesVertices = null;
             this.capsTrianglesVertices = null;
+            this.boundingCylinder.dispose();
+        }
+
+        public Color Color {
+            get { return Color.FromArgb(this.color); }
+            set { this.color = value.ToArgb(); }
         }
 
         public BoundingCylinder BoundingCylinder { get { return this.boundingCylinder; } }
 
         public bool AlphaBlendEnable { get; set; }
 
-        public bool AutoTransformEnable { get; set; }
+        public bool AutoTransformEnable {
+            get { return this.BoundingCylinder.AutoTransformEnable; }
+            set { this.BoundingCylinder.AutoTransformEnable = value; }
+        }
 
         public Matrix Transform
         {
-            get
-            {
-                return this.transform;
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return this.BoundingCylinder.Transform; }
+            set { this.BoundingCylinder.Transform = value; }
         }
 
         public Vector3 Position
         {
-            get
-            {
-                return this.center;
-            }
-            set
-            {
-                if (value == this.center) return;
-                this.center = value;
-                this.updateDraw();
-            }
+            get { return this.BoundingCylinder.Position; }
+            set { this.BoundingCylinder.Position = value; }
+            //{
+            //    if (value == this.center) return;
+            //    this.center = value;
+            //    this.updateDraw();
+            //}
         }
 
         public Vector3 Rotation
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return this.BoundingCylinder.Rotation; }
+            set { this.BoundingCylinder.Rotation = value; }
         }
 
-        public Vector3 Scale
+        public Vector3 Scale //TODO revisar
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return new Vector3(1, 1, 1); }
+            set { ; }
         }
 
         public void move(Vector3 v)
         {
-            this.center += v;
-            this.updateDraw();
+            this.BoundingCylinder.move(v);
+            //this.move(v.X, v.Y, v.Z);
         }
 
         public void move(float x, float y, float z)
         {
-            this.move(new Vector3(x, y, z));
+            this.BoundingCylinder.move(x, y, z);
+            //this.center.X += x;
+            //this.center.Y += y;
+            //this.center.Z += z;
+            //this.updateDraw();
         }
 
-        public void moveOrientedY(float movement)
+        public void moveOrientedY(float movement) //TODO
         {
-            throw new NotImplementedException();
+            this.BoundingCylinder.moveOrientedY(movement);
         }
 
         public void getPosition(Vector3 pos)
         {
-            throw new NotImplementedException();
+            this.BoundingCylinder.getPosition(pos);
+            //pos.X = this.center.X;
+            //pos.Y = this.center.Y;
+            //pos.Z = this.center.Z;
         }
 
         public void rotateX(float angle)
         {
-            throw new NotImplementedException();
+            this.BoundingCylinder.rotateX(angle);
+            //this.rotation.X += angle;
         }
 
         public void rotateY(float angle)
         {
-            throw new NotImplementedException();
+            this.BoundingCylinder.rotateY(angle);
+            //this.rotation.Y += angle;
         }
 
         public void rotateZ(float angle)
         {
-            throw new NotImplementedException();
+            this.BoundingCylinder.rotateZ(angle);
+            //this.rotation.Z += angle;
+        }
+
+        public void updateValues() //TODO
+        {
+            this.halfHeight = new Vector3(0, this.halfLength, 0);
+
+            //if (this.AutoTransformEnable)
+            //    this.halfHeight.TransformNormal(this.transform);
+            //else
+            //    this.halfHeight.TransformNormal(
+            //        Matrix.RotationYawPitchRoll(
+            //        this.rotation.X,
+            //        this.rotation.Y,
+            //        this.rotation.Z));
+            this.BoundingCylinder.updateValues();
         }
     }
 }

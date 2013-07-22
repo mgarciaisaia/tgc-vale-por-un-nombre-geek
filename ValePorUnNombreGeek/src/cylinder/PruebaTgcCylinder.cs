@@ -34,17 +34,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
         public override void init()
         {
-            cylinder = new Cylinder(new Vector3(0, 0, 0), 5, new Vector3(5, 5, 0));
-            //Device d3dDevice = GuiController.Instance.D3dDevice;
-            cylinder.AlphaBlendEnable = true;
+            cylinder = new Cylinder(new Vector3(0, 0, 0), 2, 4);
+            //cylinder.AutoTransformEnable = false;
+            cylinder.rotateZ(12);
+            cylinder.Position = new Vector3(0, 3, 0);
+            cylinder.updateValues();
+            //cylinder = new BoundingCylinder(new Vector3(0, 0, 0), 5, new Vector3(10, 10, 0));
+            //cylinder.AlphaBlendEnable = true;
 
-            GuiController.Instance.Modifiers.addBoolean("showBC", "showBC", false);
+            GuiController.Instance.Modifiers.addBoolean("boundingCylinder", "boundingCylinder", false);
+            GuiController.Instance.Modifiers.addColor("color", Color.DarkKhaki);
         }
 
 
         public override void render(float elapsedTime)
         {
-            if ((bool)GuiController.Instance.Modifiers.getValue("showBC"))
+            //cylinder.Color = (Color)GuiController.Instance.Modifiers.getValue("color");
+
+            if ((bool)GuiController.Instance.Modifiers.getValue("boundingCylinder"))
                 cylinder.BoundingCylinder.render();
             else
                 cylinder.render();
