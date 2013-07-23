@@ -13,17 +13,12 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 {
     class Cylinder : IRenderObject, ITransformObject
     {
-        private const int END_CAPS_RESOLUTION = 30;
-
         private float halfLength;
         private float radius;
         private int color;
         private BoundingCylinder boundingCylinder;
 
-
-        private CustomVertex.PositionColored[] topCapsVertices; //line strip
-        private CustomVertex.PositionColored[] bottomCapsVertices; //line strip
-
+        private const int END_CAPS_RESOLUTION = 1000;
         private CustomVertex.PositionColored[] sideTrianglesVertices; //triangle strip
         private CustomVertex.PositionColored[] capsTrianglesVertices; //triangle list
 
@@ -43,8 +38,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         private void initialize()
         {
             int capsResolution = END_CAPS_RESOLUTION;
-            this.topCapsVertices = new CustomVertex.PositionColored[capsResolution];
-            this.bottomCapsVertices = new CustomVertex.PositionColored[capsResolution];
 
             //cara lateral: un vertice por cada vertice de cada tapa, mas dos para cerrarla
             this.sideTrianglesVertices = new CustomVertex.PositionColored[2 * capsResolution + 2];
@@ -58,12 +51,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         private void updateDraw()
         {
             //vectores utilizados para el dibujado
-            //Vector3 upVector = new Vector3(0, this.halfLength, 0);
-            //Vector3 n = new Vector3(this.radius, 0, 0);
             Vector3 upVector = new Vector3(0, 1, 0);
             Vector3 n = new Vector3(1, 0, 0);
 
-            int capsResolution = this.topCapsVertices.Length;
+            int capsResolution = END_CAPS_RESOLUTION;
 
             //matriz de rotacion del vector de dibujado
             float angleStep = FastMath.TWO_PI / (float)capsResolution;
@@ -72,43 +63,46 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             //transformacion que se le aplicara a cada vertice
             Matrix transformation = this.Transform;
 
+            //arrays donde guardamos los puntos dibujados
+            Vector3[] topCapDraw = new Vector3[capsResolution];
+            Vector3[] bottomCapDraw = new Vector3[capsResolution];
+
+            Vector3 topCapCenter = Vector3.TransformCoordinate(upVector, transformation);
+            Vector3 bottomCapCenter = Vector3.TransformCoordinate(-upVector, transformation);
+
             for (int i = 0; i < capsResolution; i++)
             {
                 //establecemos los vertices de las tapas
-                Vector3 topCapPoint = Vector3.TransformCoordinate(upVector + n, transformation);
-                this.topCapsVertices[i] = new CustomVertex.PositionColored(topCapPoint, this.color);
-                Vector3 bottomCapPoint = Vector3.TransformCoordinate(-upVector + n, transformation);
-                this.bottomCapsVertices[i] = new CustomVertex.PositionColored(bottomCapPoint, this.color);
+                topCapDraw[i] = Vector3.TransformCoordinate(upVector + n, transformation);
+                bottomCapDraw[i] = Vector3.TransformCoordinate(-upVector + n, transformation);
 
                 //triangulos de la cara lateral (strip)
-                this.sideTrianglesVertices[2 * i] = this.topCapsVertices[i];
-                this.sideTrianglesVertices[2 * i + 1] = this.bottomCapsVertices[i];
+                this.sideTrianglesVertices[2 * i] = new CustomVertex.PositionColored(topCapDraw[i], color);
+                this.sideTrianglesVertices[2 * i + 1] = new CustomVertex.PositionColored(bottomCapDraw[i], color);
 
                 //triangulos de la tapa superior (list)
-                if (i > 0) this.capsTrianglesVertices[3 * i] = this.topCapsVertices[i - 1];
-                this.capsTrianglesVertices[3 * i + 1] = this.topCapsVertices[i];
-                topCapPoint = Vector3.TransformCoordinate(upVector, transformation);
-                this.capsTrianglesVertices[3 * i + 2] = new CustomVertex.PositionColored(topCapPoint, Color.White.ToArgb());
+                if (i > 0) this.capsTrianglesVertices[3 * i] = new CustomVertex.PositionColored(topCapDraw[i - 1], color);
+                this.capsTrianglesVertices[3 * i + 1] = new CustomVertex.PositionColored(topCapDraw[i], color);
+                this.capsTrianglesVertices[3 * i + 2] = new CustomVertex.PositionColored(topCapCenter, Color.White.ToArgb());
 
                 //triangulos de la tapa inferior (list)
-                if (i > 0) this.capsTrianglesVertices[3 * i + 3 * capsResolution] = this.bottomCapsVertices[i - 1];
-                this.capsTrianglesVertices[3 * i + 1 + 3 * capsResolution] = this.bottomCapsVertices[i];
-                bottomCapPoint = Vector3.TransformCoordinate(-upVector, transformation);
-                this.capsTrianglesVertices[3 * i + 2 + 3 * capsResolution] = new CustomVertex.PositionColored(bottomCapPoint, Color.White.ToArgb());
+                if (i > 0) this.capsTrianglesVertices[3 * i + 3 * capsResolution] = new CustomVertex.PositionColored(bottomCapDraw[i - 1], color);
+                this.capsTrianglesVertices[3 * i + 1 + 3 * capsResolution] = new CustomVertex.PositionColored(bottomCapDraw[i], color); ;
+                this.capsTrianglesVertices[3 * i + 2 + 3 * capsResolution] = new CustomVertex.PositionColored(bottomCapCenter, Color.White.ToArgb());
 
                 //rotamos el vector de dibujado
                 n.TransformNormal(rotationMatrix);
             }
 
             //cerramos la cara lateral
-            this.sideTrianglesVertices[2 * capsResolution] = this.topCapsVertices[0];
-            this.sideTrianglesVertices[2 * capsResolution + 1] = this.bottomCapsVertices[0];
+            this.sideTrianglesVertices[2 * capsResolution] = new CustomVertex.PositionColored(topCapDraw[0], color);
+            this.sideTrianglesVertices[2 * capsResolution + 1] = new CustomVertex.PositionColored(bottomCapDraw[0], color);
 
             //cerramos la tapa superior
-            this.capsTrianglesVertices[0] = this.topCapsVertices[capsResolution - 1];
+            this.capsTrianglesVertices[0] = new CustomVertex.PositionColored(topCapDraw[capsResolution - 1], color);
 
             //Cerramos la tapa inferior
-            this.capsTrianglesVertices[3 * capsResolution] = this.bottomCapsVertices[capsResolution - 1];
+            this.capsTrianglesVertices[3 * capsResolution] = new CustomVertex.PositionColored(bottomCapDraw[capsResolution - 1], color);
         }
 
         public void render()
@@ -121,7 +115,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
                 d3dDevice.RenderState.AlphaTestEnable = true;
             }
 
-            int capsResolution = this.topCapsVertices.Length;
+            int capsResolution = END_CAPS_RESOLUTION;
 
             d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2 * capsResolution, this.sideTrianglesVertices);
             d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleList, 2 * capsResolution, this.capsTrianglesVertices);
@@ -132,8 +126,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
         public void dispose()
         {
-            this.topCapsVertices = null;
-            this.bottomCapsVertices = null;
             this.sideTrianglesVertices = null;
             this.capsTrianglesVertices = null;
             this.boundingCylinder.dispose();
@@ -149,67 +141,67 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         #region Transformation
 
         public bool AutoTransformEnable {
-            get { return this.BoundingCylinder.AutoTransformEnable; }
-            set { this.BoundingCylinder.AutoTransformEnable = value; }
+            get { return this.boundingCylinder.AutoTransformEnable; }
+            set { this.boundingCylinder.AutoTransformEnable = value; }
         }
 
         public Matrix Transform
         {
-            get { return this.BoundingCylinder.Transform; }
-            set { this.BoundingCylinder.Transform = value; }
+            get { return this.boundingCylinder.Transform; }
+            set { this.boundingCylinder.Transform = value; }
         }
 
         public Vector3 Position
         {
-            get { return this.BoundingCylinder.Position; }
-            set { this.BoundingCylinder.Position = value; }
+            get { return this.boundingCylinder.Position; }
+            set { this.boundingCylinder.Position = value; }
         }
 
         public Vector3 Rotation
         {
-            get { return this.BoundingCylinder.Rotation; }
-            set { this.BoundingCylinder.Rotation = value; }
+            get { return this.boundingCylinder.Rotation; }
+            set { this.boundingCylinder.Rotation = value; }
         }
 
         public Vector3 Scale
         {
-            get { return this.BoundingCylinder.Scale; }
-            set { this.BoundingCylinder.Scale = value; }
+            get { return this.boundingCylinder.Scale; }
+            set { this.boundingCylinder.Scale = value; }
         }
 
         public void move(Vector3 v)
         {
-            this.BoundingCylinder.move(v);
+            this.boundingCylinder.move(v);
         }
 
         public void move(float x, float y, float z)
         {
-            this.BoundingCylinder.move(x, y, z);
+            this.boundingCylinder.move(x, y, z);
         }
 
         public void moveOrientedY(float movement)
         {
-            this.BoundingCylinder.moveOrientedY(movement);
+            this.boundingCylinder.moveOrientedY(movement);
         }
 
         public void getPosition(Vector3 pos)
         {
-            this.BoundingCylinder.getPosition(pos);
+            this.boundingCylinder.getPosition(pos);
         }
 
         public void rotateX(float angle)
         {
-            this.BoundingCylinder.rotateX(angle);
+            this.boundingCylinder.rotateX(angle);
         }
 
         public void rotateY(float angle)
         {
-            this.BoundingCylinder.rotateY(angle);
+            this.boundingCylinder.rotateY(angle);
         }
 
         public void rotateZ(float angle)
         {
-            this.BoundingCylinder.rotateZ(angle);
+            this.boundingCylinder.rotateZ(angle);
         }
 
         #endregion
