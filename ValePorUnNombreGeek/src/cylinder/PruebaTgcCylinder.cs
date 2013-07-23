@@ -36,10 +36,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         public override void init()
         {
             cylinder = new Cylinder(new Vector3(0, 0, 0), 2, 4);
-            //cylinder.AutoTransformEnable = false;
             cylinder.rotateZ(12);
             cylinder.Position = new Vector3(0, 3, 0);
             cylinder.updateValues();
+
+            //cylinder.Transform = Matrix.Scaling(2, 1, 1);
+            //cylinder.AutoTransformEnable = false;
+            //cylinder.updateValues();
 
             GuiController.Instance.Modifiers.addBoolean("boundingCylinder", "boundingCylinder", false);
             GuiController.Instance.Modifiers.addColor("color", Color.DarkGoldenrod);

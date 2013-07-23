@@ -28,7 +28,6 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             this.radius = _radius;
             this.halfLength = _halfLength;
 
-            //this.autoTransformationMatrix = Matrix.Identity;
             this.manualTransformationMatrix = Matrix.Identity;
             this.rotation = new Vector3(0, 0, 0);
             this.AutoTransformEnable = true;
@@ -49,6 +48,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
         /// <summary>
         /// Devuelve el vector HalfHeight (va del centro a la tapa superior del cilindro)
+        /// Se utiliza para testeo de colisiones
         /// </summary>
         private Vector3 HalfHeight
         {
@@ -84,25 +84,29 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             //vector de dibujado
             Vector3 n = new Vector3(1, 0, 0);
 
-            //dibujado de los bordes de las tapas
+            //array donde guardamos los puntos dibujados
+            Vector3[] draw = new Vector3[this.vertices.Length];
+
             for (int i = 0; i < END_CAPS_VERTEX_COUNT / 2; i += 2)
             {
-                //vertice inicial
-                this.vertices[i] = new CustomVertex.PositionColored(upVector + n, color);
-                this.vertices[END_CAPS_VERTEX_COUNT / 2 + i] = new CustomVertex.PositionColored(-upVector + n, color);
+                //vertice inicial de la tapa superior
+                draw[i] = upVector + n;
+                //vertice inicial de la tapa inferior
+                draw[END_CAPS_VERTEX_COUNT / 2 + i] = -upVector + n;
 
                 //rotamos el vector de dibujado
                 n.TransformNormal(rotationMatrix);
 
-                //vertice final
-                this.vertices[i + 1] = new CustomVertex.PositionColored(upVector + n, color);
-                this.vertices[END_CAPS_VERTEX_COUNT / 2 + i + 1] = new CustomVertex.PositionColored(-upVector + n, color);
+                //vertice final de la tapa superior
+                draw[i + 1] = upVector + n;
+                //vertice final de la tapa inferior
+                draw[END_CAPS_VERTEX_COUNT / 2 + i + 1] = -upVector + n;
             }
 
-            //rotamos y trasladamos los vertices
+            //rotamos y trasladamos los puntos, y los volcamos al vector de vertices
             Matrix transformation = this.Transform;
             for (int i = 0; i < END_CAPS_VERTEX_COUNT; i++)
-                this.vertices[i].Position = Vector3.TransformCoordinate(this.vertices[i].Position, transformation);
+                this.vertices[i] = new CustomVertex.PositionColored(Vector3.TransformCoordinate(draw[i], transformation), color);
         }
 
         /// <summary>
@@ -206,7 +210,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             Device d3dDevice = GuiController.Instance.D3dDevice;
 
             //actualizamos los vertices de las tapas
-            this.updateDraw(); //TODO solo actualizar si se movio el centro o hh
+            this.updateDraw();
             //actualizamos los vertices de las lineas laterales
             this.updateBordersDraw();
 
