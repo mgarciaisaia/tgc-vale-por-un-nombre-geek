@@ -41,7 +41,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         /// </summary>
         public void updateValues()
         {
-            this.autoTransformationMatrix = Matrix.RotationYawPitchRoll(this.rotation.Y, this.rotation.X, this.rotation.Z) * Matrix.Translation(this.center);
+            this.autoTransformationMatrix =
+                Matrix.Scaling(this.radius, this.halfLength, this.radius) *
+                Matrix.RotationYawPitchRoll(this.rotation.Y, this.rotation.X, this.rotation.Z) *
+                Matrix.Translation(this.center);
         }
 
         /// <summary>
@@ -75,11 +78,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
             //matriz que vamos a usar para girar el vector de dibujado
             float angle = FastMath.TWO_PI / (float)END_CAPS_RESOLUTION;
-            Vector3 upVector = new Vector3(0, this.halfLength, 0);
+            Vector3 upVector = new Vector3(0, 1, 0);
             Matrix rotationMatrix = Matrix.RotationAxis(upVector, angle);
 
             //vector de dibujado
-            Vector3 n = new Vector3(this.radius, 0, 0);
+            Vector3 n = new Vector3(1, 0, 0);
 
             //dibujado de los bordes de las tapas
             for (int i = 0; i < END_CAPS_VERTEX_COUNT / 2; i += 2)
@@ -171,14 +174,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
 
             Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center; //mmmm
-            Vector3 halfHeight = this.HalfHeight;
-            Vector3 upVector = new Vector3(0, this.halfLength, 0);
+            Vector3 upVector = new Vector3(0, 1, 0);
 
             Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, upVector);
-            //Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, halfHeight);
-            //transversalALaCamara.Y = 0;
             transversalALaCamara.Normalize();
-            transversalALaCamara *= this.radius;
 
             int color = Color.Yellow.ToArgb();
             int firstBorderVertex = END_CAPS_VERTEX_COUNT;
@@ -297,6 +296,18 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         public void rotateZ(float angle)
         {
             this.rotation.Z += angle;
+        }
+
+        public float Height
+        {
+            get { return 2 * this.halfLength; }
+            set { this.halfLength = value / 2; }
+        }
+
+        public float Radius
+        {
+            get { return this.radius; }
+            set { this.radius = value; }
         }
     }
 }
