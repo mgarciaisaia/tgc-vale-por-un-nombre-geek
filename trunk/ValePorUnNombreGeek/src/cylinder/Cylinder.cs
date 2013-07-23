@@ -58,8 +58,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         private void updateDraw()
         {
             //vectores utilizados para el dibujado
-            Vector3 upVector = new Vector3(0, this.halfLength, 0);
-            Vector3 n = new Vector3(this.radius, 0, 0);
+            //Vector3 upVector = new Vector3(0, this.halfLength, 0);
+            //Vector3 n = new Vector3(this.radius, 0, 0);
+            Vector3 upVector = new Vector3(0, 1, 0);
+            Vector3 n = new Vector3(1, 0, 0);
 
             int capsResolution = this.topCapsVertices.Length;
 
@@ -216,8 +218,20 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
         public void updateValues()
         {
-            this.BoundingCylinder.updateValues();
+            this.boundingCylinder.updateValues();
             this.updateDraw();
+        }
+
+        public float Height
+        {
+            get { return this.boundingCylinder.Height; }
+            set { this.boundingCylinder.Height = value; }
+        }
+
+        public float Radius
+        {
+            get { return this.boundingCylinder.Radius; }
+            set { this.boundingCylinder.Radius = value; }
         }
     }
 }

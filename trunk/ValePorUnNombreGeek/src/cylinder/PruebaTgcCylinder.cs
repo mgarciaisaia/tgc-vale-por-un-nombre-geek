@@ -44,6 +44,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             GuiController.Instance.Modifiers.addBoolean("boundingCylinder", "boundingCylinder", false);
             GuiController.Instance.Modifiers.addColor("color", Color.DarkGoldenrod);
 
+            GuiController.Instance.Modifiers.addVertex2f("size", new Vector2(1, 1), new Vector2(5, 10), new Vector2(2, 5));
             GuiController.Instance.Modifiers.addVertex3f("position", new Vector3(-20, -20, -20), new Vector3(20, 20, 20), new Vector3(0, 0, 0));
             float angle = FastMath.TWO_PI;
             GuiController.Instance.Modifiers.addVertex3f("rotation", new Vector3(-angle, -angle, -angle), new Vector3(angle, angle, angle), new Vector3(0, 0, 0));
@@ -53,11 +54,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         public override void render(float elapsedTime)
         {
             TgcModifiers modifiers = GuiController.Instance.Modifiers;
+            Vector2 size = (Vector2)modifiers.getValue("size");
             Vector3 position = (Vector3)modifiers.getValue("position");
             Vector3 rotation = (Vector3)modifiers.getValue("rotation");
 
             cylinder.Position = position;
             cylinder.Rotation = rotation;
+            cylinder.Radius = size.X;
+            cylinder.Height = size.Y;
 
             cylinder.Color = (Color)modifiers.getValue("color");
 
