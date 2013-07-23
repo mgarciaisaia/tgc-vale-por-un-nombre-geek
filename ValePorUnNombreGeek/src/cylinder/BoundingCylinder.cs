@@ -13,13 +13,14 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 {
     class BoundingCylinder : IRenderObject, ITransformObject
     {
-        private Vector3 center;
-        private float halfLength;
-        private Vector3 halfHeight;
         private float radius;
+        private float halfLength;
 
+        private Vector3 center;
         private Vector3 rotation;
-        private Matrix transform;
+        private Matrix autoTransformationMatrix;
+        private Matrix manualTransformationMatrix;
+
 
         public BoundingCylinder(Vector3 _center, float _radius, float _halfLength)
         {
@@ -27,18 +28,33 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             this.radius = _radius;
             this.halfLength = _halfLength;
 
-            this.transform = Matrix.Identity;
+            //this.autoTransformationMatrix = Matrix.Identity;
+            this.manualTransformationMatrix = Matrix.Identity;
             this.rotation = new Vector3(0, 0, 0);
             this.AutoTransformEnable = true;
 
             this.updateValues();
         }
 
+        /// <summary>
+        /// Actualiza la matriz de transformacion
+        /// </summary>
         public void updateValues()
         {
-            this.halfHeight = new Vector3(0, this.halfLength, 0);
-            Matrix rotationMatrix = Matrix.RotationYawPitchRoll(this.rotation.Y, this.rotation.X, this.rotation.Z);
-            this.halfHeight.TransformNormal(rotationMatrix);
+            this.autoTransformationMatrix = Matrix.RotationYawPitchRoll(this.rotation.Y, this.rotation.X, this.rotation.Z) * Matrix.Translation(this.center);
+        }
+
+        /// <summary>
+        /// Devuelve el vector HalfHeight (va del centro a la tapa superior del cilindro)
+        /// </summary>
+        private Vector3 HalfHeight
+        {
+            get
+            {
+                Vector3 halfHeight = new Vector3(0, this.halfLength, 0);
+                halfHeight.TransformNormal(this.Transform);
+                return halfHeight;
+            }
         }
 
         #region Rendering
@@ -48,7 +64,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         private CustomVertex.PositionColored[] vertices; //line list
 
         /// <summary>
-        /// Actualiza la posicion de los vertices que componen las tapas.
+        /// Actualiza la posicion de los vertices que componen las tapas
         /// </summary>
         private void updateDraw()
         {
@@ -58,9 +74,9 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             int color = Color.Yellow.ToArgb();
 
             //matriz que vamos a usar para girar el vector de dibujado
-            float delta = FastMath.TWO_PI / (float)END_CAPS_RESOLUTION;
+            float angle = FastMath.TWO_PI / (float)END_CAPS_RESOLUTION;
             Vector3 upVector = new Vector3(0, this.halfLength, 0);
-            Matrix rotationMatrix = Matrix.RotationAxis(upVector, delta);
+            Matrix rotationMatrix = Matrix.RotationAxis(upVector, angle);
 
             //vector de dibujado
             Vector3 n = new Vector3(this.radius, 0, 0);
@@ -87,23 +103,103 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         }
 
         /// <summary>
-        /// Actualiza la posicion de los cuatro vertices que componen los lados.
+        /// Actualiza la posicion de los cuatro vertices que componen los lados
         /// </summary>
         private void updateBordersDraw()
         {
-            Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center;
-            Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, this.halfHeight);
+            //Device device = GuiController.Instance.D3dDevice;
+            //Viewport viewport = device.Viewport;
+            //Matrix world = device.Transform.World;
+            //Matrix view = device.Transform.View;
+            //Matrix proj = device.Transform.Projection;
+
+            ////a es el punto mas a la izquierda de la tapa superior
+            ////b es el punto mas a la izquierda de la tapa inferior
+            ////c es el punto mas a la derecha de la tapa superior
+            ////d es el punto mas a la derecha de la tapa inferior
+
+            //Vector3 a, b, c, d, aProj, bProj, cProj, dProj;
+
+            //Vector3 topCapVertexZero = this.vertices[0].Position;
+            //a = topCapVertexZero;
+            //c = topCapVertexZero;
+            //Vector3 bottomCapVertexZero = this.vertices[END_CAPS_VERTEX_COUNT / 2].Position;
+            //b = bottomCapVertexZero;
+            //d = bottomCapVertexZero;
+            //Vector3 topCapVertexZeroProj = Vector3.Project(topCapVertexZero, viewport, proj, view, world);
+            //aProj = topCapVertexZeroProj;
+            //cProj = topCapVertexZeroProj;
+            //Vector3 bottomCapVertexZeroProj = Vector3.Project(bottomCapVertexZero, viewport, proj, view, world);
+            //bProj = bottomCapVertexZeroProj;
+            //dProj = bottomCapVertexZeroProj;
+
+            //for (int i = 1; i < END_CAPS_VERTEX_COUNT / 2; i++)
+            //{
+            //    Vector3 point = Vector3.Project(this.vertices[i].Position, viewport, proj, view, world);
+            //    if (point.X < aProj.X)
+            //    {
+            //        a = this.vertices[i].Position;
+            //        aProj = point;
+            //    }
+            //    else if (point.X > cProj.X)
+            //    {
+            //        c = this.vertices[i].Position;
+            //        cProj = point;
+            //    }
+            //}
+            //for (int i = END_CAPS_VERTEX_COUNT / 2 + 1; i < END_CAPS_VERTEX_COUNT; i++)
+            //{
+            //    Vector3 point = Vector3.Project(this.vertices[i].Position, viewport, proj, view, world);
+            //    if (point.X < bProj.X)
+            //    {
+            //        b = this.vertices[i].Position;
+            //        bProj = point;
+            //    }
+            //    else if (point.X > dProj.X)
+            //    {
+            //        d = this.vertices[i].Position;
+            //        dProj = point;
+            //    }
+            //}
+            
+            //int color = Color.Yellow.ToArgb();
+            //int firstBorderVertex = END_CAPS_VERTEX_COUNT;
+            //this.vertices[firstBorderVertex] = new CustomVertex.PositionColored(a, color);
+            //this.vertices[firstBorderVertex + 1] = new CustomVertex.PositionColored(b, color);
+            //this.vertices[firstBorderVertex + 2] = new CustomVertex.PositionColored(c, color);
+            //this.vertices[firstBorderVertex + 3] = new CustomVertex.PositionColored(d, color);
+
+
+            Vector3 cameraSeen = GuiController.Instance.CurrentCamera.getPosition() - this.center; //mmmm
+            Vector3 halfHeight = this.HalfHeight;
+            Vector3 upVector = new Vector3(0, this.halfLength, 0);
+
+            Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, upVector);
+            //Vector3 transversalALaCamara = Vector3.Cross(cameraSeen, halfHeight);
+            //transversalALaCamara.Y = 0;
             transversalALaCamara.Normalize();
             transversalALaCamara *= this.radius;
 
             int color = Color.Yellow.ToArgb();
             int firstBorderVertex = END_CAPS_VERTEX_COUNT;
 
-            this.vertices[firstBorderVertex] = new CustomVertex.PositionColored(this.center + this.halfHeight + transversalALaCamara, color);
-            this.vertices[firstBorderVertex + 1] = new CustomVertex.PositionColored(this.center - this.halfHeight + transversalALaCamara, color);
+            Matrix transformation = this.Transform;
 
-            this.vertices[firstBorderVertex + 2] = new CustomVertex.PositionColored(this.center + this.halfHeight - transversalALaCamara, color);
-            this.vertices[firstBorderVertex + 3] = new CustomVertex.PositionColored(this.center - this.halfHeight - transversalALaCamara, color);
+            //vertice superior izquierdo
+            Vector3 point = Vector3.TransformCoordinate(upVector + transversalALaCamara, transformation);
+            this.vertices[firstBorderVertex] = new CustomVertex.PositionColored(point, color);
+
+            //vertice inferior izquierdo
+            point = Vector3.TransformCoordinate(-upVector + transversalALaCamara, transformation);
+            this.vertices[firstBorderVertex + 1] = new CustomVertex.PositionColored(point, color);
+
+            //vertice superior derecho
+            point = Vector3.TransformCoordinate(upVector - transversalALaCamara, transformation);
+            this.vertices[firstBorderVertex + 2] = new CustomVertex.PositionColored(point, color);
+
+            //vertice inferior derecho
+            point = Vector3.TransformCoordinate(-upVector - transversalALaCamara, transformation);
+            this.vertices[firstBorderVertex + 3] = new CustomVertex.PositionColored(point, color);
         }
 
         public void render()
@@ -134,13 +230,13 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             get
             {
                 if (this.AutoTransformEnable)
-                    return Matrix.RotationYawPitchRoll(this.rotation.Y, this.rotation.X, this.rotation.Z) * Matrix.Translation(this.center);
+                    return this.autoTransformationMatrix;
                 else
-                    return this.transform;
+                    return this.manualTransformationMatrix;
             }
             set
             {
-                this.transform = value;
+                this.manualTransformationMatrix = value;
             }
         }
 
