@@ -18,7 +18,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         private int color;
         private BoundingCylinder boundingCylinder;
 
-        private const int END_CAPS_RESOLUTION = 1000;
+        private const int END_CAPS_RESOLUTION = 40;
         private CustomVertex.PositionColored[] sideTrianglesVertices; //triangle strip
         private CustomVertex.PositionColored[] capsTrianglesVertices; //triangle list
 
@@ -117,8 +117,11 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
             int capsResolution = END_CAPS_RESOLUTION;
 
+            //FillMode old = d3dDevice.RenderState.FillMode;
+            //d3dDevice.RenderState.FillMode = FillMode.WireFrame;
             d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, 2 * capsResolution, this.sideTrianglesVertices);
             d3dDevice.DrawUserPrimitives(PrimitiveType.TriangleList, 2 * capsResolution, this.capsTrianglesVertices);
+            //d3dDevice.RenderState.FillMode = old;
 
             d3dDevice.RenderState.AlphaTestEnable = false;
             d3dDevice.RenderState.AlphaBlendEnable = false;

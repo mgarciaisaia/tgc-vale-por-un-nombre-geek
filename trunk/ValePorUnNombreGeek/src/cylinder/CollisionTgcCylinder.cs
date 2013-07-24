@@ -14,9 +14,10 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
     /// <summary>
     /// Ejemplo en Blanco. Ideal para copiar y pegar cuando queres empezar a hacer tu propio ejemplo.
     /// </summary>
-    public class PruebaTgcCylinder : TgcExample
+    public class CollisionTgcCylinder : TgcExample
     {
         private Cylinder cylinder;
+        private TgcBoundingSphere sphere;
 
         public override string getCategory()
         {
@@ -25,7 +26,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 
         public override string getName()
         {
-            return "TgcCylinder";
+            return "Colisiones TgcCylinder";
         }
 
         public override string getDescription()
@@ -36,6 +37,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         public override void init()
         {
             cylinder = new Cylinder(new Vector3(0, 0, 0), 2, 4);
+            sphere = new TgcBoundingSphere(new Vector3(0, 0, 0), 3);
 
             //cylinder.Transform = Matrix.Scaling(2, 1, 1);
             //cylinder.AutoTransformEnable = false;
@@ -71,11 +73,19 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
                 cylinder.BoundingCylinder.render();
             else
                 cylinder.render();
+
+            if (BoundingCylinder.testSphereCylinder(sphere, cylinder.BoundingCylinder))
+                sphere.setRenderColor(Color.Black);
+            else
+                sphere.setRenderColor(Color.Yellow);
+
+            sphere.render();
         }
 
         public override void close()
         {
             cylinder.dispose();
+            sphere.dispose();
         }
 
     }
