@@ -54,7 +54,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
         {
             get
             {
-                Vector3 halfHeight = new Vector3(0, this.halfLength, 0);
+                Vector3 halfHeight = new Vector3(0, 1, 0);
                 halfHeight.TransformNormal(this.Transform);
                 return halfHeight;
             }
@@ -313,5 +313,49 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             get { return this.radius; }
             set { this.radius = value; }
         }
+
+
+
+
+
+
+        public static bool testSphereCylinder(TgcBoundingSphere sphere, BoundingCylinder cylinder)
+        {
+            Vector3 n = cylinder.HalfHeight;
+
+            Vector3 aPoint = cylinder.Position + n;
+            float d = -Vector3.Dot(n, aPoint);
+            Plane tapaSuperior = new Plane(n.X, n.Y, n.Z, d);
+
+            aPoint = cylinder.Position - n;
+            d = -Vector3.Dot(-n, aPoint);
+            Plane tapaInferior = new Plane(-n.X, -n.Y, -n.Z, d);
+
+            if (TgcCollisionUtils.classifyPointPlane(sphere.Center, tapaSuperior) != TgcCollisionUtils.PointPlaneResult.IN_FRONT_OF
+                && TgcCollisionUtils.classifyPointPlane(sphere.Center, tapaInferior) != TgcCollisionUtils.PointPlaneResult.IN_FRONT_OF)
+            {
+                //el centro de la esfera esta entre ambos planos de las tapas del cilindro
+
+                //float distanceSq = distanciaDePuntoARecta(n, cylinder.Position, sphere.Center);
+                Vector3 cylAxisStart = cylinder.Position - n;
+                Vector3 cylAxisEnd = cylinder.Position + n;
+                float distanceSq = TgcCollisionUtils.sqDistPointSegment(cylAxisStart, cylAxisEnd, sphere.Center);
+                if (distanceSq <= FastMath.Pow2(cylinder.Radius + sphere.Radius))
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //private static float distanciaDePuntoARecta(Vector3 direction, Vector3 origin, Vector3 point)
+        //{
+        //    float a = Vector3.Cross(direction, point - origin).LengthSq();
+        //    float b = direction.LengthSq();
+        //    return a / b;
+        //}
     }
 }
