@@ -8,6 +8,8 @@ using System.Drawing;
 using Microsoft.DirectX;
 using TgcViewer.Utils.Modifiers;
 using TgcViewer.Utils.TgcGeometry;
+using TgcViewer.Utils.TgcSceneLoader;
+using TgcViewer.Utils.Shaders;
 
 namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
 {
@@ -17,6 +19,7 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
     public class PruebaTgcCylinder : TgcExample
     {
         private Cylinder cylinder;
+        private string currentTexture;
 
         public override string getCategory()
         {
@@ -41,8 +44,16 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             //cylinder.AutoTransformEnable = false;
             //cylinder.updateValues();
 
+            cylinder.AlphaBlendEnable = true;
+
+            //cylinder.Effect = TgcShaders.loadEffect(GuiController.Instance.ExamplesMediaDir + "Shaders\\Ejemplo1.fx");
+            //cylinder.Technique = "RandomColorVS";
+
             GuiController.Instance.Modifiers.addBoolean("boundingCylinder", "boundingCylinder", false);
             GuiController.Instance.Modifiers.addColor("color", Color.DarkGoldenrod);
+            GuiController.Instance.Modifiers.addInt("alpha", 0, 255, 255);
+            GuiController.Instance.Modifiers.addTexture("texture", GuiController.Instance.ExamplesMediaDir + "\\Texturas\\madera.jpg");
+            GuiController.Instance.Modifiers.addBoolean("useTexture", "useTexture", false);
 
             GuiController.Instance.Modifiers.addVertex2f("size", new Vector2(1, 1), new Vector2(5, 10), new Vector2(2, 5));
             GuiController.Instance.Modifiers.addVertex3f("position", new Vector3(-20, -20, -20), new Vector3(20, 20, 20), new Vector3(0, 0, 0));
@@ -57,13 +68,24 @@ namespace AlumnoEjemplos.ValePorUnNombreGeek.src.cylinder
             Vector2 size = (Vector2)modifiers.getValue("size");
             Vector3 position = (Vector3)modifiers.getValue("position");
             Vector3 rotation = (Vector3)modifiers.getValue("rotation");
+            
+            string texturePath = (string)modifiers.getValue("texture");
+            if (texturePath != currentTexture)
+            {
+                currentTexture = texturePath;
+                cylinder.setTexture(TgcTexture.createTexture(GuiController.Instance.D3dDevice, currentTexture));
+            }
+
+            cylinder.UseTexture = (bool)modifiers.getValue("useTexture");
 
             cylinder.Position = position;
             cylinder.Rotation = rotation;
             cylinder.Radius = size.X;
             cylinder.Height = size.Y;
 
-            cylinder.Color = (Color)modifiers.getValue("color");
+            int alpha = (int)modifiers.getValue("alpha");
+            Color color = (Color)modifiers.getValue("color");
+            cylinder.Color = Color.FromArgb(alpha, color);
 
             cylinder.updateValues();
 
